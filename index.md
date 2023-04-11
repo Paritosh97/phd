@@ -14,3 +14,4 @@ Sign language synthesis is a technique for converting a sign language utterance 
 
 ## 3MT 2023
 - Link to [Presentation](./3mt-2023/slide.pptx)
+- Link to [Presentation](./3mt-2023/presentation.mp4])
