@@ -6,7 +6,7 @@ Sign language synthesis is a technique for converting a sign language utterance 
 
 ## SLTAT 2022
 - Link to [Paper](./sltat-2022/paper.pdf)
-- Link to [Poster](./poster.pdf)
+- Link to [Poster](./sltat-2022/poster.pdf)
 
 ## GRAPP 2023
 - Link to [Paper](./grapp-2023/GRAPP_DC.pdf)
@@ -14,3 +14,7 @@ Sign language synthesis is a technique for converting a sign language utterance 
 
 ## 3MT 2023
 - Link to [Presentation](./3mt-2023/presentation.mp4)
+
+## SLTAT 2023
+- Link to [Paper](./sltat-2023/paper.pdf)
+- Link to [Poster](./sltat-2023/poster.pdf)
