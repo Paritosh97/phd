@@ -1,3 +1,5 @@
+\documentclass[../../main.tex]{subfiles}
+\begin{document}
 \chapter{Background Work}
 
 In this chapter, we delve into the foundational research areas central to this thesis. We begin by exploring avatars, examining various methods for their representation and animation. Following this, we review the evolution of Sign Language descriptions, tracing their progression from linear glosses to non-linear representations. Finally, we focus on the recent advancements in Sign Language synthesis, discussing various techniques and their implications for the field.
@@ -15,13 +17,13 @@ The skeleton of a digital avatar is a crucial component for enabling realistic m
 Mixamo is a widely used online platform that provides a vast library of pre-rigged 3D characters and animations. Developed by Adobe, Mixamo offers an easy-to-use interface where users can upload their 3D models and automatically rig them using Mixamo's auto-rigging tool. This tool identifies key points on the model and generates a skeleton with appropriate bone placements. Additionally, Mixamo offers a range of pre-made animations that can be applied to the rigged models, facilitating quick and efficient animation workflows. The platform supports various file formats and is compatible with many 3D software tools. A standard Mixamo skeleton consists of 65 bones, covering major body parts including the spine, arms, legs, hands, and head.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/mixamo_autorigging.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/mixamo_autorigging.png}
   \caption{Autorigging using Mixamo}
   \label{fig:mixamo_autorigging}
 \end{figure}
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/mixamo_skeleton.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/mixamo_skeleton.png}
   \caption{Standard Mixamo skeleton structure}
   \label{fig:mixamo_skeleton}
 \end{figure}
@@ -31,7 +33,7 @@ Mixamo is a widely used online platform that provides a vast library of pre-rigg
 The Carnegie Mellon University (CMU) Motion Capture Database is one of the most extensive collections of motion capture data available for public use. This database contains thousands of motion capture sequences recorded from real human performers, capturing a wide variety of movements and actions. The heirarchy of a CMU skeleton is shown in figure \ref{fig:cmu_skeleton}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/cmu_skeleton.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/cmu_skeleton.png}
   \caption{CMU skeleton structure}
   \label{fig:cmu_skeleton}
 \end{figure}
@@ -41,7 +43,7 @@ The Carnegie Mellon University (CMU) Motion Capture Database is one of the most 
 Rigify is an add-on integrated in Blender. Rigify simplifies the process of rigging by providing a set of predefined rig templates that can be easily customized and applied to 3D models. The heirarchy of a Rigify skeleton is shown in figure \ref{fig:rigify_skeleton}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/rigify_skeleton.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/rigify_skeleton.png}
   \caption{Rigify skeleton}
   \label{fig:rigify_skeleton}
 \end{figure}
@@ -51,13 +53,13 @@ Rigify is an add-on integrated in Blender. Rigify simplifies the process of rigg
 SMPL-X (Skinned Multi-Person Linear Model eXtended) is a state-of-the-art parametric model for generating highly detailed and anatomically accurate 3D human avatars. SMPL-X encodes the shape and pose of a character using a low-dimensional space, allowing for efficient representation and manipulation. Thus, a configuration of about 100 numbers can represent the pose as well as the shape of the avatar\ref{fig:latent_space_smplx}. The heirarchy of a SMPL-X skeleton is shown in figure \ref{fig:smpl_x_skeleton}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/smpl_x_skeleton.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/smpl_x_skeleton.png}
   \caption{SMPL-X skeleton}
   \label{fig:smpl_x_skeleton}
 \end{figure}
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/latent_space_smplx.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/latent_space_smplx.png}
   \caption{SMPL-X latent space}
   \label{fig:latent_space_smplx}
 \end{figure}
@@ -67,7 +69,7 @@ SMPL-X (Skinned Multi-Person Linear Model eXtended) is a state-of-the-art parame
 The mesh of a digital avatar is the 3D model that forms the surface representation of the character. It consists of vertices, edges, and faces that define the shape and structure of the avatar. Creating and manipulating meshes is a fundamental aspect of 3D modeling and animation, allowing for detailed and realistic character designs.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/mesh.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/mesh.png}
   \caption{Mesh of a shark}
   \label{fig:mesh}
 \end{figure}
@@ -77,7 +79,7 @@ The mesh of a digital avatar is the 3D model that forms the surface representati
 Textures are 2D images applied to the surface of a 3D model to enhance its appearance and realism. Textures can represent various surface properties such as color, roughness, reflectivity, and transparency. Common types of textures include diffuse maps (color), specular maps (reflectivity), normal maps (surface detail), and roughness maps (surface smoothness). By combining different textures, artists can create visually compelling avatars with intricate surface details and lifelike appearances. These textures are often mapped onto the mesh of the avatar using UV mapping techniques to ensure proper alignment and scaling\ref{fig:texture_map}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/texture_map.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/texture_map.png}
   \caption{Texture map of an avatar}
   \label{fig:texture_map}
 \end{figure}
@@ -87,7 +89,7 @@ Textures are 2D images applied to the surface of a 3D model to enhance its appea
 Weight painting is a technique used to define how much influence each bone in a skeleton has over the surrounding mesh vertices. It plays a crucial role in ensuring that the mesh deforms naturally and realistically when the skeleton is animated. \ref{fig:weight_painting} shows an example of weight painting in Blender with the red color indicating high influence and blue indicating low influence.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/weight_painting.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/weight_painting.png}
   \caption{Weight painting}
   \label{fig:weight_painting}
 \end{figure}
@@ -97,23 +99,23 @@ Weight painting is a technique used to define how much influence each bone in a 
 Modeling and animating the face of an avatar is a complex task that involves creating detailed meshes and intricate animation controls to capture expressions and movements accurately. Blend shapes\ref{fig:blendshapes_example} are used to create different facial expressions by interpolating between multiple versions of a mesh. This technique allows animators to blend between various expressions smoothly, such as smiling, frowning, or blinking. Adding bones to the facial mesh allows for more granular control over facial movements\ref{fig:facial_bones}. Each bone can control different parts of the face, such as the jaw, eyebrows, and eyelids. This method is often used in conjunction with blend shapes to enhance expressiveness.
 
 \begin{subfigure}{0.33\linewidth}
-  \includegraphics[width=\linewidth]{images/background_work/blendshapes_example/blendshapes_example_1.png}
+  \includegraphics[width=\linewidth]{chapters/background_work/images/blendshapes_example/blendshapes_example_1.png}
   \caption{Blendshape smile at 0}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.33\linewidth}
-  \includegraphics[width=\linewidth]{images/background_work/blendshapes_example/blendshapes_example_1.png}
+  \includegraphics[width=\linewidth]{chapters/background_work/images/blendshapes_example/blendshapes_example_1.png}
   \caption{Blendshape smile at 0.5}
 \end{subfigure}
 \hfill
 \begin{subfigure}{0.33\linewidth}
-  \includegraphics[width=\linewidth]{images/background_work/blendshapes_example/blendshapes_example_1.png}
+  \includegraphics[width=\linewidth]{chapters/background_work/images/blendshapes_example/blendshapes_example_1.png}
   \caption{Blendshape smile at 1}
   \label{fig:blendshapes_example}
 \end{subfigure}
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/facial_bones.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/facial_bones.png}
   \caption{Facial bones for eyes, jaw and tongue}
   \label{fig:facial_bones}
 \end{figure}
@@ -123,7 +125,7 @@ Modeling and animating the face of an avatar is a complex task that involves cre
 A rig is the final system used by the artists to animate the avatars. This is done by doing all the above systems in order i.e. creating a skeleton, mesh, texture, weight painting, facial blendshapes, implementing IK and FK systems, and adding constraints\ref{fig:rig_example}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/rig_example.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/rig_example.png}
   \caption{Rain rig by Blender studio}
   \label{fig:rig_example}
 \end{figure}
@@ -137,7 +139,7 @@ Procedural avatar creation involves the use of algorithms and software tools to 
 MakeHuman is an open-source tool specifically designed for the rapid prototyping of humanoid avatars. It allows users to create 3D human models through an intuitive interface where parameters such as gender, age, ethnicity, and body proportions can be adjusted using sliders\ref{fig:makehuman_example}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/makehuman_example.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/makehuman_example.png}
   \caption{Avatar creation using MakeHuman}
   \label{fig:makehuman_example}
 \end{figure}
@@ -147,7 +149,7 @@ MakeHuman is an open-source tool specifically designed for the rapid prototyping
 Just like MakeHuman, SMPL-X can create avatars with parameters suchs as weight, height, age, etc. However, SMPL-X can also be created using images of a person. This allows it to be more realistic than MakeHuman\ref{fig:smpl_creation_example}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/smpl_creation_example.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/smpl_creation_example.png}
   \caption{SMPL-X avatar creation using Meshcapade}
   \label{fig:smpl_creation_example}
 \end{figure}
@@ -157,7 +159,7 @@ Just like MakeHuman, SMPL-X can create avatars with parameters suchs as weight, 
 MetaHuman Creator, developed by Epic Games, is a tool for creating ultra-realistic digital humans. The tool's emphasis on realism and detail makes it a powerful resource for creating lifelike characters for games, films, and other interactive experiences\ref{fig:metahuman_example}. MetaHumans are the most realistic avatars available today, with high-quality textures, detailed facial expressions, and advanced animation controls.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/metahuman_example.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/metahuman_example.png}
   \caption{Avatar creation using MetaHuman}
   \label{fig:metahuman_example}
 \end{figure}
@@ -171,7 +173,7 @@ The methods used for animating avatars range from manual to automated processes,
 Manual keyframing is a traditional animation technique where animators define specific poses, known as keyframes, at critical points in time. These keyframes mark the start and end points of any smooth transition or movement. The intermediate poses are then calculated using interpolation\ref{fig:keyframing}. This method provides animators with precise control over every aspect of the avatar’s movement, making it ideal for achieving nuanced and detailed animations. However, manual keyframing can be time-consuming and requires a high level of skill and expertise to ensure realistic and fluid motion.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/keyframing.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/keyframing.png}
   \caption{Manual keyframing to animate an avatar}
   \label{fig:keyframing}
 \end{figure}
@@ -179,7 +181,7 @@ Manual keyframing is a traditional animation technique where animators define sp
 Along with keyframing, motion curves\cite{TODO_Motion Warping 1995} are used to control the interpolation between keyframes. These curves define the speed and timing of the animation, allowing animators to create smooth and natural movements. Common types of motion curves include linear, ease-in, ease-out, and bezier curves. By adjusting the shape and slope of these curves, animators can fine-tune the animation to achieve the desired effect\ref{fig:motion_curves}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/motion_curves.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/motion_curves.png}
   \caption{Motion curves to finetune an animation}
   \label{fig:motion_curves}
 \end{figure}
@@ -189,7 +191,7 @@ Along with keyframing, motion curves\cite{TODO_Motion Warping 1995} are used to 
 Motion capture (mocap) retargeting involves capturing the movements of a real human actor and applying this data to a digital avatar. This process starts with recording an actor’s performance using a motion capture system, which tracks the actor’s movements through markers or sensors placed on their body \ref{fig:mocap}. The recorded data is then mapped onto the avatar’s skeleton, a process known as retargeting. Mocap retargeting ensures highly realistic animations by directly transferring the nuances of human motion to the digital character. This technique is widely used in the entertainment industry, particularly in video games and films, to create lifelike animations. While mocap retargeting can significantly speed up the animation process and improve realism, it requires access to specialized equipment and can involve complex data processing to filter noise.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/mocap.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/mocap.png}
   \caption{Mocap capture and retargeting}
   \label{fig:mocap}
 \end{figure}
@@ -203,7 +205,7 @@ Kinematics is a subfield of physics and mathematics, developed in classical mech
 Forward kinematics (FK) is a method where the position and rotation of each joint in a skeleton are specified explicitly by the animator. This means that to move a hand, for example, the animator must adjust the shoulder, elbow, and wrist joints individually. FK provides precise control over each joint, making it ideal for detailed and deliberate animations. However, it can be cumbersome for complex movements, as changes to one joint may require adjustments to multiple other joints to achieve a natural pose \ref{fig:forward_kinematics_example}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/forward_kinematics_example.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/forward_kinematics_example.png}
   \caption{Forward kinematics}
   \label{fig:forward_kinematics_example}
 \end{figure}
@@ -223,7 +225,7 @@ IK solvers are algorithms that compute the necessary joint rotations to achieve 
 \end{itemize}
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/inverse_kinematics_example.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/inverse_kinematics_example.png}
   \caption{Inverse kinematics}
   \label{fig:inverse_kinematics_example}
 \end{figure}
@@ -239,7 +241,7 @@ Procedural animation techniques use algorithms and rules to generate motion auto
 Deep learning-based techniques have shown significant promise in procedural animation, particularly in the generation of realistic and dynamic movements. Neural networks can be trained on large datasets of motion data to learn complex patterns and generate new animations\ref{fig:deep_learning_synthesis}. For example, diffusion models\cite{TODO} have been used to synthesize human-like motion sequences with high fidelity and diversity from text prompts. Treating character animation as a cross-modal translation task where descriptive sentences serve as inputs to generate corresponding avatar animations. These techniques however require large amounts of data and computational resources to train effectively.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/deep_learning_synthesis.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/deep_learning_synthesis.png}
   \caption{Deep Learning based synthesis\cite{guo2022generating}}
   \label{fig:deep_learning_synthesis}
 \end{figure}
@@ -249,7 +251,7 @@ Deep learning-based techniques have shown significant promise in procedural anim
 Hybrid animation techniques combine elements of manual keyframing, mocap retargeting, and procedural techniques to leverage the strengths of each method. By integrating these approaches, animators can achieve a balance between control, efficiency, and realism. For instance, an animator might use mocap data as a base and then refine specific movements with manual keyframes to enhance expressiveness. Additionally, procedural techniques can be applied to automate repetitive tasks or to ensure that certain constraints are met dynamically during the animation process. Hybrid methods offer a flexible and powerful workflow, allowing for the creation of complex animations that are both realistic and tailored to the specific needs of a project\ref{fig:cascadeur}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/cascadeur.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/cascadeur.png}
   \caption{Cascadeur hybrid animation tool}
   \label{fig:cascadeur}
 \end{figure}
@@ -261,7 +263,7 @@ The Uncanny Valley is a concept in the field of robotics and 3D animation that d
 As avatars become more realistic in appearance and movement, they initially become more appealing and relatable. However, there is a point at which the avatar becomes almost, but not perfectly, human-like, causing a sense of unease or revulsion in the observer. This dip in the graph of familiarity versus human likeness is known as the Uncanny Valley\ref{fig:uncanny_valley_graph}.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/uncanny_valley_graph.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/uncanny_valley_graph.png}
   \caption{Uncanny Valley}
   \label{fig:uncanny_valley_graph}
 \end{figure}
@@ -391,7 +393,7 @@ Sign language animation from text focuses on generating realistic sign language 
 Another approach\cite{TODO} used the SignBank dataset, which contains 220k parallel samples of SignWriting and spoken language text. SignWriting served as an intermediate representation, translating spoken text into SignWriting before converting it into human poses\ref{fig:sw_synthesis}. Neural machine translation (NMT) architectures with techniques like byte pair encoding (BPE) segmentation were used. Evaluations show over 30 BLEU scores in bilingual settings and over 20 BLEU in multilingual settings, validating the approach and highlighting the effectiveness of SignWriting in NLP for sign language processing.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{images/background_work/sign_writing_synthesis.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/sign_writing_synthesis.png}
   \caption{Synthesis using SignWriting as an intermediate representation}
   \label{fig:sw_synthesis}
 \end{figure}
@@ -435,3 +437,4 @@ TODO
 - complete azee to do more stuff 
 
 and more?
+\end{document}
