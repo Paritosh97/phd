@@ -1,0 +1,83 @@
+\chapter{Multi-Track and Non-Linear Synthesis}
+
+\section{Introduction}
+\subsection{Low-level Synthesis in Sign Language Animation}
+Sign language synthesis converts written descriptions into animated sign language using avatars. As discussed earlier, the traditional methods often relied on gloss sequences, but these have limitations in synchronization and context variability. Contrary  to this, the AZee method provides a hierarchical structure for sign language descriptions, allowing for more detailed and expressive animations. However, the existing AZee low-level synthesis technique was limited in its ability to handle complex, non-linear expressions and \emph{flattened} a description. This resulted in loss of interpolation information. This chapter introduces a novel approach to sign language synthesis using multi-track and non-linear editing techniques, enhancing the quality and flexibility of sign language animations.
+
+\subsection{Importance of Multi-Track and Non-Linear editing}
+TODO
+
+\subsection{Objectives of the Chapter}
+This chapter aims to present a novel approach to sign language synthesis using multi-track and non-linear editing techniques, showcasing the improvements in animation quality and flexibility.
+
+\section{Non-Linear Editing}
+\subsection{Definition and Principles of Non-Linear Editing}
+Non-linear editing refers to the ability to access any frame of a video clip or animation without having to follow a linear sequence, allowing for greater flexibility in editing and modification.
+
+\subsection{Application in Animation}
+In animation, non-linear editing facilitates the manipulation of individual animation blocks independently, which is essential for creating complex, dynamic movements.
+
+\subsection{Benefits in Sign Language Synthesis}
+Non-linear editing enhances the ability to produce realistic sign language animations by allowing for simultaneous, overlapping articulations and fine-tuning of individual movements.
+
+\section{AZee Score Tree}
+\subsection{Overview of the AZee Model}
+The AZee model is a framework for representing sign language utterances as hierarchical structures of production rules, which can be parameterized to capture the nuances of sign language.
+
+\subsection{Hierarchical Structure of AZee}
+AZee uses a tree-like structure where each node represents a production rule or constraint, and the branches represent the relationships between these rules.
+
+\subsection{Parameterized Signed Forms and Production Rules}
+Each sign language utterance in AZee is described using parameterized forms that dictate the specific articulatory features and constraints for that sign.
+
+\subsection{Example AZee Expressions and Their Representations}
+Illustrate how complex sign language expressions are encoded using AZee, providing examples and diagrams to demonstrate the hierarchical and parameterized nature of the model.
+
+\section{AZee Tree as Multi-Track Animation Representation}
+\subsection{Conversion of AZee Scores to Multi-Track Timelines}
+Explain the process of converting AZee scores into multi-track animation timelines, highlighting the challenges and solutions.
+
+\subsection{Algorithm for Multi-Track Synthesis}
+Detail the proposed algorithm for synthesizing AZee descriptions without flattening the score, preserving the dynamics of individual animation blocks.
+
+\subsubsection{Rule 1: Timely Evaluation}
+\textbf{Problem:} Overlapping blocks with different start times.\\
+\textbf{Solution:} Evaluate blocks chronologically to maintain logical sequence.
+
+\subsubsection{Rule 2: Constraint Precedence}
+\textbf{Problem:} Overlapping blocks starting simultaneously.\\
+\textbf{Solution:} Give precedence to placement constraints over orientation constraints.
+
+\subsubsection{Rule 3: Second Pass for Transpaths}
+\textbf{Problem:} Blocks with transpath constraints.\\
+\textbf{Solution:} Evaluate these blocks in a second pass after other constraints are resolved.
+
+\subsubsection{Rule 4: Second Pass for Holds}
+\textbf{Problem:} Blocks with hold constraints.\\
+\textbf{Solution:} Evaluate these blocks in a second pass to ensure dependent constraints are maintained.
+
+\subsection{Non-Conflicting Cases}
+\subsubsection{Independent Evaluations}
+Cases where blocks do not overlap or affect different bone chains can be evaluated independently.
+
+\section{Implementation and Experimental Results}
+\subsection{Implementation in Blender}
+Overview of the Blender add-on for AZee synthesis, including key components such as the AZee editor, 3D viewport, non-linear editor, and properties panel.
+
+\subsection{Experimental Results}
+
+
+Frobenius distance 
+
+Examples of synthesized AZee descriptions and a comparison between flattened and non-flattened synthesis, highlighting the preservation of dynamics and potential issues.
+
+\section{Conclusion and Future Prospects}
+\subsection{Conclusion}
+Summarize the benefits of the proposed multi-track synthesis algorithm, emphasizing the preservation of dynamics and improved naturalness in sign language animations.
+
+\subsection{Future Prospects}
+Discuss potential extensions, such as integrating top-down techniques, handling morph constraints, and reducing robotic movements through advanced techniques like ambient noise analysis and style transfer.
+
+
+
+\section{Discussion}
