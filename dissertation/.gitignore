@@ -1,0 +1,54 @@
+# Ignore LaTeX intermediate and output files in dissertation/
+*.aux
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.acn
+*.acr
+*.alg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.ist
+*.loa
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+*.xdv
+
+# Ignore PDF files in dissertation/ (optional)
+*.pdf
+
+# Ignore generated files by specific LaTeX editors in dissertation/ (optional)
+# TeXShop
+/*.texpadtmp
+
+# Kile
+*.backup
+
+# LyX
+*.lyx~
+*.lyx#
+
+# WinEdt
+*.bak
+
+# Ignore Mac-specific files in dissertation/
+.DS_Store
+
+# Ignore Windows-specific files in dissertation/
+Thumbs.db
+
+.vs/
