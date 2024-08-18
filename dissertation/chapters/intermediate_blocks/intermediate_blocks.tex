@@ -1,18 +1,78 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
-\chapter{Intermediate Blocks, Motion Curves and using AZee Templates}
+\chapter{Intermediate Blocks, Motion Curves, and Using AZee Templates}
 
 \section{Introduction}
 
-\section{Pre-animated animations}
+The development of realistic Sign Language avatars has seen significant advancements over the years, primarily through the use of procedural and pre-animated techniques such as motion capture and artistic editing. However, combining these methods presents unique challenges, particularly in achieving a natural and consistent output. This chapter delves into the intricacies of generating intermediate blocks in multi-track representations of Sign Language discourse, using a combination of procedural and artistic techniques. The approach discussed leverages the AZee model, which enables the representation of Sign Language discourses on a multi-track timeline, mapping directly to a non-linear editor. By employing motion templates and careful interpolation between keyframes, we aim to improve the naturalness and accuracy of synthesized Sign Language.
+
+
+\section{Related Work}
+
+\subsection{Motion Curves}
+
+\subsection{Motion Templates}
+
+\section{Pre-animated Animations}
+
+Pre-animated animations, particularly those derived from motion capture or other high-fidelity sources, form the foundation for many current Sign Language avatars. These animations provide a level of detail and naturalness that is difficult to achieve through purely procedural methods. However, they are limited by the specificity of the captured data; each motion is tailored to a particular sign, making it difficult to generalize or adapt to new contexts without extensive reanimation.
+
+In the context of AZee, pre-animated blocks are essential for signs that are well-defined and frequently used. For instance, common nouns or actions that have a standardized sign can be captured and reused across different contexts. This approach ensures consistency and reduces the computational load required to generate these signs from scratch each time. However, the challenge lies in seamlessly integrating these pre-animated blocks with procedurally generated content, particularly in complex sentences where the sign's meaning is influenced by its context within the discourse.
+
+The integration process involves matching pre-animated blocks to corresponding AZee blocks, ensuring that the animation correctly represents the intended meaning. This matching process is crucial because even slight deviations in timing, hand configuration, or facial expressions can alter the sign's meaning. The AZee model aids in this by providing a structured framework that can accommodate both pre-animated and procedurally generated content, but it requires careful calibration to maintain naturalness and accuracy.
 
 \section{Interpolations}
 
-\section{Motion curve stitching}
+Interpolation plays a critical role in bridging the gaps between pre-animated blocks and procedurally generated content. In the context of Sign Language synthesis, interpolation refers to the generation of intermediate poses or frames that transition smoothly from one keyframe to another. This process is particularly challenging in multi-track representations, where multiple layers of motion (such as hand movements, facial expressions, and body posture) must be synchronized to convey the correct meaning.
 
-\section{Motion templates}
+The interpolation process discussed in this chapter utilizes a combination of linear and spline interpolation techniques, depending on the complexity of the motion being synthesized. Linear interpolation is straightforward and computationally efficient, making it suitable for simple transitions where the movement between keyframes is relatively uniform. However, for more complex motions—such as those involving intricate hand shapes or facial expressions—a spline-based approach is preferred. Splines allow for smoother transitions and better capture the nuances of human motion, which is essential for maintaining the naturalness of the synthesized Sign Language.
+
+One of the key challenges in interpolation is ensuring that the intermediate poses remain semantically consistent with the intended sign. This is where the AZee model's multi-track approach proves advantageous. By representing each component of the sign (e.g., hand configuration, facial expression, body posture) as a separate track, the model allows for more precise control over the interpolation process. Each track can be interpolated independently, ensuring that the resulting poses are not only smooth but also semantically accurate.
+
+In practice, the interpolation process is often iterative. Initial interpolations are generated and then evaluated for naturalness and consistency. If the resulting motion does not meet the desired criteria, adjustments are made—either by refining the interpolation technique or by tweaking the underlying keyframes. This iterative process continues until the synthesized motion achieves a level of quality that is acceptable for use in the final animation.
+
+\section{Motion Curve Stitching}
+
+Motion curve stitching refers to the process of combining different motion curves to create a continuous and seamless animation. In the context of Sign Language synthesis, this involves stitching together motion curves generated from pre-animated blocks, interpolated blocks, and procedural animations. The goal is to create a fluid and natural movement that accurately represents the intended sign.
+
+The process of motion curve stitching begins with the identification of keyframes within each block. These keyframes represent critical points in the motion, such as the start and end of a sign or a change in hand configuration. Once these keyframes are identified, the corresponding motion curves are extracted and analyzed. The challenge here is to ensure that the motion curves from different blocks align correctly, both temporally and spatially. Misalignments can result in unnatural transitions or even incorrect signs, which would undermine the overall quality of the animation.
+
+To address this challenge, the stitching process utilizes a combination of blending and warping techniques. Blending involves gradually transitioning from one motion curve to another, ensuring a smooth and continuous movement. Warping, on the other hand, involves adjusting the timing and spatial properties of the motion curves to ensure that they align correctly. These techniques are applied iteratively, with the resulting motion curves being evaluated for naturalness and accuracy.
+
+The success of motion curve stitching depends heavily on the quality of the underlying motion curves. Poorly generated motion curves—whether due to inaccurate keyframes or inadequate interpolation—can lead to noticeable artifacts in the final animation. Therefore, it is essential to ensure that each step of the motion synthesis process, from keyframe selection to interpolation, is performed with a high degree of precision.
+
+\section{Motion Templates}
+
+Motion templates are pre-defined motion patterns that guide the synthesis of new animations. In the context of Sign Language synthesis, these templates serve as a blueprint for generating intermediate blocks and stitching together motion curves. The use of motion templates allows for greater consistency and control over the final animation, as the templates encode expert knowledge about how certain signs should be performed.
+
+The creation of motion templates is a complex process that involves both empirical observation and artistic input. Typically, templates are derived from motion capture data, which provides a detailed record of how native signers perform specific signs. This data is then analyzed to identify common patterns and features, such as the timing of hand movements or the relationship between facial expressions and hand configurations. These patterns are encoded into the motion templates, which can then be applied to new signs or sequences.
+
+One of the key advantages of using motion templates is that they allow for greater flexibility in the synthesis process. By applying different templates to the same set of keyframes, it is possible to generate multiple variations of the same sign, each with its own unique characteristics. This flexibility is particularly useful in the context of Sign Language synthesis, where the meaning of a sign can vary depending on factors such as context or the emotional state of the signer.
+
+The use of motion templates also facilitates the process of motion curve stitching. By providing a consistent framework for generating motion curves, the templates help ensure that the resulting curves align correctly and produce a natural and seamless animation. In practice, this means that the stitching process is less reliant on manual adjustments and can be performed more efficiently.
+
+However, the use of motion templates is not without its challenges. One of the main issues is the potential for overfitting, where the templates are too closely tailored to the specific motions they were derived from and do not generalize well to new signs or contexts. To mitigate this risk, it is important to ensure that the templates are sufficiently flexible and can be adapted to a wide range of motions.
 
 \section{Results}
 
+The application of the techniques discussed in this chapter has yielded promising results in the synthesis of realistic Sign Language avatars. The use of intermediate blocks and motion curve stitching has significantly improved the naturalness and accuracy of the animations, particularly in cases where complex motions or transitions are required. The incorporation of motion templates has also contributed to greater consistency and control over the final animations, allowing for more precise and contextually appropriate representations of Sign Language.
+
+One of the key metrics used to evaluate the success of the synthesis process is the naturalness of the resulting animations. This is typically assessed through a combination of qualitative and quantitative measures, such as user studies and motion analysis. In user studies, participants are asked to rate the naturalness of the animations, as well as their comprehensibility and emotional expressiveness. The results of these studies have generally been positive, with participants reporting high levels of satisfaction with the synthesized animations.
+
+Quantitative measures, such as the analysis of motion trajectories and timing, have also shown improvements in the quality of the synthesized animations. The use of motion templates, in particular, has led to more consistent and accurate motion curves, reducing the need for manual adjustments and increasing the overall efficiency of the synthesis process.
+
+However, there are still areas where further improvements are needed. For example, while the current system performs well for common signs and phrases, it can struggle with more complex or less frequently used signs. Additionally, the system's reliance on pre-animated blocks and motion capture data means that it may not always be able to generate novel motions or adapt to new contexts. These limitations highlight the need for continued research and development in this area.
+
 \section{Discussion}
+
+The techniques discussed in this chapter represent a significant step forward in the synthesis of realistic Sign Language avatars. By combining procedural and artistic techniques, and by leveraging the AZee model and motion templates, it is possible to generate animations that are both natural and accurate. However, there are still challenges to be addressed, particularly in terms of scalability and generalization.
+
+One of the main challenges is the need for large amounts of motion capture data to create high-quality motion templates. While motion capture provides a detailed and accurate record of how signs are performed, it is also time-consuming and expensive to collect. This limits the scalability of the current approach and may make it difficult to extend the system to cover the full range of signs used in different Sign Languages.
+
+Another challenge is the need for greater flexibility in the synthesis process. While the use of motion templates provides a consistent framework for generating animations, it can also be somewhat rigid, making it difficult to adapt to new signs or contexts. Future work in this area could focus on developing more flexible and adaptive templates, as well as exploring new methods for generating novel motions.
+
+Finally, there is the issue of generalization. The current system performs well for common signs and phrases, but it may not always be able to generate accurate representations of more complex or less frequently used signs. This highlights the need for further research into how the system can be improved to better handle the full range of signs used in different Sign Languages.
+
+Despite these challenges, the results achieved so far are encouraging, and there is considerable potential for further improvements in the future. By continuing to refine and develop the techniques discussed in this chapter, it may be possible to create a system that can generate realistic and accurate Sign Language animations for a wide range of applications.
+
 \end{document}
