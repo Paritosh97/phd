@@ -2,11 +2,99 @@
 \begin{document}
 \chapter{Background Work}
 
-In this chapter, we delve into the foundational research areas central to this thesis. We begin by exploring avatars, examining various methods for their representation and animation. Following this, we review the evolution of Sign Language descriptions, tracing their progression from linear glosses to non-linear representations. Finally, we focus on the recent advancements in Sign Language synthesis, discussing various techniques and their implications for the field.
+In this chapter, we delve into the foundational research areas central to this thesis. We begin by exploring how describing Sign Language (SL) forms the basis for input into an animation system. Next, we discuss avatars as a key component of SL synthesis. We then review the evolution of SL descriptions, tracing their progression from linear glosses to non-linear representations. Finally, we focus on the recent advancements in SL synthesis, discussing various techniques and their implications for the field.
 
-\section{Avatars}
+\section{Describing Sign Language}
 
-Avatars are digital representations of characters or individuals, often used in virtual environments and simulations. They can be designed to resemble humans, animals, or fantastical beings, and are crucial in fields such as gaming, virtual reality, and digital communication. Avatars serve as a medium for interaction, allowing users to express themselves and engage with others in a digital space. 
+A key challenge in Sign Language synthesis lies in the description of an SL discourse itself. The description of a discourse answers essential questions such as:
+
+\begin{itemize}
+  \item What body motions make a sign?
+  \item How do these signs and their respective motions connect to form a discourse?
+  \item What are the grammatical and syntactical rules governing these signs?
+  \item How can non-manual signals (such as facial expressions and body posture) be integrated with manual signs?
+\end{itemize}
+
+In this section, we first study the descriptive languages used to formalize SL and how they describe body motions. These descriptions are crucial as they serve as the input to the SL synthesis systems.
+
+\subsection{Lexical Approaches to Creating a Discourse}
+
+Lexical approaches focus on individual signs and their components, such as handshapes, movements, and locations. These are essential for understanding the building blocks of SL and how signs are produced. Some popular lexical descriptions include:
+
+\subsubsection{Stokoe Notation}
+
+Stokoe Notation\cite{stokoe1980sign} was one of the first systems developed to transcribe American Sign Language (ASL). It breaks down signs into three main components: location, handshape, and movement\ref{fig:stoeke}. It is a simple and effective notation for basic transcription, but focuses primarily on the manual components of signs.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/stokoe.png}
+  \caption{Stoeke Notation}
+  \label{fig:stoeke}
+\end{figure}
+
+\subsubsection{SignWriting}
+
+SignWriting is a writing system developed by Valerie Sutton just after DanceWriting\cite{sutton1973sutton} in the 1970s to represent sign languages visually. It was later included as a part of the MovementWriting system. It is a featural script, meaning that it represents the features of signs, such as handshapes, movements, and locations, rather than phonetic sounds. SignWriting is designed to be easy to read and write, with symbols that resemble the gestures they represent. The script is written in two dimensions, with symbols arranged in a grid-like structure to capture the spatial and temporal aspects of signs. SignWriting has been used to transcribe over 40 sign languages worldwide and is recognized by the International SignWriting Alphabet (ISWA) organization.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/signwriting_coffee.png}
+  \caption{Coffee in SignWriting}
+  \label{fig:signwriting_coffee}
+\end{figure}
+
+\subsubsection{HamNoSys}
+
+The Hamburg Sign Language Notation System (HamNoSys) is a phonetic transcription system for documenting sign languages globally, developed in 1985 at the University of Hamburg. Unlike Stokoe's notation, which was specifically created for American Sign Language (LSF), HamNoSys aims for broader application, transcending national sign language boundaries. While Stokoe notation later adapted to other sign languages, HamNoSys was designed from the outset to accommodate the diversity found in global sign languages.
+
+The notation system includes nearly 200 symbols categorized into five main types, which together depict the parameters of a sign. These symbols can include subscripts, superscripts, and diacritics. A sign is described through a series of these symbols, listed in a specific order:
+
+\begin{itemize}
+    \item \textbf{Handshape}: Describes the hand configuration, including the number and position of extended fingers, degree of finger bending, and thumb location. Common symbols include ovals and lines to signify finger positions and curves to represent bending.
+    \item \textbf{Hand Orientation}: Indicates the orientation of the hand and direction of the fingers or palm. Symbols include ovals with thick sides and small arrows or carets for advanced angles.
+    \item \textbf{Hand Location}: Specifies where the hand is positioned relative to the body, using symbols that often resemble the body parts involved, with a black square marking the feature's orientation.
+    \item \textbf{Movement (Optional)}: Details any motion in the sign, such as direction and type of movement (e.g., straight, wavy, circular). These are represented by complex symbols with arrows, lines, and brackets to show sequential or unified movements.
+    \item \textbf{Symmetry Operator (Optional)}: Indicates if both hands are used or specifies the use of the non-dominant hand, usually represented by two dots.
+    \item \textbf{Non-Manual Marker (NMM) (Optional)}: Denotes facial or vocal actions accompanying the sign, such as lip-pursing or eyebrow-raising.
+\end{itemize}
+
+HamNoSys offers a detailed representation of the nuanced components in SL discourse rather than serving as a practical writing system. Its main purpose is linguistic, used primarily by linguists to analyze the specific features of individual signs. However, it has also found its applications in synthesis\cite{elliott2010towards} as well as sign detection\cite{mocialov2022unsupervised}.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/hamnosys_coffee.png}
+  \caption{Coffee in HamNoSys}
+  \label{fig:hamnosys_coffee}
+\end{figure}
+
+\subsubsection{AZee}
+
+The AZee model is based on the notion of production rule, which associates a meaning to a set of observable forms. The model is based on the idea that the meaning of a sign can be decomposed into a set of features, which can be represented as a set of production rules. These rules are then used to generate the form of the sign, including the handshape, movement, and location. The AZee model is designed to be flexible and extensible, allowing for the representation of a wide range of signs and sign languages. It is particularly well-suited for SL synthesis, as it provides a systematic and structured approach to describing signs and their components. Recently, it has also been extended to a writing system.
+
+Example, the AZee visual description for a person aged 52 is shown in figure \ref{fig:azvd}. The corresponding AZee code for this would be:
+
+\begin{verbatim}
+:info-about
+	'topic
+	:une personne
+	'info
+	:info-about
+		'topic
+		:âge
+		'info
+		:tens-units
+			'tens
+			.nb-5
+			'units
+			.nb-2
+\end{verbatim}
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azvd.png}
+  \caption{AZee visual description for a person aged 52}
+  \label{fig:azvd}
+\end{figure}
+
+\section{Avatars in Sign Language Synthesis}
+
+Avatars are digital representations of characters or individuals, often used in SL synthesis to animate the described signs. This section explores the components of avatar creation and animation, followed by their use in SL synthesis.
 
 \subsection{Skeleton}
 
@@ -28,29 +116,9 @@ Mixamo is a widely used online platform that provides a vast library of pre-rigg
   \label{fig:mixamo_skeleton}
 \end{figure}
 
-\subsubsection{CMU}
-
-The Carnegie Mellon University (CMU) Motion Capture Database is one of the most extensive collections of motion capture data available for public use. This database contains thousands of motion capture sequences recorded from real human performers, capturing a wide variety of movements and actions. The heirarchy of a CMU skeleton is shown in figure \ref{fig:cmu_skeleton}.
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/cmu_skeleton.png}
-  \caption{CMU skeleton structure}
-  \label{fig:cmu_skeleton}
-\end{figure}
-
-\subsubsection{Rigify}
-
-Rigify is an add-on integrated in Blender. Rigify simplifies the process of rigging by providing a set of predefined rig templates that can be easily customized and applied to 3D models. The heirarchy of a Rigify skeleton is shown in figure \ref{fig:rigify_skeleton}.
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/rigify_skeleton.png}
-  \caption{Rigify skeleton}
-  \label{fig:rigify_skeleton}
-\end{figure}
-
 \subsubsection{SMPL-X}
 
-SMPL-X (Skinned Multi-Person Linear Model eXtended) is a state-of-the-art parametric model for generating highly detailed and anatomically accurate 3D human avatars. SMPL-X encodes the shape and pose of a character using a low-dimensional space, allowing for efficient representation and manipulation. Thus, a configuration of about 100 numbers can represent the pose as well as the shape of the avatar\ref{fig:latent_space_smplx}. The heirarchy of a SMPL-X skeleton is shown in figure \ref{fig:smpl_x_skeleton}.
+SMPL-X (Skinned Multi-Person Linear Model eXtended) is a state-of-the-art parametric model for generating highly detailed and anatomically accurate 3D human avatars. SMPL-X encodes the shape and pose of a character using a low-dimensional space, allowing for efficient representation and manipulation. Thus, a configuration of about 100 numbers can represent the pose as well as the shape of the avatar\ref{fig:latent_space_smplx}. The hierarchy of a SMPL-X skeleton is shown in figure \ref{fig:smpl_x_skeleton}.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/smpl_x_skeleton.png}
@@ -64,29 +132,15 @@ SMPL-X (Skinned Multi-Person Linear Model eXtended) is a state-of-the-art parame
   \label{fig:latent_space_smplx}
 \end{figure}
 
-\subsection{Mesh}
+\subsection{Mesh and Texture}
 
 The mesh of a digital avatar is the 3D model that forms the surface representation of the character. It consists of vertices, edges, and faces that define the shape and structure of the avatar. Creating and manipulating meshes is a fundamental aspect of 3D modeling and animation, allowing for detailed and realistic character designs.
 
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/mesh.png}
-  \caption{Mesh of a shark}
-  \label{fig:mesh}
-\end{figure}
-
-\subsection{Texture}
-
 Textures are 2D images applied to the surface of a 3D model to enhance its appearance and realism. Textures can represent various surface properties such as color, roughness, reflectivity, and transparency. Common types of textures include diffuse maps (color), specular maps (reflectivity), normal maps (surface detail), and roughness maps (surface smoothness). By combining different textures, artists can create visually compelling avatars with intricate surface details and lifelike appearances. These textures are often mapped onto the mesh of the avatar using UV mapping techniques to ensure proper alignment and scaling\ref{fig:texture_map}.
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/texture_map.png}
-  \caption{Texture map of an avatar}
-  \label{fig:texture_map}
-\end{figure}
 
 \subsubsection{Weight Painting}
 
-Weight painting is a technique used to define how much influence each bone in a skeleton has over the surrounding mesh vertices. It plays a crucial role in ensuring that the mesh deforms naturally and realistically when the skeleton is animated. \ref{fig:weight_painting} shows an example of weight painting in Blender with the red color indicating high influence and blue indicating low influence.
+Weight painting is a technique used to define how much influence each bone in a skeleton has over the surrounding mesh vertices. It plays a crucial role in ensuring that the mesh deforms naturally and realistically when the skeleton is animated. Figure \ref{fig:weight_painting} shows an example of weight painting in Blender with the red color indicating high influence and blue indicating low influence.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/weight_painting.png}
@@ -94,9 +148,13 @@ Weight painting is a technique used to define how much influence each bone in a 
   \label{fig:weight_painting}
 \end{figure}
 
-\subsubsection{Face}
+\subsubsection{Face Animation: Blend Shapes vs. Bones}
 
 Modeling and animating the face of an avatar is a complex task that involves creating detailed meshes and intricate animation controls to capture expressions and movements accurately. Blend shapes\ref{fig:blendshapes_example} are used to create different facial expressions by interpolating between multiple versions of a mesh. This technique allows animators to blend between various expressions smoothly, such as smiling, frowning, or blinking. Adding bones to the facial mesh allows for more granular control over facial movements\ref{fig:facial_bones}. Each bone can control different parts of the face, such as the jaw, eyebrows, and eyelids. This method is often used in conjunction with blend shapes to enhance expressiveness.
+
+Pros and Cons:
+- **Blend Shapes**: Ideal for detailed and smooth transitions between expressions, but limited in flexibility.
+- **Bones**: Provide granular control, better for interactive or dynamic facial animations but are more complex to set up and manage.
 
 \begin{subfigure}{0.33\linewidth}
   \includegraphics[width=\linewidth]{chapters/background_work/images/blendshapes_example/blendshapes_example_1.png}
@@ -116,11 +174,11 @@ Modeling and animating the face of an avatar is a complex task that involves cre
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/facial_bones.png}
-  \caption{Facial bones for eyes, jaw and tongue}
+  \caption{Facial bones for eyes, jaw, and tongue}
   \label{fig:facial_bones}
 \end{figure}
 
-\subsubsection{Rig}
+\subsubsection{Rigging}
 
 A rig is the final system used by the artists to animate the avatars. This is done by doing all the above systems in order i.e. creating a skeleton, mesh, texture, weight painting, facial blendshapes, implementing IK and FK systems, and adding constraints\ref{fig:rig_example}.
 
@@ -146,7 +204,7 @@ MakeHuman is an open-source tool specifically designed for the rapid prototyping
 
 \subsubsection{SMPL-X or Meshcapade}
 
-Just like MakeHuman, SMPL-X can create avatars with parameters suchs as weight, height, age, etc. However, SMPL-X can also be created using images of a person. This allows it to be more realistic than MakeHuman\ref{fig:smpl_creation_example}.
+Just like MakeHuman, SMPL-X can create avatars with parameters such as weight, height, age, etc. However, SMPL-X can also be created using images of a person. This allows it to be more realistic than MakeHuman\ref{fig:smpl_creation_example}.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/smpl_creation_example.png}
@@ -158,11 +216,7 @@ Just like MakeHuman, SMPL-X can create avatars with parameters suchs as weight, 
 
 MetaHuman Creator, developed by Epic Games, is a tool for creating ultra-realistic digital humans. The tool's emphasis on realism and detail makes it a powerful resource for creating lifelike characters for games, films, and other interactive experiences\ref{fig:metahuman_example}. MetaHumans are the most realistic avatars available today, with high-quality textures, detailed facial expressions, and advanced animation controls.
 
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/metahuman_example.png}
-  \caption{Avatar creation using MetaHuman}
-  \label{fig:metahuman_example}
-\end{figure}
+TODO: Replace MetaHuman example with a more relevant figure for your specific context.
 
 \subsection{Avatar Animation}
 
@@ -189,6 +243,8 @@ Along with keyframing, motion curves\cite{0.1145/218380.218422} are used to cont
 \subsubsection{Mocap Retargeting}
 
 Motion capture (mocap) retargeting involves capturing the movements of a real human actor and applying this data to a digital avatar. This process starts with recording an actor’s performance using a motion capture system, which tracks the actor’s movements through markers or sensors placed on their body \ref{fig:mocap}. The recorded data is then mapped onto the avatar’s skeleton, a process known as retargeting. Mocap retargeting ensures highly realistic animations by directly transferring the nuances of human motion to the digital character. This technique is widely used in the entertainment industry, particularly in video games and films, to create lifelike animations. While mocap retargeting can significantly speed up the animation process and improve realism, it requires access to specialized equipment and can involve complex data processing to filter noise.
+
+TODO: Add a discussion on the specific challenges of mocap retargeting, particularly in the context of SL synthesis.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/mocap.png}
@@ -249,7 +305,7 @@ Deep learning-based techniques have shown significant promise in procedural anim
   \label{fig:deep_learning_synthesis}
 \end{figure}
 
-\subsubsection{Hybrid}
+\subsubsection{Hybrid Techniques}
 
 Hybrid animation techniques combine elements of manual keyframing, mocap retargeting, and procedural techniques to leverage the strengths of each method. By integrating these approaches, animators can achieve a balance between control, efficiency, and realism. For instance, an animator might use mocap data as a base and then refine specific movements with manual keyframes to enhance expressiveness. Additionally, procedural techniques can be applied to automate repetitive tasks or to ensure that certain constraints are met dynamically during the animation process. Hybrid methods offer a flexible and powerful workflow, allowing for the creation of complex animations that are both realistic and tailored to the specific needs of a project\ref{fig:cascadeur}.
 
@@ -281,127 +337,23 @@ The factors contributing to the Uncanny Valley effect often include:
 
 Understanding and mitigating the Uncanny Valley effect is crucial for animators and developers aiming to create realistic and relatable avatars. One way to avoid uncanny valley could be to use stylized avatars, which are intentionally designed to deviate from realism and have a unique aesthetic\ref{fig:stylized_avatars}. Another way is to keyframe more information in the animations itself.
 
-\section{Describing Sign Language}
-
-A key challenge in Sign Language synthesis lies in the description of a Sign Language discourse itself. A description of a discourse can answer questions such as:
-
-\begin{itemize}
-  \item What body motions make a sign?
-  \item How do these signs and their respective motions connect to form a discourse?
-  \item What are the grammatical and syntactical rules governing these signs?
-  \item How can non-manual signals (such as facial expressions and body posture) be integrated with manual signs?
-  \item How can non-manual signals (such as facial expressions and body posture) be integrated with manual signs?
-\end{itemize}
-
-In this section, we first study the descriptive languages used to formalize sign languages and how they describe body motions.
-
-Descriptive languages are systems developed to transcribe and analyze sign languages. They provide a framework for representing the complex, multi-dimensional nature of sign language communication. Some notable descriptive languages include:
-
-\subsection{Lexical Descriptions}
-
-Lexical descriptions focus on individual signs and their components, such as handshapes, movements, and locations. These descriptions are essential for understanding the building blocks of sign language and how signs are produced. Some popular lexical descriptions include:
-
-\subsubsection{Stokoe Notation}
-
-Stokoe Notation\cite{stokoe1980sign} was one of the first systems developed to transcribe American Sign Language (ASL). It breaks down signs into three main components: location, handshape, and movement\ref{fig:stoeke}. It is a simple and effective notation for basic transcription, but focuses primarily on the manual components of signs.
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/stokoe.png}
-  \caption{Stoeke Notation}
-  \label{fig:stoeke}
-\end{figure}
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/stokoe_coffee.png}
-  \caption{Coffee in Stokoe Notation}
-  \label{fig:stoeke_coffee}
-\end{figure}
-
-A lot of subsequent systems were discovered inspired by Stokoe's approach. These systems are more complex and detailed, and they aim to capture the nuances of sign language more accurately.
-
-\subsubsection{SignWriting}
-
-SignWriting is a writing system developed by Valerie Sutton just after DanceWriting\cite{sutton1973sutton} in the 1970s to represent sign languages visually. It was later included as a part of the MovementWriting system. It is a featural script, meaning that it represents the features of signs, such as handshapes, movements, and locations, rather than phonetic sounds. SignWriting is designed to be easy to read and write, with symbols that resemble the gestures they represent. The script is written in two dimensions, with symbols arranged in a grid-like structure to capture the spatial and temporal aspects of signs. SignWriting has been used to transcribe over 40 sign languages worldwide and is recognized by the International SignWriting Alphabet (ISWA) organization.
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/signwriting_coffee.png}
-  \caption{Coffee in SignWriting}
-  \label{fig:signwriting_coffee}
-\end{figure}
-
-\subsubsection{HamNoSys}
-
-The Hamburg Sign Language Notation System (HamNoSys) is a phonetic transcription system for documenting sign languages globally, developed in 1985 at the University of Hamburg. Unlike Stokoe's notation, which was specifically created for American Sign Language (LSF), HamNoSys aims for broader application, transcending national sign language boundaries. While Stokoe notation later adapted to other sign languages, HamNoSys was designed from the outset to accommodate the diversity found in global sign languages.
-
-The notation system includes nearly 200 symbols categorized into five main types, which together depict the parameters of a sign. These symbols can include subscripts, superscripts, and diacritics. A sign is described through a series of these symbols, listed in a specific order:
-
-\begin{itemize}
-    \item \textbf{Handshape}: Describes the hand configuration, including the number and position of extended fingers, degree of finger bending, and thumb location. Common symbols include ovals and lines to signify finger positions and curves to represent bending.
-    \item \textbf{Hand Orientation}: Indicates the orientation of the hand and direction of the fingers or palm. Symbols include ovals with thick sides and small arrows or carets for advanced angles.
-    \item \textbf{Hand Location}: Specifies where the hand is positioned relative to the body, using symbols that often resemble the body parts involved, with a black square marking the feature's orientation.
-    \item \textbf{Movement (Optional)}: Details any motion in the sign, such as direction and type of movement (e.g., straight, wavy, circular). These are represented by complex symbols with arrows, lines, and brackets to show sequential or unified movements.
-    \item \textbf{Symmetry Operator (Optional)}: Indicates if both hands are used or specifies the use of the non-dominant hand, usually represented by two dots.
-    \item \textbf{Non-Manual Marker (NMM) (Optional)}: Denotes facial or vocal actions accompanying the sign, such as lip-pursing or eyebrow-raising.
-\end{itemize}
-
-HamNoSys offers a detailed representation of the nuanced components in sign language discourse rather than serving as a practical writing system. Its main purpose is linguistic, used primarily by linguists to analyze the specific features of individual signs. However, it has also found it's applications in synthesis\ref{elliott2010towards} as well has sign detection\ref{mocialov2022unsupervised}.
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/hamnosys_coffee.png}
-  \caption{Coffee in HamNoSys}
-  \label{fig:hamnosys_coffee}
-\end{figure}
-
-\subsection{Arranging Lexicals}
-
-A sign language description is represented as an arrangement of lexicals or glosses. This arrangement can be sequential(linear) or non-linear.
-
-\subsubsection{Sequential Arrangement}
-
-Sequential arrangement of lexicals is a linear representation of sign language discourse. In this approach, signs are listed in the order they appear in the discourse, with each sign described using lexical notation. This method is straightforward and easy to follow, making it suitable for basic transcription and analysis. However, it may not capture the full complexity of sign language, particularly the non-linear aspects of signing such as simultaneous movements and facial expressions.
-
-The following is an example of a sequential arrangement of lexicals for the sentence "I had coffee":
-\begin{center}
-  \textcolor{brown}{\textbf{COFFEE + I + HAD}}
-\end{center}
-
-\subsubsection{P/C Model}
-
-Unlike HamNoSys, the Prosodic and Chronemic Model (P/C Model) \ref{huenerfauth2006generating} is a non-linear framework for describing sign language. This model focuses on capturing the rhythmic and temporal aspects of signing, recognizing that the timing and flow of signs are essential for their meaning. The P/C Model is particularly useful for understanding the nuances of sign language that go beyond simple hand movements, including the speed, intensity, and pauses that convey additional meaning. However, it has not been adopted for sign language synthesis.
-
-\subsubsection{Canadian stuff}
-
-https://github.com/PhonologicalCorpusTools try to define sign language phonology based on articulatory features but has no synthesis applications.
-
-\subsubsection{AZee}
-
-The AZee model is based on the notion of production rule, which associates a meaning to a set of observable forms. The model is based on the idea that the meaning of a sign can be decomposed into a set of features, which can be represented as a set of production rules. These rules are then used to generate the form of the sign, including the handshape, movement, and location. The AZee model is designed to be flexible and extensible, allowing for the representation of a wide range of signs and sign languages. It is particularly well-suited for sign language synthesis, as it provides a systematic and structured approach to describing signs and their components. Recently, it has also been extended to a writing system.
-
-Examlple, the AZee visual description for a person aged 52 is shown in figure \ref{fig:azvd}. The corresponding AZee code for this would be:
-
-:info-about
-	'topic
-	:une personne
-	'info
-	:info-about
-		'topic
-		:âge
-		'info
-		:tens-units
-			'tens
-			.nb-5
-			'units
-			.nb-2
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azvd.png}
-  \caption{AZee visual description for a person aged 52}
-  \label{fig:azvd}
-\end{figure}
-
 \section{Sign Language Synthesis}
 
 Sign Language synthesis is the process of generating sign language animations from linguistic input. This process involves resolving a linguistic description into the anatomy of the avatar such as handshapes, movements, facial expressions, etc. on an avatar.  Sign Language synthesis is a complex and interdisciplinary field that draws on linguistics, computer science, animation, and human-computer interaction. Several approaches have been developed to synthesize sign language animations, each with its unique strengths and challenges.
+
+\subsection{2D Techniques}
+
+2D techniques often involve video-based synthesis, where signs are rendered in a flat, two-dimensional space. While these techniques are computationally less demanding, they lack the depth and realism of 3D animations. They are generally easier to produce but struggle with capturing complex spatial relationships.
+
+\subsection{3D Techniques}
+
+3D techniques generate SL animations using avatars that operate in a three-dimensional space. These methods provide a more immersive and realistic representation of SL. 3D synthesis can leverage advanced avatars, such as those created by MetaHuman or SMPL-X, to achieve high levels of detail and expressiveness. However, 3D synthesis requires more computational resources and careful consideration of the Uncanny Valley phenomenon\ref{fig:uncanny_valley}.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/uncanny_valley_graph.png}
+  \caption{Uncanny Valley}
+  \label{fig:uncanny_valley}
+\end{figure}
 
 \subsection{JASigning}
 
@@ -419,19 +371,15 @@ Unlike the previous models, EMBR (Embodied Agents Behaviour Realizer) Script \re
 
 EMBR (Embodied Agents Behaviour Realizer)\cite{heloir2010real} is a real-time animation engine engineered to produce expressive gestures and sign language for virtual avatars. EMBR facilitates precise control over avatar movements, encompassing hand shapes, facial expressions, and body postures critical for accurate sign language depiction. The framework supports scripting and integrates with various input modalities, such as text or motion capture data, to generate realistic and contextually appropriate sign language animations. EMBR's flexibility and adaptability make it a valuable tool in research settings, particularly for studies focused on the nuances of non-verbal communication and the development of nuanced, context-sensitive gestures.
 
-\subsection{Sign3D}
+\subsection{Synthesis based on Generative Models}
 
-The Sign3D project developed tools for high-fidelity 3D recording of French Sign Language (LSF) using an optical motion capture system with head-mounted oculometers. They annotated captured data with Elan software, segmenting signs and adding meta-data. A visual composition interface was created for assembling new sentences from the database. These motion capture chunks were concatenated and optimized for smooth transitions. The process concluded with rendering a 3D virtual signer for accurate motion playback.
-
-\subsection{Synthesis based on generative models}
-
-Generative models have shown promise in sign language synthesis by learning the underlying structure of sign language data and generating new animations. These models can be trained on large datasets of sign language videos to capture the complex relationships between linguistic input and sign language output. Some popular generative models used in sign language synthesis include:
+Generative models have shown promise in SL synthesis by learning the underlying structure of sign language data and generating new animations. These models can be trained on large datasets of sign language videos to capture the complex relationships between linguistic input and SL output. Some popular generative models used in SL synthesis include:
 
 \subsubsection{Gloss based}
 
 Sign language animation from text focuses on generating realistic sign language videos from written text. The process involves text-to-gloss conversion, gloss-to-pose generation, and pose-to-sign rendering. Recent approaches utilize neural networks and generative models to enhance animation fluidity and realism. One method uses dictionary examples and a codebook of signs to create continuous sign language sequences, incorporating both manual and non-manual features\cite{Walsh2024ADR}. However, challenges remained in annotating the data and training the models effectively, particularly in the production of natural hand and facial movements.
 
-\subsubsection{Sign Writing based}
+\subsubsection{SignWriting based}
 
 Another approach\cite{jiang-etal-2023-machine} used the SignBank dataset, which contains 220k parallel samples of SignWriting and spoken language text. SignWriting served as an intermediate representation, translating spoken text into SignWriting before converting it into human poses\ref{fig:sw_synthesis}. Neural machine translation (NMT) architectures with techniques like byte pair encoding (BPE) segmentation were used. Evaluations show over 30 BLEU scores in bilingual settings and over 20 BLEU in multilingual settings, validating the approach and highlighting the effectiveness of SignWriting in NLP for sign language processing.
 
