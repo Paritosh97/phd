@@ -68,14 +68,27 @@ Detail the proposed algorithm for synthesizing AZee descriptions without flatten
 \subsubsection{Independent Evaluations}
 Cases where blocks do not overlap or affect different bone chains can be evaluated independently. This includes non-overlapping blocks and constraints such as morph and look, which act independently from other constraints.
 
-\section{Implementation and Experimental Results}
+\section{Implementation}
 
-\subsection{Implementation in Blender}
 Overview of the Blender add-on for AZee synthesis, including key components such as the AZee editor, 3D viewport, non-linear editor, and properties panel. Discuss how the add-on integrates with Blender's existing tools to facilitate the synthesis process.
 
-\subsection{Experimental Results}
+\subsection{Results}
 
 WORKS ON ANY AVATAR
+
+Examples of synthesized AZee descriptions, comparing flattened and non-flattened synthesis. Highlight the preservation of dynamics and any potential issues encountered. Discuss the use of Frobenius distance as a metric for evaluating the accuracy of the synthesized animations.
+
+\subsection{Evaluation}
+
+we dont evaluate sign language synthesis, we evaluate azee synthesis
+
+against mediapipe 
+
+against paula
+
+against rosetta mocap
+
+against state of the art and sgnify
 
 Examples of synthesized AZee descriptions, comparing flattened and non-flattened synthesis. Highlight the preservation of dynamics and any potential issues encountered. Discuss the use of Frobenius distance as a metric for evaluating the accuracy of the synthesized animations.
 
@@ -90,14 +103,5 @@ Discuss potential extensions to this work, such as integrating top-down techniqu
 \section{Acknowledgement}
 This work has been funded by the Bpifrance investment “Structuring Projects for Competitiveness” (PSPC), as part of the Serveur Gestuel project (IVès et 4Dviews Companies, LISN — University Paris-Saclay, and Gipsa-Lab — Grenoble Alpes University).
 
-\section{Bibliographical References}
-\begin{itemize}
-    \item Bertoldi, N., et al. (2010). On the creation and the annotation of a large-scale Italian-LIS parallel corpus. LREC2010 4th Workshop on the Representation and Processing of Sign Languages: Corpora and Sign Language Technologies, Valletta, Malta.
-    \item Filhol, M., Hadjadj, M., Choisier, A. (2014). Non-manual features: the right to indifference. International Conference on Language Resources and Evaluation.
-    \item Filhol, M., Mcdonald, J., Wolfe, R. (2017). Synthesizing sign language by connecting linguistically structured descriptions to a multi-track animation system.
-    \item Nunnari, F., Filhol, M., Heloir, A. (2018). Animating azee descriptions using off-the-shelf IK solvers. Workshop on the Representation and Processing of Sign Languages.
-    \item Smits, R., et al. (2008). iTaSc: a tool for multi-sensor integration in robot manipulation. IEEE International Conference on Multisensor Fusion and Integration for Intelligent Systems.
-    \item Wolfe, R., et al. (2021). State of the art and future challenges of the portrayal of facial non-manual signals by signing avatar. International Conference on Human-Computer Interaction.
-\end{itemize}
 
 \end{document}
