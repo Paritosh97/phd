@@ -4,17 +4,108 @@
 \label{ch:rigging_layers}
 
 \section{Introduction}
-Rigging is a crucial process in character animation, particularly in creating digital avatars that need to perform complex and expressive motions, such as those required for sign language synthesis. In computer graphics, rigging involves setting up a skeletal structure (also known as an armature) that drives the mesh of a character, allowing it to move and deform in a realistic manner. For sign language avatars, this process is even more intricate, as it must account for not just the physical movement of limbs but also the nuances of non-manual signals, facial expressions, and the synchronization of multiple gestures.
+In computer graphics, rigging involves setting up a skeletal structure (also known as an armature) that drives the mesh of a character, allowing it to move and deform in a realistic manner. Rigging is a critical component of character animation, as it determines how the character responds to movement and how it deforms during animation. In the context of sign language avatars, rigging plays a crucial role in capturing the complex articulations and expressions of sign language gestures.
 
 The layered approach to rigging, which this chapter explores in depth, offers a sophisticated method for managing these complexities. By dividing the rigging process into several distinct layers—each responsible for a different aspect of the avatar’s movement and deformation—we can achieve a higher level of control and flexibility. This approach not only facilitates the creation of more natural and expressive animations but also makes the system scalable and adaptable to a wide range of linguistic contexts.
 
 In this chapter, we will delve into the theoretical foundations of layered rigging, review related work, describe the specific layers used in our system, and discuss the results and implications of this approach. We will also outline future directions for improving the integration of procedural methods with traditional animation techniques.
 
-\section{Related Work}
-The development of sign language avatars has been a subject of considerable research, driven by the need to create accessible and inclusive communication tools for the Deaf community. Traditional approaches to sign language synthesis have relied heavily on pre-recorded motion capture data, which is then mapped to specific signs or glosses. While effective in certain contexts, these methods face significant challenges in terms of scalability, flexibility, and the ability to produce naturalistic animations.
+\section{Procedural Rigging for Signing Avatars}
 
-\subsection{Pre-recorded Animation Techniques}
-One of the earliest methods for sign language synthesis involved the use of pre-recorded animations triggered by gloss-based databases (Pezeshkpour et al., 1999). In this approach, each sign is represented by a gloss, which is then linked to a corresponding animation clip. While this method allows for the accurate representation of individual signs, it is limited by the size of the animation database and the time required to create and manage these clips. As a result, it is not well-suited for generating long or complex sign language utterances, nor can it easily adapt to the dynamic requirements of virtual environments.
+Rigs have been used in computer animation for decades to control the movement and deformation of characters. Traditional rigging systems typically consist of a hierarchical structure of bones, controllers, and constraints that define how the character’s mesh deforms in response to movement. Section {subsubsec:skeleton} in chapter {ch:background_work} gave an overview of the different skeletal structures of an avatar and how it is used to control the character’s movements.
+
+A signing avatar differs significantly from the traditional systems. For starter, no sign language uses the lower body in its articulation. This means that the rigging system for a signing avatar can be simplified to focus on the upper body as shown in figure \ref{ref:upper_body_avatar}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/upper_body_avatar.png}
+    \caption{An example of an upper body avatar rig}
+    \label{ref:upper_body_avatar}
+\end{figure}
+
+However for procedurally animating a signing avatar, the complexity of sign language gestures and expressions poses unique challenges and necessitates a more sophisticated rigging system.
+
+\subsection{AZee Blender interface}
+
+The previous low level synthesizor for AZee \cite{fabrizio} used an armature in blender with todo bones and todo sites. These bones and sites were mapped to a \emph{SkelSpec} structure. Similarly, AZee's abstract posture was mapped to the \emph{SkelSpec} structure as well. The \emph{SkelSpec} structure thus formed as an intermediate bridge between an Animated AZee Score and the armature \ref{fig:old_interface}. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/old_interface.png}
+    \caption{The old interface of the low level synthesizor for AZee}
+    \label{fig:old_interface}
+\end{figure}
+
+One of the first contributions of my work was to create a new interface for the low level synthesizor for AZee. This new interface didn't have a \emph{SkelSpec} \ref{fig:new_interface} and interacted directly with the blender armature resulting in faster executions \ref{tab:faster_executions}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/new_interface.png}
+    \caption{The new interface of the low level synthesizor for AZee}
+    \label{fig:new_interface}
+\end{figure}
+
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Interface} & \textbf{Execution time (s)} \\
+        \hline
+        Old & 0.5 \\
+        New & 0.2 \\
+        \hline
+    \end{tabular}
+    \caption{Comparison of execution times between the old and new interfaces}
+    \label{tab:faster_executions}
+\end{table}
+
+\subsection{Automatic site generation}
+
+The previous low level synthesizor for AZee \cite{fabrizio} required the user to manually create sites in blender. This was a tedious time consuming process process and could lead to errors \ref{fig:prev_sites}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/prev_sites.png}
+    \caption{Manually created sites in the previous low level synthesizor for AZee}
+    \label{fig:prev_sites}
+\end{figure}
+
+This site generation process could be partially automated if we have the knowledge of the bone structure. Algorithm was used to generate sites based on bone location and avatar mesh using simple raycasting \ref{alg:raycasting}.
+
+TODO
+\begin{algorithm}
+    \label{alg:raycasting}
+    \caption{Raycasting algorithm for automatic site generation}
+    \begin{algorithmic}
+        \State $bones \gets$ get all bones in the armature
+        \For{$bone$ in $bones$}
+            \State $head \gets$ get the head of the bone
+            \State $tail \gets$ get the tail of the bone
+            \State $midpoint \gets$ get the midpoint of the bone
+            \State $direction \gets$ get the direction of the bone
+            \State $site \gets$ create a site at the midpoint of the bone
+            \State $site \gets$ move the site in the direction of the bone
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+\subsection{Constraint Optimization}
+
+The previous low level synthesizor for AZee \cite{fabrizio} used a constraint optimization algorithm to generate the armature pose. This algorithm \ref{alg:old_constraint_optimization} TODO
+
+
+\begin{algorithm}
+    \label{alg:old_constraint_optimization}
+    \caption{Old constraint optimization algorithm}
+    \begin{algorithmic}
+        \State $constraints \gets$ get all constraints in the armature
+        \For{$constraint$ in $constraints$}
+            \State $constraint \gets$ apply the constraint to the armature
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+
 
 \subsection{Procedural Animation Methods}
 To address the limitations of pre-recorded animation techniques, researchers have explored procedural methods for sign language synthesis. Procedural animation involves generating motion dynamically based on a set of rules or constraints, rather than relying on pre-existing data. This approach offers greater flexibility and scalability, as it can generate novel animations on-the-fly, tailored to specific linguistic or contextual needs.
