@@ -4,49 +4,45 @@
 \chapter{Multi-Track and Non-Linear Synthesis}
 \label{ch:multi_track}
 
+Human movement is a symphony of coordinated actions, where each part of the body plays a distinct role, yet all work together in harmony to create a seamless expression of intent. The essence of this coordination lies in the ability to perform multiple actions simultaneously or in carefully timed sequences, with each movement contributing to the larger tapestry of physical expression. Traditional approaches to understanding or replicating this complexity often fall short, reducing human motion to a linear series of bone rotations that lack the depth and nuance of true human movement.
+
+The concept of multi-track control offers a different perspective—one that acknowledges the layered nature of our physical existence. It recognizes that our movements are not isolated but interwoven, with each gesture or posture influencing and being influenced by others. By allowing multiple threads of action to unfold concurrently or in precise intervals, multi-track control mirrors the natural rhythm and flow of life. It captures the interplay between stillness and motion, the balance of tension and release, and the silent dialogue between different parts of the body as they move together yet independently. In doing so, it brings us closer to understanding the profound complexity of human movement, honoring the subtlety and grace inherent in every action.
+
+Similarly, non-linearity in movement reflects the dynamic and adaptive nature of human actions. Just as life rarely follows a straightforward path, our movements often involve layers of simultaneous actions that interact in complex ways. In fields like video editing or film production, non-linear control allows creators to work with multiple layers of footage, sounds, and effects, enabling them to craft scenes where various elements unfold together, contributing to a richer and more cohesive narrative.
+
+In the realm of sign language, the non-linear and multi-track nature of human movement is particularly evident. Sign language involves a combination of simultaneous gestures, facial expressions, and body movements, all working together to convey meaning. By adopting a non-linear, multi-track approach, we can more accurately capture the intricate coordination involved in signing, where gestures and expressions occur in parallel, influencing and overlapping with each other. This approach respects the complexity and interconnectivity inherent in sign language, allowing for a more nuanced and realistic portrayal of its dynamic and expressive nature. In doing so, it brings us closer to truly understanding and representing the fluidity and richness of sign language as it is naturally used, honoring its depth and complexity as a form of human communication.
+
+This chapter aims to present a novel approach to sign language synthesis using multi-track and non-linear editing techniques. It showcases improvements in animation quality and flexibility, demonstrating how these techniques preserve the dynamics of individual animation blocks and enhance procedural generation capabilities.
+
+The content of this chapter is structured as follows: We introduce the key concepts of multi-track timeline control and non-linear editing in sign language synthesis. The \emph{Multi-Track Timeline} section covers related work, AZee score synchronization, and conflict resolution techniques. The \emph{Non-Linear Editing} section discusses its role in enhancing animation flexibility, along with rules for block ordering. In \emph{Implementation and Results}, we describe the integration within Blender’s editor and evaluate AZee synthesis against benchmarks. Finally, the \emph{Conclusion and Future Prospects} section summarizes the advantages of our approach and suggests directions for future research.
+
 \section{Introduction}
 
-\subsection{Background on Sign Language Synthesis}
-Sign language synthesis converts written descriptions into animated sign language using avatars. Traditional methods often relied on gloss sequences, but these have limitations in synchronization and context variability. The AZee model provides a hierarchical structure for sign language descriptions, allowing for more detailed and expressive animations. However, the existing AZee low-level synthesis technique was limited in its ability to handle complex, non-linear expressions, leading to a loss of interpolation information.
+TODO
 
-\subsection{Importance of Multi-Track and Non-Linear Editing}
-Multi-track and non-linear editing methods provide significant improvements over traditional linear editing techniques. They allow simultaneous manipulation of multiple animation tracks, supporting the complex, overlapping motions characteristic of natural sign language. This results in more fluid and realistic animations that better capture the subtleties of human signing.
 
-\subsection{Objectives of the Chapter}
-This chapter aims to present a novel approach to sign language synthesis using multi-track and non-linear editing techniques. It showcases improvements in animation quality and flexibility, demonstrating how these techniques preserve the dynamics of individual animation blocks and enhance procedural generation capabilities.
+\section{Multi-Track Timeline}
+
+\subsection{Related Work}
+
+\subsection{AZee Synced Score to Multi-Track Timeline}
+
+\subsection{Resolving Block Conflicts}
+
+
+\subsubsection{Pre-animated blocks}
 
 \section{Non-Linear Editing}
 
-\subsection{Definition and Principles of Non-Linear Editing}
 Non-linear editing refers to the ability to access and edit any frame of a video clip or animation independently of the sequence. This flexibility allows for more sophisticated and precise adjustments, essential for achieving high-quality animations.
 
-\subsection{Application in Animation}
-In animation, non-linear editing enables animators to work on individual segments of an animation independently, which is crucial for managing complex animations with multiple overlapping actions.
+\subsection{Related Work}
 
-\subsection{Benefits in Sign Language Synthesis}
-Non-linear editing enhances the realism and fluidity of sign language animations. By allowing for simultaneous and overlapping articulations, it ensures that the nuanced movements of sign language are accurately represented, leading to more natural and comprehensible animations.
+\subsection{AZee and Non-Linear Editing}
 
-\section{AZee Score Tree}
+\subsection{Block Ordering}
 
-\subsection{Overview of the AZee Model}
-The AZee model provides a framework for representing sign language utterances as hierarchical structures of production rules. These rules can be parameterized to capture the specific articulatory features and constraints of each sign.
-
-\subsection{Hierarchical Structure of AZee}
-AZee uses a tree-like structure, where each node represents a production rule or constraint, and the branches indicate the relationships between these rules. This hierarchical structure allows for a detailed and flexible representation of sign language.
-
-\subsection{Parameterized Signed Forms and Production Rules}
-Each sign language utterance in AZee is described using parameterized forms that specify the articulatory features and constraints for that sign. These forms allow for a precise and customizable representation of sign language.
-
-\subsection{Example AZee Expressions and Their Representations}
-Illustrate how complex sign language expressions are encoded using AZee. Provide examples and diagrams to demonstrate the hierarchical and parameterized nature of the model, showcasing its ability to represent detailed and nuanced sign language utterances.
-
-\section{AZee Tree as Multi-Track Animation Representation}
-
-\subsection{Conversion of AZee Scores to Multi-Track Timelines}
-Explain the process of converting AZee scores into multi-track animation timelines. Highlight the challenges involved and the solutions developed to address these challenges.
-
-\subsection{Algorithm for Multi-Track Synthesis}
-Detail the proposed algorithm for synthesizing AZee descriptions without flattening the score, preserving the dynamics of individual animation blocks.
+Pre-animated blocks put first
 
 \subsubsection{Rule 1: Timely Evaluation}
 \textbf{Problem:} Overlapping blocks with different start times.\\
@@ -64,19 +60,13 @@ Detail the proposed algorithm for synthesizing AZee descriptions without flatten
 \textbf{Problem:} Blocks with hold constraints.\\
 \textbf{Solution:} Evaluate these blocks in a second pass to ensure dependent constraints are maintained.
 
-\subsection{Non-Conflicting Cases}
-\subsubsection{Independent Evaluations}
 Cases where blocks do not overlap or affect different bone chains can be evaluated independently. This includes non-overlapping blocks and constraints such as morph and look, which act independently from other constraints.
 
-\section{Implementation}
 
-Overview of the Blender add-on for AZee synthesis, including key components such as the AZee editor, 3D viewport, non-linear editor, and properties panel. Discuss how the add-on integrates with Blender's existing tools to facilitate the synthesis process.
 
-\subsection{Results}
+\section{Implementation and Results}
 
-WORKS ON ANY AVATAR
-
-Examples of synthesized AZee descriptions, comparing flattened and non-flattened synthesis. Highlight the preservation of dynamics and any potential issues encountered. Discuss the use of Frobenius distance as a metric for evaluating the accuracy of the synthesized animations.
+The multi-track timeline is implementated in blender's non-linear editor. Each AZee Score, when animated, generates a blender action which is put on the non-linear editor as a block with duration specified by the AZee \emph{sync rules}
 
 \subsection{Evaluation}
 
@@ -99,9 +89,5 @@ Summarize the benefits of the proposed multi-track synthesis algorithm, emphasiz
 
 \subsection{Future Prospects}
 Discuss potential extensions to this work, such as integrating top-down techniques, handling morph constraints, and reducing robotic movements through advanced techniques like ambient noise analysis and style transfer. Outline possible future research directions and improvements.
-
-\section{Acknowledgement}
-This work has been funded by the Bpifrance investment “Structuring Projects for Competitiveness” (PSPC), as part of the Serveur Gestuel project (IVès et 4Dviews Companies, LISN — University Paris-Saclay, and Gipsa-Lab — Grenoble Alpes University).
-
 
 \end{document}
