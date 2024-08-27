@@ -27,7 +27,7 @@ However for procedurally animating a signing avatar, the complexity of sign lang
 
 \subsection{AZee Blender interface}
 
-The previous low level synthesizor for AZee \cite{fabrizio} used an armature in blender with todo bones and todo sites. These bones and sites were mapped to a \emph{SkelSpec} structure. Similarly, AZee's abstract posture was mapped to the \emph{SkelSpec} structure as well. The \emph{SkelSpec} structure thus formed as an intermediate bridge between an Animated AZee Score and the armature \ref{fig:old_interface}. 
+The previous low level synthesizor for AZee \cite{fabrizio} was based on an armature in blender. These bones and sites were mapped to a \emph{SkelSpec} structure. Similarly, AZee's abstract posture was mapped to the \emph{SkelSpec} structure as well. The \emph{SkelSpec} structure thus formed as an intermediate bridge between an Animated AZee Score and the armature \ref{fig:old_interface}. 
 
 \begin{figure}[h]
     \centering
@@ -61,7 +61,7 @@ One of the first contributions of my work was to create a new interface for the 
 
 \subsection{Automatic site generation}
 
-The previous low level synthesizor for AZee \cite{fabrizio} required the user to manually create sites in blender. This was a tedious time consuming process process and could lead to errors \ref{fig:prev_sites}.
+The AZee low-level language consists of 332 sites (appendix \ref{appendix:sites}) which the user to manually create sites in blender. This was a tedious time consuming process process and could lead to errors \ref{fig:prev_sites}.
 
 \begin{figure}[h]
     \centering
@@ -89,92 +89,223 @@ TODO
     \end{algorithmic}
 \end{algorithm}
 
-\subsection{Constraint Optimization}
+The sites an be visualized on the avatar in figure \ref{fig:sites_bazeel}.
 
-The previous low level synthesizor for AZee \cite{fabrizio} used a constraint optimization algorithm to generate the armature pose. This algorithm \ref{alg:old_constraint_optimization} TODO
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/sites_bazeel.png}
+    \caption{All AZee sites on the BAZeel avatar}
+    \label{fig:sites_bazeel}
+\end{figure}
 
+\subsection{Automatic rigging}
 
-\begin{algorithm}
-    \label{alg:old_constraint_optimization}
-    \caption{Old constraint optimization algorithm}
-    \begin{algorithmic}
-        \State $constraints \gets$ get all constraints in the armature
-        \For{$constraint$ in $constraints$}
-            \State $constraint \gets$ apply the constraint to the armature
-        \EndFor
-    \end{algorithmic}
-\end{algorithm}
+The previous custom rig contained 57 bones \ref{appendix:old_bone_list}. These bones were initially structured to accommodate the unique skeletal system requirements of the AZee framework, which utilizes a "rotation first" paradigm. However, since Blender operates on a "translation first" paradigm, a conversion process was necessary. This conversion involved splitting each AZee bone into two corresponding Blender bones: one for translation and one for rotation, with the rotation bone named by appending a ".rot" suffix to the original bone name (figure \ref{fig:old_bone_structure}). Additionally, sites were modeled in a dual fashion, where both bones and empty objects were created to manage site positioning and visualization.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/old_bone_structure.png}
+    \caption{Duplicate bones for rotation and translation}
+    \label{fig:old_bone_structure}
+\end{figure}
 
-
-\subsection{Procedural Animation Methods}
-To address the limitations of pre-recorded animation techniques, researchers have explored procedural methods for sign language synthesis. Procedural animation involves generating motion dynamically based on a set of rules or constraints, rather than relying on pre-existing data. This approach offers greater flexibility and scalability, as it can generate novel animations on-the-fly, tailored to specific linguistic or contextual needs.
-
-The AZee model (Filhol et al., 2014) represents a significant advancement in this area. AZee allows for the parameterization of sign language gestures based on semantic functions, enabling the synthesis of complex utterances with precise control over timing, concurrency, and non-manual features. By generating a timeline that specifies every aspect of the utterance, AZee overcomes many of the synchronization issues inherent in earlier models.
-
-Despite these advancements, procedural methods face challenges in achieving the same level of naturalness and expressivity as pre-recorded animations. This has led to the development of hybrid approaches that combine the strengths of both techniques, as well as the exploration of more sophisticated rigging systems, such as the layered approach described in this chapter.
-
-\section{Procedural Rigging}
-Procedural rigging refers to the process of generating the rig (skeletal structure) of a character dynamically, based on procedural rules or constraints. In the context of sign language avatars, procedural rigging allows for the creation of rigs that can adapt to different gestures, expressions, and movements in real-time, without the need for extensive manual setup.
-
-\subsection{Site Objects}
-TODO: Elaborate on the concept of site objects in procedural rigging and their role in facilitating dynamic adjustments to the rig based on linguistic input.
-
-\section{Layers in Avatars}
-The layered approach to rigging involves dividing the rigging process into several distinct layers, each responsible for different aspects of the avatar's movement and deformation. This modular approach allows for greater flexibility and control, enabling animators to fine-tune each layer independently while maintaining overall coherence in the final animation.
+This old system however, can be improved using multiple avatar layers. To do this we need 3 separate layers,
 
 \subsection{Deformation Bone Layer}
-The deformation bone layer is the foundation of the avatar's rig. It includes the bones that directly influence the mesh of the character, controlling how the skin deforms in response to movement. This layer is responsible for the overall shape and posture of the avatar, ensuring that the character's movements are smooth and realistic.
+
+The deformation bone layer(figure \ref{ref:deform_layer}) is the foundation of the avatar's rig. It includes the bones that directly influence the mesh of the character, controlling how the skin deforms in response to movement. This layer is responsible for the overall shape and posture of the avatar, ensuring that the character's movements are smooth and realistic.
 
 In this layer, the bones are typically organized into a hierarchy, with the root bone controlling the overall position and orientation of the avatar, and child bones controlling specific parts of the body, such as the limbs, spine, and head. Weight painting is used to determine how much influence each bone has over the surrounding mesh, allowing for precise control over how the character's skin deforms.
 
-One of the key challenges in the deformation bone layer is managing the interaction between different parts of the body. For example, when the arm moves, the shoulder and spine must also adjust to maintain a natural posture. This requires careful consideration of joint constraints and the use of advanced techniques such as dual quaternion skinning to prevent artifacts such as "twisting" or "collapsing" of the mesh.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/deform_layer.png}
+    \caption{Deformation bone layer}
+    \label{fig:deform_layer}
+\end{figure}
 
 \subsection{Inverse Kinematics Layer}
-The inverse kinematics (IK) layer is responsible for positioning the avatar's limbs by solving for the joint angles required to achieve a desired end-effector position. In the context of sign language avatars, this is particularly important for ensuring that the hands can accurately perform the required gestures.
 
-IK is a powerful tool for animators because it allows them to specify the position of the end of a limb (such as a hand or foot) and have the software automatically calculate the necessary joint rotations to achieve that position. This is particularly useful for tasks that require precise control over the hands, such as signing, where the exact position and orientation of the hands are critical.
+The inverse kinematics (IK) layer (figure ref:ik_layer) is responsible for positioning the avatar's limbs and spine by solving for the joint angles required to achieve a desired end-effector position.
 
-However, IK also presents certain challenges. One issue is that the solution provided by the IK solver may not always be physically plausible or aesthetically pleasing. For example, an IK solution might place the hand in the correct position but result in unnatural rotations of the elbow or shoulder. To address this, additional constraints are often applied to limit the range of motion of the joints and to prioritize certain joints over others.
+A separate IK layers ensures that the FK configuration is not lost during constraint evaluation. If the posture is in IK mode i.e. is solving for a placement, the deform layers copy the orientations resolved by the IK layer.
 
-In our layered approach, the IK layer is closely integrated with the deformation bone layer, ensuring that the movements generated by the IK solver are consistent with the overall posture of the avatar. This integration is achieved through the use of custom IK solvers and constraints that take into account the specific requirements of sign language gestures.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/ik_layer.png}
+    \caption{IK bone layer}
+    \label{fig:ik_layer}
+\end{figure}
 
 \subsection{Forward Kinematics Layer}
-The forward kinematics (FK) layer controls the rotation of bones in a hierarchical manner, where the rotation of a parent bone affects all its children. This layer is used for broader, more deliberate movements, such as head tilts, body leans, or full-body rotations, which are important for conveying non-manual signals in sign language.
+
+The forward kinematics (FK) layer (figure \ref{fig:fk_layer}) controls the rotation of bones in a hierarchical manner, where the rotation of a parent bone affects all its children. This layer is used for broader, more deliberate movements, such as head tilts, body leans, or full-body rotations, which are important for conveying non-manual signals in sign language.
 
 FK provides animators with a high degree of control over each individual bone in the rig, allowing for precise adjustments to the character's pose. Unlike IK, where the position of the end-effector is specified, FK requires the animator to manually rotate each bone in the chain, starting from the root and working down to the extremities. This can be more time-consuming but offers greater flexibility in achieving complex poses.
 
-In the context of sign language avatars, the FK layer is particularly important for managing non-manual signals, which often involve subtle movements of the head, eyes, and torso. By combining FK with IK, animators can create complex, coordinated movements that integrate both deliberate and reactive motions.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/fk_layer.png}
+    \caption{FK bone layer}
+    \label{fig:fk_layer}
+\end{figure}
 
-\subsection{Morphs}
-Morphs are predefined shape keys that alter the mesh of the avatar independently of the skeletal structure. They are used to control finer details of the avatar's appearance, such as facial expressions, muscle bulges, or specific gestures that cannot be easily achieved through bone manipulation alone.
+\subsection{Constraint Based Posture Optimization}
 
-In sign language avatars, morphs play a crucial role in conveying the subtleties of facial expressions, which are an integral part of the language. For example, raising the eyebrows, furrowing the brow, or tightening the lips can all significantly change the meaning of a sign. Morphs allow these expressions to be blended smoothly with the skeletal movements, ensuring that the avatar's face remains expressive and natural throughout the animation.
+The previous low level synthesizor for AZee \cite{fabrizio} used a constraint based optimization algorithm to generate the armature pose for a frame. This algorithm \ref{alg:old_constraint_optimization} collects all posture constaints given by the AZee Animated Score for every frame and solves for the posture by optimizing this constraints using distance functions. 
 
-Morph targets are typically created by sculpting the mesh into different shapes and then saving these shapes as "keys." During animation, these keys can be blended together in various combinations to achieve the desired expression. The morph layer interacts with the other layers by adjusting the mesh deformation in response to the skeletal movement, ensuring that the overall appearance of the avatar remains cohesive.
+\begin{algorithm}
+    \caption{Constraint-Based Optimization for Posture Synthesis based on \emph{flattened} animated score}
+    \label{alg:old_constraint_based_optimization}
+    \begin{algorithmic}[1]
+    \Require $\text{PostureConstraints} \ \mathit{posture\_constraint}$, $\text{Object} \ \mathit{armature\_object}$
+    \Ensure Armature object is posed according to the constraints
+    
+    \State \textbf{Initialize:} $i \gets 0$
+    \State $distance\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_site\_distance\_threshold}$
+    \State $angle\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_bone\_rot\_angle\_threshold \times \pi / 180}$
+    \State $max\_iterations \gets \mathit{bpy.context.scene.azee\_ik\_max\_iterations}$
+    
+    \State $place\_distance, orient\_angles \gets \textsc{ComputeDistance}(\mathit{posture\_constraint})$
+    \While{$i < max\_iterations$}
+        \State \textbf{Apply Positional Constraint:} \textsc{ApplyPositionConstraint}($\mathit{posture\_constraint}$)
+        \State \textbf{Apply Rotational Constraints:} \textsc{ApplyOrientConstraints}($\mathit{posture\_constraint}$)
+        
+        \State $place\_distance, orient\_angles \gets \textsc{ComputeDistance}(\mathit{posture\_constraint})$
+        
+        \State \textbf{Check Thresholds:}
+        \If {$\mathit{place\_distance} < \mathit{distance\_threshold}$ \textbf{and} $\max(\mathit{orient\_angles}) < \mathit{angle\_threshold}$}
+            \State \textbf{Break:} \textbf{end while}
+        \EndIf
+        
+        \State $i \gets i + 1$
+    \EndWhile
+    
+    \Procedure{ApplyPositionConstraint}{$\mathit{posture\_constraint}$}
+        \If {$\mathit{posture\_constraint.place\_constraint} \neq \text{None}$}
+            \State $site\_pose\_bone \gets \mathit{posture\_constraint.place\_constraint.site\_pose\_bone}$
+            \State $target\_vect \gets \mathit{posture\_constraint.place\_constraint.target\_vect}$
+            \State \textbf{Setup Target:} $tmp\_ik\_target \gets \textsc{CreateTemporaryTarget}(target\_vect)$
+            \State \textbf{Apply IK Constraint:} \textsc{ApplyIKConstraint}($site\_pose\_bone$, $tmp\_ik\_target$, \textit{position})
+            \State \textsc{BakePose}($\mathit{posture\_constraint}$)
+            \State \textsc{RemoveTemporaryTarget}($tmp\_ik\_target$)
+        \EndIf
+    \EndProcedure
+    
+    \Procedure{ApplyOrientConstraints}{$\mathit{posture\_constraint}$}
+        \ForAll {$orient\_constraint \in \mathit{posture\_constraint.orient\_constraints}$}
+            \State $effector\_pose\_bone \gets \mathit{orient\_constraint.pose\_bone}$
+            \State $ik\_target\_rot \gets \mathit{orient\_constraint.get\_target\_quaternion()}$
+            \State $ik\_relaxation\_mask \gets \mathit{orient\_constraint.get\_axis\_relaxation\_mask()}$
+            \State \textbf{Setup Target:} $tmp\_ik\_target \gets \textsc{CreateTemporaryTarget}(ik\_target\_rot)$
+            \State \textbf{Apply IK Constraint:} \textsc{ApplyIKConstraint}($effector\_pose\_bone$, $tmp\_ik\_target$, \textit{rotation}, $ik\_relaxation\_mask$)
+            \State \textsc{BakePose}($\mathit{posture\_constraint}$)
+            \State \textsc{RemoveTemporaryTarget}($tmp\_ik\_target$)
+        \EndFor
+    \EndProcedure
+    
+    \Procedure{ComputeDistance}{$\mathit{posture\_constraint}$}
+        \State $place\_offset \gets \textsc{ComputePlaceOffset}(\mathit{posture\_constraint})$
+        \State $orient\_offsets \gets \textsc{ComputeOrientOffsets}(\mathit{posture\_constraint})$
+        \State $place\_distance \gets \textsc{ComputeDistanceFromOffset}(place\_offset)$
+        \State $orient\_angles \gets \textsc{ComputeAnglesFromOffsets}(orient\_offsets)$
+        \State \Return ($place\_distance$, $orient\_angles$)
+    \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
 
-\section{Methodology}
-This section details the methodology used to implement the layered rigging system in our sign language avatar synthesis model. The approach combines procedural techniques with traditional animation workflows, implemented within Blender, to create a flexible and scalable system for generating realistic sign language animations.
+The approach handles only placements and orientations and uses a flattened animated AZee Score. This was improved \ref{alg:new_constraint_optimization} by generating from the multi-track synced score itself(more discussed in chapter \ref{ch:multi-track}) with support for other constraints such as \emph{morph}, \emph{lookat} and \emph{trill}.
 
-\subsection{Layer Integration}
-TODO: Discuss how the different layers (Deformation Bone, IK, FK, Morphs) are integrated into a cohesive system. Explain the process of blending between layers and managing dependencies between them.
+\begin{algorithm}
+    \caption{Constraint-Based Optimization for Posture Synthesis based on a multi-track synced score}
+    \label{alg:new_constraint_based_optimization}
+    \begin{algorithmic}[1]
+        \Require $\text{PostureConstraints} \ \mathit{posture\_constraint\_DAG}$, $\text{Object} \ \mathit{armature\_object}$, $\text{FrameRange} \ \mathit{frames}$
+        \Ensure Armature object is posed according to the constraints
+        
+        \State \textbf{Initialize:} $i \gets 0$
+        \State $distance\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_site\_distance\_threshold}$
+        \State $angle\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_bone\_rot\_angle\_threshold \times \pi / 180}$
+        \State $max\_iterations \gets \mathit{bpy.context.scene.azee\_ik\_max\_iterations}$
+        
+        \State $\mathit{sorted\_constraints} \gets \mathit{posture\_constraint\_DAG.topological\_sort()}$
+        \State $frames\_to\_keyframe \gets \textsc{DetermineFramesToKeyframe}(\mathit{frames}, \mathit{dynamic\_points})$
+        \While{$i < max\_iterations$}
+            \ForAll {$f \in \mathit{frames\_to\_keyframe}$}
+                \State $\mathit{cumulative\_loss} \gets 0.0$
+                \ForAll {$constraint \in \mathit{sorted\_constraints}$}
+                    \State \textbf{Apply Constraint:} \textsc{ApplyConstraint}($constraint$, $f$)
+                    \State $cumulative\_loss \gets cumulative\_loss + \mathit{constraint.get\_loss(f)}$
+                \EndFor
+                \If {$cumulative\_loss < \mathit{bpy.context.scene.azee\_animator\_threshold}$}
+                    \State \textbf{Break:} \textbf{end while}
+                \EndIf
+                \State \textbf{Insert Keyframe:} \textsc{InsertKeyframe}($f$)
+            \EndFor
+            \State $i \gets i + 1$
+        \EndWhile
+        
+        \Procedure{ApplyConstraint}{$constraint, frame$}
+            \If {$constraint$ \textbf{is} PlacementConstraint}
+                \State \textbf{Evaluate Target:} $target \gets \textsc{EvaluatePlacementTarget}(constraint, frame)$
+                \State \textbf{Place Site:} \textsc{PlaceSite}($constraint.site$, $target$)
+            \ElsIf {$constraint$ \textbf{is} OrientationConstraint}
+                \State \textbf{Evaluate Direction:} $direction \gets \textsc{EvaluateOrientation}(constraint, frame)$
+                \State \textbf{Rotate Bone:} \textsc{RotateBone}($constraint.bone$, $direction$)
+            \ElsIf {$constraint$ \textbf{is} MorphConstraint}
+                \State \textbf{Apply Morph:} \textsc{ApplyMorph}($constraint$, frame)
+            \ElsIf {$constraint$ \textbf{is} LookAtConstraint}
+                \State \textbf{Evaluate LookAt Point:} $point \gets \textsc{EvaluateLookAtPoint}(constraint, frame)$
+                \State \textbf{Rotate Eyes:} \textsc{RotateEyesToTarget}($constraint.eyes$, $point$)
+            \ElsIf {$constraint$ \textbf{is} TrillConstraint}
+                \State \textbf{Apply Trill:} \textsc{ApplyTrill}($constraint$, frame)
+            \ElsIf {$constraint$ \textbf{is} TranspathConstraint}
+                \State \textbf{Set Path:} $path \gets \textsc{DeterminePath}(constraint, frame\_start, frame\_end)$
+                \State \textbf{Follow Path:} \textsc{FollowPath}($constraint.site$, $path$)
+            \Else
+                \State \textbf{Unknown Constraint Type:} \textsc{HandleError}()
+            \EndIf
+        \EndProcedure
+        
+        \Procedure{DetermineFramesToKeyframe}{$frames, dynamic\_points$}
+            \State $frames\_to\_keyframe \gets \textsc{IdentifyKeyFrames}(\mathit{frames})$
+            \If {$dynamic\_points$ \textbf{is not} \textbf{empty}}
+                \State \textbf{Add Dynamic Frames:} $frames\_to\_keyframe \gets frames\_to\_keyframe \cup \textsc{DynamicFrameRanges}(dynamic\_points)$
+            \EndIf
+            \State \Return $frames\_to\_keyframe$
+        \EndProcedure
+        
+        \Procedure{InsertKeyframe}{$frame$}
+            \ForAll {$fcurve \in \mathit{armature\_object.animation\_data.action.fcurves}$}
+                \State \textsc{KeyframeInsert}($fcurve$, $frame$)
+            \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
 
-\subsection{AZee Model Implementation}
-The AZee model serves as the linguistic foundation for our sign language synthesis system. This model allows for the parameterization of sign language gestures based on semantic functions, which are then mapped to specific constraints and actions within the rigging system.
+\subsection{Morphs Constraints}
 
-The implementation of AZee within our layered rigging system involves translating the linguistic descriptions into a sequence of constraints that are applied to the appropriate layers. For example, a description might specify the position of the hands, the orientation of the head, and the configuration of the fingers, all of which are handled by different layers within the rig.
+The word "morph" comes from the Greek word "morphē" (μορφή), which means "form" or "shape." In modern usage, "morph" is often used as a shorthand for "morphing". In the field of computer graphics and animation, morphs are predefined shape keys that modify the mesh of the avatar independently of the skeletal structure, allowing for the detailed control of specific aspects of the avatar's appearance that cannot be easily achieved through bone manipulation alone. This includes subtle facial expressions, muscle bulges, and other nuanced gestures that are critical for conveying meaning in sign language.
 
-The AZee model also provides a framework for managing the timing and concurrency of gestures, ensuring that the various components of a sign are synchronized correctly. This is particularly important for complex utterances that involve multiple simultaneous actions, such as pointing while raising the eyebrows or tilting the head.
+AZee sees morphs as any change in the configuration of the avatar, which can be specified by the linguist in 1 dimension. For instance, closing of hands(a change in skeleton configuration) or raising the eyebrows(a change in the 3D mesh). Thus, these changes could also be formalized as Pose-Space Deformations.
 
-\subsection{Data-Driven Synthesis}
-In addition to procedural methods, our system incorporates data-driven synthesis techniques to enhance the realism and naturalness of the animations. Pre-recorded motion data is used to inform the procedural generation of movements, providing a reference for achieving lifelike gestures.
+\subsubsection{Skeletal Morphs}
 
-Data-driven synthesis is particularly useful for capturing the nuances of sign language that are difficult to model procedurally, such as the fluidity of hand movements or the subtle changes in posture that occur during signing. By combining these techniques with the AZee model, we can generate animations that are both accurate and expressive.
+Morph targets are typically generated by sculpting the avatar's mesh into various shapes that correspond to different expressions or gestures. These sculpted shapes are then saved as "keys," which can be blended together during animation to produce the desired expression. This process allows for a high degree of flexibility in animation, as different keys can be combined in real-time to create a wide range of expressions.
 
-\subsection{Implementation in Blender}
-Blender, a popular open-source 3D creation suite, was chosen as the platform for implementing our layered rigging system. Blender's flexible rigging tools and support for Python scripting made it an ideal choice for developing a custom solution tailored to the needs of sign language synthesis.
+For example, in a signing avatar, a morph might be used to raise one eyebrow while simultaneously forming a specific hand shape. The morph layer interacts with the skeletal layer by adjusting the mesh deformation in response to the skeletal movements, ensuring that the overall appearance of the avatar remains cohesive. This interaction is crucial for maintaining the realism of the avatar, as it allows for natural transitions between different expressions and gestures.
 
-The system is implemented as a Blender add-on, providing a user-friendly interface for animators to create and edit sign language animations. The add-on includes tools for managing the different layers, applying constraints, and visualizing the results in real-time. This allows animators to work efficiently and make adjustments as needed to achieve the desired results.
+\subsubsection{Facial Morphs}
+
+Morphs do not operate in isolation but rather work in tandem with the avatar's skeletal movements. While the skeletal system provides the foundation for the avatar's overall posture and major movements, morphs add an additional layer of detail by refining the surface deformations of the mesh. This is particularly important in sign language synthesis, where both gross motor movements and fine motor expressions must be synchronized to convey meaning accurately.
+
+For instance, when an avatar raises its hand to sign, the skeletal system dictates the overall arm movement, but the morphs refine the finger positions and facial expressions, ensuring that the sign is communicated effectively. The ability to blend morphs with skeletal movements allows for the creation of more natural and fluid animations, which are essential for the realism and believability of the avatar.
+
+\subsubsection{1D Space of a Morph}
+todo
+
+\subsubsection{Integration with other layers}
+todo
 
 \section{Results}
 The implementation of the layered rigging system in Blender has yielded promising results in the synthesis of sign language animations. By leveraging the strengths of both procedural and data-driven techniques, we have been able to create animations that are both natural and scalable.
@@ -215,8 +346,6 @@ TODO: Consider how the system can be made more accessible and user-friendly for 
 TODO: Investigate the integration of the rigging system with other technologies, such as virtual reality (VR), augmented reality (AR), or real-time motion capture, to expand its applications.
 
 \section{Conclusion}
-The development of a layered rigging system for sign language avatars represents a significant step forward in the field of sign language synthesis. By combining procedural and data-driven techniques, and implementing them within a flexible, modular framework, we have created a system that can produce high-quality, naturalistic animations that are both scalable and adaptable to a wide range of linguistic contexts.
-
-The results achieved so far demonstrate the potential of this approach, but there is still much work to be done. As we continue to refine and expand the system, we aim to provide a powerful tool for animators and researchers working in the field of accessible communication, ultimately contributing to more inclusive and effective digital environments for the Deaf community.
+The development of a layered rigging system for sign language avatars represents a significant step forward in the field of sign language synthesis. todo
 
 \end{document}
