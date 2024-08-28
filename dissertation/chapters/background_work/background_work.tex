@@ -86,6 +86,42 @@ For instance, the AZee visual description for a person aged 52 is depicted in Fi
 			.nb-2
 \end{verbatim}
 
+The AZee interpreter parses this code recursively, generating the corresponding(figure \ref{fig:timeline_example}) multi-track timeline for the avatar to animate.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/timeline_example.png}
+  \caption{AZee visual description for a person aged 52}
+  \label{fig:timeline_example}
+\end{figure}
+
+This timeline is geenrated using the recursive algorithm \ref{alg:azee_recursion}.
+
+todo
+\begin{algorithm}
+  \caption{AZee Recursion}
+  \label{alg:azee_recursion}
+  \begin{algorithmic}
+    \Function{AZee}{$code$}
+      \If{$code$ is a leaf node}
+        \State \Return $code$
+      \EndIf
+      \State $result \gets$ empty list
+      \For{$child$ in $code$}
+        \State $result \gets$ \Call{AZee}{$child$}
+      \EndFor
+      \State \Return $result$
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+The step by step recursion can be seen in {annex:azee_recursion}.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/timeline_example.png}
+  \caption{AZee visual description for a person aged 52}
+  \label{fig:azvd}
+\end{figure}
+
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azvd.png}
   \caption{AZee visual description for a person aged 52}
@@ -468,7 +504,7 @@ The system extends the Paula avatar using AZee descriptions. AZee encodes both f
 \subsubsection{Low-level synthesizer for AZee}
 \label{subsubsec:low_level_synthesizer_for_azee}
 
-This work presents a bottom-up (or low-level generation using constraint optimization) synthesis solution for the AZee system using off-the-shelf IK solvers. The approach generates procedurally computed animations from AZee's symbolic descriptions, leveraging Blender's 3D editor and iTaSC solver. This method handles constraints as IK problems, translating skeletal poses into keyframes. Despite inherently robotic motion, it serves as a low-level fallback for the existing top-down system. Preliminary results show effective static pose generation and a trade-off between precision and computation time, enhancing the flexibility of sign language avatar systems by integrating procedural synthesis with predefined animations.
+This work presents a bottom-up (or low-level generation using constraint optimization) synthesis solution for the AZee system using off-the-shelf IK solvers. The approach (discussed in detail in \ref{ch:multi_track}) generates procedurally computed animations from AZee's symbolic descriptions, leveraging Blender's 3D editor and iTaSC solver. This method handles constraints as IK problems, translating skeletal poses into keyframes. Despite inherently robotic motion, it serves as a low-level fallback for the existing top-down system. Preliminary results show effective static pose generation and a trade-off between precision and computation time, enhancing the flexibility of sign language avatar systems by integrating procedural synthesis with predefined animations.
 
 \section{Conclusion}
 \label{sec:conclusion}
