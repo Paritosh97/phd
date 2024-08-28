@@ -3,56 +3,82 @@
 \chapter{Introduction}
 \label{ch:introduction}
 
-Sign language is a primary mode of communication for the Deaf and hard-of-hearing communities. It is vital for ensuring accessibility and inclusivity in various aspects of life, such as education, media, and public services. With the advancement of technology, there is an increasing need for high-quality sign language synthesis systems that can provide naturalistic and expressive animations, bridging communication gaps between signers and non-signers.
+Sign language is a primary mode of communication for the Deaf and hard-of-hearing communities, playing a crucial role in ensuring accessibility and inclusivity across various aspects of life, such as education, media, and public services. With the advancement of technology, there is an increasing need for high-quality sign language synthesis systems that can produce naturalistic and expressive animations, bridging the communication gaps between signers and non-signers.
 
-TODO
+Sign language is a rich and complex mode of communication that relies on visual-gestural modalities, utilizing hand shapes, movements, facial expressions, and body postures to convey meaning. These languages are not universal but vary across regions and cultures, each with its own grammar, syntax, and lexicon. As a result, creating effective sign language synthesis systems requires a deep understanding of both linguistic intricacies and the technical demands of real-time animation.
+
+Despite its critical role in the lives of Deaf individuals, a significant communication gap remains between signers and non-signers, particularly in areas such as education, healthcare, media, and public services. This gap is further exacerbated by a global shortage of qualified sign language interpreters, making it difficult to provide adequate support to all who need it.
 
 \section{Motivation}
-Despite advancements, current sign language synthesis systems struggle to capture the full complexity of sign language, including hand shapes, movements, and facial expressions. The challenge lies in creating scalable models that can adapt to the diverse linguistic and cultural contexts of sign languages across the globe.
 
-Improving sign language synthesis is crucial for enhancing accessibility and autonomy for Deaf individuals. Recent breakthroughs in machine learning, computer vision, and natural language processing present opportunities to address these challenges and develop more advanced systems that offer greater realism and adaptability.
+The motivation for this research stems from the urgent need to address the challenges faced by the Deaf community in accessing essential services and engaging in daily life. Currently, sign language synthesis systems struggle to replicate the full spectrum of sign language, including the subtle nuances of hand shapes, movements, and facial expressions—elements integral to the grammar and meaning of sign language itself.
+
+The global shortage of sign language interpreters is a well-documented issue. In Europe alone, approximately 750,000 Deaf individuals use sign language as their primary means of communication, yet there are only about 6,600 working sign language interpreters. This disparity is even greater in countries with limited resources for Deaf education and interpreter training. In many regions, the ratio of interpreters to Deaf individuals is so low that access to services is severely restricted, underscoring the importance of developing automated sign language synthesis systems as a scalable solution.
+
+The COVID-19 pandemic has further highlighted the critical need for accessible communication, as public health information, educational content, and essential services moved online. The lack of available sign language interpreters during this time made it increasingly difficult for many Deaf individuals to access vital information, leading to a renewed focus on developing digital tools that enhance communication accessibility, particularly in virtual environments.
+
+Advances in natural language processing, computer graphics, computer vision and machine learning  over the past decade offer promising avenues for overcoming the limitations of current sign language synthesis systems. Leveraging these technologies could lead to more advanced models capable of generating highly naturalistic and expressive sign language animations. Such models not only have the potential to improve communication for Deaf individuals but also contribute to the broader goal of creating a more inclusive society.
+
+In addition to addressing the shortage of interpreters, there is a growing recognition of the need for cultural and linguistic diversity in sign language synthesis. Sign languages are deeply connected to the culture and identity of Deaf communities. Each sign language reflects the unique culture of its region, and any attempt to synthesize sign language must respect and preserve this diversity. This requires models that are not only technically accurate but also culturally sensitive, capable of adapting to the nuances of different sign languages while maintaining the integrity of communication.
+
+Furthermore, sign language is highly context-dependent, with variations in signs based on factors such as the signer’s region, community, and personal style. Capturing this complexity in a digital format necessitates sophisticated models that can understand and replicate these nuances. Current systems often lack the flexibility to adapt to these variations, leading to animations that may be technically correct but lack the fluidity and expressiveness of natural sign language.
+
+Another important motivation for this research is its potential impact on education. For Deaf students, access to educational content in sign language is crucial for academic success. However, the availability of such content is often limited, particularly in regions with few sign language interpreters. Automated sign language synthesis systems could bridge this gap, enabling the creation of educational materials that are accessible to Deaf students in their native sign language, thereby improving educational outcomes and leveling the playing field.
+
+Finally, the increasing use of virtual environments and avatars in communication presents both challenges and opportunities for sign language synthesis. As more interactions move online, there is a growing need for avatars that can communicate in sign language with the same fluency and expressiveness as human signers. This requires advances in both animation technology and the underlying linguistic models that drive these avatars. By developing more sophisticated synthesis systems, it is possible to create avatars capable of meaningful communication with Deaf users, providing a richer and more inclusive online experience.
 
 \section{Objectives and Contributions}
 
-The primary objectives of this thesis are:
+This research is centered on addressing the limitations of existing sign language synthesis systems and exploring new methods to enhance the naturalness and expressiveness of synthesized sign language animations. Specifically, this research aims to:
+
 \begin{itemize}
-    \item To develop new methods for generating more natural and expressive sign language animations.
-    \item To explore machine learning techniques that enhance the scalability and adaptability of sign language synthesis models.
+    \item \textbf{Develop new methods for generating more natural and expressive sign language animations:} The focus here is on improving the quality of sign language synthesis based on linguistic input that better captures the intricacies of sign language, including hand shapes, movements, and facial expressions, which are crucial for conveying both the form and meaning of a sign language utterance.
+    \item \textbf{Explore the scalability and adaptability of sign language synthesis:} Given the diversity of sign languages worldwide, it is essential to develop systems that can adapt to different linguistic and cultural contexts. This research will investigate methods to create scalable models that can be easily adapted to various sign languages and avatar systems, ensuring that the technology can be applied globally.
 \end{itemize}
 
-This research is expected to make the following contributions:
+The contributions of this research are expected to be multifaceted, offering both theoretical and practical advancements in the field of sign language synthesis:
+
 \begin{itemize}
-    \item Introducing novel algorithms or models for sign language synthesis.
-    \item Demonstrating improvements in the realism and comprehensibility of generated sign language.
-    \item Providing a framework that can be adapted to various sign languages and contexts.
+    \item \textbf{Introducing novel algorithms for sign language synthesis:} This research will contribute new techniques and methodologies for synthesizing sign language, particularly in the areas of rigging, facial expression synthesis, and motion interpolation. These algorithms are designed to improve the realism and fluidity of sign language animations, making them more natural and understandable for users.
+    \item \textbf{Demonstrating improvements in the realism and scalability of generated sign language:} The research will include evaluations of the proposed methods, demonstrating their effectiveness in producing sign language animations.
+    \item \textbf{Providing a framework that can be adapted to various sign languages and contexts:} The ultimate goal of this research is to create a flexible and adaptable framework that can be applied to different sign languages and used in a variety of contexts, from education and media to public services.
 \end{itemize}
 
-The structure of this thesis is designed to guide the reader through the research in a logical and coherent manner. Following this introductory chapter, Chapter \ref{ch:background-work} provides a comprehensive review of the background work, covering existing methods in sign language synthesis, relevant machine learning techniques, and the challenges identified in the literature. The subsequent chapters, \ref{rigging_layers}, \ref{multi_track}, \ref{facial_expressions}, \ref{intermediate_blocks}, \ref{pose_matching}, focus on the key technical contributions of this research. Chapter \ref{rigging_layers} introduces the concept of rigging layers, followed by Chapter \ref{multi_track}, which discusses the multi-track approach. Chapter \ref{facial_expressions} explores the integration of facial expressions, while Chapter \ref{intermediate_blocks} delves into the development of intermediate blocks. Chapter \ref{pose_matching} addresses pose matching techniques. Finally, Chapter \ref{conclusion} concludes the thesis by discussing the implications of the findings, their potential applications in real-world scenarios such as accessibility and education, and offering a summary of the key results along with suggestions for future research.
+\section{Significance of the Problem}
 
+The significance of this research lies in its potential to close the technical gap between sign linguists and character animators, facilitating a more seamless collaboration between these fields. Traditionally, sign linguists and animators have worked in parallel but largely disconnected domains. Sign linguists focus on the linguistic structure and cultural context of sign languages, while character animators concentrate on creating visually convincing movements in digital avatars. However, the complexity and nuance of sign languages require a deeper integration of these two areas to produce animations that are both linguistically accurate and visually expressive.
+
+One of the key innovations explored in this research is the use of the AZee framework, which provides a structured linguistic model for sign languages. AZee offers a formalism for encoding the various components of sign language, including hand shapes, movements, and facial expressions, within a unified system. By leveraging AZee, this research bridges the gap between the abstract linguistic representations of signs and the concrete visual expressions needed for character animation. This approach allows for the generation of sign language animations that are not only technically precise but also retain the fluidity and naturalness of human signing.
+
+Moreover, AZee facilitates the creation of reusable templates and motion curves, enabling animators to produce consistent and contextually appropriate animations without needing extensive linguistic expertise. This reduces the reliance on handcrafted animations and allows for the scalability of sign language synthesis across different languages and cultural contexts. The integration of AZee into the animation pipeline enhances the adaptability of the system, making it possible to quickly generate animations for various sign languages, each with its own unique grammar and style.
+
+In summary, the research contributes to both the field of sign language linguistics and the domain of computer animation by providing a framework that unites the strengths of both disciplines. It addresses the need for more effective tools that can translate linguistic insights into high-quality, real-time sign language animations, thus promoting greater accessibility and inclusivity for the Deaf community.
+
+\section{Structure of the Thesis}
+
+The structure of this thesis is designed to guide the reader through the research in a logical and coherent manner. Following this introductory chapter, Chapter \ref{ch:background_work} provides a comprehensive review of the background work, covering existing methods in sign language synthesis, relevant techniques, and the challenges identified in the literature. This chapter sets the stage for the technical contributions that follow, offering a detailed overview of the current state of the field and the gaps that this research aims to address.
+
+Chapter \ref{ch:rigging_layers} introduces the concept of rigging layers, a critical component in the synthesis of sign language animations. This chapter delves into the technical aspects of creating and managing the skeletal structure of avatars, which is essential for producing realistic and fluid movements. The discussion includes both traditional and innovative approaches to rigging, highlighting the strengths and limitations of each method.
+
+Chapter \ref{ch:multi_track} builds on the concept of rigging by discussing the multi-track approach to sign language synthesis. This approach allows for the simultaneous representation of multiple aspects of sign language, such as hand movements, facial expressions, and body postures. By integrating these elements into a cohesive system, the multi-track approach enables the synthesis of more natural and expressive animations.
+
+In Chapter \ref{ch:facial_expressions}, the focus shifts to the synthesis of facial expressions, which are a critical component of sign language. Facial expressions convey a wealth of information in sign language, from grammatical markers to emotional cues. This chapter explores the challenges of synthesizing realistic facial expressions and presents new methods for integrating them into sign language animations.
+
+Chapter \ref{ch:intermediate_blocks} addresses the development of intermediate blocks, which are used to create smooth transitions between different elements of sign language animations. This chapter discusses the importance of motion curves and templates in achieving fluid and natural movements, and it introduces new techniques for generating intermediate blocks that enhance the overall realism of the animations.
+
+Chapter \ref{ch:pose_matching} focuses on pose matching techniques, which are used to ensure that the synthesized animations accurately reflect the intended sign language gestures. This chapter presents new methods for matching poses across different sign language models, with a focus on improving the accuracy and consistency of the animations.
+
+Finally, Chapter \ref{ch:conclusion} concludes the thesis by discussing the implications of the findings, their potential applications in real-world scenarios, and offering a summary of the key results along with suggestions for future research. This chapter also reflects on the broader impact of the research, considering how the advancements in sign language synthesis can contribute to the ongoing efforts to promote accessibility and inclusivity for Deaf individuals.
 
 \section{Publications}
+
 Work presented in this thesis has been the subject of the following publications:
-\begin{cvpubs}
-    \fullcite{sharma:hal-03721720}
-\end{cvpubs}
 
-\begin{cvpubs}
-    \fullcite{sharma:hal-04143663}
-\end{cvpubs}
+\fullcite{sharma:hal-03721720}
+\fullcite{sharma:hal-04143663}
+\fullcite{10193413}
+\fullcite{10.1145/3606037.3606837}
+\fullcite{Sharma2024FacialEF}
+\fullcite{10.1145/3658852.3659080}
 
-\begin{cvpubs}
-    \fullcite{10193413}
-\end{cvpubs}
-
-\begin{cvpubs}
-    \fullcite{10.1145/3606037.3606837}
-\end{cvpubs}
-
-\begin{cvpubs}
-    \fullcite{Sharma2024FacialEF}
-\end{cvpubs}
-
-\begin{cvpubs}
-    \fullcite{10.1145/3658852.3659080}
-\end{cvpubs}
 \end{document}
