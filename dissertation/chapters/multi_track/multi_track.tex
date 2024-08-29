@@ -16,14 +16,13 @@ This chapter aims to present a novel approach to sign language synthesis using m
 
 The content of this chapter is structured as follows: We introduce the key concepts of multi-track timeline control and non-linear editing in sign language synthesis. The \emph{Multi-Track Timeline} section covers related work, AZee score synchronization, and conflict resolution techniques. The \emph{Non-Linear Editing} section discusses its role in enhancing animation flexibility, along with rules for block ordering. In \emph{Implementation and Results}, we describe the integration within Blender’s editor and evaluate AZee synthesis against benchmarks. Finally, the \emph{Conclusion and Future Prospects} section summarizes the advantages of our approach and suggests directions for future research.
 
-\section{Introduction}
-
-TODO
-
-
 \section{Multi-Track Timeline}
 
+todo
+
 \subsection{Related Work}
+
+todo
 
 \subsubsection{Existing low-level AZee synthesizor}
 
@@ -35,22 +34,26 @@ todo john, cant leverage low level, etc etc
 
 \subsubsection{Outside Sign Language Synthesis}
 
-Matthis
+todo Matthis
+
+\subsubsection{Non-Linear Editing}
+todo Non-linear editing refers to the ability to access and edit any frame of a video clip or animation independently of the sequence. This flexibility allows for more sophisticated and precise adjustments, essential for achieving high-quality animations.
 
 \subsection{AZee Synced Score to Multi-Track Timeline}
 
+todo
+
+\subsection{AZee and Non-Linear Editing}
+
+todo
+
 \subsection{Resolving Block Conflicts}
+
+todo
 
 
 \subsubsection{Pre-animated blocks}
-
-\section{Non-Linear Editing}
-
-Non-linear editing refers to the ability to access and edit any frame of a video clip or animation independently of the sequence. This flexibility allows for more sophisticated and precise adjustments, essential for achieving high-quality animations.
-
-\subsection{Related Work}
-
-\subsection{AZee and Non-Linear Editing}
+todo
 
 \subsection{Block Ordering}
 
@@ -73,8 +76,6 @@ Pre-animated blocks put first
 \textbf{Solution:} Evaluate these blocks in a second pass to ensure dependent constraints are maintained.
 
 Cases where blocks do not overlap or affect different bone chains can be evaluated independently. This includes non-overlapping blocks and constraints such as morph and look, which act independently from other constraints.
-
-
 
 \section{Implementation and Results}
 

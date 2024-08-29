@@ -1,9 +1,10 @@
 \documentclass[../../main.tex]{subfiles}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
 \begin{document}
 \chapter{Rigging and Layers}
 \label{ch:rigging_layers}
 
-\section{Introduction}
 In computer graphics, rigging involves setting up a skeletal structure (also known as an armature) that drives the mesh of a character, allowing it to move and deform in a realistic manner. Rigging is a critical component of character animation, as it determines how the character responds to movement and how it deforms during animation. In the context of sign language avatars, rigging plays a crucial role in capturing the complex articulations and expressions of sign language gestures.
 
 The layered approach to rigging, which this chapter explores in depth, offers a sophisticated method for managing these complexities. By dividing the rigging process into several distinct layers—each responsible for a different aspect of the avatar’s movement and deformation—we can achieve a higher level of control and flexibility. This approach not only facilitates the creation of more natural and expressive animations but also makes the system scalable and adaptable to a wide range of linguistic contexts.
@@ -45,6 +46,7 @@ One of the first contributions of my work was to create a new interface for the 
     \label{fig:new_interface}
 \end{figure}
 
+todo
 \begin{table}
     \centering
     \begin{tabular}{|c|c|}
@@ -70,22 +72,44 @@ The AZee low-level language consists of 332 sites (appendix \ref{appendix:sites}
     \label{fig:prev_sites}
 \end{figure}
 
-This site generation process could be partially automated if we have the knowledge of the bone structure. Algorithm was used to generate sites based on bone location and avatar mesh using simple raycasting \ref{alg:raycasting}.
+This site generation process could be partially automated if we have the knowledge of the bone structure. Algorithm was used to generate sites based on bone location and avatar mesh using simple raycasting \ref{alg:site_generation_with_raycasting}.
 
-TODO
 \begin{algorithm}
-    \label{alg:raycasting}
-    \caption{Raycasting algorithm for automatic site generation}
+    \label{alg:site_generation_with_raycasting}
+    \caption{Raycasting Algorithm for Automatic Site Generation}
     \begin{algorithmic}
-        \State $bones \gets$ get all bones in the armature
-        \For{$bone$ in $bones$}
-            \State $head \gets$ get the head of the bone
-            \State $tail \gets$ get the tail of the bone
-            \State $midpoint \gets$ get the midpoint of the bone
-            \State $direction \gets$ get the direction of the bone
-            \State $site \gets$ create a site at the midpoint of the bone
-            \State $site \gets$ move the site in the direction of the bone
+        \State \textbf{Input:} A 3D model with bones
+        \State \textbf{Output:} Generated and positioned sites on the model
+
+        \State $sites \gets$ an empty list to store generated site locations
+
+        \State \text{Remove existing sites from the model}
+
+        \State $armature \gets$ find the armature associated with the 3D model
+
+        \For{each $bone$ in $armature$}
+            \State $start\_point \gets$ determine a starting point based on the bone's position
+            \State $direction \gets$ calculate the direction vector based on the bone's orientation
+            
+            \State $hit\_success, hit\_location \gets$ perform raycasting from $start\_point$ in $direction$
+            \If{$hit\_success$}
+                \State $site\_location \gets hit\_location$
+            \Else
+                \State $site\_location \gets$ fallback location based on predefined logic
+            \EndIf
+
+            \State add $site\_location$ to $sites$ list
+            
+            \State \text{Apply any additional constraints or relationships between the site and the bone}
         \EndFor
+
+        \For{each $finger$ in the model's fingers}
+            \For{each $segment$ in $finger$}
+                \State repeat the raycasting procedure to determine and store $site\_locations$ for each segment
+            \EndFor
+        \EndFor
+
+        \State finalize and store the $sites$ list for further processing or rendering
     \end{algorithmic}
 \end{algorithm}
 
@@ -175,8 +199,8 @@ FK provides animators with a high degree of control over each individual bone in
 The previous low level synthesizor for AZee \cite{fabrizio} used a constraint based optimization algorithm to generate the armature pose for a frame. This algorithm \ref{alg:old_constraint_optimization} collects all posture constaints given by the AZee Animated Score for every frame and solves for the posture by optimizing this constraints using distance functions. 
 
 \begin{algorithm}
-    \caption{Constraint-Based Optimization for Posture Synthesis based on \emph{flattened} animated score}
-    \label{alg:old_constraint_based_optimization}
+    \caption{Constraint-Based Optimization for Posture Synthesis}
+    \label{alg:trimmed_constraint_based_optimization}
     \begin{algorithmic}[1]
     \Require $\text{PostureConstraints} \ \mathit{posture\_constraint}$, $\text{Object} \ \mathit{armature\_object}$
     \Ensure Armature object is posed according to the constraints
@@ -186,50 +210,33 @@ The previous low level synthesizor for AZee \cite{fabrizio} used a constraint ba
     \State $angle\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_bone\_rot\_angle\_threshold \times \pi / 180}$
     \State $max\_iterations \gets \mathit{bpy.context.scene.azee\_ik\_max\_iterations}$
     
-    \State $place\_distance, orient\_angles \gets \textsc{ComputeDistance}(\mathit{posture\_constraint})$
     \While{$i < max\_iterations$}
-        \State \textbf{Apply Positional Constraint:} \textsc{ApplyPositionConstraint}($\mathit{posture\_constraint}$)
-        \State \textbf{Apply Rotational Constraints:} \textsc{ApplyOrientConstraints}($\mathit{posture\_constraint}$)
-        
-        \State $place\_distance, orient\_angles \gets \textsc{ComputeDistance}(\mathit{posture\_constraint})$
-        
-        \State \textbf{Check Thresholds:}
+        \State \textbf{Apply Constraints:} \textsc{ApplyPositionConstraint}($\mathit{posture\_constraint}$), \textsc{ApplyOrientConstraints}($\mathit{posture\_constraint}$)
+        \State \textbf{Compute Offsets:} $place\_distance, orient\_angles \gets \textsc{ComputeDistance}(\mathit{posture\_constraint})$
         \If {$\mathit{place\_distance} < \mathit{distance\_threshold}$ \textbf{and} $\max(\mathit{orient\_angles}) < \mathit{angle\_threshold}$}
             \State \textbf{Break:} \textbf{end while}
         \EndIf
-        
         \State $i \gets i + 1$
     \EndWhile
     
     \Procedure{ApplyPositionConstraint}{$\mathit{posture\_constraint}$}
         \If {$\mathit{posture\_constraint.place\_constraint} \neq \text{None}$}
-            \State $site\_pose\_bone \gets \mathit{posture\_constraint.place\_constraint.site\_pose\_bone}$
-            \State $target\_vect \gets \mathit{posture\_constraint.place\_constraint.target\_vect}$
-            \State \textbf{Setup Target:} $tmp\_ik\_target \gets \textsc{CreateTemporaryTarget}(target\_vect)$
-            \State \textbf{Apply IK Constraint:} \textsc{ApplyIKConstraint}($site\_pose\_bone$, $tmp\_ik\_target$, \textit{position})
-            \State \textsc{BakePose}($\mathit{posture\_constraint}$)
-            \State \textsc{RemoveTemporaryTarget}($tmp\_ik\_target$)
+            \State \textbf{Apply IK:} \textsc{ApplyIKConstraint}($\mathit{posture\_constraint.place\_constraint.site\_pose\_bone}$, 
+            \textsc{CreateTemporaryTarget}($\mathit{posture\_constraint.place\_constraint.target\_vect}$), \textit{position})
         \EndIf
     \EndProcedure
     
     \Procedure{ApplyOrientConstraints}{$\mathit{posture\_constraint}$}
         \ForAll {$orient\_constraint \in \mathit{posture\_constraint.orient\_constraints}$}
-            \State $effector\_pose\_bone \gets \mathit{orient\_constraint.pose\_bone}$
-            \State $ik\_target\_rot \gets \mathit{orient\_constraint.get\_target\_quaternion()}$
-            \State $ik\_relaxation\_mask \gets \mathit{orient\_constraint.get\_axis\_relaxation\_mask()}$
-            \State \textbf{Setup Target:} $tmp\_ik\_target \gets \textsc{CreateTemporaryTarget}(ik\_target\_rot)$
-            \State \textbf{Apply IK Constraint:} \textsc{ApplyIKConstraint}($effector\_pose\_bone$, $tmp\_ik\_target$, \textit{rotation}, $ik\_relaxation\_mask$)
-            \State \textsc{BakePose}($\mathit{posture\_constraint}$)
-            \State \textsc{RemoveTemporaryTarget}($tmp\_ik\_target$)
+            \State \textbf{Apply IK:} \textsc{ApplyIKConstraint}($orient\_constraint.pose\_bone$, 
+            \textsc{CreateTemporaryTarget}($orient\_constraint.get\_target\_quaternion()$), \textit{rotation}, 
+            $orient\_constraint.get\_axis\_relaxation\_mask()$)
         \EndFor
     \EndProcedure
     
     \Procedure{ComputeDistance}{$\mathit{posture\_constraint}$}
-        \State $place\_offset \gets \textsc{ComputePlaceOffset}(\mathit{posture\_constraint})$
-        \State $orient\_offsets \gets \textsc{ComputeOrientOffsets}(\mathit{posture\_constraint})$
-        \State $place\_distance \gets \textsc{ComputeDistanceFromOffset}(place\_offset)$
-        \State $orient\_angles \gets \textsc{ComputeAnglesFromOffsets}(orient\_offsets)$
-        \State \Return ($place\_distance$, $orient\_angles$)
+        \State \Return \textsc{ComputeDistanceFromOffset}(\textsc{ComputePlaceOffset}($\mathit{posture\_constraint}$)), 
+        \textsc{ComputeAnglesFromOffsets}(\textsc{ComputeOrientOffsets}($\mathit{posture\_constraint}$))
     \EndProcedure
     \end{algorithmic}
 \end{algorithm}
@@ -237,25 +244,24 @@ The previous low level synthesizor for AZee \cite{fabrizio} used a constraint ba
 The approach handles only placements and orientations and uses a flattened animated AZee Score. This was improved \ref{alg:new_constraint_optimization} by generating from the multi-track synced score itself(more discussed in chapter \ref{ch:multi-track}) with support for other constraints such as \emph{morph}, \emph{lookat} and \emph{trill}.
 
 \begin{algorithm}
-    \caption{Constraint-Based Optimization for Posture Synthesis based on a multi-track synced score}
-    \label{alg:new_constraint_based_optimization}
+    \caption{Constraint-Based Optimization for Posture Synthesis}
+    \label{alg:trimmed_multi_track_optimization}
     \begin{algorithmic}[1]
         \Require $\text{PostureConstraints} \ \mathit{posture\_constraint\_DAG}$, $\text{Object} \ \mathit{armature\_object}$, $\text{FrameRange} \ \mathit{frames}$
         \Ensure Armature object is posed according to the constraints
         
         \State \textbf{Initialize:} $i \gets 0$
-        \State $distance\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_site\_distance\_threshold}$
-        \State $angle\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_bone\_rot\_angle\_threshold \times \pi / 180}$
+        \State $distance\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_site\_distance\_threshold}$, $angle\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_bone\_rot\_angle\_threshold \times \pi / 180}$
         \State $max\_iterations \gets \mathit{bpy.context.scene.azee\_ik\_max\_iterations}$
-        
         \State $\mathit{sorted\_constraints} \gets \mathit{posture\_constraint\_DAG.topological\_sort()}$
         \State $frames\_to\_keyframe \gets \textsc{DetermineFramesToKeyframe}(\mathit{frames}, \mathit{dynamic\_points})$
+        
         \While{$i < max\_iterations$}
             \ForAll {$f \in \mathit{frames\_to\_keyframe}$}
                 \State $\mathit{cumulative\_loss} \gets 0.0$
                 \ForAll {$constraint \in \mathit{sorted\_constraints}$}
                     \State \textbf{Apply Constraint:} \textsc{ApplyConstraint}($constraint$, $f$)
-                    \State $cumulative\_loss \gets cumulative\_loss + \mathit{constraint.get\_loss(f)}$
+                    \State $\mathit{cumulative\_loss} \gets cumulative\_loss + \mathit{constraint.get\_loss(f)}$
                 \EndFor
                 \If {$cumulative\_loss < \mathit{bpy.context.scene.azee\_animator\_threshold}$}
                     \State \textbf{Break:} \textbf{end while}
@@ -267,32 +273,24 @@ The approach handles only placements and orientations and uses a flattened anima
         
         \Procedure{ApplyConstraint}{$constraint, frame$}
             \If {$constraint$ \textbf{is} PlacementConstraint}
-                \State \textbf{Evaluate Target:} $target \gets \textsc{EvaluatePlacementTarget}(constraint, frame)$
-                \State \textbf{Place Site:} \textsc{PlaceSite}($constraint.site$, $target$)
+                \State \textsc{PlaceSite}($constraint.site$, \textsc{EvaluatePlacementTarget}($constraint$, $frame$))
             \ElsIf {$constraint$ \textbf{is} OrientationConstraint}
-                \State \textbf{Evaluate Direction:} $direction \gets \textsc{EvaluateOrientation}(constraint, frame)$
-                \State \textbf{Rotate Bone:} \textsc{RotateBone}($constraint.bone$, $direction$)
+                \State \textsc{RotateBone}($constraint.bone$, \textsc{EvaluateOrientation}($constraint$, $frame$))
             \ElsIf {$constraint$ \textbf{is} MorphConstraint}
-                \State \textbf{Apply Morph:} \textsc{ApplyMorph}($constraint$, frame)
+                \State \textsc{ApplyMorph}($constraint$, $frame$)
             \ElsIf {$constraint$ \textbf{is} LookAtConstraint}
-                \State \textbf{Evaluate LookAt Point:} $point \gets \textsc{EvaluateLookAtPoint}(constraint, frame)$
-                \State \textbf{Rotate Eyes:} \textsc{RotateEyesToTarget}($constraint.eyes$, $point$)
+                \State \textsc{RotateEyesToTarget}($constraint.eyes$, \textsc{EvaluateLookAtPoint}($constraint$, $frame$))
             \ElsIf {$constraint$ \textbf{is} TrillConstraint}
-                \State \textbf{Apply Trill:} \textsc{ApplyTrill}($constraint$, frame)
+                \State \textsc{ApplyTrill}($constraint$, $frame$)
             \ElsIf {$constraint$ \textbf{is} TranspathConstraint}
-                \State \textbf{Set Path:} $path \gets \textsc{DeterminePath}(constraint, frame\_start, frame\_end)$
-                \State \textbf{Follow Path:} \textsc{FollowPath}($constraint.site$, $path$)
+                \State \textsc{FollowPath}($constraint.site$, \textsc{DeterminePath}($constraint$, $frame$))
             \Else
-                \State \textbf{Unknown Constraint Type:} \textsc{HandleError}()
+                \State \textsc{HandleError}()
             \EndIf
         \EndProcedure
         
         \Procedure{DetermineFramesToKeyframe}{$frames, dynamic\_points$}
-            \State $frames\_to\_keyframe \gets \textsc{IdentifyKeyFrames}(\mathit{frames})$
-            \If {$dynamic\_points$ \textbf{is not} \textbf{empty}}
-                \State \textbf{Add Dynamic Frames:} $frames\_to\_keyframe \gets frames\_to\_keyframe \cup \textsc{DynamicFrameRanges}(dynamic\_points)$
-            \EndIf
-            \State \Return $frames\_to\_keyframe$
+            \State \Return $\textsc{IdentifyKeyFrames}(\mathit{frames}) \cup \textsc{DynamicFrameRanges}(dynamic\_points)$
         \EndProcedure
         
         \Procedure{InsertKeyframe}{$frame$}
@@ -322,10 +320,86 @@ Morphs do not operate in isolation but rather work in tandem with the avatar's s
 For instance, when an avatar raises its hand to sign, the skeletal system dictates the overall arm movement, but the morphs refine the finger positions and facial expressions, ensuring that the sign is communicated effectively. The ability to blend morphs with skeletal movements allows for the creation of more natural and fluid animations, which are essential for the realism and believability of the avatar.
 
 \subsubsection{1D Space of a Morph}
+
 todo
+- show morph space
+- show and explain graph
+
+\begin{tikzpicture}
+    \label{fig:morph_graph}
+    \begin{axis}[
+        domain=0:2, % Define the range of x
+        samples=100, % Number of samples to plot
+        axis lines=middle, % Draw the axes in the middle
+        xlabel={$x$},
+        ylabel={$y$},
+        ymin=-0.1, ymax=1.1, % Define y-axis range
+        xmin=-0.1, xmax=1.1, % Define x-axis range
+        xtick={0, 0.5, 1, 2},
+        ytick={0, 0.5, 1},
+        grid=both, % Add a grid
+        thick,
+    ]
+    \addplot[blue, thick] {1 / (1 + exp(-10 * (x - 0.5)))};
+    \end{axis}
+\end{tikzpicture}
 
 \subsubsection{Integration with other layers}
+
 todo
+\begin{algorithm}
+    \caption{Posture Generation with Constraints}
+    \label{alg:posture_morph_integrate}
+    \begin{algorithmic}[1]    
+    \Procedure{GeneratePosture}{$Blocks$}
+        \For{each $Block$ in $Blocks$}
+            \State $Constraints \gets \text{TopologicalSort}(\text{CreateDAG}(Block))$
+            \For{each $Frame$ from $Block.Start$ to $Block.End$}
+                \For{$Epoch \gets 1$ to $MaxEpochs$}
+                    \State $Loss \gets 0$
+                    \For{each $C$ in $Constraints$}
+                        \State \text{Apply}($C$, $Frame$)
+                        \State $Loss \gets Loss + \text{ComputeLoss}(C, Frame)$
+                    \EndFor
+                    \If{$Loss < Threshold$} \textbf{break} \EndIf
+                \EndFor
+                \State \text{InsertKeyframe}(Frame)
+            \EndFor
+        \EndFor
+    \EndProcedure
+    
+    \Procedure{Apply}{$C$, $Frame$}
+        \If{$C$ is $MorphConstraint$} \State \text{ApplyMorph}($C$, $Frame$)
+        \ElsIf{$C$ is $PlacementConstraint$} \State \text{ApplyPlacement}($C$, $Frame$)
+        \ElsIf{$C$ is $OrientationConstraint$} \State \text{ApplyOrientation}($C$, $Frame$)
+        \EndIf
+    \EndProcedure
+    
+    \end{algorithmic}
+\end{algorithm}
+
+todo
+\begin{algorithm}
+    \caption{Calculate MorphConstraint Loss in Terms of FK}
+    \begin{algorithmic}[1]
+    
+    \Procedure{ComputeMorphFKLoss}{$\mathbf{p}_{\text{current}}$, $\mathbf{p}_{\text{target}}$, $\mathbf{q}_{\text{current}}$, $\mathbf{q}_{\text{target}}$}
+        \State $\text{PositionLoss} \gets \|\mathbf{p}_{\text{current}} - \mathbf{p}_{\text{target}}\|$
+        \State $\text{RotationDiff} \gets \mathbf{q}_{\text{current}} \cdot \mathbf{q}_{\text{target}}$
+        \State $\text{RotationLoss} \gets 1 - |\text{RotationDiff}|$
+        \State $\text{TotalLoss} \gets \lambda_p \times \text{PositionLoss} + \lambda_r \times \text{RotationLoss}$
+        \State \Return $\text{TotalLoss}$
+    \EndProcedure
+    
+    \Procedure{ApplyMorphConstraint}{$\text{MorphConstraint}$, $\text{Frame}$}
+        \State $\mathbf{p}_{\text{current}}, \mathbf{q}_{\text{current}} \gets \text{ApplyMorph}(\text{MorphConstraint}, \text{Frame})$
+        \State $\mathbf{p}_{\text{target}}, \mathbf{q}_{\text{target}} \gets \text{GetTargetState}(\text{Frame})$
+        \State $\text{Loss} \gets \text{ComputeMorphFKLoss}(\mathbf{p}_{\text{current}}, \mathbf{p}_{\text{target}}, \mathbf{q}_{\text{current}}, \mathbf{q}_{\text{target}})$
+        \State \Return $\text{Loss}$
+    \EndProcedure
+    
+    \end{algorithmic}
+\end{algorithm}
 
 \section{Results}
 todo The implementation of the layered rigging system in Blender has yielded promising results in the synthesis of sign language animations. By leveraging the strengths of both procedural and data-driven techniques, we have been able to create animations that are both natural and scalable.
