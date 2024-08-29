@@ -96,20 +96,38 @@ The AZee interpreter parses this code recursively, generating the corresponding(
 
 This timeline is geenrated using the recursive algorithm \ref{alg:azee_recursion}.
 
-todo
 \begin{algorithm}
   \caption{AZee Recursion}
   \label{alg:azee_recursion}
-  \begin{algorithmic}
-    \Function{AZee}{$code$}
-      \If{$code$ is a leaf node}
-        \State \Return $code$
+  \begin{algorithmic}[1]
+    \Function{create\_blocks}{name, score, parent\_name, parent\_score, dynamic\_points}
+      \If{parent\_score is not None}
+        \State Modify name and sync rules for recursion
       \EndIf
-      \State $result \gets$ empty list
-      \For{$child$ in $code$}
-        \State $result \gets$ \Call{AZee}{$child$}
-      \EndFor
-      \State \Return $result$
+      \State Update block timings
+      \If{score has dynamic\_point}
+        \State Append dynamic\_point to dynamic\_points
+      \EndIf
+      \If{shortcut\_action exists and use\_shortcut\_actions is true}
+        \State Increment sync order
+        \State Create and append preanimated block
+        \State Update score timings
+        \State Update parent sync rule if needed
+        \State \Return block
+      \EndIf
+      \If{score is SyncedScore}
+        \ForAll{child\_score in score.block\_contents}
+          \State Create and append meta block
+          \State Recursively create composite blocks
+        \EndFor
+      \ElsIf{score is CstrScore or HoldScore}
+        \State Increment sync order
+        \State Create and append block based on type
+      \EndIf
+      \If{parent\_score is not None}
+        \State Update parent score timings
+      \EndIf
+      \State \Return block
     \EndFunction
   \end{algorithmic}
 \end{algorithm}
@@ -136,15 +154,13 @@ Sign Language synthesis is the process of generating sign language discourses fr
 \subsection{2D Techniques}
 \label{subsec:2d_techniques}
 
-2D techniques often involve video-based synthesis, where signs are rendered in a flat, two-dimensional space. 
-
-The most popular approach by \cite{todo} uses the SignBank dataset, which contains 220k parallel samples of SignWriting and spoken language text. SignWriting served as an intermediate representation, translating spoken text into SignWriting before converting it into human poses. Neural machine translation (NMT) architectures with techniques like byte pair encoding (BPE) segmentation were used. The evaluations for translation show over 30 BLEU scores in bilingual settings and over 20 BLEU in multilingual settings, validating the approach and highlighting the effectiveness of SignWriting in NLP for sign language processing. The synthesis was in the form of a 2D video, fitted on the mediapipe\cite{todo} a GAN\cite{TODO}.
+The state of the art in 2D synthesis \cite{walsh2024sign} addresses the common issue of regression to the mean in previous models, which often resulted in unnatural and under-articulated signing. The authors propose a method called "sign stitching," which involves normalizing signs into a canonical pose, cropping, stitching them together, and applying frequency domain filtering and resampling to produce cohesive, expressive sign language sequences. They also introduce a Noise Substitution Vector Quantization (NSVQ) transformer to integrate facial expressions, enhancing the naturalness of the signs. The approach is evaluated using a SignGAN model to generate photo-realistic signers, achieving state-of-the-art performance across multiple datasets and receiving positive feedback in user evaluations for its realism and expressiveness. The synthesis is in the form of a 2D video, fitted on the mediapipe a GAN.
 
 Figures \ref{fig:synthesis_mediaipe_2d} and \ref{fig:synthesis_gan_2d} illustrate this process, showing the initial SignWriting-based synthesis and the subsequent fitting of a GAN on the Mediapipe skeleton to enhance the realism of the generated signs.
 
 \begin{figure} 
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/sign_writing_synthesis.png} 
-  \caption{Synthesis using SignWriting as an intermediate representation} 
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/synthesis_mediaipe_2d.png} 
+  \caption{Synthesis using Sign-Stitching} 
   \label{fig:synthesis_mediaipe_2d} 
 \end{figure}
 
@@ -486,7 +502,7 @@ Sign language animation from text focuses on generating realistic sign language 
 \subsubsection{SignAvatars}
 \label{subsubsec:signavatars}
 
-The SignAvatars \cite{todo} dataset introduces a large-scale, multi-prompt 3D sign language motion dataset with 70,000 videos and 8.34 million frames from 153 signers. It includes isolated and continuous signs, annotated with 3D meshes and biomechanically-valid poses. The dataset supports tasks such as 3D sign language recognition and production from text scripts, individual words, and HamNoSys notation. A novel annotation pipeline ensures accurate 3D holistic annotations. Evaluation metrics indicate significant improvements in generating natural and consistent 3D sign language animations from diverse textual inputs using models like Sign-VQVAE.
+The SignAvatars \cite{yu2023signavatars} dataset introduces a large-scale, multi-prompt 3D sign language motion dataset with 70,000 videos and 8.34 million frames from 153 signers. It includes isolated and continuous signs, annotated with 3D meshes and biomechanically-valid poses. The dataset supports tasks such as 3D sign language recognition and production from text scripts, individual words, and HamNoSys notation. A novel annotation pipeline ensures accurate 3D holistic annotations. Evaluation metrics indicate significant improvements in generating natural and consistent 3D sign language animations from diverse textual inputs using models like Sign-VQVAE.
 
 \subsubsection{Sgnify}
 \label{subsubsec:sgnify}
