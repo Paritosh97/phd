@@ -66,18 +66,18 @@ HamNoSys offers a detailed representation of the nuanced components in an SL utt
 
 Unlike previously discussed lexical approaches, the AZee model is grounded in the concept of production rules, which link specific meanings to observable forms. This model operates on the principle that the meaning of a sign can be broken down into a set of features, which are then represented through production rules. These rules guide the generation of the sign's form, encompassing aspects like handshape, movement, and location. Designed to be both flexible and extensible, the AZee model is capable of representing a broad spectrum of signs and sign languages. It is particularly advantageous for sign language synthesis, offering a systematic and structured method for describing signs and their components.
 
-In this model, signs can be described using a low-level language, which directly correlates with the postures of an abstract avatar, allowing for the animation of the sign. This low-level code can also be integrated with a higher-level AZee language, enhancing its versatility. Recently, the AZee model has even been extended to function as a writing system.
+In this model, signs can be described using a low-level language, which directly correlates with the postures of an abstract avatar, allowing for the animation of the sign. This low-level code can also be integrated with a higher-level AZee language, enhancing its versatility. Recently, the AZee model has even been extended to function as a writing system \cite{todo} (figure \ref{fig:azvd}).
 
-For instance, the AZee visual description for a person aged 52 is depicted in Figure \ref{fig:azvd}. The corresponding AZee code for this description would be:
+To understand how the AZee model works, consider the following example of the utterance meaning "a person aged 52". The AZee code for this utterance will be:
 
 \begin{verbatim}
 :info-about
 	'topic
-	:une personne
+	:person
 	'info
 	:info-about
 		'topic
-		:âge
+		:age
 		'info
 		:tens-units
 			'tens
@@ -86,59 +86,33 @@ For instance, the AZee visual description for a person aged 52 is depicted in Fi
 			.nb-2
 \end{verbatim}
 
-The AZee interpreter parses this code recursively, generating the corresponding(figure \ref{fig:timeline_example}) multi-track timeline for the avatar to animate.
+The AZee interpreter can parse this description recursively, generating a \emph{Score}(figure \ref{fig:azee_score_example}) (inspired from musical scores) which is then used to animate the sign.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/timeline_example.png}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azee_score_example.png}
   \caption{AZee visual description for a person aged 52}
-  \label{fig:timeline_example}
+  \label{fig:azee_score_example}
 \end{figure}
 
-This timeline is geenrated using the recursive algorithm \ref{alg:azee_recursion}.
+A \emph{Score} in AZee can be of various types,
 
-\begin{algorithm}
-  \caption{AZee Recursion}
-  \label{alg:azee_recursion}
-  \begin{algorithmic}[1]
-    \Function{create\_blocks}{name, score, parent\_name, parent\_score, dynamic\_points}
-      \If{parent\_score is not None}
-        \State Modify name and sync rules for recursion
-      \EndIf
-      \State Update block timings
-      \If{score has dynamic\_point}
-        \State Append dynamic\_point to dynamic\_points
-      \EndIf
-      \If{shortcut\_action exists and use\_shortcut\_actions is true}
-        \State Increment sync order
-        \State Create and append preanimated block
-        \State Update score timings
-        \State Update parent sync rule if needed
-        \State \Return block
-      \EndIf
-      \If{score is SyncedScore}
-        \ForAll{child\_score in score.block\_contents}
-          \State Create and append meta block
-          \State Recursively create composite blocks
-        \EndFor
-      \ElsIf{score is CstrScore or HoldScore}
-        \State Increment sync order
-        \State Create and append block based on type
-      \EndIf
-      \If{parent\_score is not None}
-        \State Update parent score timings
-      \EndIf
-      \State \Return block
-    \EndFunction
-  \end{algorithmic}
-\end{algorithm}
+\begin{itemize}
+  \item \textbf{Synced Score}: A recrusive structure containing otehr scores with some relative timing information.
+  \item \textbf{Constraint Score}: A score specifying constraints on the body parts.
+  \item \textbf{Hold Score}: A score holding another score for some amount of time.
+  \item \textbf{KeyFrame Score}: An abstract \emph{flattened} representation of Constraint Score.
+  \item \textbf{Non-Animated KeyFrame Score}: A \emph{flattened} representation of constraints on body parts per frame.
+  \item \textbf{Animated KeyFrame Score}: A \emph{flattened} representation of pose changes per frame.
+\end{itemize}
 
-The step by step recursion can be seen in {annex:azee_recursion}.
+In addition to the score types, the AZee model includes several other important operators and concepts that allows to represdent Sign Language. Some of these include,
 
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/timeline_example.png}
-  \caption{AZee visual description for a person aged 52}
-  \label{fig:azvd}
-\end{figure}
+\begin{itemize}
+  \item \textbf{Dynamic Points and Paths}: to define moving targets or locations that body parts should follow.
+  \item \textbf{Posture structures}: \emph{posture} provides an abstract site and skeleton representation of the human body. A posture can be modified using constraints such as \emph{place}(placement of body parts), \emph{orient}(orientation of bones), and \emph{morph}(morphoogical change in posture).
+  \item \textbf{3D math operations}: Various math operations such as vectors, mathematical curves, and transformations are supported in AZee.
+  \item \textbf{Partial Application of Operators}: allows for the partial application of an operator to a set of arguments, effectively creating a new operator.
+\end{itemize}
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azvd.png}

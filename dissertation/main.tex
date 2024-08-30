@@ -8,6 +8,7 @@
 \usepackage[default,oldstyle, scale=.95]{opensans} % police Open Sans
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{glossaries}
 \usepackage{fancyhdr}
 \usepackage{amssymb}
 \usepackage{xcolor} % où color selon l'installation
@@ -235,9 +236,9 @@ Titre, Affiliation   &   \\
 \vspace*{\fill}
 \newpage
 
-\subfile{chapters/acknowledgments/acknowledgments.tex}
+\subfile{acknowledgements/acknowledgements.tex}
 
-\subfile{chapters/resume/resume.tex}
+\subfile{resume/resume.tex}
 
 \newgeometry{top=4cm, bottom=4cm, left=2cm, right=2cm}
 
@@ -247,6 +248,10 @@ Titre, Affiliation   &   \\
 \listoffigures
 \newpage
 \listoftables
+\newpage
+\subfile{glossary/glossary.tex}
+\makeglossaries
+\printglossaries
 \newpage
 
 \newgeometry{top=4cm, bottom=4cm, left=4cm, right=4cm}

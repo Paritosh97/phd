@@ -1,6 +1,5 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
-
 \chapter{Multi-Track and Non-Linear Synthesis}
 \label{ch:multi_track}
 
@@ -14,53 +13,144 @@ In the realm of sign language, the non-linear and multi-track nature of human mo
 
 This chapter aims to present a novel approach to sign language synthesis using multi-track and non-linear editing techniques. It showcases improvements in animation quality and flexibility, demonstrating how these techniques preserve the dynamics of individual animation blocks and enhance procedural generation capabilities.
 
-The content of this chapter is structured as follows: We introduce the key concepts of multi-track timeline control and non-linear editing in sign language synthesis. The \emph{Multi-Track Timeline} section covers related work, AZee score synchronization, and conflict resolution techniques. The \emph{Non-Linear Editing} section discusses its role in enhancing animation flexibility, along with rules for block ordering. In \emph{Implementation and Results}, we describe the integration within Blender’s editor and evaluate AZee synthesis against benchmarks. Finally, the \emph{Conclusion and Future Prospects} section summarizes the advantages of our approach and suggests directions for future research.
+The content of this chapter is structured as follows: todo
 
-\section{Multi-Track Timeline}
+\section{Related Work}
+\label{sec:related_work}
 
-todo
+Both multi-track and non-linear editing have been widely used in various fields, including film production, video editing(figure \ref{fig:video_edit}), and animation (figure \ref{fig:nle_blender}). 
 
-\subsection{Related Work}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/video_editing.jpg}
+    \caption{Video editing software interface showing multiple tracks for editing video and audio clips.}
+    \label{fig:video_edit}
+\end{figure}
 
-todo
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/nle_blender.jpg}
+    \caption{Blender's non-linear editor interface showing multiple tracks for editing animation clips.}
+    \label{fig:nle_blender}
+\end{figure}
 
-\subsubsection{Existing low-level AZee synthesizor}
+However, their appliations in both procedural animation and sign language synthesis are limited.
 
-todo fabrizio, cant leverage shortcuts, etc etc
+\subsection{Existing low-level AZee synthesizor}
+\label{subsecc:old_azee_synthesizor}
 
-\subsubsection{Paula}
+Although AZee is multi-track by nature (where the lingusit has the ability to crate the track), the low-level AZee synthesizor is based on a flattened \emph{AnimatedScore} representation that flattenes each track made by the linguist. This flattening layer loses the multi-track information and the dynamics of the original AZee description. 
 
-todo john, cant leverage low level, etc etc
+For example, consider the following low-level AZee description:
 
-\subsubsection{Outside Sign Language Synthesis}
+\begin{verbatim}
+    todo
+\end{verbatim}
 
-todo Matthis
+This description when compiled with the AZee interpreter generates an AZee \emph{SyncedScore} using the algorithm \ref{alg:azee_recursion} \cite{todo} that is show in in figure \ref{fig:azee_synced_score}.
 
-\subsubsection{Non-Linear Editing}
-todo Non-linear editing refers to the ability to access and edit any frame of a video clip or animation independently of the sequence. This flexibility allows for more sophisticated and precise adjustments, essential for achieving high-quality animations.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_synced_score.png}
+    \caption{AZee Synced Score generated from the low-level AZee description.}
+    \label{fig:azee_synced_score}
+\end{figure}
 
-\subsection{AZee Synced Score to Multi-Track Timeline}
+Figure \ref{fig:azee_flattened_score} shows the flattened version of this AZee Synced Score, where all the tracks are merged into a single track. This flattening is done by collecting all the constraints for each frame and applying them to the corresponding bone rotations during animation.
 
-todo
+This approach is also inextensible to be used with pre-animated motion data since the flattened representation does not contain the original location of the corresponding animation block on the timeline. 
 
-\subsection{AZee and Non-Linear Editing}
+\subsection{Paula}
+\label{subsec:paula}
 
-todo
+On the contrary, a multi-track approach to sign language synthesis has already been done by \cite{todo}. Paula is a multi-track sign language synthesis system that strictly uses pre-recorded motion data. The system is based on a multi-track timeline where each track is created by the artist(or can be based on the AZee description). The Paula interface is shown in figure \ref{fig:paula}.
 
-\subsection{Resolving Block Conflicts}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/paula.png}
+    \caption{Paula interface showing a multi-track timeline for sign language synthesis.}
+    \label{fig:paula}
+\end{figure}
 
-todo
+However, Paula doesn't support low-level synthesis from AZee descriptions. This poses a challenge in scalability since an artist is always needed to create the building blocks of the animation. Although, the interface is tailored specifically for creating sign language content, a human intervention is still needed. Another drawback of Paula is that it is based on a single avatar model, which limits the diversity of the animations that can be created.
 
+\subsection{Outside Sign Language Synthesis}
+\label{subsec:other_multi_track}
 
-\subsubsection{Pre-animated blocks}
-todo
+The concept of multi-track timeline control for text-driven 3D human motion generation was also explored by \cite{petrovich24stmc}. The work introduces a novel way to address the limitations of previous methods that lacked fine-grained control over action composition and timing. This approach allows users to define multiple textual prompts within overlapping temporal intervals, enabling precise control over complex actions (figure \ref{fig:multi_track_other}). The proposed Spatio-Temporal Motion Collage (STMC) method, which operates at test-time, integrates with pre-trained motion diffusion models to generate realistic motions that adhere to the specified timeline. However, it is not for use in sign language synthesis, where precise and context-sensitive hand and body gestures are required, as it relies heavily on models not specifically designed for such detailed tasks.
 
-\subsection{Block Ordering}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/multi_track_other.png}
+    \caption{Multi-track timeline control for text-driven 3D human motion generation.}
+    \label{fig:multi_track_other}
+\end{figure}
 
-Pre-animated blocks put first
+\section{AZee Synced Score to Multi-Track Timeline}
+\label{sec:score_to_timeline}
 
-\subsubsection{Rule 1: Timely Evaluation}
-\textbf{Problem:} Overlapping blocks with different start times.\\
+One of the areas which this work aims to address is the direct creation of a multi-track animation timeline from a multi-track AZee Synced Score. This approach allows for the preservation of the original multi-track information and dynamics present in the AZee description. The algorithm \ref{alg:azee_timeline} shows how the AZee Synced Score is converted into a multi-track timeline.
+
+\begin{algorithm}
+    \caption{AZee Recursion Algorithm (Simplified)}
+    \label{alg:azee_timeline}
+    \begin{algorithmic}[1]
+        \Function{CreateBlocks}{name, score, parent\_name, parent\_score, dynamic\_points}
+            \If {parent\_score is not None}
+                \State name $\gets$ name + "." + parent\_name
+                \State \Call{UpdateSyncRules}{parent\_score, name}
+            \EndIf
+            
+            \State \Call{UpdateBlockTimings}{name, score, parent\_name, parent\_score}
+            \If {score.dynamic\_point}
+                \State dynamic\_points.append(score.dynamic\_point)
+            \EndIf
+            
+            \If {shortcut\_action $\gets$ \Call{GetShortcutAction}{score} \textbf{and} UseShortcutActions()}
+                \State \Return \Call{CreateShortcutBlock}{name, score, parent\_score}
+            \ElsIf {score is a SyncedScore}
+                \For {child\_name, child\_score in score.block\_contents}
+                    \State \Call{CreateBlocks}{child\_name, child\_score, name, score, dynamic\_points}
+                \EndFor
+            \Else
+                \State \Return \Call{CreateRegularBlock}{name, score, parent\_score}
+            \EndIf
+            
+            \If {parent\_score is not None}
+                \State \Call{UpdateParentTimings}{parent\_name, name}
+            \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+The figure \ref{fig:azee_timeline} shows the multi-track timeline generation for a simple example.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_timeline.png}
+    \caption{Multi-track timeline generation from an AZee Synced Score.}
+    \label{fig:azee_timeline}
+\end{figure}
+
+\section{AZee and Non-Linearity}
+\label{sec:azee_nl}
+
+The order of synthesis of the blocks in the multi-track timeline is crucial for avoiding conflicts and ensuring the correct execution of constraints. Thus, an action which happens later in the timeline might be synthesized first. This makes the synthesis non-linear. Figure \ref{fig:example_azee_non_linear} shows an example of non-linear synthesis.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/example_azee_non_linear.png}
+    \caption{Example of non-linear synthesis in AZee.}
+    \label{fig:example_azee_non_linear}
+\end{figure}
+
+\section{Resolving Block Conflicts}
+\label{sec:resolve_conflitcs}
+
+Since the blocks in the multi-track timeline can have constraints that affect the same body parts, conflicts can arise. These conflicts need to be resolved to ensure the correct execution of the constraints. The following rules are used to resolve conflicts:
+
+\subsection{Timely Evaluation}
+\textbf{Problem:} Overlapping blocks with different start times.
 \textbf{Solution:} Evaluate blocks chronologically to maintain logical sequence.
 
 \subsubsection{Rule 2: Constraint Precedence}
@@ -75,13 +165,29 @@ Pre-animated blocks put first
 \textbf{Problem:} Blocks with hold constraints.\\
 \textbf{Solution:} Evaluate these blocks in a second pass to ensure dependent constraints are maintained.
 
+\subsection{Pre-animated blocks}
+\textbf{Problem:} Overlapping blocks with different start times.\\
+\textbf{Solution:} Evaluate blocks chronologically to maintain logical sequence.
+
 Cases where blocks do not overlap or affect different bone chains can be evaluated independently. This includes non-overlapping blocks and constraints such as morph and look, which act independently from other constraints.
 
+
+\ection{Pre-animated blocks}
+\label{sec:preanim_blocks}
+todo
+
+\section{Block Ordering}
+\label{sec:block_ordering}
+
+
 \section{Implementation and Results}
+\label{sec:implem_results}
+
 
 The multi-track timeline is implementated in blender's non-linear editor. Each AZee Score, when animated, generates a blender action which is put on the non-linear editor as a block with duration specified by the AZee \emph{sync rules}
 
-\subsection{Evaluation}
+\section{Evaluation}
+\label{sec:eval}
 
 we dont evaluate sign language synthesis, we evaluate azee synthesis
 
@@ -95,12 +201,7 @@ against state of the art and sgnify
 
 Examples of synthesized AZee descriptions, comparing flattened and non-flattened synthesis. Highlight the preservation of dynamics and any potential issues encountered. Discuss the use of Frobenius distance as a metric for evaluating the accuracy of the synthesized animations.
 
-\section{Conclusion and Future Prospects}
-
-\subsection{Conclusion}
+\section{Conclusion}
 Summarize the benefits of the proposed multi-track synthesis algorithm, emphasizing the preservation of dynamics and improved naturalness in sign language animations. Highlight the contributions of this approach to the field of sign language synthesis.
-
-\subsection{Future Prospects}
-Discuss potential extensions to this work, such as integrating top-down techniques, handling morph constraints, and reducing robotic movements through advanced techniques like ambient noise analysis and style transfer. Outline possible future research directions and improvements.
 
 \end{document}
