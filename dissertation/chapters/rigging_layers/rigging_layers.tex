@@ -9,12 +9,12 @@ In computer graphics, rigging involves setting up a skeletal structure (also kno
 
 The layered approach to rigging, which this chapter explores in depth, offers a sophisticated method for managing these complexities. By dividing the rigging process into several distinct layers—each responsible for a different aspect of the avatar’s movement and deformation—we can achieve a higher level of control and flexibility. This approach not only facilitates the creation of more natural and expressive animations but also makes the system scalable and adaptable to a wide range of linguistic contexts.
 
-In this chapter, we ...todo, section labeled
+In this chapter, we ...todo, section
 
 \section{Procedural Rigging for Signing Avatars}
-\label{sec:proc_rig_signing_avatars}
+\label{ch:rigging_layers:proc_rig_signing_avatars}
 
-Rigs have been used in computer animation for decades to control the movement and deformation of characters. Traditional rigging systems typically consist of a hierarchical structure of bones, controllers, and constraints that define how the character’s mesh deforms in response to movement. Section {subsubsec:skeleton} in chapter {ch:background_work} gave an overview of the different skeletal structures of an avatar and how it is used to control the character’s movements.
+Rigs have been used in computer animation for decades to control the movement and deformation of characters. Traditional rigging systems typically consist of a hierarchical structure of bones, controllers, and constraints that define how the character’s mesh deforms in response to movement.
 
 A signing avatar differs significantly from the traditional systems. For starter, no sign language uses the lower body in its articulation. This means that the rigging system for a signing avatar can be simplified to focus on the upper body as shown in figure \ref{ref:upper_body_avatar}. 
 
@@ -28,47 +28,32 @@ A signing avatar differs significantly from the traditional systems. For starter
 However for procedurally animating a signing avatar, the complexity of sign language gestures and expressions poses unique challenges and necessitates a more sophisticated rigging system.
 
 \subsection{AZee Blender interface}
-\label{subsec:azee_blender_interface}
+\label{ch:rigging_layers:proc_rig_signing_avatars:azee_blender_interface}
 
 The previous low level synthesizor for AZee \cite{fabrizio} was based on an armature in blender. These bones and sites were mapped to a \emph{SkelSpec} structure. Similarly, AZee's abstract posture was mapped to the \emph{SkelSpec} structure as well. The \emph{SkelSpec} structure thus formed as an intermediate bridge between an Animated AZee Score and the armature \ref{fig:old_interface}. 
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/old_interface.png}
     \caption{The old interface of the low level synthesizor for AZee}
     \label{fig:old_interface}
 \end{figure}
 
-One of the first contributions of my work was to create a new interface for the low level synthesizor for AZee. This new interface didn't have a \emph{SkelSpec} \ref{fig:new_interface} and interacted directly with the blender armature resulting in faster executions \ref{tab:faster_executions}.
+One of the first contributions of this work was to create a new interface for the low level synthesizor for AZee. This new interface didn't have a \emph{SkelSpec} \ref{fig:new_interface} and interacted directly with the blender armature. 
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/new_interface.png}
     \caption{The new interface of the low level synthesizor for AZee}
     \label{fig:new_interface}
 \end{figure}
 
-todo
-\begin{table}
-    \centering
-    \begin{tabular}{|c|c|}
-        \hline
-        \textbf{Interface} & \textbf{Execution time (s)} \\
-        \hline
-        Old & 0.5 \\
-        New & 0.2 \\
-        \hline
-    \end{tabular}
-    \caption{Comparison of execution times between the old and new interfaces}
-    \label{tab:faster_executions}
-\end{table}
-
 \subsection{Automatic site generation}
-\label{subsec:auto_site_generation}
+\label{ch:rigging_layers:proc_rig_signing_avatars:auto_site_generation}
 
 The AZee low-level language consists of 332 sites (appendix \ref{appendix:sites}) which the user to manually create sites in blender. This was a tedious time consuming process process and could lead to errors \ref{fig:prev_sites}.
 
-\begin{figure}[h]
+\begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/prev_sites.png}
     \caption{Manually created sites in the previous low level synthesizor for AZee}
@@ -144,9 +129,8 @@ The sites an be visualized on the avatar in figure \ref{fig:sites_bazeel_combine
     \label{fig:sites_bazeel_combined}
 \end{figure}
 
-
 \subsection{Automatic rigging}
-\label{subsec:auto_rig}
+\label{ch:rigging_layers:proc_rig_signing_avatars:auto_rig}
 
 The previous custom rig contained 57 bones \ref{appendix:old_bone_list}. These bones were initially structured to accommodate the unique skeletal system requirements of the AZee framework, which utilizes a "rotation first" paradigm. However, since Blender operates on a "translation first" paradigm, a conversion process was necessary. This conversion involved splitting each AZee bone into two corresponding Blender bones: one for translation and one for rotation, with the rotation bone named by appending a ".rot" suffix to the original bone name (figure \ref{fig:old_bone_structure}). Additionally, sites were modeled in a dual fashion, where both bones and empty objects were created to manage site positioning and visualization.
 
@@ -160,7 +144,7 @@ The previous custom rig contained 57 bones \ref{appendix:old_bone_list}. These b
 This old system however, can be improved using multiple avatar layers. To do this we need 3 separate layers,
 
 \subsection{Deformation Bone Layer}
-\label{subsec:deform_bone_layer}
+\label{ch:rigging_layers:proc_rig_signing_avatars:deform_bone_layer}
 
 The deformation bone layer(figure \ref{ref:deform_layer}) is the foundation of the avatar's rig. It includes the bones that directly influence the mesh of the character, controlling how the skin deforms in response to movement. This layer is responsible for the overall shape and posture of the avatar, ensuring that the character's movements are smooth and realistic.
 
@@ -174,7 +158,7 @@ In this layer, the bones are typically organized into a hierarchy, with the root
 \end{figure}
 
 \subsection{Inverse Kinematics Layer}
-\label{subsec:ik_layer}
+\label{ch:rigging_layers:proc_rig_signing_avatars:ik_layer}
 
 The inverse kinematics (IK) layer (figure ref:ik_layer) is responsible for positioning the avatar's limbs and spine by solving for the joint angles required to achieve a desired end-effector position.
 
@@ -188,7 +172,7 @@ A separate IK layers ensures that the FK configuration is not lost during constr
 \end{figure}
 
 \subsection{Forward Kinematics Layer}
-\label{subsec:fk_layer}
+\label{ch:rigging_layers:proc_rig_signing_avatars:fk_layer}
 
 The forward kinematics (FK) layer (figure \ref{fig:fk_layer}) controls the rotation of bones in a hierarchical manner, where the rotation of a parent bone affects all its children. This layer is used for broader, more deliberate movements, such as head tilts, body leans, or full-body rotations, which are important for conveying non-manual signals in sign language.
 
@@ -202,7 +186,7 @@ FK provides animators with a high degree of control over each individual bone in
 \end{figure}
 
 \subsection{Constraint Based Posture Optimization}
-\label{subsec:cb_posegen}
+\label{ch:rigging_layers:proc_rig_signing_avatars:cb_posegen}
 
 The previous low level synthesizor for AZee \cite{fabrizio} used a constraint based optimization algorithm to generate the armature pose for a frame. This algorithm \ref{alg:old_constraint_optimization} collects all posture constaints given by the AZee Animated Score for every frame and solves for the posture by optimizing this constraints using distance functions. 
 
@@ -310,58 +294,99 @@ The approach handles only placements and orientations and uses a flattened anima
 \end{algorithm}
 
 \subsection{Morphs Constraints}
-\label{subsec:morph_constraints}
+\label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints}
 
 The word "morph" comes from the Greek word "morphē" (μορφή), which means "form" or "shape." In modern usage, "morph" is often used as a shorthand for "morphing". In the field of computer graphics and animation, morphs are predefined shape keys that modify the mesh of the avatar independently of the skeletal structure, allowing for the detailed control of specific aspects of the avatar's appearance that cannot be easily achieved through bone manipulation alone. This includes subtle facial expressions, muscle bulges, and other nuanced gestures that are critical for conveying meaning in sign language.
 
-AZee sees morphs as any change in the configuration of the avatar, which can be specified by the linguist in 1 dimension. For instance, closing of hands(a change in skeleton configuration) or raising the eyebrows(a change in the 3D mesh). Thus, these changes could also be formalized as Pose-Space Deformations.
+AZee sees morphs as any change in the configuration of the avatar, which can be specified by the linguist in 1 dimension. For instance, closing of hands(a change in skeleton configuration) or raising the eyebrows(a change in the 3D mesh). The syntax of a morph constraint is as follows:
+
+\[
+\texttt{morph } \text{\emph{'morph\_id'}} \ \texttt{weight[0, 1]}
+\]
 
 \subsubsection{Skeletal Morphs}
-\label{subsec:skel_morphs}
+\label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints:skel_morphs}
 
-todo adduction adbuction etc
+Skeletal morphs are a specific type of morph that directly manipulates the skeletal structure of an avatar to produce a desired pose or motion. Unlike traditional bone-based manipulations that rely solely on inverse or forward kinematics, skeletal morphs allow for more nuanced and localized control over specific joints or groups of joints. This is particularly useful for complex hand gestures or other detailed movements that are difficult to achieve with bone rotations alone.
 
-Morph targets are typically generated by sculpting the avatar's mesh into various shapes that correspond to different expressions or gestures. These sculpted shapes are then saved as "keys," which can be blended together during animation to produce the desired expression. This process allows for a high degree of flexibility in animation, as different keys can be combined in real-time to create a wide range of expressions.
+In AZee, skeletal morphs are treated as constraints that define a forward kinematic change in the avatar's skeletal configuration. These morphs can influence various aspects of the skeleton, such as:
 
-For example, in a signing avatar, a morph might be used to raise one eyebrow while simultaneously forming a specific hand shape. The morph layer interacts with the skeletal layer by adjusting the mesh deformation in response to the skeletal movements, ensuring that the overall appearance of the avatar remains cohesive. This interaction is crucial for maintaining the realism of the avatar, as it allows for natural transitions between different expressions and gestures.
+\begin{itemize}
+    \item \textbf{Flexion and Extension:} This refers to the bending (flexion) or straightening (extension) of a joint, such as the fingers or wrists. Flexion reduces the angle between bones, while extension increases it.
+    \item \textbf{Adduction and Abduction:} Adduction involves moving a limb closer to the body's midline, whereas abduction moves it away. These movements are crucial for natural arm and hand gestures.
+    \item \textbf{Hyperextension:} This is an extension of a joint beyond its normal range of motion, often used for expressive gestures that require exaggerated poses.
+\end{itemize}
+
+Figure \ref{fig:skeletal_morphs} shows a table of skeletal morphs and their corresponding effects on the avatar's skeleton.
+
+todo
+\begin{figure}
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Morph ID} & \textbf{Effect} \\
+        \hline
+        \texttt{hand\_close} & Closes the hand into a fist \\
+        \texttt{hand\_open} & Opens the hand from a fist \\
+        \texttt{wrist\_flex} & Bends the wrist downwards \\
+        \texttt{wrist\_extend} & Straightens the wrist \\
+        \texttt{elbow\_flex} & Bends the elbow \\
+        \texttt{elbow\_extend} & Straightens the elbow \\
+        \texttt{shoulder\_adduct} & Moves the shoulder towards the body's midline \\
+        \texttt{shoulder\_abduct} & Moves the shoulder away from the body's midline \\
+        \texttt{shoulder\_hyperextend} & Hyperextends the shoulder \\
+        \hline
+    \end{tabular}
+    \caption{Table of skeletal morphs and their effects}
+    \label{fig:skeletal_morphs}
+\end{figure}
 
 \subsubsection{Facial Morphs}
-\label{subsubsec:facial_morphs}
+\label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints:facial_morphs}
 
-todo facs etc
+Facial morphs in the AZee framework provide a means to represent the complex and nuanced expressions essential for conveying emotions and grammatical cues in sign languages. These morphs are crucial for enhancing the realism and expressiveness of signing avatars, allowing them to replicate the subtle facial movements that are integral to effective communication in sign language (figure \ref{fig:facial_example}).
 
-Morphs do not operate in isolation but rather work in tandem with the avatar's skeletal movements. While the skeletal system provides the foundation for the avatar's overall posture and major movements, morphs add an additional layer of detail by refining the surface deformations of the mesh. This is particularly important in sign language synthesis, where both gross motor movements and fine motor expressions must be synchronized to convey meaning accurately.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/facial_example.png}
+    \caption{Facial morph for ..todo}
+    \label{fig:facial_example}
+\end{figure}
 
-For instance, when an avatar raises its hand to sign, the skeletal system dictates the overall arm movement, but the morphs refine the finger positions and facial expressions, ensuring that the sign is communicated effectively. The ability to blend morphs with skeletal movements allows for the creation of more natural and fluid animations, which are essential for the realism and believability of the avatar.
+Facial Morph targets are typically generated by sculpting the avatar's mesh into various shapes that correspond to different expressions or gestures. These sculpted shapes are then saved as "keys," which can be blended together during animation to produce the desired expression. This process allows for a high degree of flexibility in animation, as different keys can be combined in real-time to create a wide range of expressions. While this section offers a brief overview, the detailed modeling, implementation, and challenges associated with facial morphs are discussed extensively in Chapter \ref{ch:facial_expressions}.
 
 \subsubsection{1D Space of a Morph}
-\label{subsubsec:morph_space}
+\label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints:morph_space}
 
 todo
 - show morph space
 - show and explain graph
 
+
 \begin{tikzpicture}
     \label{fig:morph_graph}
     \begin{axis}[
-        domain=0:2, % Define the range of x
-        samples=100, % Number of samples to plot
-        axis lines=middle, % Draw the axes in the middle
-        xlabel={$x$},
-        ylabel={$y$},
-        ymin=-0.1, ymax=1.1, % Define y-axis range
-        xmin=-0.1, xmax=1.1, % Define x-axis range
-        xtick={0, 0.5, 1, 2},
-        ytick={0, 0.5, 1},
-        grid=both, % Add a grid
-        thick,
+        xlabel={Substrate concentration [S]},
+        ylabel={Reaction rate $v$},
+        grid=major,
+        domain=0:10,
+        samples=100,
+        ymin=0,
+        ymax=1.1,
     ]
-    \addplot[blue, thick] {1 / (1 + exp(-10 * (x - 0.5)))};
+    \addplot[
+        thick,
+        smooth,
+        blue,
+    ] {x / (1 + x)};
+    
+    \addlegendentry{$v = \frac{[S]}{K_m + [S]}$}
+    
     \end{axis}
 \end{tikzpicture}
 
 \subsubsection{Integration with other layers}
-\label{subsubsec:intergation}
+\label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints:intergation}
 
 todo
 \begin{algorithm}
@@ -419,8 +444,25 @@ todo
 \end{algorithm}
 
 \section{Results}
-\label{sec:results}
+\label{ch:rigging_layers:results}
 todo The implementation of the layered rigging system in Blender has yielded promising results in the synthesis of sign language animations. By leveraging the strengths of both procedural and data-driven techniques, we have been able to create animations that are both natural and scalable.
+
+
+resulting in faster executions \ref{tab:faster_executions}.
+todo
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Interface} & \textbf{Execution time (s)} \\
+        \hline
+        Old & 0.5 \\
+        New & 0.2 \\
+        \hline
+    \end{tabular}
+    \caption{Comparison of execution times between the old and new interfaces}
+    \label{tab:faster_executions}
+\end{table}
 
 against mediapipe 
 
