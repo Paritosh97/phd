@@ -29,15 +29,15 @@ In summary, this chapter presents our approach to sign language motion generatio
 
 
 In this chapter, we take a step in this direction by leveraging the low level synthesis techniques we looked in Chapter \ref{ch:multi_track} to create a motion matching system which is capable to generate more natural poses.
-The chapter is structured as follows. In Section \ref{sec:todo}, we .... In Section \ref{sec:todo}, we .... Next, in Section \ref{sec:todo}, .... In Section \ref{sec:todo}, .... Finally, in Section \ref{sec:todo}, we conclude the chapter with our final remarks.
+The chapter is structured as follows. In Section \ref{ch:pose_matching:todo}, we .... In Section \ref{ch:pose_matching:todo}, we .... Next, in Section \ref{ch:pose_matching:todo}, .... In Section \ref{ch:pose_matching:todo}, .... Finally, in Section \ref{ch:pose_matching:todo}, we conclude the chapter with our final remarks.
 
 \section{Related work}
-\label{sec:related_work}
+\label{ch:pose_matching:related_work}
 
 In this section, we discuss relevant background work in pose matching, focusing on classical methods, data-driven approaches, and the integration of latent space representations. These methodologies form the foundation for understanding advancements in character animation.
 
 \subsection{Classical Inverse Kinematics (IK) Methods}
-\label{subsec:classical_ik}
+\label{ch:pose_matching:related_work:classical_ik}
 
 Classical Inverse Kinematics (IK) methods have been a cornerstone in the field of character animation, providing techniques to determine the necessary joint angles to achieve a desired end-effector position. Some of these methods are Jacobian-based approach \cite{TODO itasc}, Cyclic Coordinate Descent (CCD)\cite{TODO}, and Forward And Backward Reaching Inverse Kinematics (FABRIK)\cite{TODO}.
 
@@ -74,7 +74,7 @@ These classical methods have been widely adopted due to their balance between co
 \end{figure}
 
 \subsection{Data-Driven IK Approaches}
-\label{subsec:data_driven_ik}
+\label{ch:pose_matching:related_work:data_driven_ik}
 
 The limitations of classical IK methods have spurred the development of data-driven approaches, which leverage large datasets and machine learning to improve the realism and flexibility of character animations.
 
@@ -111,6 +111,7 @@ These data-driven approaches represent a significant advancement over classical 
 \end{figure}
 
 \subsection{Latent Space Representations in Animation}
+\label{ch:pose_matching:related_work:latent_space}
 
 Latent space representations have become increasingly important in character animation, providing a powerful tool for managing the complexity of pose and motion data. Variational Autoencoders (VAEs)\cite{TODO}, such as the one used in SMPLify-X\cite{TODO}, learn a probabilistic model of human poses, allowing for the generation and manipulation of poses in a lower-dimensional space. In the context of pose estimation, VAEs help in predicting 3D poses from 2D images by learning a latent space that captures the distribution of plausible human poses. This latent space can then be sampled to generate realistic poses that meet specific constraints, such as end-effector positions or overall body posture\ref{fig:simplifyx}.
 
@@ -127,10 +128,10 @@ VPoser\cite{TODO}, a specific implementation of a VAE, further demonstrates the 
 Overall, latent space representations have become a crucial component of modern character animation, enabling more complex and realistic animations while also providing tools for creative control and manipulation.
 
 \section{Pose Matching with AZee Low Level synthesis}
-\label{sec:pose_matching_with_azee}
+\label{ch:pose_matching:pose_matching_with_azee}
 
 \section{Conclusion}
-\label{sec:conclusion}
+\label{ch:pose_matching:conclusion}
 
 The application of these advanced techniques varies significantly between real-time systems, such as video games, and production environments, such as film or high-quality CGI.
 

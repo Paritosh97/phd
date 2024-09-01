@@ -3,64 +3,104 @@
 \chapter{Facial Expressions}
 \label{ch:facial_expressions}
 
-In the previous chapters, we have discussed the importance of manual features in the context of sign language synthesis. In this chapter, we focus on the synthesis of facial expressions from AZee. Facial expressions are not only a critical component of emotional communication but also carry significant grammatical information in sign languages. The accurate synthesis of these expressions is therefore vital for the realism and effectiveness of signing avatars. This chapter begins with an introduction to the importance of facial expressions in sign language, followed by a discussion of previous work in this area, including the challenges that remain. We then present our method for facial expression synthesis, focusing on the creation of blendshapes from action units (AUs). The chapter concludes with an evaluation of our method and a summary of our findings.
+Facial expressions are a crucial element of communication in both spoken and sign languages. In sign languages, they serve a dual purpose: conveying the emotional state of the signer and encoding grammatical information such as questions, negation, and emphasis. While spoken languages rely on tone and intonation for these functions, sign languages depend heavily on non-manual signals, particularly facial expressions, to fully convey the meaning of an utterance. Therefore, creating accurate and expressive facial animations in signing avatars is essential for producing realistic and comprehensible sign language content.
 
-Facial expressions are an integral part of communication in both spoken and sign languages. In sign languages, facial expressions serve dual functions: they convey the emotional state of the signer and encode grammatical information such as questions, negation, and emphasis. Unlike spoken languages, where tone and intonation primarily carry these functions, sign languages rely heavily on non-manual signals, particularly facial expressions, to convey the full meaning of an utterance. Therefore, the synthesis of accurate and expressive facial animations in signing avatars is crucial for creating realistic and comprehensible sign language content.
+However, synthesizing facial expressions for signing avatars presents significant challenges due to the complexity and subtlety of these expressions. Unlike manual signs, which involve distinct hand and arm movements, facial expressions require the coordinated movement of various facial muscles, each contributing to the overall expression. Different facial features, such as eyebrows, eyes, and mouth, often move independently yet in harmony to produce coherent expressions. Moreover, the same facial expression can convey different meanings depending on the context, adding another layer of complexity to the task.
 
-The challenge of synthesizing facial expressions in signing avatars lies in the complexity and subtlety of these expressions. Unlike manual signs, which involve discrete movements of the hands and arms, facial expressions involve a combination of movements from various facial muscles, each contributing to the overall expression. This complexity is compounded by the fact that different facial features (e.g., eyebrows, eyes, mouth) often move independently but in coordination to produce a coherent expression. Moreover, the same facial expression can convey different meanings depending on the context, making the task of synthesis even more challenging.
+This chapter tackles these challenges by introducing a method for synthesizing facial expressions using the AZee framework for French Sign Language (LSF). To achieve this, specific production rules for facial expressions were integrated into AZee. By employing action units (AUs) as the foundational elements of these expressions, we can generate blendshapes that precisely represent the required facial movements. These blendshapes are subsequently integrated into a facial rigging system, allowing for the dynamic and realistic animation of signing avatars.
 
-This chapter aims to address these challenges by presenting a method for synthesizing facial expressions based on the AZee framework for French Sign Language (LSF). The AZee framework provides a set of production rules that associate specific facial expressions with particular meanings or grammatical functions. By using action units (AUs) as the building blocks for these expressions, we can create blendshapes that capture the necessary facial movements. These blendshapes are then integrated into a facial rigging system that allows for the dynamic and realistic animation of signing avatars.
+Previous chapters focused on the synthesis of manual features in sign language. In contrast, this chapter centers on the synthesis of facial expressions using the AZee framework, emphasizing their critical role in both emotional communication and the conveyance of grammatical information in sign languages. The precise synthesis of these expressions is therefore essential for enhancing the realism and effectiveness of signing avatars.
+
+The chapter is structured as follows: Section \ref{ch:facial_expressions:related_work} reviews related work in facial expression synthesis, examining previous approaches, the challenges encountered, and recent advancements. Section \ref{ch:facial_expressions:related_work:facial_expressions_in_sign_language_synthesis} focuses on the synthesis of facial expressions in sign language avatars, discussing their importance for sign language comprehension and the challenges in capturing their nuances. Section \ref{ch:facial_expressions:related_work:face_rigging} explores different face rigging techniques, including blendshape-based rigging, skeleton-based rigging, and hybrid methods, and compares their advantages and disadvantages. Finally, Section \ref{ch:facial_expressions:related_work:emotion_recognition} delves into emotion recognition systems and their role in generating facial expressions that align with the emotional tone of the signed message.
 
 \section{Related Work}
 \label{ch:facial_expressions:related_work}
 
-The synthesis of facial expressions in sign language avatars has been a topic of research for many years. However, it remains a challenging area due to the complexity of facial movements and the need for these movements to be both expressive and contextually appropriate. This section reviews the related work in facial expression synthesis, focusing on previous approaches, the challenges they faced, and the advances that have been made in recent years.
+This section reviews the previous work in facial expression synthesis, focusing on the challenges and advancements in capturing the nuances of facial movements. It also discusses the importance of facial expressions in sign language synthesis and the techniques used to model these expressions effectively.
 
-\subsubsection{Facial Expressions in Sign Language Synthesis}
+\subsubsection{Facial Expressions Synthesis}
+\label{ch:facial_expressions:related_work:facial_expressions_synthesis}
 
-Facial expressions in sign language synthesis have been explored through various approaches, each with its strengths and limitations. Early work in this field often treated facial expressions as secondary to manual signs, resulting in avatars that could perform signs but lacked the necessary expressiveness to convey the full meaning of a conversation. These early models often relied on predefined facial expressions, which were triggered by specific manual signs but did not account for the nuances of facial movements.
+todo citations
+Most of the facial expressions research is motivated by synthesis from voice signals. These methods are generally categorized into lip-sync techniques [19, 39, 5, 33], which align mouth movements with audio, and full-face expression synthesis [9, 14, 53]. Some approaches model speaking style with 3D animation parameters [7], create generalized latent audio expressions combined with a person-specific 3D model [42], and produce expressive facial outputs conditioned on style, although some are unsuitable for tasks requiring full-face movement [46]. A related work, MakeItTalk [54], introduces a two-stage deep learning model that predicts facial landmark displacements based on audio input and a speaker identifier, followed by an image-to-image translation method to generate the final facial expression. Another study, EAMM [20], focuses on transferring local emotional deformations to an audio-driven talking face, using deep learning to map audio to keypoints and their dynamics, resulting in emotion-related facial motions.
 
-Recent advances have recognized the importance of facial expressions and have incorporated more sophisticated techniques to capture the subtleties of these movements. For example, research by Huenerfauth et al. (2011) highlighted the importance of facial expressions for the comprehension of sign language by Deaf users, showing that avatars with more naturalistic facial expressions were better understood. Similarly, the work of Gibet et al. (2011) used motion capture data to create more realistic facial animations, though they faced challenges related to the granularity of the data and the complexity of capturing fine facial movements.
+Synthesis of facial expressions in sign language is a much-less explored area. SGNify \cite{Forte_2023_CVPR} can do a 3D reconstruction of a signer's face using in FLAME \cite{todo_flame} space from a monocular video. The Paula avatar uses rotational pivots and pre-defined movements, offering more natural and expressive facial animations \cite{johnson-2022-improved}. More recent work \cite{azevedo2024empowering} uses sentiment and semantic information to generate realistic facial expressions, achieving state-of-the-art results and outperforming existing approaches. However, these methods are limited in their ability to capture the full range of facial expressions in sign language, particularly the grammatical and emotional nuances that are essential for effective communication. However, these methods are limited in their ability to meaningully relate facial expressions to the signed message.
 
-The development of the AZee framework by Filhol (2021) marked a significant advancement in this area by providing a structured approach to the synthesis of facial expressions. AZee allows for the systematic representation of both manual and non-manual components of sign language, offering a holistic model that integrates facial expressions as an essential part of the linguistic structure. This approach contrasts with earlier methods that often treated facial expressions as isolated features, separate from the manual signs they accompany.
+\subsection{Emotion Recognition}
+\label{ch:facial_expressions:related_work:emotion_recognition}
 
-One of the key challenges in this area is the need to balance expressiveness with the constraints of real-time rendering. Facial expressions must be detailed enough to convey the necessary emotional and grammatical information but must also be rendered efficiently to ensure smooth animation. This has led to the development of various techniques for facial rigging and animation, which are discussed in the following section.
+Emotion recognition systems typically use machine learning algorithms to analyze facial features and identify the underlying emotional state. These systems can be trained on large datasets of facial images, which are annotated with emotional labels, to learn the relationships between facial movements and emotions. The most common approach to define emotions is the Ekman's Facial Action Coding System (FACS) \cite{ekman1978facial}, which categorizes facial expressions into a set of action units (AUs) (figure \ref{fig:action_units})  that correspond to specific muscle movements. Recent works by \cite{luo2022learning} have shown that deep learning models can infer the set of active action units on a face image, which can be used to predict the underlying emotion. EMOCA \cite{danvevcek2022emoca} is another work which reconstructs 3D faces from single images, accurately capturing emotional expressions by introducing an emotion-consistency loss, significantly improving the quality of reconstructed expressions over previous methods.
 
-\subsubsection{Face Rigging}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/action_units.png}
+    \caption{Facial Action Coding System (FACS) action units}
+    \label{fig:action_units}
+\end{figure}
 
-Face rigging is the process of creating a digital framework that allows for the animation of facial expressions. There are several approaches to face rigging, each with its advantages and disadvantages. The most common approaches include blendshape-based rigging, skeleton-based rigging, and hybrid approaches that combine elements of both.
+Emotion recognition can be helpful in understanding as well as modeling facial expressions in sign language synthesis. By analyzing the emotional content of a signed message, we can generate facial expressions that align with the emotional tone of the message, enhancing the realism and expressiveness of the signing avatar.
 
-\paragraph{Blendshape-Based Rigging}
+\subsection{Face Rigging}
+\label{ch:facial_expressions:related_work:face_rigging}
+
+Face rigging is the process of creating a digital framework that allows for the animation of facial expressions. There are several approaches to face rigging, each with its advantages and disadvantages. The most common approaches include blendshape-based rigging and skeleton-based rigging.
+
+\subsubsection{Blendshape-Based Rigging}
+\label{ch:facial_expressions:related_work:face_rigging:blendshape_based_rigging}
 
 Blendshape-based rigging involves creating a set of predefined facial shapes (blendshapes) that represent various expressions. These blendshapes can be blended together in different proportions to create a wide range of facial expressions. This method is widely used in the animation industry due to its simplicity and flexibility. It allows animators to create complex expressions by adjusting the influence of each blendshape on the final animation. However, the downside of this approach is that it requires a large number of blendshapes to capture all possible expressions, which can be time-consuming to create and manage.
 
-Blendshapes are particularly effective for capturing specific facial movements, such as eyebrow raises, lip curls, or cheek puffs, which are common in sign language expressions. By creating a library of blendshapes that correspond to different AUs, animators can mix and match these shapes to generate the required expressions for any given sign. This approach also allows for fine-tuning of the expressions to ensure that they align with the intended emotional or grammatical meaning.
+Blendshapes are particularly effective for capturing specific facial movements, such as eyebrow raises, lip curls, cheek puffs, etc. By creating a library of blendshapes that correspond to different facial actions, animators can easily combine these shapes to create expressive and realistic facial animations (figure \ref{fig:blendshapes}).
 
-\paragraph{Skeleton-Based Rigging}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/blendshapes.png}
+    \caption{Blendshapes for facial expressions}
+    \label{fig:blendshapes}
+\end{figure}
 
-Skeleton-based rigging, also known as joint-based rigging, uses a hierarchical system of bones and joints to control facial movements. This approach is more commonly used for animating body movements but can also be applied to facial animation. The advantage of skeleton-based rigging is that it provides a more natural way to animate movements that involve multiple facial features, such as smiling or frowning. However, it can be less intuitive to work with compared to blendshapes, especially for subtle expressions that require precise control over individual facial muscles.
+\subsubsection{Skeleton-Based Rigging}
+\label{ch:facial_expressions:related_work:face_rigging:skeleton_based_rigging}
 
-In the context of sign language synthesis, skeleton-based rigging can be particularly useful for creating dynamic expressions that change over time, such as a gradual transition from a neutral face to a surprised expression. This method allows for smoother transitions between different facial states, which is crucial for maintaining the fluidity of sign language communication. However, the complexity of managing a skeletal rig for the face can make this approach challenging, particularly when dealing with the intricate facial expressions required for sign language.
+Skeleton-based rigging, also known as joint-based rigging, uses a hierarchical system of bones and joints to control facial movements. This approach is more commonly used for animating body movements but can also be applied to facial animation. The advantage of skeleton-based rigging is that it provides a more ways to control since the control space of joints can be 3D (figure \ref{fig:skeleton_based_rigging}). Example, jaw movements(up, down, left, right, front or back), eye movements, etc. However, it can be less intuitive to work with compared to blendshapes, especially for subtle expressions that require precise control over individual facial muscles.
 
-\paragraph{Hybrid Rigging}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/skeleton_based_rigging.png}
+    \caption{Skeleton-based rigging for facial expressions}
+    \label{fig:skeleton_based_rigging}
+\end{figure}
 
-Hybrid rigging combines elements of both blendshape-based and skeleton-based rigging. This approach allows animators to use blendshapes for fine control over specific facial features while using a skeletal system for more general movements. Hybrid rigging offers the best of both worlds, providing flexibility and control while minimizing the limitations of each individual approach. However, it can be more complex to implement and may require more computational resources to achieve the desired level of realism.
+\subsubsection{Hybrid Rigging}
+\label{ch:facial_expressions:related_work:face_rigging:hybrid_rigging}
 
-Hybrid approaches are especially beneficial for sign language avatars, where the need for detailed facial expressions must be balanced with the demands of real-time animation. By integrating blendshapes with a skeletal rig, animators can achieve a high degree of control over facial movements, allowing for the synthesis of complex expressions that are both accurate and expressive. This method also facilitates the layering of multiple expressions, such as combining a raised eyebrow (indicating a question) with a furrowed brow (indicating concern), which is common in sign language discourse.
+Hybrid rigging approaches combine elements of both blendshape-based and skeleton-based rigging to offer greater flexibility and control. By leveraging the strengths of both techniques, hybrid rigging can overcome the limitations of each individual approach. For example, blendshapes can be used for fine-tuned expressions, while skeletons provide control over broader movements like jaw or head rotations. 
 
-\subsection{Emotion Recognition}
+\subsection{Capturing Facial Expressions}
+\label{ch:facial_expressions:related_work:face_rigging:capture}
 
-Emotion recognition plays a critical role in the synthesis of facial expressions, particularly in ensuring that the expressions generated by avatars are contextually appropriate. Emotion recognition systems typically use machine learning algorithms to analyze facial features and identify the underlying emotional state. These systems can be trained on large datasets of facial images, which are annotated with emotional labels, to learn the relationships between facial movements and emotions.
+Keyframing remains a foundational technique in facial animation, where animators manually set key poses and interpolate between them to create fluid motion. While keyframing is effective in controlled environments, it may struggle to capture the natural variability and complexity required in sign language synthesis, where subtle changes in expression can convey different meanings.
 
-In the context of sign language synthesis, emotion recognition can be used to guide the generation of facial expressions that match the emotional tone of the signed message. For example, if an avatar is signing a sentence that conveys sadness, the emotion recognition system can ensure that the facial expressions generated are consistent with this emotion. This is particularly important in sign languages, where facial expressions often carry emotional and grammatical meanings simultaneously.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/keyframing.png}
+    \caption{Keyframing process, showing how key poses are set and interpolated to create a continuous animation.}
+    \label{fig:keyframing}
+\end{figure}
 
-Recent advancements in deep learning have further improved the accuracy of emotion recognition systems. By leveraging convolutional neural networks (CNNs) and recurrent neural networks (RNNs), these systems can now capture subtle variations in facial expressions and map them to specific emotional states with high precision. This capability is essential for sign language synthesis, where the correct interpretation of facial expressions can significantly impact the overall meaning of the communication.
+Performance-based approaches, such as motion capture, involve capturing real human facial movements and using this data to drive digital avatars. This method provides a high level of realism, capturing the natural dynamics and nuances of facial expressions. Apple's ARKit and FaceCap are examples of performance-based facial animation tools that use motion capture technology to animate digital characters (figure \ref{fig:motion_capture}).
 
-\subsection{Method}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/motion_capture.png}
+    \caption{Performance-based facial animation using motion capture technology, which captures the real-time movements of an actor’s face.}
+    \label{fig:motion_capture}
+\end{figure}
+
+\section{Action Unit Analysis}
+\label{ch:facial_expressions:action_unit_analysis}
 
 Our method for facial expression synthesis is based on the creation of blendshapes from action units (AUs), which are the fundamental building blocks of facial expressions as defined by the Facial Action Coding System (FACS). This section outlines the steps involved in our method, from the analysis of action units to the creation of blendshapes and the generation of motion curves.
-
-\subsection{Action Unit Analysis}
 
 The first step in our method is the analysis of action units (AUs). AUs represent the activation of specific facial muscles and are the basic components of facial expressions. Each AU corresponds to a particular movement, such as raising the eyebrows or pursing the lips, and can be combined with other AUs to create complex expressions.
 
@@ -68,7 +108,8 @@ To analyze AUs, we used a combination of manual observation and automatic detect
 
 In cases where automatic detection fell short, particularly for expressions that involve multiple, subtle AUs, we manually annotated the facial expressions using FACS-based coding. This process involved detailed analysis of the facial expressions in our reference corpus (the 40 brèves corpus), breaking down each expression into its constituent AUs. This approach allowed us to ensure that our blendshapes accurately reflected the intended expressions, capturing both the emotional and grammatical nuances required for sign language synthesis.
 
-\subsection{Blendshape Creation}
+\section{Blendshape Creation}
+\label{ch:facial_expressions:blendshape_creation}
 
 Once the AUs were identified, we created blendshapes that correspond to each AU. Blendshapes are essentially different versions of a 3D face model, each representing a specific facial expression. By blending these shapes together, we can create a wide range of facial expressions.
 
@@ -77,6 +118,7 @@ We used the FACSHuman plugin for MakeHuman to create these blendshapes. FACSHuma
 The creation of blendshapes also involved ensuring that they could be seamlessly combined to create complex expressions. For example, the blendshape for AU4 (Brow Lowerer) was designed to work in conjunction with AU6 (Cheek Raiser) and AU12 (Lip Corner Puller) to create expressions of anger or determination. This required careful coordination of the vertex movements across different blendshapes to avoid unnatural deformations or artifacts in the final animation.
 
 \subsection{Motion Curves for Blendshapes}
+\label{ch:facial_expressions:motion_curves_for_blendshapes}
 
 After creating the blendshapes, we generated motion curves to control how these shapes are animated over time. Motion curves define the changes in the blendshape's influence over the course of an animation, allowing for smooth transitions between different facial expressions.
 
@@ -84,7 +126,8 @@ We extended our intermediate block generator to include motion curves for facial
 
 For example, in the expression "big-threatening," the motion curves were designed to gradually increase the influence of the blendshapes corresponding to AU10 (Upper Lip Raiser) and AU25 (Lips Part) while simultaneously decreasing the influence of AU4 (Brow Lowerer) as the expression transitions from a neutral state to one of aggression. This careful modulation of the blendshape influences over time resulted in an expression that not only looked realistic but also conveyed the intended emotional and grammatical cues effectively.
 
-\section{Results}
+\section{Results and Implementation}
+\label{ch:facial_expressions:results}
 
 Our method was evaluated through the synthesis of facial expressions on a set of signing avatars. We tested the avatars' ability to perform a wide range of AUs and combined them to create the expressions defined by the AZee production rules. The results were assessed based on the realism of the animations, the accuracy of the expressions, and the ability to apply them consistently across different avatars.
 
@@ -92,6 +135,14 @@ The synthesized facial expressions were tested with native sign language users t
 
 One notable success was the synthesis of expressions related to questions and emphasis, which are heavily reliant on precise eyebrow and eyelid movements. The blendshapes and motion curves for these expressions were particularly effective in conveying the necessary non-manual signals, enhancing the overall comprehension of the signed messages. However, expressions that involved subtle mouth movements, such as "it-is-a-shame" or "something-sticks-out," were more challenging to model accurately, highlighting areas for further refinement.
 
-\section{Discussion}
+\section{Evaluation}
+\label{ch:facial_expressions:evaluation}
+
+todo
+
+\section{Conclusion}
+\label{ch:facial_expressions:conclusion}
+
+todo
 
 \end{document}
