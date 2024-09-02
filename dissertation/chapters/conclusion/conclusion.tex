@@ -3,6 +3,116 @@
 \chapter{Conclusion}
 \label{ch:conclusion}
 
+In this chapter, we present a summary and overview of the contributions made in this thesis on \textit{Sign Language Synthesis by a Decreasing Granularity System from AZee}. We outline the research conducted throughout the thesis in Section~\ref{sec:summary}. In Section~\ref{sec:opensource}, we delve into the open-source contributions, with a particular focus on the AZee-based sign language synthesis toolkit developed as part of this research. In Section~\ref{sec:contributions}, we enumerate our specific contributions, and in Section~\ref{sec:future}, we explore potential directions for future research that could build on the work presented in this thesis.
+
+\section{Summary}
+\label{sec:summary}
+
+This thesis explores innovative approaches to synthesizing sign language using a decreasing granularity system based on the AZee framework. The primary objective was to develop a system that could generate sign language sequences that are both linguistically accurate and naturally expressive, addressing a crucial need in accessible communication technologies for the Deaf and Hard of Hearing communities.
+
+In Chapter~\ref{chap:background}, we reviewed the foundational work in sign language linguistics, motion capture technologies, and synthesis systems, particularly focusing on the AZee linguistic framework. AZee provides a structured way to describe sign language at varying levels of granularity, which we identified as a key to achieving fluent and contextually appropriate sign language synthesis.
+
+Chapter~\ref{chap:decreasing_granularity} introduced the concept of decreasing granularity in the context of sign language synthesis. We proposed a hierarchical model where high-level linguistic descriptions gradually transition into lower-level kinematic representations. This approach was shown to be effective in maintaining the linguistic integrity of the signs while ensuring smooth and natural transitions between movements.
+
+In Chapter~\ref{chap:implementation}, we implemented the proposed decreasing granularity system and integrated it with the AZee framework. The system was designed to take abstract linguistic input and generate corresponding sign language sequences. We demonstrated that this system could produce more natural and contextually accurate signs compared to traditional methods that rely heavily on fixed, pre-recorded sign sequences.
+
+Chapter~\ref{chap:evaluation} focused on the evaluation of the synthesized sign language sequences. We conducted both qualitative and quantitative assessments, involving native signers and linguistic experts. The results indicated that our approach significantly improved the expressiveness and accuracy of synthesized signs, particularly in complex or context-dependent scenarios.
+
+Finally, in Chapter~\ref{chap:optimization}, we addressed one of the main challenges identified in our system: the real-time generation of sign language. We proposed an optimization technique that reduces the computational load without compromising the quality of the output. This advancement is particularly important for deploying the system in real-world applications, such as live sign language interpretation in public services or media.
+
+Overall, our work has advanced the field of sign language synthesis by introducing a novel method that balances linguistic rigor with the flexibility needed for natural expression. While our system shows great promise, it also opens up several avenues for further exploration and improvement.
+
+\section{Reproducible Research}
+\label{sec:opensource}
+
+One of the key contributions of this thesis is the open-source implementation of the decreasing granularity system for sign language synthesis. The code and datasets associated with our studies are publicly available, ensuring that the results can be reproduced and built upon by other researchers in the field. Below are the links to the GitHub repositories corresponding to each chapter:
+
+\begin{itemize}
+    \item \textbf{Chapter 3 (Decreasing Granularity Model):}
+    \url{github.com/yourusername/GranularityModel}
+    
+    \item \textbf{Chapter 4 (AZee Integration and Synthesis):}
+    \url{github.com/yourusername/AZeeSynthesis}
+    
+    \item \textbf{Chapter 5 (Evaluation Datasets and Scripts):}
+    \url{github.com/yourusername/SignLanguageEval}
+\end{itemize}
+
+In addition to the repositories listed above, we have also developed a toolkit that enables researchers and developers to experiment with and deploy the sign language synthesis system in various applications. This toolkit is designed to be modular and extensible, allowing for easy integration with other linguistic models or sign language datasets.
+
+\subsection*{AZee-Synthesis Toolkit}
+
+The AZee-Synthesis Toolkit provides an end-to-end solution for generating sign language sequences from high-level linguistic descriptions. Built on the principles of the AZee framework, the toolkit supports a wide range of sign languages and can be easily adapted to new languages or dialects. Below is an example of how the toolkit can be used to generate a sign sequence:
+
+\begin{verbatim}
+from azee_toolkit import SignLanguageSynthesizer
+from azee_toolkit.models import AZeeModel
+
+# Initialize the synthesizer with a pre-trained AZee model
+synthesizer = SignLanguageSynthesizer(model=AZeeModel.load_pretrained('path/to/model'))
+
+# Generate sign language sequence from linguistic description
+sign_sequence = synthesizer.synthesize("GREETINGS")
+
+# Visualize the generated sequence
+sign_sequence.visualize()
+\end{verbatim}
+
+The toolkit also includes tools for fine-tuning the synthesis process, optimizing performance, and evaluating the output against benchmark datasets. It has been designed with both research and practical deployment in mind, offering a robust platform for the continued development of sign language technologies.
+
+\section{Contributions}
+\label{sec:contributions}
+
+The research presented in this thesis has led to several significant contributions to the field of sign language synthesis:
+
+\begin{itemize}
+    \item \textbf{A Novel Decreasing Granularity Framework:} In Chapter~\ref{chap:decreasing_granularity}, we introduced a hierarchical model that enables the synthesis of sign language at varying levels of detail. This model bridges the gap between high-level linguistic descriptions and low-level kinematic execution, ensuring that the synthesized signs are both accurate and natural.
+
+    \item \textbf{Integration with the AZee Framework:} In Chapter~\ref{chap:implementation}, we successfully integrated our decreasing granularity model with the AZee framework, demonstrating its applicability to a wide range of sign languages. This integration allows for the generation of contextually appropriate signs that adhere to the linguistic rules of the target language.
+
+    \item \textbf{State-of-the-Art Sign Language Synthesis:} The system developed in this thesis outperforms existing methods in terms of expressiveness and contextual accuracy, as evidenced by the evaluations conducted in Chapter~\ref{chap:evaluation}. Our approach sets a new benchmark for the synthesis of complex sign language sequences.
+
+    \item \textbf{Open-Source Toolkit for Sign Language Synthesis:} We have released an open-source toolkit that encapsulates the methods and models developed in this thesis. This toolkit is designed to facilitate further research and the development of practical applications in the field of sign language technology.
+\end{itemize}
+
+\section{Future Directions}
+\label{sec:future}
+
+While the contributions of this thesis mark significant progress in sign language synthesis, several avenues for future research remain open. Below, we outline potential research topics that could extend the work presented in this thesis.
+
+\subsection{Enhancing the Decreasing Granularity Model}
+
+\begin{itemize}
+    \item \textbf{Dynamic Granularity Adjustment:} Future research could explore methods for dynamically adjusting the level of granularity based on the context or user preferences. This would enable more personalized and adaptive sign language synthesis.
+    
+    \item \textbf{Integration with Neural Networks:} Incorporating deep learning techniques, such as neural networks, could enhance the model’s ability to generalize across different sign languages and dialects. This integration could also improve the synthesis of signs that involve complex or subtle movements.
+\end{itemize}
+
+\subsection{Expanding AZee Framework Capabilities}
+
+\begin{itemize}
+    \item \textbf{Support for Additional Sign Languages:} While the current system supports a range of sign languages, expanding its capabilities to include more languages and regional dialects would increase its applicability and impact.
+    
+    \item \textbf{Multimodal Integration:} Combining the sign language synthesis system with other modalities, such as facial expressions and body posture, could lead to a more comprehensive and natural representation of signed communication.
+\end{itemize}
+
+\subsection{Real-Time Sign Language Synthesis}
+
+\begin{itemize}
+    \item \textbf{Optimization for Low-Latency Environments:} Future research should focus on optimizing the system for real-time applications, such as live interpretation services. This would involve reducing computational load while maintaining the quality of the synthesized signs.
+    
+    \item \textbf{User-Centered Evaluation:} Conducting extensive user studies to evaluate the system’s performance in real-world scenarios would provide valuable insights for further refinement and development.
+\end{itemize}
+
+\subsection{Interdisciplinary Research}
+
+\begin{itemize}
+    \item \textbf{Collaboration with Linguists and Sign Language Experts:} Continued collaboration with linguists and native signers will be crucial for refining the linguistic accuracy and expressiveness of the synthesized signs. This interdisciplinary approach will help ensure that the technology remains aligned with the needs and preferences of the Deaf and Hard of Hearing communities.
+    
+    \item \textbf{Ethical Considerations:} As sign language synthesis technology evolves, it is important to address ethical considerations, such as ensuring accessibility and avoiding the misrepresentation of signed communication. Future research should incorporate these considerations into the design and deployment of sign language technologies.
+\end{itemize}
+
+In conclusion, this thesis has laid a strong foundation for the development of advanced sign language synthesis systems. By building on the work presented here, future research has the potential to further enhance the accessibility and effectiveness of communication technologies for the Deaf and Hard of Hearing communities.
 
 
 \end{document}
