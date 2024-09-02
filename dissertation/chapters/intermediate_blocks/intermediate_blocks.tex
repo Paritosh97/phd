@@ -9,7 +9,7 @@ Generating these intermediate blocks in multi-track representations requires a b
 
 This chapter focuses on the generation of intermediate blocks within the multi-track representations introduced in chapter \ref{ch:multi-track}. By utilizing motion templates and carefully interpolating between keyframes, we aim to enhance the naturalness and coherence of Sign Language synthesis, bridging the gap between procedural methods and the dynamic nature of human communication.
 
-In this chapter, section ...todo
+In this chapter, section \ref{ch:intermediate_blocks:related_work} discusses the related work on AZee Templates, Motion Curves, and Motion Templates. Section \ref{ch:intermediate_blocks:intermediate_block_generation} explores the generation of intermediate blocks, while section \ref{ch:intermediate_blocks:results} presents the results of this process. Finally, section \ref{ch:intermediate_blocks:conclusion_and_future_work} concludes the chapter and outlines potential future directions for this research.
 
 \section{Related Work}
 \label{ch:intermediate_blocks:related_work}
@@ -74,7 +74,7 @@ The creation of this intermediate block relies on a templace expression check wh
 \subsection{Reusing Motion Templates}
 \label{ch:intermediate_blocks:reusing_motion_templates}
 
-Motion templates are pre-defined motion patterns that guide the synthesis of new animations. In the context of AZee driven synthesis, these templates serve as a blueprint for generating intermediate blocks and stitching motion curves. The use of motion templates allows for greater consistency and control over the final animation, as the templates encode expert knowledge about how certain signs should be performed.
+Motion templates are pre-defined motion patterns that guide the synthesis of new animations. In the context of AZee driven synthesis, these templates serve as a blueprint for generating intermediate blocks and motion curves. The use of motion templates allows for greater consistency and control over the final animation, as the templates encode expert knowledge about how certain signs should be performed.
 
 These motion templates are based on the template of the AZee rule and can be artistically created or procedurally generated. Algorithm \ref{alg:top_down_search_template} shows a top-down search algorithm for selecting the best motion template based on the AZee rule.
 
@@ -95,9 +95,31 @@ todo artistically created templates
 \section{Motion Curves}
 \label{ch:intermediate_blocks:curves}
 
-Motion curves are a fundamental component of character animation, providing a graphical representation of how a character's movements change over time. By manipulating these curves, animators can control the timing and spacing of movements, ensuring that the animation is realistic and expressive. 
+Motion curves are a fundamental component of character animation, providing a graphical representation of how a character's movements change over time. By manipulating these curves, animators can control the timing and spacing of movements, ensuring that the animation is realistic and expressive.
 
-The template expression check determines the motion template to be used, which in turn gives us information regarding how a pair of blocks can be stitched. Figure \ref{fig:stitching_motion_curves} shows how motion curves can be stitched together for the above example.
+\subsection{Skeletal Motion Curves}
+\label{ch:intermediate_blocks:curves:skeletal}
+
+The template expression check determines the motion template to be used, which in turn gives us information regarding how a pair of blocks can be conneted. However, these motion curves can either effect the skeleton, or the shape keys. For skeleton, these motion curves represent time in x axis, and the joint angle(FK) of the y axis. Each bone has has 4 motion curves (one for each axis of the quaternion rotation).
+
+Figure \ref{fig:motion_curves_skeletal} shows how motion curves can be used for skeleton for the above example.
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_skeletal.png}
+    \caption{Motion Curves for Skeleton}
+    \label{fig:motion_curves_skeletal}
+\end{figure}
+
+\subsection{Shape Key Motion Curves}
+\label{ch:intermediate_blocks:curves:shape_keys}
+
+For shape keys, the motion curves represent time in x axis, and the weight of the shape key in the y axis. Each shape key has one motion curve. Figure \ref{fig:motion_curves_shape_keys} shows how motion curves can be used for shape keys for the facial expressions of the above example.
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_shape_keys.png}
+    \caption{Motion Curves for Shape Keys}
+    \label{fig:motion_curves_shape_keys}
+\end{figure}
 
 \section{Results}
 \label{ch:intermediate_blocks:results}
