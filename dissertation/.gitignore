@@ -28,8 +28,10 @@
 *.vrb
 *.xdv
 
-# Ignore PDF files in dissertation/ (optional)
-*.pdf
+# Ignore PDF files in chapters
+annex/*.pdf
+acknowledgements/*.pdf
+chapters/*.pdf
 
 # Ignore generated files by specific LaTeX editors in dissertation/ (optional)
 # TeXShop
