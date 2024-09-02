@@ -104,45 +104,164 @@ Our method for facial expression synthesis is based on the creation of blendshap
 
 The first step in our method is the analysis of action units (AUs). AUs represent the activation of specific facial muscles and are the basic components of facial expressions. Each AU corresponds to a particular movement, such as raising the eyebrows or pursing the lips, and can be combined with other AUs to create complex expressions.
 
-To analyze AUs, we used a combination of manual observation and automatic detection tools. Manual observation involved studying facial expressions in video recordings of sign language, paying close attention to the movements of individual facial features. We also used automatic detection tools, such as FaceTorch, to identify AUs in still images. While these tools provided a useful starting point, they often required manual adjustments to ensure accuracy, particularly for subtle or complex expressions.
+To analyze AUs, we used a combination of manual observation and automatic detection tools. We also used mediapipe and the AU detector by \cite{luo2022learning}, to identify AUs in still images (figure \ref{fig:face_detect}). While these tools provided a useful starting point, they often required manual adjustments to ensure accuracy, particularly for subtle or complex expressions.
 
-In cases where automatic detection fell short, particularly for expressions that involve multiple, subtle AUs, we manually annotated the facial expressions using FACS-based coding. This process involved detailed analysis of the facial expressions in our reference corpus (the 40 brèves corpus), breaking down each expression into its constituent AUs. This approach allowed us to ensure that our blendshapes accurately reflected the intended expressions, capturing both the emotional and grammatical nuances required for sign language synthesis.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/face_detect.png}
+    \caption{Facial action unit detection using mediapipe and the AU detector by \cite{luo2022learning}.}
+    \label{fig:face_detect}
+\end{figure}
+
+For these manual adjustments, we used a linguists input by adjusting the movements of individual facial features(figure \ref{fig:face_adjust}).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/face_adjust.png}
+    \caption{Manual adjustment of facial expressions to ensure accuracy.}
+    \label{fig:face_adjust}
+\end{figure}
+
+The synthesized facial expressions were taken from our reference corpus (the 40 brèves corpus), breaking down each expression into its constituent AUs. This approach allowed us to ensure that our blendshapes accurately reflected the intended expressions, capturing both the emotional and grammatical nuances required for sign language synthesis.
 
 \section{Blendshape Creation}
 \label{ch:facial_expressions:blendshape_creation}
 
-Once the AUs were identified, we created blendshapes that correspond to each AU. Blendshapes are essentially different versions of a 3D face model, each representing a specific facial expression. By blending these shapes together, we can create a wide range of facial expressions.
+Once the AUs were identified, we used FACSHuman \cite{fig:facshuman} blendshapes as reference to create shapekeys in blender that correspond to each AU \ref{fig:facshuman_blendshapes}. Shape keys \ref{fig:shape_keys} are essentially different versions of a 3D model, each representing a specific change in vertices. By blending and interpolating these keys together, we can create a wide range of mesh shapes.
 
-We used the FACSHuman plugin for MakeHuman to create these blendshapes. FACSHuman allows for precise control over the movement of facial features, making it possible to model each AU accurately. For each blendshape, we adjusted the position of vertices in the 3D model to match the desired facial movement. This process involved iterating between manual adjustments and automated tools to ensure that the blendshapes accurately captured the intended expressions.
+Since the FACSHuman blendshape work on any MakeHuman template mesh, this technique of synthesis is avatar independant. However, since the original model doesn't cover all the blendshapes(for all the face meshes), some blendshapes were created manually. The complete process involved iterating between manual adjustments and automated tools to ensure that the blendshapes accurately captured the intended expressions. The creation of blendshapes also involved ensuring that they could be seamlessly combined to create complex expressions. For example, the blendshape for AU4 (Brow Lowerer) was designed to work in conjunction with AU6 (Cheek Raiser) and AU12 (Lip Corner Puller) to create expressions of anger or determination. This required careful coordination of the vertex movements across different blendshapes to avoid unnatural deformations or artifacts in the final animation.
 
-The creation of blendshapes also involved ensuring that they could be seamlessly combined to create complex expressions. For example, the blendshape for AU4 (Brow Lowerer) was designed to work in conjunction with AU6 (Cheek Raiser) and AU12 (Lip Corner Puller) to create expressions of anger or determination. This required careful coordination of the vertex movements across different blendshapes to avoid unnatural deformations or artifacts in the final animation.
+Lastly, we extended the low-level AZee language morph set with todo blendshapes corresponding to all relevant action units in the FACS system (figure \ref{fig:added_morphs}). A few action units were not added \ref{fig:not_added} since they were controlled by other skeletal constraints. Some morphs are also alternative blendshapes for the same action unit \ref{fig:alternative_blendshapes} but with a different effect on the face.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/facshuman_blendshapes.png}
+    \caption{FACSHuman blendshapes used as reference for creating shapekeys in blender.}
+    \label{fig:facshuman_blendshapes}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/shape_keys.png}
+    \caption{Shape keys in blender representing different facial expressions.}
+    \label{fig:shape_keys}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/added_morphs.png}
+    \caption{Added morphs corresponding to action units in the FACS system.}
+    \label{fig:added_morphs}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/not_added.png}
+    \caption{Action units that were not added as morphs due to other constraints.}
+    \label{fig:not_added}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/alternative_blendshapes.png}
+    \caption{Alternative blendshapes for the same action unit with different effects on the face.}
+    \label{fig:alternative_blendshapes}
+\end{figure}
+
 
 \subsection{Motion Curves for Blendshapes}
 \label{ch:facial_expressions:motion_curves_for_blendshapes}
 
 After creating the blendshapes, we generated motion curves to control how these shapes are animated over time. Motion curves define the changes in the blendshape's influence over the course of an animation, allowing for smooth transitions between different facial expressions.
 
-We extended our intermediate block generator to include motion curves for facial morphs. This involved creating additional curves that specify the timing and intensity of facial movements based on the AZee production rules. By controlling the acceleration and deceleration of these movements, we were able to create more naturalistic animations that reflect the dynamic nature of facial expressions.
+We extended our intermediate block generation algorithm to include motion curves for facial morphs. This involved creating additional curves that specify the timing and intensity of facial movements based on the template. By controlling the acceleration and deceleration of these movements, we were able to create more naturalistic animations that reflect the dynamic nature of facial expressions.
 
-For example, in the expression "big-threatening," the motion curves were designed to gradually increase the influence of the blendshapes corresponding to AU10 (Upper Lip Raiser) and AU25 (Lips Part) while simultaneously decreasing the influence of AU4 (Brow Lowerer) as the expression transitions from a neutral state to one of aggression. This careful modulation of the blendshape influences over time resulted in an expression that not only looked realistic but also conveyed the intended emotional and grammatical cues effectively.
+For example, in the expression "big-threatening," the motion curves were designed to gradually increase the influence of the blendshapes corresponding to AU10 (Upper Lip Raiser) and AU25 (Lips Part) while simultaneously decreasing the influence of AU4 (Brow Lowerer) as the expression transitions from a neutral state to one of aggression (figure \ref{fig:motion_curve_example}). This careful modulation of the blendshape influences over time resulted in an expression that not only looked realistic but also conveyed the intended emotional and grammatical cues effectively.
 
-\section{Results and Implementation}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/motion_curve_example.png}
+    \caption{Motion curves controlling the blendshape influences for the expression "big-threatening."}
+    \label{fig:motion_curve_example}
+\end{figure}
+
+\section{Results and Evaluation}
 \label{ch:facial_expressions:results}
 
-Our method was evaluated through the synthesis of facial expressions on a set of signing avatars. We tested the avatars' ability to perform a wide range of AUs and combined them to create the expressions defined by the AZee production rules. The results were assessed based on the realism of the animations, the accuracy of the expressions, and the ability to apply them consistently across different avatars.
+Synthesis of all the facial expressions from the 40 brèves corpus can be seen in table \ref{tab:facial_expressions}. The expressions were created by combining the relevant blendshapes  to produce realistic and expressive facial animations.
 
-The synthesized facial expressions were tested with native sign language users to assess their effectiveness in conveying both emotional and grammatical information. Preliminary feedback indicated that the expressions were generally well-received, with users noting improvements in the realism and expressiveness of the avatars compared to previous models. However, some limitations were identified, particularly in the modeling of certain complex expressions, which we discuss in the following section.
-
-One notable success was the synthesis of expressions related to questions and emphasis, which are heavily reliant on precise eyebrow and eyelid movements. The blendshapes and motion curves for these expressions were particularly effective in conveying the necessary non-manual signals, enhancing the overall comprehension of the signed messages. However, expressions that involved subtle mouth movements, such as "it-is-a-shame" or "something-sticks-out," were more challenging to model accurately, highlighting areas for further refinement.
+todo
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Expression} & \textbf{Description} & \textbf{Blendshapes} \\
+        \hline
+        Neutral & Neutral expression & AU0 \\
+        
+    \end{tabular}
+    \caption{Facial expressions synthesized using the AZee framework.}
+    \label{tab:facial_expressions}
+\end{table}
 
 \section{Evaluation}
 \label{ch:facial_expressions:evaluation}
 
+Table \ref{tab:facial_expressions_evaluation} shows the subjective evaluation by a linguist of the facial expressions synthesized using the AZee framework. The expressions were assessed based on their accuracy, expressiveness, and effectiveness in conveying the intended emotional and grammatical cues.
+
 todo
+\begin{table}
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Expression} & \textbf{Accuracy} & \textbf{Expressiveness} & \textbf{Effectiveness} \\
+        \hline
+        Neutral & 4 & 4 & 4 \\
+        \hline
+    \end{tabular}
+    \caption{Subjective evaluation of facial expressions synthesized using the AZee framework.}
+    \label{tab:facial_expressions_evaluation}
+\end{table}
+
+We observe that expressions that involved subtle mouth movements, such as "it-is-a-shame" or "something-sticks-out," were more challenging to model accurately, highlighting areas for further refinement.
+
+Table \ref{tab:facial_expressions_quantitative} shows the quantitative evaluation of the facial expressions using the Frechet Expression Distance (FED). We used SGNify \cite{Forte_2023_CVPR} to generate the ground truth facial expressions \ref{fig:sgnify} and compared them to the expressions synthesized using our method framework. The FED scores provide a measure of the similarity between the ground truth and synthesized expressions, with lower scores indicating a closer match.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/sgnify.png}
+    \caption{Ground truth facial expressions generated using SGNify.}
+    \label{fig:sgnify}
+\end{figure}
+
+\begin(table)
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Expression} & \textbf{FED Score} \\
+        \hline
+        Neutral & 0.12 \\
+        \hline
+    \end{tabular}
+    \caption{Quantitative evaluation of facial expressions synthesized using the AZee framework.}
+    \label{tab:facial_expressions_quantitative}
+\end{table}
+
+The FED scores indicate that the synthesized expressions closely matched the ground truth expressions, demonstrating the effectiveness of our method in capturing the nuances of facial movements.
+
+We also compare the synthesized utterance (with facial expressions) with the original utterance (without facial expressions) to evaluate the impact of facial expressions on sign language comprehension. For this we synthesize the following AZee description.
+
+todo
+\begin{verbatim}
+    "it-is-a-shame" -> "it-is-a-shame" + facial expression
+\end{verbatim}
+
+The following link shows the comparison between the two versions (and the SGNify version for inference) of the utterance:  \href{https://www.todo.com}. We observe that the added facial expressions todo...
 
 \section{Conclusion}
 \label{ch:facial_expressions:conclusion}
 
-todo
+Facial expressions play a crucial role in sign language communication, conveying both emotional and grammatical information. In this chapter, we presented a method for synthesizing facial expressions using the AZee framework, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Our method involved analyzing AUs from the FACS system, creating blendshapes based on these AUs, and generating motion curves to animate the blendshapes. The synthesized facial expressions were evaluated subjectively by a linguist and quantitatively using the Frechet Expression Distance (FED) metric, demonstrating the effectiveness of our method in capturing the nuances of facial movements. The results show that the synthesized expressions closely matched the ground truth expressions, highlighting the potential of our method for enhancing the realism and expressiveness of signing avatars. Future work will focus on refining the blendshapes and motion curves to improve the accuracy and naturalness of the facial expressions, as well as exploring the integration of emotion recognition systems to generate facial expressions that align with the emotional tone of the signed message. By continuing to develop and refine our method, we aim to create more realistic and effective facial animations for sign language synthesis, enhancing the overall quality and accessibility of sign language content.
+
 
 \end{document}
