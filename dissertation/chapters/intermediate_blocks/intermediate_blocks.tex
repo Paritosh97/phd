@@ -76,21 +76,37 @@ The creation of this intermediate block relies on a templace expression check wh
 
 Motion templates are pre-defined motion patterns that guide the synthesis of new animations. In the context of AZee driven synthesis, these templates serve as a blueprint for generating intermediate blocks and motion curves. The use of motion templates allows for greater consistency and control over the final animation, as the templates encode expert knowledge about how certain signs should be performed.
 
-These motion templates are based on the template of the AZee rule and can be artistically created or procedurally generated. Algorithm \ref{alg:top_down_search_template} shows a top-down search algorithm for selecting the best motion template based on the AZee rule.
+These motion templates are based on the template of the AZee rule and can be artistically created or procedurally generated. Figure \ref{fig:top_down_search_template} shows a top-down search algorithm for selecting the best motion template based on the AZee rule \emph{info-about}.
 
-\begin{algorithm}
-\caption{Top-Down Search for Motion Template Selection}
-\label{alg:top_down_search_template}
-\begin{algorithmic}
-todo
-\end{algorithmic}
-\end{algorithm}
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/top_down_search_template.png}
+    \caption{Top-Down Search for Motion Template}
+    \label{fig:top_down_search_template}
+\end{figure}
 
-For example, todo...
+The procedurally generated templates can be based on the AZee rule and corresponding motion data. For example, motion curves for the template \texttt{info-about} can be seen in the following figure \ref{fig:motion_curves_template_procedural}.
 
-todo procedurally generated templates
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_template_procedural.png}
+    \caption{Procedurally Generated Motion Curves for Template \texttt{info-about}}
+    \label{fig:motion_curves_template_procedural}
+\end{figure}
 
-todo artistically created templates
+The template was created by extracting bone movements using mediapipe pose estimation and then converting them into motion curves (figure \ref{fig:motion_curves_mediapipe}).
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_mediapipe.png}
+    \caption{Motion Curves from Mediapipe Pose Estimation}
+    \label{fig:motion_curves_mediapipe}
+\end{figure}
+
+Similarly, artistically created template for the rule \texttt{about-ref} can be seen in the following figure \ref{fig:motion_curves_template_artist}.
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_template_artist.png}
+    \caption{Artistically Created Motion Curves for Template \texttt{about-ref}}
+    \label{fig:motion_curves_template_artist}
+\end{figure}
 
 \section{Motion Curves}
 \label{ch:intermediate_blocks:curves}
@@ -124,7 +140,7 @@ For shape keys, the motion curves represent time in x axis, and the weight of th
 \section{Results}
 \label{ch:intermediate_blocks:results}
 
-Figure \ref{fig:intermediate_blocks_results} shows the results of the intermediate block generation process. The top row shows the original AZee blocks, while the bottom row shows the intermediate blocks generated using motion curves and templates. Motion curve comparison betweeen standard interpolation and interpolation based on the template for the AZee rule ...todo... is shown in figure \ref{fig:intermediate_blocks_comparison}.
+Figure \ref{fig:intermediate_blocks_results} shows the results of the intermediate block generation process. The top row shows the original AZee blocks, while the bottom row shows the intermediate blocks generated using motion curves and templates. Motion curve comparison betweeen standard interpolation and interpolation based on the template for some AZee rules is shown in figure \ref{fig:intermediate_blocks_comparison}.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/intermediate_blocks_results.png}
@@ -132,9 +148,7 @@ Figure \ref{fig:intermediate_blocks_results} shows the results of the intermedia
     \label{fig:intermediate_blocks_results}
 \end{figure}
 
-The 2 animations can be seen in the following video: \url{todo}
-
-The motion template used can also be procedurally generated based on the AZee rule and corresponding motion capture. Animation for the AZee rule \texttt{todo} can be seen in the following video: \url{todo}
+The complete animations can be seen in the following video: \url{todo}
 
 \section{Conclusion and Future Work}
 \label{ch:intermediate_blocks:conclusion_and_future_work}

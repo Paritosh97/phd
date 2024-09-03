@@ -293,12 +293,17 @@ The approach handles only placements and orientations and uses a flattened anima
     \end{algorithmic}
 \end{algorithm}
 
-todo joint limits
+To omit impossible poses, the skeleton is also assigned joint limit constraints. These constraints are used to prevent the avatar from entering physically impossible poses, such as hyperextending a joint or bending it beyond its natural range of motion. Figure \ref{fig:joint_limits} shows an example of joint limits applied to the avatar's arm.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/joint_limits.png}
+    \caption{Joint limits applied to the avatar's arm}
+    \label{fig:joint_limits}
+\end{figure}
 
 \subsection{Morphs Constraints}
 \label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints}
-
-todo dynamic morphs 
 
 The word "morph" comes from the Greek word "morphē" (μορφή), which means "form" or "shape." In modern usage, "morph" is often used as a shorthand for "morphing". In the field of computer graphics and animation, morphs are predefined shape keys that modify the mesh of the avatar independently of the skeletal structure, allowing for the detailed control of specific aspects of the avatar's appearance that cannot be easily achieved through bone manipulation alone. This includes subtle facial expressions, muscle bulges, and other nuanced gestures that are critical for conveying meaning in sign language.
 
@@ -323,22 +328,44 @@ In AZee, skeletal morphs are treated as constraints that define a forward kinema
 
 Figure \ref{fig:skeletal_morphs} shows a table of skeletal morphs and their corresponding effects on the avatar's skeleton.
 
-todo
 \begin{figure}
     \centering
     \begin{tabular}{|c|c|}
         \hline
         \textbf{Morph ID} & \textbf{Effect} \\
         \hline
-        \texttt{hand\_close} & Closes the hand into a fist \\
-        \texttt{hand\_open} & Opens the hand from a fist \\
-        \texttt{wrist\_flex} & Bends the wrist downwards \\
-        \texttt{wrist\_extend} & Straightens the wrist \\
-        \texttt{elbow\_flex} & Bends the elbow \\
-        \texttt{elbow\_extend} & Straightens the elbow \\
-        \texttt{shoulder\_adduct} & Moves the shoulder towards the body's midline \\
-        \texttt{shoulder\_abduct} & Moves the shoulder away from the body's midline \\
-        \texttt{shoulder\_hyperextend} & Hyperextends the shoulder \\
+        % Finger Morphs
+        \texttt{index\_bend\_L} & Bends the left index finger \\
+        \texttt{middle\_bend\_L} & Bends the left middle finger \\
+        \texttt{ring\_bend\_L} & Bends the left ring finger \\
+        \texttt{little\_bend\_L} & Bends the left little finger \\
+        \texttt{index\_bend\_R} & Bends the right index finger \\
+        \texttt{middle\_bend\_R} & Bends the right middle finger \\
+        \texttt{ring\_bend\_R} & Bends the right ring finger \\
+        \texttt{little\_bend\_R} & Bends the right little finger \\
+        \texttt{index\_hook\_L} & Hooks the left index finger \\
+        \texttt{middle\_hook\_L} & Hooks the left middle finger \\
+        \texttt{ring\_hook\_L} & Hooks the left ring finger \\
+        \texttt{little\_hook\_L} & Hooks the left little finger \\
+        \texttt{index\_hook\_R} & Hooks the right index finger \\
+        \texttt{middle\_hook\_R} & Hooks the right middle finger \\
+        \texttt{ring\_hook\_R} & Hooks the right ring finger \\
+        \texttt{little\_hook\_R} & Hooks the right little finger \\
+        \texttt{thumb\_bend\_L} & Bends the left thumb \\
+        \texttt{thumb\_hook\_L} & Hooks the left thumb \\
+        \texttt{thumb\_opposed\_L} & Moves the left thumb to an opposed position \\
+        \texttt{thumb\_bend\_R} & Bends the right thumb \\
+        \texttt{thumb\_hook\_R} & Hooks the right thumb \\
+        \texttt{thumb\_opposed\_R} & Moves the right thumb to an opposed position \\
+        \texttt{fingers\_spread\_L} & Spreads the fingers on the left hand \\
+        \texttt{fingers\_spread\_R} & Spreads the fingers on the right hand \\
+        \hline
+        % Body Posture Morphs
+        \texttt{shoulder\_raise\_L} & Raises the left shoulder \\
+        \texttt{shoulder\_raise\_R} & Raises the right shoulder \\
+        \texttt{shoulder\_shrug\_L} & Shrugs the left shoulder \\
+        \texttt{shoulder\_shrug\_R} & Shrugs the right shoulder \\
+        \texttt{spine\_extended} & Extends the spine \\
         \hline
     \end{tabular}
     \caption{Table of skeletal morphs and their effects}
@@ -353,7 +380,7 @@ Facial morphs in the AZee framework provide a means to represent the complex and
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/facial_example.png}
-    \caption{Facial morph for ..todo}
+    \caption{Facial morph for \emph{:inter-subjecitivty}}
     \label{fig:facial_example}
 \end{figure}
 
@@ -362,62 +389,14 @@ Facial Morph targets are typically generated by sculpting the avatar's mesh into
 \subsubsection{Integration with other layers}
 \label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints:intergation}
 
-The morph constraints are integrated along with the other constraints in the posture optimization algorithm \ref{alg:posture_morph_integrate}. The skeletal morphs act on the FK layer while the facial morphs act on the mesh directly.
+The morph constraints are integrated along with the other constraints in the posture optimization algorithm. For this, we calculate the FK values of the impacted bones for skeletal morphs and calculate the loss using rotation distance formula. For the the facial morphs, the morphs act on the mesh and the loss is calculated using the distance between the vertices (figure \ref{fig:morphs_optimize}).
 
-todo
-\begin{algorithm}
-    \caption{Posture Generation with Constraints}
-    \label{alg:posture_morph_integrate}
-    \begin{algorithmic}[1]    
-    \Procedure{GeneratePosture}{$Blocks$}
-        \For{each $Block$ in $Blocks$}
-            \State $Constraints \gets \text{TopologicalSort}(\text{CreateDAG}(Block))$
-            \For{each $Frame$ from $Block.Start$ to $Block.End$}
-                \For{$Epoch \gets 1$ to $MaxEpochs$}
-                    \State $Loss \gets 0$
-                    \For{each $C$ in $Constraints$}
-                        \State \text{Apply}($C$, $Frame$)
-                        \State $Loss \gets Loss + \text{ComputeLoss}(C, Frame)$
-                    \EndFor
-                    \If{$Loss < Threshold$} \textbf{break} \EndIf
-                \EndFor
-                \State \text{InsertKeyframe}(Frame)
-            \EndFor
-        \EndFor
-    \EndProcedure
-    
-    \Procedure{Apply}{$C$, $Frame$}
-        \If{$C$ is $MorphConstraint$} \State \text{ApplyMorph}($C$, $Frame$)
-        \ElsIf{$C$ is $PlacementConstraint$} \State \text{ApplyPlacement}($C$, $Frame$)
-        \ElsIf{$C$ is $OrientationConstraint$} \State \text{ApplyOrientation}($C$, $Frame$)
-        \EndIf
-    \EndProcedure
-    
-    \end{algorithmic}
-\end{algorithm}
-
-todo
-\begin{algorithm}
-    \caption{Calculate MorphConstraint Loss in Terms of FK}
-    \begin{algorithmic}[1]
-        \label{alg:morph_constraint_loss}
-    \Procedure{ComputeMorphFKLoss}{$\mathbf{p}_{\text{current}}$, $\mathbf{p}_{\text{target}}$, $\mathbf{q}_{\text{current}}$, $\mathbf{q}_{\text{target}}$}
-        \State $\text{PositionLoss} \gets \|\mathbf{p}_{\text{current}} - \mathbf{p}_{\text{target}}\|$
-        \State $\text{RotationDiff} \gets \mathbf{q}_{\text{current}} \cdot \mathbf{q}_{\text{target}}$
-        \State $\text{RotationLoss} \gets 1 - |\text{RotationDiff}|$
-        \State $\text{TotalLoss} \gets \lambda_p \times \text{PositionLoss} + \lambda_r \times \text{RotationLoss}$
-        \State \Return $\text{TotalLoss}$
-    \EndProcedure
-    
-    \Procedure{ApplyMorphConstraint}{$\text{MorphConstraint}$, $\text{Frame}$}
-        \State $\mathbf{p}_{\text{current}}, \mathbf{q}_{\text{current}} \gets \text{ApplyMorph}(\text{MorphConstraint}, \text{Frame})$
-        \State $\mathbf{p}_{\text{target}}, \mathbf{q}_{\text{target}} \gets \text{GetTargetState}(\text{Frame})$
-        \State $\text{Loss} \gets \text{ComputeMorphFKLoss}(\mathbf{p}_{\text{current}}, \mathbf{p}_{\text{target}}, \mathbf{q}_{\text{current}}, \mathbf{q}_{\text{target}})$
-        \State \Return $\text{Loss}$
-    \EndProcedure
-    
-    \end{algorithmic}
-\end{algorithm}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/morphs_optimize.png}
+    \caption{Optimization of morphs in the posture optimization algorithm}
+    \label{fig:morphs_optimize}
+\end{figure}
 
 \section{Results and Implementation}
 \label{ch:rigging_layers:results}
@@ -433,6 +412,8 @@ The layered rigging system has been implemented and tested on the BAZeel avatar 
 
 \section{Evaluation}
 \label{ch:rigging_layers:evaluation}
+
+We evaluate the performance, accuracy, and quality of the animation generated by the layered rigging system.
 
 \subsection{Performance}
 \label{ch:rigging_layers:evaluation:performance}

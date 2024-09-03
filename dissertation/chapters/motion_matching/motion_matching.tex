@@ -19,9 +19,9 @@ In this section, we discuss relevant background work in motion matching, focusin
 \subsection{Classical Inverse Kinematics (IK) Methods}
 \label{ch:motion_matching:related_work:classical_ik}
 
-Classical Inverse Kinematics (IK) methods have been a cornerstone in the field of character animation, providing techniques to determine the necessary joint angles to achieve a desired end-effector position. Some of these methods are Jacobian-based approach \cite{TODO itasc}, Cyclic Coordinate Descent (CCD)\cite{TODO}, and Forward And Backward Reaching Inverse Kinematics (FABRIK)\cite{TODO}.
+Classical Inverse Kinematics (IK) methods have been a cornerstone in the field of character animation, providing techniques to determine the necessary joint angles to achieve a desired end-effector position. Some of these methods are Jacobian-based approach \cite{4648032}, Cyclic Coordinate Descent (CCD)\cite{kenwright2012inverse}, and Forward And Backward Reaching Inverse Kinematics (FABRIK)\cite{aristidou2011fabrik}.
 
-Jacobian-Based Methods involve computing the Jacobian matrix to linearize the relationship between joint angles and end-effector positions. By iteratively adjusting joint angles to reduce the error between the current and target positions, these methods offer a robust solution for real-time applications\ref{fig:jacobian_based}. However, they often require complex matrix operations and are sensitive to singularities, making them less suitable for more complex animations [TODO].
+Jacobian-Based Methods involve computing the Jacobian matrix to linearize the relationship between joint angles and end-effector positions. By iteratively adjusting joint angles to reduce the error between the current and target positions, these methods offer a robust solution for real-time applications\ref{fig:jacobian_based}. However, they often are sensitive to singularities, resulting in unrealistic or unstable motion.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/jacobian_based.png}
@@ -29,7 +29,7 @@ Jacobian-Based Methods involve computing the Jacobian matrix to linearize the re
     \label{fig:jacobian_based}
 \end{figure}
 
-Cyclic Coordinate Descent (CCD) simplifies the IK problem by iteratively adjusting one joint at a time, minimizing the distance between the end-effector and the target\ref{fig:ccdik}. CCD is computationally efficient and easy to implement, making it popular in game engines. However, its greedy approach can lead to suboptimal solutions, especially in highly constrained scenarios\cite{TODO}.
+Cyclic Coordinate Descent (CCD) simplifies the IK problem by iteratively adjusting one joint at a time, minimizing the distance between the end-effector and the target\ref{fig:ccdik}. CCD is computationally efficient and easy to implement, making it popular in game engines. However, its greedy approach can lead to suboptimal solutions, especially in highly constrained scenarios.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/ccdik.png}
@@ -37,7 +37,7 @@ Cyclic Coordinate Descent (CCD) simplifies the IK problem by iteratively adjusti
   \label{fig:ccdik}
 \end{figure}
 
-FABRIK differs from other methods by focusing on the positions of joints rather than their angles. It iteratively adjusts the positions of joints through a two-pass approach, first from the end-effector to the root and then from the root to the end-effector\ref{fig:fabrik}. This method is known for its simplicity and stability, particularly in scenarios where maintaining a natural joint configuration is crucial\cite{TODO}.
+FABRIK differs from other methods by focusing on the positions of joints rather than their angles. It iteratively adjusts the positions of joints through a two-pass approach, first from the end-effector to the root and then from the root to the end-effector\ref{fig:fabrik}. This method is known for its simplicity and stability, particularly in scenarios where maintaining a natural joint configuration is crucial.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/fabrik.png}
@@ -58,7 +58,7 @@ These classical methods have been widely adopted due to their balance between co
 
 The limitations of classical IK methods have spurred the development of data-driven approaches, which leverage large datasets and machine learning to improve the realism and flexibility of character animations.
 
-Motion Matching represents a significant shift from traditional IK by utilizing a large database of motion capture (mocap) data. Instead of predefined animation clips, Motion Matching dynamically selects the most appropriate pose based on user inputs and contextual parameters. This approach was notably employed by Ubisoft in the game For Honor, where it enabled more fluid and responsive character animations\ref{fig:for_honor}. Motion Matching's ability to break down animations into fine-grained clips allows for seamless transitions and more natural movements\cite{TODO}.
+Motion Matching represents a significant shift from traditional IK by utilizing a large database of motion capture (mocap) data. Instead of predefined animation clips, Motion Matching dynamically selects the most appropriate pose based on user inputs and contextual parameters. This approach was notably employed by Ubisoft in the game For Honor, where it enabled more fluid and responsive character animations\ref{fig:for_honor}. Motion Matching's ability to break down animations into fine-grained clips allows for seamless transitions and more natural movements.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/for_honor.png}
@@ -66,7 +66,7 @@ Motion Matching represents a significant shift from traditional IK by utilizing 
   \label{fig:for_honor}
 \end{figure}
 
-Phase-Functioned Neural Networks (PFNN) \cite{TODO} extends the capabilities of motion matching by incorporating phase information into the neural network's weights. This phase-aware approach allows the network to generate contextually appropriate animations that account for the cyclical nature of bipedal movement, such as walking or running. Unlike traditional methods that rely on blending animation clips, PFNN encodes the entire animation process within the neural network, offering greater flexibility and control.
+Phase-Functioned Neural Networks (PFNN) \cite{sheng2021pfnn} extends the capabilities of motion matching by incorporating phase information into the neural network's weights. This phase-aware approach allows the network to generate contextually appropriate animations that account for the cyclical nature of bipedal movement, such as walking or running. Unlike traditional methods that rely on blending animation clips, PFNN encodes the entire animation process within the neural network, offering greater flexibility and control.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/pfnn.png}
@@ -74,7 +74,7 @@ Phase-Functioned Neural Networks (PFNN) \cite{TODO} extends the capabilities of 
   \label{fig:pfnn}
 \end{figure}
 
-Style-Based Inverse Kinematics (Style IK) leverages machine learning to represent poses in a latent space, where the distribution of poses can be learned and sampled. Using Scaled Gaussian Process Latent Variable Models (SGPLVM), Style IK can generate stylized animations that conform to specific aesthetic or functional constraints. This approach is particularly useful for creating animations that need to adhere to a particular style or where mocap data is not available\cite{TODO}.
+Style-Based Inverse Kinematics (Style IK) leverages machine learning to represent poses in a latent space, where the distribution of poses can be learned and sampled. Using Scaled Gaussian Process Latent Variable Models (SGPLVM), Style IK can generate stylized animations that conform to specific aesthetic or functional constraints. This approach is particularly useful for creating animations that need to adhere to a particular style or where mocap data is not available\cite{grochow2004style}.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/style_ik.png}
@@ -82,18 +82,12 @@ Style-Based Inverse Kinematics (Style IK) leverages machine learning to represen
   \label{fig:style_ik}
 \end{figure}
 
-These data-driven approaches represent a significant advancement over classical IK methods, offering greater flexibility, realism, and the ability to handle complex, non-linear constraints. However, they also introduce new challenges, such as the need for extensive training data and increased computational demands, particularly in real-time applications \ref{fig:problem_data_driven}.
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/problem_data_driven.png}
-  \caption{TODO}
-  \label{fig:problem_data_driven}
-\end{figure}
+These data-driven approaches represent a significant advancement over classical IK methods, offering greater flexibility, realism, and the ability to handle complex, non-linear constraints. However, they also introduce new challenges, such as the need for extensive training data and increased computational demands, particularly in real-time applications.
 
 \subsection{Latent Space Representations in Animation}
 \label{ch:motion_matching:related_work:latent_space}
 
-Latent space representations have become increasingly important in character animation, providing a powerful tool for managing the complexity of pose and motion data. Variational Autoencoders (VAEs)\cite{TODO}, such as the one used in SMPLify-X\cite{TODO}, learn a probabilistic model of human poses, allowing for the generation and manipulation of poses in a lower-dimensional space. In the context of pose estimation, VAEs help in predicting 3D poses from 2D images by learning a latent space that captures the distribution of plausible human poses. This latent space can then be sampled to generate realistic poses that meet specific constraints, such as end-effector positions or overall body posture\ref{fig:simplifyx}.
+Latent space representations have become increasingly important in character animation, providing a powerful tool for managing the complexity of pose and motion data. Variational Autoencoders (VAEs)\cite{kingma2013auto}, such as the one used in SMPLify-X\cite{pavlakos2019expressive}, learn a probabilistic model of human poses, allowing for the generation and manipulation of poses in a lower-dimensional space. In the context of pose estimation, VAEs help in predicting 3D poses from 2D images by learning a latent space that captures the distribution of plausible human poses. This latent space can then be sampled to generate realistic poses that meet specific constraints, such as end-effector positions or overall body posture\ref{fig:simplifyx}.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/simplifyx.png}
@@ -103,7 +97,7 @@ Latent space representations have become increasingly important in character ani
 
 The use of latent space not only reduces the dimensionality of the data, making it easier to work with, but also enables more sophisticated manipulations, such as style transfer or the synthesis of new poses that blend characteristics from multiple examples. This has proven particularly valuable in scenarios where high-quality mocap data is not available, or where the goal is to create stylized or non-standard animations.
 
-VPoser\cite{TODO}, a specific implementation of a VAE, further demonstrates the power of latent space in animation. By encoding poses into a low-dimensional latent space, VPoser can be used in optimization processes to ensure that generated poses are both realistic and meet specific criteria. This approach is particularly effective in applications like pose estimation from monocular images, where the latent space helps to regularize the solution and avoid physically implausible poses.
+VPoser\cite{pavlakos2019expressive}, a specific implementation of a VAE, further demonstrates the power of latent space in animation. By encoding poses into a low-dimensional latent space, VPoser can be used in optimization processes to ensure that generated poses are both realistic and meet specific criteria. This approach is particularly effective in applications like pose estimation from monocular images, where the latent space helps to regularize the solution and avoid physically implausible poses.
 
 Overall, latent space representations have become a crucial component of modern character animation, enabling more complex and realistic animations while also providing tools for creative control and manipulation.
 
@@ -115,7 +109,7 @@ In this section, we discuss the application of motion matching techniques to the
 \subsection{Preparing the dataset}
 \label{ch:motion_matching:motion_matching_with_azee:dataset}
 
-The first step in integrating motion matching into AZee is to train a Variational Autoencoder (VAE) on set of sign language poses. For this task, we use a dataset of mocap data collected from the Rosetta dataset \cite{TODO}. The dataset consists of todo poses and should capture the diversity of poses and movements associated with different signs, providing a rich source of training data for the VAE.. Since our focus was only on the upper body, we didn't use the facial bones and the lower body for the training. We also retargeted the mocap data to the BAZeel avatar, which is compatible with the AZee skeleton structure (figure \ref{fig:retargeted}).
+The first step in integrating motion matching into AZee is to train a Variational Autoencoder (VAE) on set of sign language poses. For this task, we use a dataset of mocap data collected from the Rosetta dataset \cite{bertin2022rosetta}. The dataset consists of todo poses and should capture the diversity of poses and movements associated with different signs, providing a rich source of training data for the VAE.. Since our focus was only on the upper body, we didn't use the facial bones and the lower body for the training. We also retargeted the mocap data to the BAZeel avatar, which is compatible with the AZee skeleton structure (figure \ref{fig:retargeted}).
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/retargeted.png}
@@ -134,7 +128,7 @@ Next, we converted the motion into AZee's FK pose array. The FK pose array consi
 \subsection{Training VPoser}
 \label{ch:motion_matching:motion_matching_with_azee:training}
 
-A VAE \cite{todo} is a type of generative model that learns a low-dimensional latent space representation of the input data. In the context of character animation, a VAE can be used to capture the distribution of poses in a dataset, allowing for the generation of new poses that are statistically similar to the training data. The VAE consists of an encoder network that maps input poses to a latent space and a decoder network that reconstructs the input poses from the latent space (figure \ref{fig:vae}).
+A VAE is a type of generative model that learns a low-dimensional latent space representation of the input data. In the context of character animation, a VAE can be used to capture the distribution of poses in a dataset, allowing for the generation of new poses that are statistically similar to the training data. The VAE consists of an encoder network that maps input poses to a latent space and a decoder network that reconstructs the input poses from the latent space (figure \ref{fig:vae}).
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/vae.png}
@@ -157,19 +151,31 @@ With the VAE trained, we can now implement a motion matching system that leverag
 
 Algorithm \ref{alg:motion_matching} outlines the motion matching process. Given a target pose generated by the AZee synthesizor, we first encode the pose into the latent space using the VPoser encoder. We then compute the distance between the encoded pose and each pose in the dataset, selecting the pose with the smallest distance as the best match. Finally, we decode the matched pose back into the AZee FK pose array and apply it to the character.
 
-todo
 \begin{algorithm}
-  \caption{Motion Matching Algorithm}
+  \caption{AZee constraint optimization with motion matching algorithm}
   \label{alg:motion_matching}
-  \begin{algorithmic}
-    \STATE \textbf{Input:} Target pose $P_{target}$
-    \STATE \textbf{Output:} Matched pose $P_{matched}$
-    \STATE Encode $P_{target}$ into latent space: $z_{target} = \text{VPoser.encoder}(P_{target})$
-    \STATE $P_{matched} = \text{argmin}_{P_i} \text{dist}(z_{target}, \text{VPoser.encoder}(P_i))$
-    \STATE $P_{matched} = \text{VPoser.decoder}(z_{matched})$
-    \STATE Apply $P_{matched}$ to character
+  \begin{algorithmic}[1]
+  \For{$frame$ \textbf{in} frames}
+      \State \texttt{switch\_cursor\_to\_frame($f$)}
+      \For{\texttt{parallel\_block \textbf{in} self.parallel\_blocks}}
+          \State \texttt{constraints.add(parallel\_block.constraints)}
+      \EndFor
+      \For{\texttt{constraint \textbf{in} constraints}}
+          \State \texttt{constraint.apply($frame$)}
+      \EndFor
+      \State \texttt{model.pose\_embedding}
+      \State \texttt{model.global\_trans}
+      \State \texttt{optimizer = \dots}
+      \For{\texttt{epoch \textbf{in} range(max\_epochs)}}
+          \State \texttt{optimizer.zero\_grad()}
+          \State \texttt{\dots}
+          \State \texttt{optimizer.step()}
+          \If{\texttt{loss.item() < threshold}} \State \texttt{break} \EndIf
+      \EndFor
+      \State \texttt{posture.keyframe($frame$)}
+  \EndFor
   \end{algorithmic}
-\end{algorithm}
+  \end{algorithm}
 
 \subsection{Results and Evaluation}
 \label{ch:motion_matching:motion_matching_with_azee:results}
@@ -214,6 +220,8 @@ Lastly, figure \ref{fig:losses} shows how retargeting the mocap data to the AZee
 \label{ch:motion_matching:discussion}
 
 The integration of motion matching into the AZee system represents a significant advancement in sign language synthesis. By leveraging data-driven IK and latent space representations, we are able to generate more realistic and contextually appropriate sign language animations. This has the potential to enhance the expressiveness and naturalness of sign language avatars, making them more engaging and accessible to users. In some ways, this offfers a new perspective to Sign Language synthesis where the linguistics decides the "what" and the motion matching decides the "how" of the animation.
+
+For future, posers based on neural distance fields \cite{tiwari2022pose} or diffusion \cite{lu2023dposer} could be used for motion matching since the current poser has a bayesian bias. Also, continuity of motion matching with respect to signing spaces could be studied further improving the the learnt pose prior.
 
 While the integration of machine learning into SL synthesis offers numerous advantages, it also introduces new challenges. Data-driven and latent space methods typically require significant computational resources, both during training and inference. This can be a major barrier in real-time applications, where low latency is critical. Also the effectiveness of machine learning models depends heavily on the availability of high-quality training data. In many cases, obtaining sufficient mocap data can be difficult, especially for non-standard or stylized animations. Lastly, while machine learning models can generate realistic and high-quality animations, they often lack the fine-grained control that human animators require. Ensuring that these models produce outputs that align with artistic vision remains a significant challenge.
 

@@ -41,13 +41,7 @@ However, their appliations in both procedural animation and sign language synthe
 
 Although AZee is multi-track by nature (where the lingusit has the ability to crate the track), the low-level AZee synthesizor is based on a flattened \emph{AnimatedScore} representation that flattenes each track made by the linguist. This flattening layer loses the multi-track information and the dynamics of the original AZee description. 
 
-For example, consider the following low-level AZee description:
-
-\begin{verbatim}
-    todo
-\end{verbatim}
-
-This description when compiled with the AZee interpreter generates an AZee \emph{SyncedScore} using the algorithm \ref{alg:azee_recursion} \cite{todo} that is show in in figure \ref{fig:azee_synced_score}.
+For example, consider the following low-level AZee description for \emph{:cupboard} when compiled with the AZee interpreter generates an AZee \emph{SyncedScore} using the algorithm \ref{alg:azee_recursion} \cite{filhol2017synthesizing} that is show in in figure \ref{fig:azee_synced_score}.
 
 \begin{figure}[h]
     \centering
@@ -58,12 +52,19 @@ This description when compiled with the AZee interpreter generates an AZee \emph
 
 Figure \ref{fig:azee_flattened_score} shows the flattened version of this AZee Synced Score, where all the tracks are merged into a single track. This flattening is done by collecting all the constraints for each frame and applying them to the corresponding bone rotations during animation.
 
-This approach is also inextensible to be used with pre-animated motion data since the flattened representation does not contain the original location of the corresponding animation block on the timeline. 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_flattened_score.png}
+    \caption{Flattened version of the AZee Synced Score.}
+    \label{fig:azee_flattened_score}
+\end{figure}
+
+This approach is also inextensible to be used with pre-animated motion data blocks for larger sequences since the flattened representation does not contain the original location of the corresponding animation block on the timeline. 
 
 \subsection{Paula}
 \label{ch:multi_track:related_work:paula}
 
-On the contrary, a multi-track approach to sign language synthesis has already been done by \cite{todo}. Paula is a multi-track sign language synthesis system that strictly uses pre-recorded motion data. The system is based on a multi-track timeline where each track is created by the artist(or can be based on the AZee description). The Paula interface is shown in figure \ref{fig:paula}.
+On the contrary, a multi-track approach to sign language synthesis has already been done by \cite{filhol2017synthesizing}. Paula is a multi-track sign language synthesis system that strictly uses pre-recorded motion data. The system is based on a multi-track timeline where each track is created by the artist(or can be based on the AZee description). The Paula interface is shown in figure \ref{fig:paula}.
 
 \begin{figure}[h]
     \centering
@@ -230,7 +231,7 @@ Even though the constraints are optimised together, each individual block in the
 
 Transpath blocks are blocks which contain transpath constraints. A transpath constraint is a constraint that moves a body site along a path. It acts as an interpolation block but with a controlled path for a particular body site for it's preceding block and following blocks. The figure \ref{fig:transpath_blocks} shows an example of transpath blocks for ...todo. Just like cyclic block sets, transpath blocks are evaluated in a second pass.
 
-todo how are they baked 
+Transpath blocks are baked by evaluating the transpath constraint for each frame and applying the change in motion curve of the body site wrt to the preceding and the successing block. These motion curves are then baked as a new block.
 
 \begin{figure}[h]
     \centering
@@ -242,9 +243,16 @@ todo how are they baked
 \subsection{Hold Blocks}
 \label{ch:multi_track:second_pass:hold_blocks}
 
-Hold blocks are blocks that hold another block for a certain duration. The figure \ref{fig:hold_blocks} shows an example of hold blocks for ...todo. Hold blocks are also evaluated in the second pass since they hold another block(which has to be evaluated in the 1st pass).
+Hold blocks are blocks that hold another block for a certain duration. The figure \ref{fig:hold_blocks} shows an example of hold blocks for the rule \emph{:info-about(:topic, :info)}. Hold blocks are also evaluated in the second pass since they hold another block(which has to be evaluated in the 1st pass).
 
-todo how are they baked 
+Hold blocks are baked by extending the end of the motion curves of the block being held.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/hold_blocks.png}
+    \caption{Hold blocks for the rule \emph{:info-about(:topic, :info)}.}
+    \label{fig:hold_blocks}
+\end{figure}
 
 \section{Pre-animated blocks}
 \label{ch:multi_track:preanim_blocks}
@@ -270,8 +278,8 @@ todo
         \hline
         \textbf{Sign} & \textbf{Timeline} \\
         \hline
-        \emph{tree} & figure \ref{fig:tree_timeline} \\
-        \emph{cupboard} & figure \ref{fig:cupboard_timeline} \\
+        \emph{tree} & figure todo \\
+        \emph{cupboard} & figure todo \\
         \emph{...} & ... \\
         \hline
     \end{tabular}

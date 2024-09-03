@@ -21,10 +21,9 @@ This section reviews the previous work in facial expression synthesis, focusing 
 \subsubsection{Facial Expressions Synthesis}
 \label{ch:facial_expressions:related_work:facial_expressions_synthesis}
 
-todo citations
-Most of the facial expressions research is motivated by synthesis from voice signals. These methods are generally categorized into lip-sync techniques [19, 39, 5, 33], which align mouth movements with audio, and full-face expression synthesis [9, 14, 53]. Some approaches model speaking style with 3D animation parameters [7], create generalized latent audio expressions combined with a person-specific 3D model [42], and produce expressive facial outputs conditioned on style, although some are unsuitable for tasks requiring full-face movement [46]. A related work, MakeItTalk [54], introduces a two-stage deep learning model that predicts facial landmark displacements based on audio input and a speaker identifier, followed by an image-to-image translation method to generate the final facial expression. Another study, EAMM [20], focuses on transferring local emotional deformations to an audio-driven talking face, using deep learning to map audio to keypoints and their dynamics, resulting in emotion-related facial motions.
+Most of the facial expressions research is motivated by synthesis from voice signals. These methods are generally categorized into lip-sync techniques \cite{you_said_that, talking_face, lip_movements, lip_sync_expert}, which align mouth movements with audio, and full-face expression synthesis {eskimez, greenwood18, controllable_facial_synth}. Some approaches model speaking style with 3D animation parameters \cite{cudeiro}, create generalized latent audio expressions combined with a person-specific 3D model \cite{FLAME}, and produce expressive facial outputs conditioned on style, although some are unsuitable for tasks requiring full-face movement \cite{imitating}. A related work, MakeItTalk \cite{Yang:2020:MakeItTalk}, introduces a two-stage deep learning model that predicts facial landmark displacements based on audio input and a speaker identifier, followed by an image-to-image translation method to generate the final facial expression. Another study, EAMM \cite{eamm}, focuses on transferring local emotional deformations to an audio-driven talking face, using deep learning to map audio to keypoints and their dynamics, resulting in emotion-related facial motions.
 
-Synthesis of facial expressions in sign language is a much-less explored area. SGNify \cite{Forte_2023_CVPR} can do a 3D reconstruction of a signer's face using in FLAME \cite{todo_flame} space from a monocular video. The Paula avatar uses rotational pivots and pre-defined movements, offering more natural and expressive facial animations \cite{johnson-2022-improved}. More recent work \cite{azevedo2024empowering} uses sentiment and semantic information to generate realistic facial expressions, achieving state-of-the-art results and outperforming existing approaches. However, these methods are limited in their ability to capture the full range of facial expressions in sign language, particularly the grammatical and emotional nuances that are essential for effective communication. However, these methods are limited in their ability to meaningully relate facial expressions to the signed message.
+Synthesis of facial expressions in sign language is a much-less explored area. SGNify \cite{Forte_2023_CVPR} can do a 3D reconstruction of a signer's face using in FLAME \cite{FLAME} space from a monocular video. The Paula avatar uses rotational pivots and pre-defined movements, offering more natural and expressive facial animations \cite{johnson-2022-improved}. More recent work \cite{azevedo2024empowering} uses sentiment and semantic information to generate realistic facial expressions, achieving state-of-the-art results and outperforming existing approaches. However, these methods are limited in their ability to capture the full range of facial expressions in sign language, particularly the grammatical and emotional nuances that are essential for effective communication. However, these methods are limited in their ability to meaningully relate facial expressions to the signed message.
 
 \subsection{Emotion Recognition}
 \label{ch:facial_expressions:related_work:emotion_recognition}
@@ -122,12 +121,12 @@ For these manual adjustments, we used a linguists input by adjusting the movemen
     \label{fig:face_adjust}
 \end{figure}
 
-The synthesized facial expressions were taken from our reference corpus (the 40 brèves corpus), breaking down each expression into its constituent AUs. This approach allowed us to ensure that our blendshapes accurately reflected the intended expressions, capturing both the emotional and grammatical nuances required for sign language synthesis.
+The synthesized facial expressions were taken from our reference corpus (the 40 brèves corpus) \cite{challant2024extending} \cite{challant2022first}, breaking down each expression into its constituent AUs. This approach allowed us to ensure that our blendshapes accurately reflected the intended expressions, capturing both the emotional and grammatical nuances required for sign language synthesis.
 
 \section{Blendshape Creation}
 \label{ch:facial_expressions:blendshape_creation}
 
-Once the AUs were identified, we used FACSHuman \cite{fig:facshuman} blendshapes as reference to create shapekeys in blender that correspond to each AU \ref{fig:facshuman_blendshapes}. Shape keys \ref{fig:shape_keys} are essentially different versions of a 3D model, each representing a specific change in vertices. By blending and interpolating these keys together, we can create a wide range of mesh shapes.
+Once the AUs were identified, we used FACSHuman \cite{gilbert2021facshuman} blendshapes as reference to create shapekeys in blender that correspond to each AU \ref{fig:facshuman_blendshapes}. Shape keys \ref{fig:shape_keys} are essentially different versions of a 3D model, each representing a specific change in vertices. By blending and interpolating these keys together, we can create a wide range of mesh shapes.
 
 Since the FACSHuman blendshape work on any MakeHuman template mesh, this technique of synthesis is avatar independant. However, since the original model doesn't cover all the blendshapes(for all the face meshes), some blendshapes were created manually. The complete process involved iterating between manual adjustments and automated tools to ensure that the blendshapes accurately captured the intended expressions. The creation of blendshapes also involved ensuring that they could be seamlessly combined to create complex expressions. For example, the blendshape for AU4 (Brow Lowerer) was designed to work in conjunction with AU6 (Cheek Raiser) and AU12 (Lip Corner Puller) to create expressions of anger or determination. This required careful coordination of the vertex movements across different blendshapes to avoid unnatural deformations or artifacts in the final animation.
 
@@ -251,12 +250,11 @@ The FED scores indicate that the synthesized expressions closely matched the gro
 
 We also compare the synthesized utterance (with facial expressions) with the original utterance (without facial expressions) to evaluate the impact of facial expressions on sign language comprehension. For this we synthesize the following AZee description.
 
-todo
-\begin{verbatim}
-    "it-is-a-shame" -> "it-is-a-shame" + facial expression
+\begin{verbatim}    
+    todo
 \end{verbatim}
 
-The following link shows the comparison between the two versions (and the SGNify version for inference) of the utterance:  \href{https://www.todo.com}. We observe that the added facial expressions todo...
+The following link shows the comparison between the two versions (and the SGNify version for inference) of the utterance:  \href{todo}. We observe that the added facial expressions todo...
 
 \section{Conclusion}
 \label{ch:facial_expressions:conclusion}
