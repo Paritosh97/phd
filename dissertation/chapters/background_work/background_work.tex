@@ -88,7 +88,7 @@ To understand how the AZee model works, consider the following example of the ut
 
 The AZee interpreter can parse this description recursively, generating a \emph{Score}(figure \ref{fig:azee_score_example}) (inspired from musical scores) which is then used to animate the sign.
 
-\begin{figure}
+\begin{figure}[h]
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azee_score_example.png}
   \caption{AZee visual description for a person aged 52}
   \label{fig:azee_score_example}
@@ -128,12 +128,12 @@ Sign Language synthesis is the process of generating sign language discourses fr
 \subsection{2D Techniques}
 \label{subsec:2d_techniques}
 
-The state of the art in 2D synthesis \cite{walsh2024sign} addresses the common issue of regression to the mean in previous models, which often resulted in unnatural and under-articulated signing. The authors propose a method called "sign stitching," which involves normalizing signs into a canonical pose, cropping, stitching them together, and applying frequency domain filtering and resampling to produce cohesive, expressive sign language sequences. They also introduce a Noise Substitution Vector Quantization (NSVQ) transformer to integrate facial expressions, enhancing the naturalness of the signs. The approach is evaluated using a SignGAN model to generate photo-realistic signers, achieving state-of-the-art performance across multiple datasets and receiving positive feedback in user evaluations for its realism and expressiveness. The synthesis is in the form of a 2D video, fitted on the mediapipe a GAN.
+Various 2D synthesis \cite{jiang2024signclipconnectingtextsign} \cite{moryossef2024signmtrealtimemultilingualsign} already exist which generate signs directly from glosses. One of the newer techniques \cite{walsh2024sign} addresses the common issue of regression to the mean in previous models, which often resulted in unnatural and under-articulated signing. The authors propose a method called "sign stitching," which involves normalizing signs into a canonical pose, cropping, stitching them together, and applying frequency domain filtering and resampling to produce cohesive, expressive sign language sequences. They also introduce a Noise Substitution Vector Quantization (NSVQ) transformer to integrate facial expressions, enhancing the naturalness of the signs. The approach is evaluated using a SignGAN model to generate photo-realistic signers, achieving state-of-the-art performance across multiple datasets and receiving positive feedback in user evaluations for its realism and expressiveness. The synthesis is in the form of a 2D video, fitted on the mediapipe a GAN.
 
-Figures \ref{fig:synthesis_mediaipe_2d} and \ref{fig:synthesis_gan_2d} illustrate this process, showing the initial SignWriting-based synthesis and the subsequent fitting of a GAN on the Mediapipe skeleton to enhance the realism of the generated signs.
+Figures \ref{fig:synthesis_mediaipe_2d} and \ref{fig:synthesis_gan_2d} illustrate how the output of such methods usually look like, showing the initial mediapipe-based synthesis and the subsequent fitting of a GAN on the Mediapipe skeleton to enhance the realism of the generated signs.
 
 \begin{figure} 
-  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/synthesis_mediaipe_2d.png} 
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/sign_writing_synthesis.png} 
   \caption{Synthesis using Sign-Stitching} 
   \label{fig:synthesis_mediaipe_2d} 
 \end{figure}
