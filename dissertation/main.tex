@@ -8,9 +8,11 @@
 \usepackage[default,oldstyle, scale=.95]{opensans} % police Open Sans
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage{newunicodechar}
 \usepackage{glossaries}
 \usepackage{fancyhdr}
 \usepackage{amssymb}
+\usepackage{natbib}
 \usepackage{xcolor} % où color selon l'installation
 \definecolor{Prune}{RGB}{99,0,60} % l14-33 : couleurs de la charte graphique upsaclay
 \definecolor{B1}{RGB}{49,62,72} 
@@ -48,7 +50,6 @@
     linkcolor=black,
     urlcolor=purple}
 
-
 \pagestyle{plain} % pour ne garder que les n°de page en milieu-bas et supprimer les indications de chapitre en marge haute
 
 
@@ -59,7 +60,8 @@
 \usepackage{subcaption}
 \usepackage{subfiles}
 
-\usepackage{lipsum} % à retirer!!!
+\makeglossaries
+
 \begin{document}
 
 \begin{titlepage}
@@ -265,7 +267,6 @@ Throughout our research, we focus on deepening the understanding and utility of 
 \listoftables
 \newpage
 \subfile{glossary/glossary.tex}
-\makeglossaries
 \printglossaries
 \newpage
 
