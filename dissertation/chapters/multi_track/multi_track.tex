@@ -22,14 +22,14 @@ Both multi-track and non-linear editing have been widely used in various fields,
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/video_editing.jpg}
-    \caption{Video editing software interface showing multiple tracks for editing video and audio clips.}
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/video_editing.png}
+    \caption{Video editing software interfaces with multiple tracks for editing video and audio clips.}
     \label{fig:video_edit}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/nle_blender.jpg}
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/nle_blender.png}
     \caption{Blender's non-linear editor interface showing multiple tracks for editing animation clips.}
     \label{fig:nle_blender}
 \end{figure}
@@ -124,7 +124,7 @@ One of the areas which this work aims to address is the direct creation of a mul
     \end{algorithmic}
 \end{algorithm}
 
-The figure \ref{fig:azee_timeline} shows the multi-track timeline generation for a simple example.
+The figure \ref{fig:azee_timeline} shows the multi-track timeline generation for \emph{:cupboard}.
 
 \begin{figure}[h]
     \centering
@@ -150,13 +150,6 @@ The order of synthesis of the blocks in the multi-track timeline is crucial for 
 
 Since the blocks in the multi-track timeline can have constraints that affect the same body parts, conflicts can arise. These conflicts need to be resolved to ensure the correct execution of the constraints. The following rules are used to resolve conflicts:
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/cupboard_timeline.png}
-    \caption{Multi-track timeline for the sign \emph{cupboard}.}
-    \label{fig:cupboard_timeline}
-\end{figure}
-
 \subsection{ConstraintDAG}
 \label{ch:multi_track:resolve_conflitcs:constraint_dag}
 
@@ -173,12 +166,12 @@ The constraints in the blocks can be represented as a Directed Acyclic Graph (DA
 \label{ch:multi_track:resolve_conflitcs:rule1}
 \textbf{Problem:} Overlapping blocks with different start times.
 \textbf{Solution:} Evaluate blocks chronologically to maintain logical sequence i.e. the block that starts first is evaluated first.
-\textbf{Example:} Let's consider the timeline in figure \ref{fig:cupboard_timeline} for the sign \emph{cupboard} (figure \ref{fig:cupboard}). Here, blocks PALMS_DOWN(palms facing down) and HANDS_APART(hands being apart) overlap(effect the same bones i.e. the hand chains). Thus, the block that starts first, PALMS_DOWN, is evaluated first. The HANDS_APART block is evaluated after the PALMS_DOWN block is finished.
+\textbf{Example:} Let's consider the timeline in figure \ref{fig:azee_timeline} for the sign \emph{cupboard} (figure \ref{fig:cupboard}). Here, blocks PALMS\_DOWN(palms facing down) and HANDS\_APART(hands being apart) overlap(effect the same bones i.e. the hand chains). Thus, the block that starts first, PALMS\_DOWN, is evaluated first. The HANDS\_APART block is evaluated after the PALMS\_DOWN block is finished.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/cupboard.png}
-    \caption{AZee description for the sign \emph{cupboard}.}
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/cupboard.jpg}
+    \caption{Sign \emph{cupboard} \cite{moody97}}
     \label{fig:cupboard}
 \end{figure}
 
@@ -186,7 +179,7 @@ The constraints in the blocks can be represented as a Directed Acyclic Graph (DA
 \label{ch:multi_track:resolve_conflitcs:rule2}
 \textbf{Problem:} Order of topological sorting in case of 0 constraint dependencies for a block.
 \textbf{Solution:} Follow the constraint precedence order: \emph{placement}, \emph{transpaths}, \emph{lookat}, \emph{trill}, \emph{orientation} and then \emph{morph}.
-\textbf{Example:} Let's consider the same timeline in figure \ref{fig:cupboard_timeline}. The block ... todo
+\textbf{Example:} Let's consider the same timeline in figure \ref{fig:azee_timeline}. The block ... todo
 
 Non-overlapping blocks can be evaluated in parallel since they won't break the posture. The figure \ref{fig:example_non_overlapping} shows an example of non-overlapping blocks...todo
 
