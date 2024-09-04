@@ -32,7 +32,7 @@ Emotion recognition systems typically use machine learning algorithms to analyze
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/action_units.png}
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/action_units.jpg}
     \caption{Facial Action Coding System (FACS) action units}
     \label{fig:action_units}
 \end{figure}
@@ -91,8 +91,8 @@ Performance-based approaches, such as motion capture, involve capturing real hum
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/motion_capture.png}
-    \caption{Performance-based facial animation using motion capture technology, which captures the real-time movements of an actor’s face.}
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/motion_capture.jpg}
+    \caption{Performance-based facial animation using Apple's ARKit
     \label{fig:motion_capture}
 \end{figure}
 
@@ -108,7 +108,7 @@ To analyze AUs, we used a combination of manual observation and automatic detect
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/face_detect.png}
-    \caption{Facial action unit detection using mediapipe and the AU detector by \cite{luo2022learning}.}
+    \caption{Facial action unit detection using mediapipe and the AU detector by \cite{luo2022learning} for \emph{big-threatening}}
     \label{fig:face_detect}
 \end{figure}
 
@@ -142,7 +142,7 @@ Lastly, we extended the low-level AZee language morph set with todo blendshapes 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/shape_keys.png}
-    \caption{Shape keys in blender representing different facial expressions.}
+    \caption{Blender interface. (a) Shape Key properties (b) 3D Viewport (c) Non-linear Editor (d) Action Editor (e) AZee editor}
     \label{fig:shape_keys}
 \end{figure}
 
@@ -156,7 +156,7 @@ Lastly, we extended the low-level AZee language morph set with todo blendshapes 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/not_added.png}
-    \caption{Action units that were not added as morphs due to other constraints.}
+    \caption{Action units that were not added as morphs due to other constraints}
     \label{fig:not_added}
 \end{figure}
 
@@ -189,15 +189,15 @@ For example, in the expression "big-threatening," the motion curves were designe
 
 Synthesis of all the facial expressions from the 40 brèves corpus can be seen in table \ref{tab:facial_expressions}. The expressions were created by combining the relevant blendshapes  to produce realistic and expressive facial animations.
 
-todo
+
 \begin{table}
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
         \textbf{Expression} & \textbf{Description} & \textbf{Blendshapes} \\
         \hline
-        Neutral & Neutral expression & AU0 \\
-        
+        AZee & Facial Expression \\
+        todo & todo \\
     \end{tabular}
     \caption{Facial expressions synthesized using the AZee framework.}
     \label{tab:facial_expressions}
