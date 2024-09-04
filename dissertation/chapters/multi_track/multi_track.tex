@@ -153,20 +153,21 @@ Since the blocks in the multi-track timeline can have constraints that affect th
 \subsection{ConstraintDAG}
 \label{ch:multi_track:resolve_conflitcs:constraint_dag}
 
-The constraints in the blocks can be represented as a Directed Acyclic Graph (DAG) where the nodes are the constraints and the edges represent the dependencies between the constraints. During evaluation, a topological sort enables that no linguistic constraint is broken. The figure \ref{fig:constraint_dag} shows example of a ConstraintDAG for a single block discource for the sign \emph{tree}.
+The constraints in the blocks can be represented as a Directed Acyclic Graph (DAG) where the nodes are the constraints and the edges represent the dependencies between the constraints. During evaluation, a topological sort enables that no linguistic constraint is broken. The figure \ref{fig:constraint_dag_armoire} shows example of a ConstraintDAG for the block HANDS_CONTACT for the sign\emph{cupboard}. A more complex DAG of constraints can be seen in figure \ref{fig:constraint_dag_tree} for the sign \emph{tree}.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/constraint_dag.png}
     \caption{ConstraintDAG for a single block discource for the sign \emph{tree}.}
-    \label{fig:constraint_dag}
+    \label{fig:constraint_dag_tree}
 \end{figure}
 
-\subsection{Rule 1: Timely Evaluation}
-\label{ch:multi_track:resolve_conflitcs:rule1}
-\textbf{Problem:} Overlapping blocks with different start times.
-\textbf{Solution:} Evaluate blocks chronologically to maintain logical sequence i.e. the block that starts first is evaluated first.
-\textbf{Example:} Let's consider the timeline in figure \ref{fig:azee_timeline} for the sign \emph{cupboard} (figure \ref{fig:cupboard}). Here, blocks PALMS\_DOWN(palms facing down) and HANDS\_APART(hands being apart) overlap(effect the same bones i.e. the hand chains). Thus, the block that starts first, PALMS\_DOWN, is evaluated first. The HANDS\_APART block is evaluated after the PALMS\_DOWN block is finished.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/constraint_dag_cupboard.png}
+    \caption{ConstraintDAG for a single block discource for the block HANDS\_CONTACT from the sign \emph{cupboard}.}
+    \label{fig:constraint_dag_cupboard}
+\end{figure}
 
 \begin{figure}
     \centering
@@ -175,20 +176,19 @@ The constraints in the blocks can be represented as a Directed Acyclic Graph (DA
     \label{fig:cupboard}
 \end{figure}
 
+\subsection{Rule 1: Timely Evaluation}
+\label{ch:multi_track:resolve_conflitcs:rule1}
+\textbf{Problem:} Overlapping blocks with different start times.
+\textbf{Solution:} Evaluate blocks chronologically to maintain logical sequence i.e. the block that starts first is evaluated first.
+\textbf{Example:} Let's consider the timeline in figure \ref{fig:azee_timeline} for the sign \emph{cupboard} (figure \ref{fig:cupboard}). Here, blocks PALMS\_DOWN(palms facing down) and HANDS\_APART(hands being apart) overlap(effect the same bones i.e. the hand chains). Thus, the block that starts first, PALMS\_DOWN, is evaluated first. The HANDS\_APART block is evaluated after the PALMS\_DOWN block is finished.
+
 \subsection{Rule 2: Constraint Precedence}
 \label{ch:multi_track:resolve_conflitcs:rule2}
 \textbf{Problem:} Order of topological sorting in case of 0 constraint dependencies for a block.
 \textbf{Solution:} Follow the constraint precedence order: \emph{placement}, \emph{transpaths}, \emph{lookat}, \emph{trill}, \emph{orientation} and then \emph{morph}.
-\textbf{Example:} Let's consider the same timeline in figure \ref{fig:azee_timeline}. The block ... todo
+\textbf{Example:} Let's consider the same timeline in figure \ref{fig:azee_timeline}. The block HANDS\_CONTACT optimizes placements first, then the orienations of the palm(coming from the block PALMS\_DOWN).
 
-Non-overlapping blocks can be evaluated in parallel since they won't break the posture. The figure \ref{fig:example_non_overlapping} shows an example of non-overlapping blocks...todo
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/example_non_overlapping.png}
-    \caption{Example of non-overlapping blocks.}
-    \label{fig:example_non_overlapping}
-\end{figure}
+Non-overlapping blocks can be evaluated in parallel since they won't break the posture. Example, blocks PERM and HANDS\_CONTACT is non-overlapping block set in the sign \emph{armoire}.
 
 \section{Second Pass}
 \label{ch:multi_track:second_pass}
@@ -198,12 +198,12 @@ A second pass is done on the timeline to synthesize cyclic block sets, transpath
 \subsection{Cyclic Block Set}
 \label{ch:multi_track:second_pass:cyclic_blocks}
 
-Cyclic block sets, as the name suggests, are blocks that effect each other cyclically. The figure \ref{fig:cyclic_blocks} shows a cyclic block set for ...todo. This problem arises dure to hierarchical nature of a skeleton(any changes in parent will change the child even if the blocks don't effect that part of the skeleton). To deal with such sets, the blocks are evaluated again in a second pass by optimising for a \emph{cumulative flattened loss} i.e. cumulating loss of all constraints of the block set for the frame and optimising them together.
+Cyclic block sets, as the name suggests, are blocks that effect each other cyclically. The figure \ref{fig:cyclic_blocks} shows a cyclic block set for HANDS\_CONTACT and PALMS\_DOWN. This problem could arise if blocks effect a common heirarchy of the skeleton(any changes in parent will change the child even if the blocks don't effect that part of the skeleton). To deal with such sets, the blocks are evaluated again in a second pass by optimising for a \emph{cumulative flattened loss} i.e. cumulating loss of all constraints of the block set for the frame and optimising them together.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/cyclic_blocks.png}
-    \caption{Cyclic block set for ...todo.}
+    \caption{Cyclic block set for PALMS\_DOWN and HANDS\_CONTACT}
     \label{fig:cyclic_blocks}
 \end{figure}
 
@@ -222,14 +222,14 @@ Even though the constraints are optimised together, each individual block in the
 \subsection{Transpath Blocks}
 \label{ch:multi_track:second_pass:transpath_blocks}
 
-Transpath blocks are blocks which contain transpath constraints. A transpath constraint is a constraint that moves a body site along a path. It acts as an interpolation block but with a controlled path for a particular body site for it's preceding block and following blocks. The figure \ref{fig:transpath_blocks} shows an example of transpath blocks for ...todo. Just like cyclic block sets, transpath blocks are evaluated in a second pass.
+Transpath blocks are blocks which contain transpath constraints. A transpath constraint is a constraint that moves a body site along a path. It acts as an interpolation block but with a controlled path for a particular body site for it's preceding block and following blocks. The figure \ref{fig:transpath_blocks} shows an example of transpath blocks for the sign \emph{cupboard}. Just like cyclic block sets, transpath blocks are evaluated in a second pass.
 
 Transpath blocks are baked by evaluating the transpath constraint for each frame and applying the change in motion curve of the body site wrt to the preceding and the successing block. These motion curves are then baked as a new block.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/transpath_blocks.png}
-    \caption{Transpath blocks for ...todo.}
+    \caption{Transpath blocks in \emph{cupboard}}
     \label{fig:transpath_blocks}
 \end{figure}
 
@@ -264,7 +264,6 @@ The timeline can also contain pre-animated blocks. These blocks are blocks that 
 
 The multi-track timeline is implementated in blender's non-linear editor. Each AZee Score, when animated, generates a blender action which is put on the non-linear editor as a strip with duration specified by the AZee \emph{sync rules}. The following table \ref{tab:azee_to_blender} shows a non-exhaustive list of animated signs in blender with their corresponding generated timeline.
 
-todo
 \begin{table}[h]
     \centering
     \begin{tabular}{|c|c|}
