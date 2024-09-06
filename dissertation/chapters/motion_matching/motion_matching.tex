@@ -66,7 +66,7 @@ Motion Matching represents a significant shift from traditional IK by utilizing 
   \label{fig:for_honor}
 \end{figure}
 
-Phase-Functioned Neural Networks (PFNN) \cite{sheng2021pfnn} extends the capabilities of motion matching by incorporating phase information into the neural network's weights. This phase-aware approach allows the network to generate contextually appropriate animations that account for the cyclical nature of bipedal movement, such as walking or running. Unlike traditional methods that rely on blending animation clips, PFNN encodes the entire animation process within the neural network, offering greater flexibility and control.
+Phase-Functioned Neural Networks (PFNN) \cite{10.1145/3072959.3073663} (figure \ref{fig:pfnn})  extends the capabilities of motion matching by incorporating phase information into the neural network's weights. This phase-aware approach allows the network to generate contextually appropriate animations that account for the cyclical nature of bipedal movement, such as walking or running. Unlike traditional methods that rely on blending animation clips, PFNN encodes the entire animation process within the neural network, offering greater flexibility and control.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/pfnn.png}
@@ -74,7 +74,7 @@ Phase-Functioned Neural Networks (PFNN) \cite{sheng2021pfnn} extends the capabil
   \label{fig:pfnn}
 \end{figure}
 
-Style-Based Inverse Kinematics (Style IK) leverages machine learning to represent poses in a latent space, where the distribution of poses can be learned and sampled. Using Scaled Gaussian Process Latent Variable Models (SGPLVM), Style IK can generate stylized animations that conform to specific aesthetic or functional constraints. This approach is particularly useful for creating animations that need to adhere to a particular style or where mocap data is not available\cite{grochow2004style}.
+Style-Based Inverse Kinematics (Style IK) (figure \ref{fig:style_ik}) leverages machine learning to represent poses in a latent space, where the distribution of poses can be learned and sampled. Using Scaled Gaussian Process Latent Variable Models (SGPLVM), Style IK can generate stylized animations that conform to specific aesthetic or functional constraints. This approach is particularly useful for creating animations that need to adhere to a particular style or where mocap data is not available\cite{grochow2004style}.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/style_ik.png}

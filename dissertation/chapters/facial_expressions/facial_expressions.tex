@@ -21,7 +21,7 @@ This section reviews the previous work in facial expression synthesis, focusing 
 \subsubsection{Facial Expressions Synthesis}
 \label{ch:facial_expressions:related_work:facial_expressions_synthesis}
 
-Most of the facial expressions research is motivated by synthesis from voice signals. These methods are generally categorized into lip-sync techniques \cite{yousaidthat, talkingface, lipmovements, lipsyncexpert}, which align mouth movements with audio, and full-face expression synthesis {eskimez, greenwood18, controllable_facial_synth}. Some approaches model speaking style with 3D animation parameters \cite{cudeiro}, create generalized latent audio expressions combined with a person-specific 3D model \cite{FLAME}, and produce expressive facial outputs conditioned on style, although some are unsuitable for tasks requiring full-face movement \cite{imitating}. A related work, MakeItTalk \cite{Yang:2020:MakeItTalk}, introduces a two-stage deep learning model that predicts facial landmark displacements based on audio input and a speaker identifier, followed by an image-to-image translation method to generate the final facial expression. Another study, EAMM \cite{eamm}, focuses on transferring local emotional deformations to an audio-driven talking face, using deep learning to map audio to keypoints and their dynamics, resulting in emotion-related facial motions.
+Most of the facial expressions research is motivated by synthesis from voice signals. These methods are generally categorized into lip-sync techniques \cite{yousaidthat, talkingface, lipmovements, lipsyncexpert}, which align mouth movements with audio, and full-face expression synthesis \cite{eskimez, greenwood18, controllable_facial_synth}. Some approaches model speaking style with 3D animation parameters \cite{cudeiro}, create generalized latent audio expressions combined with a person-specific 3D model \cite{FLAME}, and produce expressive facial outputs conditioned on style, although some are unsuitable for tasks requiring full-face movement \cite{imitating}. A related work, MakeItTalk \cite{Yang:2020:MakeItTalk}, introduces a two-stage deep learning model that predicts facial landmark displacements based on audio input and a speaker identifier, followed by an image-to-image translation method to generate the final facial expression. Another study, EAMM \cite{eamm}, focuses on transferring local emotional deformations to an audio-driven talking face, using deep learning to map audio to keypoints and their dynamics, resulting in emotion-related facial motions.
 
 Synthesis of facial expressions in sign language is a much-less explored area. SGNify \cite{Forte_2023_CVPR} can do a 3D reconstruction of a signer's face using in FLAME \cite{FLAME} space from a monocular video. The Paula avatar uses rotational pivots and pre-defined movements, offering more natural and expressive facial animations \cite{johnson-2022-improved}. More recent work \cite{azevedo2024empowering} uses sentiment and semantic information to generate realistic facial expressions, achieving state-of-the-art results and outperforming existing approaches. However, these methods are limited in their ability to capture the full range of facial expressions in sign language, particularly the grammatical and emotional nuances that are essential for effective communication. However, these methods are limited in their ability to meaningully relate facial expressions to the signed message.
 
@@ -92,7 +92,7 @@ Performance-based approaches, such as motion capture, involve capturing real hum
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/motion_capture.jpg}
-    \caption{Performance-based facial animation using Apple's ARKit
+    \caption{Performance-based facial animation using Apple's ARKit}
     \label{fig:motion_capture}
 \end{figure}
 
@@ -130,8 +130,6 @@ Once the AUs were identified, we used FACSHuman \cite{gilbert2021facshuman} blen
 
 Since the FACSHuman blendshape work on any MakeHuman template mesh, this technique of synthesis is avatar independant. However, since the original model doesn't cover all the blendshapes(for all the face meshes), some blendshapes were created manually. The complete process involved iterating between manual adjustments and automated tools to ensure that the blendshapes accurately captured the intended expressions. The creation of blendshapes also involved ensuring that they could be seamlessly combined to create complex expressions. For example, the blendshape for AU4 (Brow Lowerer) was designed to work in conjunction with AU6 (Cheek Raiser) and AU12 (Lip Corner Puller) to create expressions of anger or determination. This required careful coordination of the vertex movements across different blendshapes to avoid unnatural deformations or artifacts in the final animation.
 
-Lastly, we extended the low-level AZee language morph set with todo blendshapes corresponding to all relevant action units in the FACS system (figure \ref{fig:added_morphs}). A few action units were not added \ref{fig:not_added} since they were controlled by other skeletal constraints. Some morphs are also alternative blendshapes for the same action unit \ref{fig:alternative_blendshapes} but with a different effect on the face.
-
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/facshuman_blendshapes.png}
@@ -146,26 +144,100 @@ Lastly, we extended the low-level AZee language morph set with todo blendshapes 
     \label{fig:shape_keys}
 \end{figure}
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/added_morphs.png}
-    \caption{Added morphs corresponding to action units in the FACS system.}
-    \label{fig:added_morphs}
-\end{figure}
+Lastly, we extended the low-level AZee language morph set with 94 blendshapes corresponding to most of the action units in the FACS system (figure \ref{tab:added_units}) along with some additional ones. A few action units were not added \ref{tab:not_added} since they were controlled by other skeletal constraints. Some morphs are also alternative blendshapes for the same action unit \ref{tab:alternative_blendshapes} but with a different effect on the face.
 
-\begin{figure}
+\begin{table}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/not_added.png}
-    \caption{Action units that were not added as morphs due to other constraints}
-    \label{fig:not_added}
-\end{figure}
+    \scriptsize
+    \begin{tabular}{|c|l|c|l|}
+        \hline
+        \textbf{AU Code} & \textbf{Description}                     & \textbf{AU Code} & \textbf{Description}                      \\ \hline
+        AU1              & Inner Brow Raise                        & AU1\_L            & Inner Brow Raise (Left)                   \\ \hline
+        AU1\_R           & Inner Brow Raise (Right)                & AU2              & Outer Brow Raise                          \\ \hline
+        AU2\_L           & Outer Brow Raise (Left)                 & AU2\_R            & Outer Brow Raise (Right)                  \\ \hline
+        AU4              & Brow Lowerer                            & AU5              & Upper Lid Raise                           \\ \hline
+        AU5\_L           & Upper Lid Raise (Left)                  & AU5\_R            & Upper Lid Raise (Right)                   \\ \hline
+        AU6              & Cheek Raise                             & AU6\_L            & Cheek Raise (Left)                        \\ \hline
+        AU6\_R           & Cheek Raise (Right)                     & AU7              & Lids Tight                                \\ \hline
+        AU7\_L           & Lids Tight (Left)                       & AU7\_R            & Lids Tight (Right)                        \\ \hline
+        AU8              & Lips Toward Each Other                  & AU9              & Nose Wrinkle                              \\ \hline
+        AU9\_L           & Nose Wrinkle (Left)                     & AU9\_R            & Nose Wrinkle (Right)                      \\ \hline
+        AU10             & Upper Lip Raiser                        & AU10\_L           & Upper Lip Raiser (Left)                   \\ \hline
+        AU10\_R          & Upper Lip Raiser (Right)                & AU11             & Nasolabial Furrow Deepener                \\ \hline
+        AU11\_L          & Nasolabial Furrow Deepener (Left)       & AU11\_R           & Nasolabial Furrow Deepener (Right)        \\ \hline
+        AU12             & Lip Corner Puller                       & AU12\_L           & Lip Corner Puller (Left)                  \\ \hline
+        AU12\_R          & Lip Corner Puller (Right)               & AU13             & Sharp Lip Puller                          \\ \hline
+        AU13\_L          & Sharp Lip Puller (Left)                 & AU13\_R           & Sharp Lip Puller (Right)                  \\ \hline
+        AU14             & Dimpler                                 & AU14\_L           & Dimpler (Left)                            \\ \hline
+        AU14\_R          & Dimpler (Right)                         & AU15             & Lip Corner Depressor                      \\ \hline
+        AU15\_L          & Lip Corner Depressor (Left)             & AU15\_R           & Lip Corner Depressor (Right)              \\ \hline
+        AU16             & Lower Lip Depress                       & AU17             & Chin Raiser                               \\ \hline
+        AU18             & Lip Pucker                              & AU19             & Tongue Show                               \\ \hline
+        AU20             & Lip Stretch                             & AU20\_L           & Lip Stretch (Left)                        \\ \hline
+        AU20\_R          & Lip Stretch (Right)                     & AU21             & Neck Tightener                            \\ \hline
+        AU22\_25\_up\_down & Lip Funneler (Both Lips) & AU23             & Lip Tightener                             \\ \hline
+        AU24             & Lip Presser                             & AU25             & Lips Part                                 \\ \hline
+        AU25\_L          & Lips Part (Left)                        & AU25\_R           & Lips Part (Right)                         \\ \hline
+        AU26             & Jaw Drop                                & AU27             & Mouth Stretch                             \\ \hline
+        AU28             & Lips Suck                               & AU29             & Jaw Thrust                                \\ \hline
+        AU30\_L          & Jaw Sideways (Left)                     & AU30\_R           & Jaw Sideways (Right)                      \\ \hline
+        AU31             & Jaw Clencher                            & AU32             & Bite                                      \\ \hline
+        AU33             & Blow                                    & AU34             & Puff                                      \\ \hline
+        AU35             & Cheek Suck                              & AU36             & Tongue Bulge                              \\ \hline
+        AU37             & Lip Wipe                                & AU38             & Nostril Dilate                            \\ \hline
+        AU39             & Nostril Compress                        & AU43             & Eye Closure                               \\ \hline
+        AU43\_L          & Eye Close (Left)                        & AU43\_R           & Eye Close (Right)                         \\ \hline
+    \end{tabular}
+    \caption{Added blend shapes} 
+    \label{tab:added_units} 
+\end{table}
 
-\begin{figure}
+\begin{table}
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/alternative_blendshapes.png}
-    \caption{Alternative blendshapes for the same action unit with different effects on the face.}
-    \label{fig:alternative_blendshapes}
-\end{figure}
+    \scriptsize
+    \begin{tabular}{|c|l|c|l|}
+        \hline
+        \textbf{AU Code} & \textbf{Description}                     & \textbf{AU Code} & \textbf{Description}                      \\ \hline
+        AU40             & Sniff                                   & AU41             & Lid Droop                                 \\ \hline
+        AU42             & Slit                                    & AU44             & Squint                                    \\ \hline
+        AU45             & Blink                                   & AU46             & Wink                                      \\ \hline
+        AU51             & Head Turn Left (IK controlled)          & AU52             & Head Turn Right (IK controlled)           \\ \hline
+        AU53             & Head Up (IK controlled)                 & AU54             & Head Down (IK controlled)                 \\ \hline
+        AU55             & Head Tilt Left (IK controlled)          & AU56             & Head Tilt Right (IK controlled)           \\ \hline
+        AU57             & Head Forward (IK controlled)            & AU58             & Head Back (IK controlled)                 \\ \hline
+        AU61             & Eyes Turn Left (lookat constraint)      & AU62             & Eyes Turn Right (lookat constraint)       \\ \hline
+        AU63             & Eyes Up (lookat constraint)             & AU64             & Eyes Down (lookat constraint)             \\ \hline
+    \end{tabular}
+    \caption{Action units skipped} 
+    \label{tab:not_added} 
+\end{table}
+
+
+\vspace{1cm}
+
+\begin{table}
+    \centering
+    \scriptsize
+    \begin{tabular}{|c|l|c|l|}
+        \hline
+        \textbf{AU Code} & \textbf{Description}                     & \textbf{AU Code} & \textbf{Description}                      \\ \hline
+        AU1\_a            & Inner Brow Raise (Alternative)          & AU2\_a            & Outer Brow Raise (Alternative)           \\ \hline
+        AU4\_a            & Brow Lowerer (Alternative A)            & AU4\_b            & Brow Lowerer (Alternative B)             \\ \hline
+        AU6\_a            & Cheek Raise (Alternative A)             & AU6\_b            & Cheek Raise (Alternative B)              \\ \hline
+        AU9\_a            & Nose Wrinkle (Alternative A)            & AU12\_a           & Lip Corner Puller (Alternative A)        \\ \hline
+        AU12\_b           & Lip Corner Puller (Alternative B)       & AU17\_a           & Chin Raiser (Alternative A)              \\ \hline
+        AU18\_a           & Lip Pucker (Alternative)                & AU25\_a           & Lips Part (Alternative A)                \\ \hline
+        AU22\_25\_upper  & Lip Funneler (Upper Lip)     & AU22\_25\_down   & Lip Funneler (Bottom Lip)  \\ \hline
+        AU26\_lip\_down   & Jaw Drop Bottom Lip Down (Alternative)  & AU26\_tongue\_down & Jaw Drop Tongue Down (Alternative)       \\ \hline
+        AU26\_tongue\_out & Jaw Drop Tongue Out (Alternative)       & AU26\_a           & Jaw Drop (Alternative)                   \\ \hline
+        AU28\_a           & Lips Suck (Upper Lip)                   & AU28\_bottom      & Lips Suck (Lower Lip)                    \\ \hline
+        tongue\_back\_up  & Tongue Back Up                          & tongue\_out       & Tongue Out                               \\ \hline
+        tongue\_up        & Tongue Up                               & tongue\_wide      & Tongue Wide                              \\ \hline
+    \end{tabular}
+    \caption{Alternative blend shapes} 
+    \label{tab:alternative_blendshapes}
+\end{table}
+
 
 
 \subsection{Motion Curves for Blendshapes}
@@ -208,29 +280,56 @@ Synthesis of all the facial expressions from the 40 brèves corpus can be seen i
 
 Table \ref{tab:facial_expressions_evaluation} shows the subjective evaluation by a linguist of the facial expressions synthesized using the AZee framework. The expressions were assessed based on their accuracy, expressiveness, and effectiveness in conveying the intended emotional and grammatical cues.
 
-todo
-\begin{table}
+\begin{table*}
     \centering
-    \begin{tabular}{|c|c|c|c|}
-        \hline
-        \textbf{Expression} & \textbf{Accuracy} & \textbf{Expressiveness} & \textbf{Effectiveness} \\
-        \hline
-        Neutral & 4 & 4 & 4 \\
-        \hline
+    \begin{tabular}{|l|p{8cm}|}
+    \hline
+    \textbf{Expression} & \textbf{Limitations} \\
+    \hline
+    \texttt{almost-reaching} & Mouth modeling unconvincing. \\
+    \hline
+    \texttt{continuously} & "Pffff" air and cheek puff difficult, neutral eyebrows. \\
+    \hline
+    \texttt{do-you-realise} & Thick eyebrow issue. \\
+    \hline
+    \texttt{it-is-a-shame} & Mouth expression not quite real. \\
+    \hline
+    \texttt{most-probably} & Less visible teeth preferred, thick eyebrow issue. \\
+    \hline
+    \texttt{much-almost-too-much} & Frowning eyebrows and lack of eye wrinkles not convincing. \\
+    \hline
+    \texttt{nothing-sticks-out} & Tucked lips difficult to model. \\
+    \hline
+   \texttt{something-sticks-out} & Interpreted as confusion, mouth modeling limitation. \\
+    \hline
+    \texttt{trouble-disturbance} & Frowning eyebrows difficult, mouth "rising" hard to model, result not convincing. \\
+    \hline
+    \texttt{uneasy-awkward} & Tongue tip out with slightly open mouth hard to model, unconvincing. \\
+    \hline
+    \texttt{with-chaos} & Single cheek blow/puff and alternating eye blinks hard without animation. \\
+    \hline
+    \texttt{with-no-precision} & Upper lip over lower and mouth near nose unmodellable. \\
+    \hline
+    \texttt{with-surprise} & Cannot lower lower eyelid fully, thick eyebrow issue. \\
+    \hline
+    \texttt{with-uncertainty} & Appears sadder than uncertain, thick eyebrow issue. \\
+    \hline
+    \texttt{with-worry} & Lack of wrinkles around nose/forehead. \\
+    \hline
     \end{tabular}
-    \caption{Subjective evaluation of facial expressions synthesized using the AZee framework.}
+    \caption{Limitations for each facial expression rule.}
     \label{tab:facial_expressions_evaluation}
-\end{table}
+\end{table*}
 
 We observe that expressions that involved subtle mouth movements, such as "it-is-a-shame" or "something-sticks-out," were more challenging to model accurately, highlighting areas for further refinement.
 
-Table \ref{tab:facial_expressions_quantitative} shows the quantitative evaluation of the facial expressions using the Frechet Expression Distance (FED). We used SGNify \cite{Forte_2023_CVPR} to generate the ground truth facial expressions \ref{fig:sgnify} and compared them to the expressions synthesized using our method framework. The FED scores provide a measure of the similarity between the ground truth and synthesized expressions, with lower scores indicating a closer match.
+Table \ref{tab:facial_expressions_quantitative} shows the quantitative evaluation of the facial expressions using the Frechet Expression Distance (FED). We also fitted FLAME \cite{FLAME} on the  ground truth facial expressions \ref{fig:spectre} and compared them to the expressions synthesized using our method framework. The FED scores provide a measure of the similarity between the ground truth and synthesized expressions, with lower scores indicating a closer match.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/sgnify.png}
-    \caption{Ground truth facial expressions generated using SGNify.}
-    \label{fig:sgnify}
+    \caption{Facial expressions generated using FLAME by fitting SPECTRE}
+    \label{fig:spectre}
 \end{figure}
 
 \begin{table}
@@ -239,10 +338,10 @@ Table \ref{tab:facial_expressions_quantitative} shows the quantitative evaluatio
         \hline
         \textbf{Expression} & \textbf{FED Score} \\
         \hline
-        Neutral & 0.12 \\
+        big-threatening & todo \\
         \hline
     \end{tabular}
-    \caption{Quantitative evaluation of facial expressions synthesized using the AZee framework}
+    \caption{Quantitative evaluation of facial expressions synthesized}
     \label{tab:facial_expressions_quantitative}
 \end{table}
 
