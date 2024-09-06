@@ -7,9 +7,9 @@ Creativity in human expression often lies at the intersection of structure and f
 
 Generating these intermediate blocks in multi-track representations requires a blend of procedural precision and adaptive techniques. The complexity of Sign Language demands more than linear models; it requires an approach that can reflect the nuances of real-life communication. By integrating the AZee model with multi-track timelines, this chapter explores how we can improve the accuracy and fluidity of synthesized Sign Language.
 
-This chapter focuses on the generation of intermediate blocks within the multi-track representations introduced in chapter \ref{ch:multi-track}. By utilizing motion templates and carefully interpolating between keyframes, we aim to enhance the naturalness and coherence of Sign Language synthesis, bridging the gap between procedural methods and the dynamic nature of human communication.
+This chapter focuses on the generation of intermediate blocks within the multi-track representations introduced in chapter~\ref{ch:multi-track}. By utilizing motion templates and carefully interpolating between keyframes, we aim to enhance the naturalness and coherence of Sign Language synthesis, bridging the gap between procedural methods and the dynamic nature of human communication.
 
-In this chapter, section \ref{ch:intermediate_blocks:related_work} discusses the related work on AZee Templates, Motion Curves, and Motion Templates. Section \ref{ch:intermediate_blocks:intermediate_block_generation} explores the generation of intermediate blocks, while section \ref{ch:intermediate_blocks:results} presents the results of this process. Finally, section \ref{ch:intermediate_blocks:conclusion_and_future_work} concludes the chapter and outlines potential future directions for this research.
+In this chapter, section~\ref{ch:intermediate_blocks:related_work} discusses the related work on AZee Templates, Motion Curves, and Motion Templates. Section~\ref{ch:intermediate_blocks:intermediate_block_generation} explores the generation of intermediate blocks, while section~\ref{ch:intermediate_blocks:results} presents the results of this process. Finally, section~\ref{ch:intermediate_blocks:conclusion_and_future_work} concludes the chapter and outlines potential future directions for this research.
 
 \section{Related Work}
 \label{ch:intermediate_blocks:related_work}
@@ -24,9 +24,9 @@ AZee templates are abstract representations used in sign language synthesis, lin
 \subsection{Motion Curves}
 \label{ch:intermediate_blocks:related_work:motion_curves}
 
-Motion curves, (often refered as function curves or F-curves), have been extensively used in 3D character animation to control the timing and spacing of movements. These curves provide a graphical representation of a parameter's change over time, making them an essential tool in achieving realistic and fluid motion in animations(figure \ref{fig:fcurves_blender}). Early foundational work by Witkin and Kass \cite{witkin1988spacetime} introduced spacetime constraints, which used optimization techniques to control motion curves in generating realistic animations under physical constraints. This idea has evolved, and modern techniques now integrate deep learning models with motion curves to enhance control and automate the generation of complex animations.
+Motion curves, (often refered as function curves or F-curves), have been extensively used in 3D character animation to control the timing and spacing of movements. These curves provide a graphical representation of a parameter's change over time, making them an essential tool in achieving realistic and fluid motion in animations(figure~\ref{fig:fcurves_blender}). Early foundational work by Witkin and Kass~\cite{witkin1988spacetime} introduced spacetime constraints, which used optimization techniques to control motion curves in generating realistic animations under physical constraints. This idea has evolved, and modern techniques now integrate deep learning models with motion curves to enhance control and automate the generation of complex animations.
 
-In the context of Sign Language, \cite{inproceedings} discuss the use of 3D motion analysis to accurately capture and animate sign language gestures by extracting motion curve parameters from sensors like Microsoft Kinect. These motion curves, which represent the trajectories of movements made during signing, are essential for animating virtual signers in a natural and precise manner. The paper highlights how these curves are mathematically defined, including their type, plane of motion, and velocity, which are then used to recreate realistic sign language animations, enhancing applications like sign language recognition and machine translation.
+In the context of Sign Language,~\cite{inproceedings} discuss the use of 3D motion analysis to accurately capture and animate sign language gestures by extracting motion curve parameters from sensors like Microsoft Kinect. These motion curves, which represent the trajectories of movements made during signing, are essential for animating virtual signers in a natural and precise manner. The paper highlights how these curves are mathematically defined, including their type, plane of motion, and velocity, which are then used to recreate realistic sign language animations, enhancing applications like sign language recognition and machine translation.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/fcurves_blender.png}
@@ -34,11 +34,11 @@ In the context of Sign Language, \cite{inproceedings} discuss the use of 3D moti
     \label{fig:fcurves_blender}
 \end{figure}
 
-In recent research, deep learning methods have been employed to interpret and adapt F-curves for motion inbetweening tasks(figure \ref{fig:inbetweening_transformers}) \cite{10.1145/3550454.3555454}. However, traditional mathematical optimization techniques are still widely in use(figure \ref{fig:inbetweening_disney}) \cite{10.1145/3306346.3322938}.
+In recent research, deep learning methods have been employed to interpret and adapt F-curves for motion inbetweening tasks(figure~\ref{fig:inbetweening_transformers})~\cite{10.1145/3550454.3555454}. However, traditional mathematical optimization techniques are still widely in use(figure~\ref{fig:inbetweening_disney})~\cite{10.1145/3306346.3322938}.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/inbetweening_transformers.jpg}
-    \caption{Motion Inbetweening using 2 stage Transformers \cite{10.1145/3306346.3322938}}
+    \caption{Motion Inbetweening using 2 stage Transformers~\cite{10.1145/3306346.3322938}}
     \label{fig:inbetweening_transformers}
 \end{figure}
 
@@ -54,9 +54,9 @@ In recent research, deep learning methods have been employed to interpret and ad
 
 Motion templates offer a reusable framework for applying pre-defined motion patterns across different characters or scenarios. These templates are essentially built upon motion curves that define the motion's parameters, allowing for efficient replication and adaptation of complex motions. The concept of motion templates has been widely adopted in various fields, from character animation to robotic motion planning. Modern approaches often combine motion templates with machine learning techniques to facilitate the adaptation of these templates to new contexts, such as different character anatomies or environmental conditions.
 
-In the context of character animation, motion templates can be particularly advantageous. The reusable nature of these templates allows for the consistent production of motion across different avatars while ensuring that the nuances of each motion are preserved. A method for controlling avatars using clustered motion segments from a large motion capture database was introduced by \cite{10.1145/566654.566607}, enabling efficient real-time animation with intuitive user interfaces.
+In the context of character animation, motion templates can be particularly advantageous. The reusable nature of these templates allows for the consistent production of motion across different avatars while ensuring that the nuances of each motion are preserved. A method for controlling avatars using clustered motion segments from a large motion capture database was introduced by~\cite{10.1145/566654.566607}, enabling efficient real-time animation with intuitive user interfaces.
 
-The Paula avatar uses AZee geometric templates that can be applied across various signing scenarios. For example, a rule such as place-prf(proform-vehicle, midssp) allows for the placement of a vehicle proform in the middle of the signing space(figure \ref{fig:azee_template_example}). This method leverages a consistent geometric system, enabling the natural synthesis of movements without relying on a fixed set of points, which is crucial for capturing the variability and dynamism inherent in sign language. This approach however, generates animations by focusing solely on higher-level linguistic structures rather than low-level positional data.
+The Paula avatar uses AZee geometric templates that can be applied across various signing scenarios. For example, a rule such as place-prf(proform-vehicle, midssp) allows for the placement of a vehicle proform in the middle of the signing space(figure~\ref{fig:azee_template_example}). This method leverages a consistent geometric system, enabling the natural synthesis of movements without relying on a fixed set of points, which is crucial for capturing the variability and dynamism inherent in sign language. This approach however, generates animations by focusing solely on higher-level linguistic structures rather than low-level positional data.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/azee_template_example.png}
@@ -76,7 +76,7 @@ The creation of this intermediate block relies on a templace expression check wh
 
 Motion templates are pre-defined motion patterns that guide the synthesis of new animations. In the context of AZee driven synthesis, these templates serve as a blueprint for generating intermediate blocks and motion curves. The use of motion templates allows for greater consistency and control over the final animation, as the templates encode expert knowledge about how certain signs should be performed.
 
-These motion templates are based on the template of the AZee rule and can be artistically created or procedurally generated. Figure \ref{fig:top_down_search_template} shows a top-down search algorithm for selecting the best motion template based on the AZee rule \emph{info-about}.
+These motion templates are based on the template of the AZee rule and can be artistically created or procedurally generated. Figure~\ref{fig:top_down_search_template} shows a top-down search algorithm for selecting the best motion template based on the AZee rule \emph{info-about}.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/top_down_search_template.png}
@@ -84,7 +84,7 @@ These motion templates are based on the template of the AZee rule and can be art
     \label{fig:top_down_search_template}
 \end{figure}
 
-The procedurally generated templates can be based on the AZee rule and corresponding motion data. For example, motion curves for the template \texttt{info-about} can be seen in the following figure \ref{fig:motion_curves_template_procedural}.
+The procedurally generated templates can be based on the AZee rule and corresponding motion data. For example, motion curves for the template \texttt{info-about} can be seen in the following figure~\ref{fig:motion_curves_template_procedural}.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_template_procedural.png}
@@ -92,7 +92,7 @@ The procedurally generated templates can be based on the AZee rule and correspon
     \label{fig:motion_curves_template_procedural}
 \end{figure}
 
-The template was created by extracting bone movements using mediapipe pose estimation and then converting them into motion curves (figure \ref{fig:motion_curves_mediapipe}).
+The template was created by extracting bone movements using mediapipe pose estimation and then converting them into motion curves (figure~\ref{fig:motion_curves_mediapipe}).
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_mediapipe.png}
@@ -100,7 +100,7 @@ The template was created by extracting bone movements using mediapipe pose estim
     \label{fig:motion_curves_mediapipe}
 \end{figure}
 
-Similarly, artistically created template for the rule \texttt{about-ref} can be seen in the following figure \ref{fig:motion_curves_template_artist}.
+Similarly, artistically created template for the rule \texttt{about-ref} can be seen in the following figure~\ref{fig:motion_curves_template_artist}.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_template_artist.png}
@@ -118,7 +118,7 @@ Motion curves are a fundamental component of character animation, providing a gr
 
 The template expression check determines the motion template to be used, which in turn gives us information regarding how a pair of blocks can be conneted. However, these motion curves can either effect the skeleton, or the shape keys. For skeleton, these motion curves represent time in x axis, and the joint angle(FK) of the y axis. Each bone has has 4 motion curves (one for each axis of the quaternion rotation).
 
-Figure \ref{fig:motion_curves_skeletal} shows how motion curves can be used for skeleton for the above example.
+Figure~\ref{fig:motion_curves_skeletal} shows how motion curves can be used for skeleton for the above example.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_skeletal.png}
@@ -129,7 +129,7 @@ Figure \ref{fig:motion_curves_skeletal} shows how motion curves can be used for 
 \subsection{Shape Key Motion Curves}
 \label{ch:intermediate_blocks:curves:shape_keys}
 
-For shape keys, the motion curves represent time in x axis, and the weight of the shape key in the y axis. Each shape key has one motion curve. Figure \ref{fig:motion_curves_shape_keys} shows how motion curves can be used for shape keys for the facial expressions of the above example.
+For shape keys, the motion curves represent time in x axis, and the weight of the shape key in the y axis. Each shape key has one motion curve. Figure~\ref{fig:motion_curves_shape_keys} shows how motion curves can be used for shape keys for the facial expressions of the above example.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_shape_keys.png}
@@ -140,7 +140,7 @@ For shape keys, the motion curves represent time in x axis, and the weight of th
 \section{Results}
 \label{ch:intermediate_blocks:results}
 
-Figure \ref{fig:intermediate_blocks_results} shows the results of the intermediate block generation process. The top row shows the original AZee blocks, while the bottom row shows the intermediate blocks generated using motion curves and templates. Motion curve comparison betweeen standard interpolation and interpolation based on the template for some AZee rules is shown in figure \ref{fig:intermediate_blocks_comparison}.
+Figure~\ref{fig:intermediate_blocks_results} shows the results of the intermediate block generation process. The top row shows the original AZee blocks, while the bottom row shows the intermediate blocks generated using motion curves and templates. Motion curve comparison betweeen standard interpolation and interpolation based on the template for some AZee rules is shown in figure~\ref{fig:intermediate_blocks_comparison}.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/intermediate_blocks_results.png}
