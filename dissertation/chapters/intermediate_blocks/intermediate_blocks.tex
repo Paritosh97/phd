@@ -186,23 +186,41 @@ For shape keys, the motion curves represent time in x axis, and the weight of th
 \section{Results}
 \label{ch:intermediate_blocks:results}
 
-Figure~\ref{fig:intermediate_blocks_results} shows the results of the intermediate block generation process. The top row shows the original AZee blocks, while the bottom row shows the intermediate blocks generated using motion curves and templates. Motion curve comparison betweeen standard interpolation and interpolation based on the template for some AZee rules is shown in figure~\ref{fig:intermediate_blocks_comparison}.
+Table~\ref{tab:intermediate_blocks_results} shows the results of the intermediate block generation process. Motion curve comparison betweeen standard interpolation and interpolation based on the template for some AZee rules is shown in figure~\ref{tab:intermediate_blocks_comparison}.
 
-\begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/intermediate_blocks_results.png}
+\begin{table}
+    \centering
     \caption{Intermediate Block Generation Results}
-    \label{fig:intermediate_blocks_results}
-\end{figure}
+    \begin{tabular}{|c|c|}
+    \hline
+    \textbf{Azee Rule} & \textbf{Intermediate Blocks Generated with Motion Curve} \\
+    \hline
+    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/template_todo1.png} \\
+    \hline
+    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/template_todo2.png} \\
+    \hline
+    \end{tabular}
+    \label{tab:intermediate_blocks_results}
+\end{table}
 
 \begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/intermediate_blocks_comparison.png}
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    \textbf{AZee Rule} & \textbf{Standard Interpolation} & \textbf{Template based Interpolation} \\
+    \hline
+    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/standard_interpolation_todo1.png} & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/template_interpolation_todo1.png} \\
+    \hline
+    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/standard_interpolation_todo2.png} & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/template_interpolation_todo2.png} \\
+    \hline
+    \end{tabular}
     \caption{Comparison with normal interpolation}
-    \label{fig:intermediate_blocks_comparison}
+    \label{tab:intermediate_blocks_comparison}
 \end{figure}
 
 The complete animations can be seen in the following video: \url{todo}
 
-An increase in naturalness when animating using the intermediate blocks technique can be seen. Moreover, this work provides us isnights regarding the motion profile which an AZee rul asbtracts.
+An increase in naturalness when animating using the intermediate blocks technique can be seen. Moreover, this work provides us isnights regarding the motion profile which an AZee rule asbtracts.
 
 \section{Conclusion and Future Work}
 \label{ch:intermediate_blocks:conclusion_and_future_work}
