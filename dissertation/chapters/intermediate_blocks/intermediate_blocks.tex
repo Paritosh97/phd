@@ -1,4 +1,6 @@
 \documentclass[../../main.tex]{subfiles}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \begin{document}
 \chapter{Intermediate Blocks, Motion Curves, and AZee Templates}
 \label{ch:intermediate_blocks}
@@ -69,17 +71,17 @@ The Paula avatar uses AZee geometric templates that can be applied across variou
 
 Intermediate blocks are blocks of motion not specified by the AZee model. Building on the concepts of motion curves and templates, intermediate block generation is a process in creating smooth transitions between constrained and pre-animated blocks. Interpolation techniques, such as linear and spline interpolation, can be used to generate intermediate poses or frames that maintain the semantic consistency of the intended sign.
 
-The creation of this intermediate block relies on a templace expression check which determines the motion template to be used. 
+The creation of this intermediate block relies on a template expression check which determines the motion template to be used. 
 
 \subsection{Reusing Motion Templates}
 \label{ch:intermediate_blocks:reusing_motion_templates}
 
 Motion templates are pre-defined motion patterns that guide the synthesis of new animations. In the context of AZee driven synthesis, these templates serve as a blueprint for generating intermediate blocks and motion curves. The use of motion templates allows for greater consistency and control over the final animation, as the templates encode expert knowledge about how certain signs should be performed.
 
-These motion templates are based on the template of the AZee rule and can be artistically created or procedurally generated. Figure~\ref{fig:top_down_search_template} shows a top-down search algorithm for selecting the best motion template based on the AZee rule \emph{info-about}.
+These motion templates are based on the template of the AZee rule and can be artistically created or procedurally generated. Figure~\ref{fig:top_down_search_template} shows a top-down search algorithm for selecting the best motion template based on the AZee rule \emph{info-about(cat,cute)}.
 
 \begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/top_down_search_template.png}
+    \centering \includegraphics[width = 4in]{chapters/intermediate_blocks/images/top_down_search_template.png}
     \caption{Top-Down Search for Motion Template}
     \label{fig:top_down_search_template}
 \end{figure}
@@ -87,12 +89,26 @@ These motion templates are based on the template of the AZee rule and can be art
 The procedurally generated templates can be based on the AZee rule and corresponding motion data. For example, motion curves for the template \texttt{info-about} can be seen in the following figure~\ref{fig:motion_curves_template_procedural}.
 
 \begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_template_procedural.png}
-    \caption{Procedurally Generated Motion Curves for Template \texttt{info-about}}
+    \centering \includegraphics[width = 4in]{chapters/intermediate_blocks/images/motion_curves_template_procedural.png}
+    \caption{Procedurally Generated motion curves for template \emph{info-about}}
     \label{fig:motion_curves_template_procedural}
 \end{figure}
 
-The template was created by extracting bone movements using mediapipe pose estimation and then converting them into motion curves (figure~\ref{fig:motion_curves_mediapipe}).
+The template was created by extracting bone rotations as quaternions using mediapipe pose estimation and then converting them into motion curves (figure~\ref{fig:motion_curves_mediapipe}). The final blended rotation can be calculated using Spherical Linear Interpolation (Slerp) between \( n \) quaternions \( q_1, q_2, \dots, q_n \):
+
+\[
+q_{\text{blend}} = \text{Slerp}\left(\dots \text{Slerp}\left(\text{Slerp}(q_1, q_2, t_1), q_3, t_2 \right) \dots , q_n, t_{n-1} \right)
+\]
+
+Where:
+\begin{itemize}
+    \item \( t_1, t_2, \dots, t_{n-1} \) are the blend factors for each interpolation step, with \( t_i \in [0, 1] \).
+    \item The Slerp between two quaternions \( q_i \) and \( q_j \) is defined as:
+    \[
+    \text{Slerp}(q_i, q_j, t) = \frac{\sin((1-t)\theta)}{\sin(\theta)} q_i + \frac{\sin(t\theta)}{\sin(\theta)} q_j
+    \]
+    where \( \theta = \arccos(q_i \cdot q_j) \) is the angle between the quaternions.
+\end{itemize}
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_mediapipe.png}
@@ -100,11 +116,41 @@ The template was created by extracting bone movements using mediapipe pose estim
     \label{fig:motion_curves_mediapipe}
 \end{figure}
 
-Similarly, artistically created template for the rule \texttt{about-ref} can be seen in the following figure~\ref{fig:motion_curves_template_artist}.
+Figure~\ref{fig:motion_curves_mocap} similar template creation but using AZee annotated motion capture~\cite{bertin2022rosetta}.
 
 \begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/motion_curves_template_artist.png}
-    \caption{Artistically Created Motion Curves for Template \texttt{about-ref}}
+    \centering \includegraphics[width = 4in]{chapters/intermediate_blocks/images/motion_curves_mocap.png}
+    \caption{Motion Curves from AZee annotated Mocap for the chin up in }
+    \label{fig:motion_curves_mocap}
+\end{figure}
+
+Lastly, artistically created template for the rule \emph{about-ref} can be seen in the following figure~\ref{fig:motion_curves_template_artist}.
+
+\begin{figure}
+     \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            title={template for \emph{about-ref}},
+            xlabel={Time (scaled from 0 to 1)},
+            ylabel={Rotation/Tilt (normalized)},
+            grid=major,
+            legend style={at={(0.5,-0.2)},anchor=north,legend columns=1} % Legend in two rows
+        ]
+        % Bust rotation
+        \addplot[blue, thick, domain=0:1] {sin(deg(pi*x))};
+        \addlegendentry{Bust Rotation (toward reference point)}
+        
+        % Head tilt
+        \addplot[green, thick, domain=0:1] {0.8*sin(deg(pi*x))};
+        \addlegendentry{Head Tilt (toward reference point)}
+        
+        % Neck rotation (compensating)
+        \addplot[red, thick, domain=0:1] {-0.5*sin(deg(pi*x))};
+        \addlegendentry{Neck Rotation (compensating)}
+        
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Artistically Created motion curves for template \emph{about-ref}}
     \label{fig:motion_curves_template_artist}
 \end{figure}
 
@@ -116,7 +162,7 @@ Motion curves are a fundamental component of character animation, providing a gr
 \subsection{Skeletal Motion Curves}
 \label{ch:intermediate_blocks:curves:skeletal}
 
-The template expression check determines the motion template to be used, which in turn gives us information regarding how a pair of blocks can be conneted. However, these motion curves can either effect the skeleton, or the shape keys. For skeleton, these motion curves represent time in x axis, and the joint angle(FK) of the y axis. Each bone has has 4 motion curves (one for each axis of the quaternion rotation).
+The template expression check determines the motion template to be used, which in turn gives us information regarding how a pair of blocks can be connected. However, these motion curves can either effect the skeleton, or the shape keys. For skeleton, these motion curves represent time in x axis, and the joint angle(FK) of the y axis. Each bone has has 4 motion curves (one for each axis of the quaternion rotation).
 
 Figure~\ref{fig:motion_curves_skeletal} shows how motion curves can be used for skeleton for the above example.
 
@@ -148,13 +194,28 @@ Figure~\ref{fig:intermediate_blocks_results} shows the results of the intermedia
     \label{fig:intermediate_blocks_results}
 \end{figure}
 
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/intermediate_blocks_comparison.png}
+    \caption{Comparison with normal interpolation}
+    \label{fig:intermediate_blocks_comparison}
+\end{figure}
+
 The complete animations can be seen in the following video: \url{todo}
+
+An increase in naturalness when animating using the intermediate blocks technique can be seen. Moreover, this work provides us isnights regarding the motion profile which an AZee rul asbtracts.
 
 \section{Conclusion and Future Work}
 \label{ch:intermediate_blocks:conclusion_and_future_work}
 
 In this chapter, we explored the generation of intermediate blocks in multi-track representations using motion curves and templates. By leveraging the AZee model and motion curves, we were able to create smooth transitions between constrained blocks, enhancing the naturalness and coherence of Sign Language synthesis. The results demonstrate the effectiveness of this approach compared to using standard block interpolation. 
 
-Future areas to improve this technique could be a deeper quantitative analysis of mocap data based on various AZee rules. This could help in procedurally creating a more robust set of motion templates that can be used across different signing scenarios.
+%limitations
+While the current system of motion templates proves effective for generating smooth transitions in most body movements, it faces significant challenges when dealing with finer details such as finger articulation. The complexity of finger movements in sign language, especially during rapid transitions, requires high precision in motion curves and templates. Unfortunately, the current implementation lacks the necessary granularity to handle the intricate dynamics of handshapes and finger configurations, often resulting in unnatural or robotic animations in these areas. Moreover, capturing the nuances of coarticulation between handshapes and other body parts remains an open challenge.
+
+Another limitation stems from too much data in the motion templates. This might bring in information such as the identity of the signer, which may not always generalize well. While procedurally generated templates based on AZee rules offer flexibility, their 
+
+Future areas to improve this technique could include a more detailed quantitative analysis of motion capture data based on a broader range of AZee rules, as well as further refinement of finger tracking and facial expressions in the motion templates.
+
+Future areas to improve this technique could be a deeper quantitative analysis of mocap data based on more AZee rules. This could help in procedurally creating a more robust set of motion templates that can be used across different signing scenarios.
 
 \end{document}

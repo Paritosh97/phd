@@ -1,4 +1,6 @@
 \documentclass[../../main.tex]{subfiles}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
 \begin{document}
 \chapter{Motion Matching for Sign Language Synthesis}
 \label{ch:motion_matching}
@@ -109,7 +111,7 @@ In this section, we discuss the application of motion matching techniques to the
 \subsection{Preparing the dataset}
 \label{ch:motion_matching:motion_matching_with_azee:dataset}
 
-The first step in integrating motion matching into AZee is to train a Variational Autoencoder (VAE) on set of sign language poses. For this task, we use a dataset of mocap data collected from the Rosetta dataset~\cite{bertin2022rosetta}. The dataset consists of todo poses and should capture the diversity of poses and movements associated with different signs, providing a rich source of training data for the VAE.. Since our focus was only on the upper body, we didn't use the facial bones and the lower body for the training. We also retargeted the mocap data to the BAZeel avatar, which is compatible with the AZee skeleton structure (figure~\ref{fig:retargeted}).
+The first step in integrating motion matching into AZee is to train a Variational Autoencoder (VAE) on set of sign language poses. For this task, we use a dataset of mocap data collected from the Rosetta dataset~\cite{bertin2022rosetta}. The dataset consists of 167066 poses and should capture the diversity of poses and movements associated with different signs, providing a rich source of training data for the VAE.. Since our focus was only on the upper body, we didn't use the facial bones and the lower body for the training. We also retargeted the mocap data to the BAZeel avatar, which is compatible with the AZee skeleton structure (figure~\ref{fig:retargeted}).
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/retargeted.png}
@@ -130,13 +132,117 @@ Next, we converted the motion into AZee's FK pose array. The FK pose array consi
 
 A VAE is a type of generative model that learns a low-dimensional latent space representation of the input data. In the context of character animation, a VAE can be used to capture the distribution of poses in a dataset, allowing for the generation of new poses that are statistically similar to the training data. The VAE consists of an encoder network that maps input poses to a latent space and a decoder network that reconstructs the input poses from the latent space (figure~\ref{fig:vae}).
 
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/motion_matching/images/vae.png}
-  \caption{Variational Autoencoder (VAE)}
-  \label{fig:vae}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+    every neuron/.style={
+        circle,
+        draw,
+        minimum size=0.6cm
+    },
+    neuron missing/.style={
+        draw=none, 
+        scale=1,
+        text height=0.333cm,
+        execute at begin node=\color{black}$\vdots$
+    },
+    layer/.style={
+        rectangle,
+        draw,
+        text centered,
+        minimum width=2cm
+    }
+]
+
+% Input Layer
+\foreach \i in {1,2,3}
+    \node [every neuron/.try, neuron \i/.try] (input-\i) at (0,1.5-\i*0.6) {};
+
+\node at (0,-1) {\vdots};
+\node at (0,-1.5) {54};
+
+% Encoder L1
+\foreach \i in {1,2}
+    \node [every neuron/.try, neuron \i/.try] (L1-\i) at (2,1.2-\i*0.6) {};
+
+\node at (2,-1) {\vdots};
+\node at (2,-1.5) {128};
+
+% Encoder L2
+\foreach \i in {1,2}
+    \node [every neuron/.try, neuron \i/.try] (L2-\i) at (4,1.2-\i*0.6) {};
+
+\node at (4,-1) {\vdots};
+\node at (4,-1.5) {64};
+
+% Latent Layer
+\foreach \i in {1,2}
+    \node [every neuron/.try, neuron \i/.try] (L3-\i) at (6,1.2-\i*0.6) {};
+
+\node at (6,-1) {\vdots};
+\node at (6,-1.5) {32};
+
+% Decoder L4
+\foreach \i in {1,2}
+    \node [every neuron/.try, neuron \i/.try] (L4-\i) at (8,1.2-\i*0.6) {};
+
+\node at (8,-1) {\vdots};
+\node at (8,-1.5) {64};
+
+% Decoder L5
+\foreach \i in {1,2}
+    \node [every neuron/.try, neuron \i/.try] (L5-\i) at (10,1.2-\i*0.6) {};
+
+\node at (10,-1) {\vdots};
+\node at (10,-1.5) {128};
+
+% Output Layer
+\foreach \i in {1,2,3}
+    \node [every neuron/.try, neuron \i/.try] (output-\i) at (12,1.5-\i*0.6) {};
+
+\node at (12,-1) {\vdots};
+\node at (12,-1.5) {54};
+
+% Draw the connections
+\foreach \i in {1,2,3}
+    \foreach \j in {1,2}
+        \draw [->] (input-\i) -- (L1-\j);
+
+\foreach \i in {1,2}
+    \foreach \j in {1,2}
+        \draw [->] (L1-\i) -- (L2-\j);
+
+\foreach \i in {1,2}
+    \foreach \j in {1,2}
+        \draw [->] (L2-\i) -- (L3-\j);
+
+\foreach \i in {1,2}
+    \foreach \j in {1,2}
+        \draw [->] (L3-\i) -- (L4-\j);
+
+\foreach \i in {1,2}
+    \foreach \j in {1,2}
+        \draw [->] (L4-\i) -- (L5-\j);
+
+\foreach \i in {1,2}
+    \foreach \j in {1,2,3}
+        \draw [->] (L5-\i) -- (output-\j);
+
+\end{tikzpicture}
+\caption{Architecture of the VAE}
+\label{fig:vae}
 \end{figure}
 
-VPoser is a specific implementation of a VAE designed for pose estimation and synthesis. We train the VPoser using the AZee FK pose array data. The training ...todo
+Trained on a dataset containing 167,066 poses. The dataset is divided into training, validation, and test sets, which are loaded using the \texttt{AnimationDS} class from the dataloader. During training, batches of poses are processed, with each batch consisting of 512 samples. The training is carried out on a CUDA-enabled GPU, utilizing mixed precision training for efficiency. The VPoser model architecture consists of a latent space with 32 dimensions (\texttt{latentD}), and the neural network has 512 neurons per layer. 
+
+The loss function used during training includes two primary components: 
+\begin{itemize}
+    \item \textbf{Reconstruction Loss}: This loss is computed at the joint level by comparing the reconstructed pose with the original pose using L1 loss. An additional pose-level reconstruction loss (L2 loss) is applied during the first 10 epochs to help the model learn better early on.
+    \item \textbf{KL Divergence Loss}: The KL divergence regularizes the latent space by enforcing it to follow a standard normal distribution, ensuring that the latent space representation is smooth and continuous.
+\end{itemize}
+
+The total loss is the sum of the reconstruction loss and KL divergence loss. The optimization is carried out using the Adam optimizer with a learning rate of $1 \times 10^{-2}$ and weight decay of $0.0001$. A learning rate scheduler is used, which reduces the learning rate by a factor of 0.5 every third of the training epochs. 
 
 \subsection{Implementing Motion Matching}
 \label{ch:motion_matching:motion_matching_with_azee:implementation}
