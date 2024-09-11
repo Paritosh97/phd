@@ -9,7 +9,7 @@ Creativity in human expression often lies at the intersection of structure and f
 
 Generating these intermediate blocks in multi-track representations requires a blend of procedural precision and adaptive techniques. The complexity of Sign Language demands more than linear models; it requires an approach that can reflect the nuances of real-life communication. By integrating the AZee model with multi-track timelines, this chapter explores how we can improve the accuracy and fluidity of synthesized Sign Language.
 
-This chapter focuses on the generation of intermediate blocks within the multi-track representations introduced in chapter~\ref{ch:multi-track}. By utilizing motion templates and carefully interpolating between keyframes, we aim to enhance the naturalness and coherence of Sign Language synthesis, bridging the gap between procedural methods and the dynamic nature of human communication.
+This chapter focuses on the generation of intermediate blocks within the multi-track representations introduced in chapter~\ref{ch:multi-track}. By utilizing motion templates and carefully interpolating between keyframes, we aim to enhance the naturalness and coherence of Sign Language synthesis.
 
 In this chapter, section~\ref{ch:intermediate_blocks:related_work} discusses the related work on AZee Templates, Motion Curves, and Motion Templates. Section~\ref{ch:intermediate_blocks:intermediate_block_generation} explores the generation of intermediate blocks, while section~\ref{ch:intermediate_blocks:results} presents the results of this process. Finally, section~\ref{ch:intermediate_blocks:conclusion_and_future_work} concludes the chapter and outlines potential future directions for this research.
 
@@ -36,7 +36,7 @@ In the context of Sign Language,~\cite{inproceedings} discuss the use of 3D moti
     \label{fig:fcurves_blender}
 \end{figure}
 
-In recent research, deep learning methods have been employed to interpret and adapt F-curves for motion inbetweening tasks(figure~\ref{fig:inbetweening_transformers})~\cite{10.1145/3550454.3555454}. However, traditional mathematical optimization techniques are still widely in use(figure~\ref{fig:inbetweening_disney})~\cite{10.1145/3306346.3322938}.
+In recent research, deep learning methods have been employed to interpret and adapt motion curves for inbetweening tasks(figure~\ref{fig:inbetweening_transformers})~\cite{10.1145/3550454.3555454}. However, traditional mathematical optimization techniques are still widely in use. For example~\cite{10.1145/3306346.3322938} used tangent-space optimization to control character interpolations by allowing animators to directly manipulate positions and orientations, minimizing the need for additional keyframes. It ensures smooth transitions while respecting constraints like joint limits and contact points, integrating seamlessly into existing animation workflows (figure~\ref{fig:inbetweening_disney}). 
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/inbetweening_transformers.jpg}
@@ -50,7 +50,6 @@ In recent research, deep learning methods have been employed to interpret and ad
     \label{fig:inbetweening_disney}
 \end{figure}
 
-
 \subsection{Motion Templates}
 \label{ch:intermediate_blocks:related_work:motion_templates}
 
@@ -58,7 +57,7 @@ Motion templates offer a reusable framework for applying pre-defined motion patt
 
 In the context of character animation, motion templates can be particularly advantageous. The reusable nature of these templates allows for the consistent production of motion across different avatars while ensuring that the nuances of each motion are preserved. A method for controlling avatars using clustered motion segments from a large motion capture database was introduced by~\cite{10.1145/566654.566607}, enabling efficient real-time animation with intuitive user interfaces.
 
-The Paula avatar uses AZee geometric templates that can be applied across various signing scenarios. For example, a rule such as place-prf(proform-vehicle, midssp) allows for the placement of a vehicle proform in the middle of the signing space(figure~\ref{fig:azee_template_example}). This method leverages a consistent geometric system, enabling the natural synthesis of movements without relying on a fixed set of points, which is crucial for capturing the variability and dynamism inherent in sign language. This approach however, generates animations by focusing solely on higher-level linguistic structures rather than low-level positional data.
+The Paula avatar uses AZee geometric templates that can be applied across various signing scenarios. For example, a rule such as place-prf(proform-vehicle, midssp) allows for the placement of a vehicle proform in the middle of the signing space(figure~\ref{fig:azee_template_example}). This method leverages a consistent geometric system, enabling the natural synthesis of movements without relying on a fixed set of points, which is crucial for capturing the variability and dynamism inherent in sign language. This approach however, generates animations by focusing solely on higher-level linguistic structures rather than low-level constraints.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/azee_template_example.png}
@@ -186,28 +185,13 @@ For shape keys, the motion curves represent time in x axis, and the weight of th
 \section{Results}
 \label{ch:intermediate_blocks:results}
 
-Table~\ref{tab:intermediate_blocks_results} shows the results of the intermediate block generation process. Motion curve comparison betweeen standard interpolation and interpolation based on the template for some AZee rules is shown in figure~\ref{tab:intermediate_blocks_comparison}.
-
-\begin{table}
-    \centering
-    \caption{Intermediate Block Generation Results}
-    \begin{tabular}{|c|c|}
-    \hline
-    \textbf{Azee Rule} & \textbf{Intermediate Blocks Generated with Motion Curve} \\
-    \hline
-    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/template_todo1.png} \\
-    \hline
-    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/template_todo2.png} \\
-    \hline
-    \end{tabular}
-    \label{tab:intermediate_blocks_results}
-\end{table}
+Table~\ref{tab:intermediate_blocks_comparison}shows the results of the intermediate block generation process. We compare the results of using standard interpolation techniques with the proposed template-based interpolation method. The table shows the difference in naturalness and coherence between the two methods, highlighting the benefits of using motion curves and templates to generate intermediate blocks.
 
 \begin{figure}
     \centering
-    \begin{tabular}{|c|c|}
+    \begin{tabular}{|c|c|c|}
     \hline
-    \textbf{AZee Rule} & \textbf{Standard Interpolation} & \textbf{Template based Interpolation} \\
+    \textbf{AZee Rule} & \textbf{Linear Interpolation} & \textbf{Template based Interpolation} \\
     \hline
     TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/standard_interpolation_todo1.png} & \includegraphics[width=1.5in]{chapters/intermediate_blocks/images/template_interpolation_todo1.png} \\
     \hline
