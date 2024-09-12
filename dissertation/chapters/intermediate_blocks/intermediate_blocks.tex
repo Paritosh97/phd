@@ -65,10 +65,24 @@ The Paula avatar uses AZee geometric templates that can be applied across variou
     \label{fig:azee_template_example}
 \end{figure}
 
+For our experiments, we will be mainly using the \emph{40 brèves}~\cite{challant2022first} corpus. The frequency of the AZee rules in this corpus can be seen in figure~\ref{fig:azee_rule_frequency}.
+
+\begin{figure}
+    \centering \includegraphics[width = 5in]{chapters/intermediate_blocks/images/azee_rule_frequency.png}
+    \caption{Frequency of AZee rules in the \emph{40 brèves} corpus}
+    \label{fig:azee_rule_frequency}
+\end{figure}
+
 \section{Intermediate Block Generation}
 \label{ch:intermediate_blocks:intermediate_block_generation}
 
-Intermediate blocks are blocks of motion not specified by the AZee model. Building on the concepts of motion curves and templates, intermediate block generation is a process in creating smooth transitions between constrained and pre-animated blocks. Interpolation techniques, such as linear and spline interpolation, can be used to generate intermediate poses or frames that maintain the semantic consistency of the intended sign.
+Intermediate blocks are blocks of motion not specified by the AZee model. Building on the concepts of motion curves and templates, intermediate block generation is a process in creating smooth transitions between constrained and pre-animated blocks. Interpolation techniques, such as linear and spline interpolation, can be used to generate intermediate poses or frames that maintain the semantic consistency of the intended sign. Figure ~\ref{fig:info_about_intermediate_example} shows intermediate blocks generated for the AZee rule \emph{info-about(topic,info)}.
+
+\begin{figure}
+    \centering \includegraphics[width = 5in]{chapters/intermediate_blocks/images/info_about_intermediate_example.png}
+    \caption{Intermediate Blocks for the AZee rule \emph{info-about(topic,info)}}
+    \label{fig:info_about_intermediate_example}
+\end{figure}
 
 The creation of this intermediate block relies on a template expression check which determines the motion template to be used. 
 
@@ -212,9 +226,9 @@ An increase in naturalness when animating using the intermediate blocks techniqu
 In this chapter, we explored the generation of intermediate blocks in multi-track representations using motion curves and templates. By leveraging the AZee model and motion curves, we were able to create smooth transitions between constrained blocks, enhancing the naturalness and coherence of Sign Language synthesis. The results demonstrate the effectiveness of this approach compared to using standard block interpolation. 
 
 %limitations
-While the current system of motion templates proves effective for generating smooth transitions in most body movements, it faces significant challenges when dealing with finer details such as finger articulation. The complexity of finger movements in sign language, especially during rapid transitions, requires high precision in motion curves and templates. Unfortunately, the current implementation lacks the necessary granularity to handle the intricate dynamics of handshapes and finger configurations, often resulting in unnatural or robotic animations in these areas. Moreover, capturing the nuances of coarticulation between handshapes and other body parts remains an open challenge.
+While the current system of motion templates proves effective for generating smooth transitions in most body movements, it faces significant challenges when dealing with finer details such as finger articulation. The complexity of finger movements in sign language, especially during rapid transitions, requires high precision in motion curves and templates. Unfortunately, the current implementation lacks the necessary granularity, resulting in robotic transitions. Moreover, capturing thte nuances of coarticulation between handshapes be it with mocap or using pose estimation remains an open challenge.
 
-Another limitation stems from too much data in the motion templates. This might bring in information such as the identity of the signer, which may not always generalize well. While procedurally generated templates based on AZee rules offer flexibility, their 
+Another limitation stems from too much data in the motion templates. This might bring in information such as the identity of the signer, which may not always generalize well. This can be mitigated by using a more generalized set of motion templates that can be applied across different signing scenarios.
 
 Future areas to improve this technique could include a more detailed quantitative analysis of motion capture data based on a broader range of AZee rules, as well as further refinement of finger tracking and facial expressions in the motion templates.
 
