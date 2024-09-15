@@ -8,79 +8,71 @@ In this chapter, we present a summary and overview of the contributions made in 
 \section{Summary}
 \label{ch:conclusion:summary}
 
-This thesis explores innovative approaches to synthesizing sign language using a decreasing granularity system based on the AZee framework. The primary objective was to develop a system that could generate sign language sequences that are both linguistically accurate and naturally expressive, addressing a crucial need in accessible communication technologies for the Deaf and Hard of Hearing communities.
+This thesis explores innovative approaches to synthesizing sign language using a decreasing granularity system based on the AZee framework. The primary objective was to develop a system that could generate sign language sequences that are linguistically accurate and easier to reproduce, addressing a crucial need in accessible communication technologies for the Deaf and Hard of Hearing communities.
 
-In Chapter~\ref{chap:background}, we reviewed the foundational work in sign language linguistics, motion capture technologies, and synthesis systems, particularly focusing on the AZee linguistic framework. AZee provides a structured way to describe sign language at varying levels of granularity, which we identified as a key to achieving fluent and contextually appropriate sign language synthesis.
+In Chapter~\ref{ch:background_work}, we reviewed the foundational work in describing sign languages, and synthesis techniques, particularly focusing on synthesis from AZee. AZee provides a structured way to describe sign language at varying levels of granularity. However, existing methods often struggle to balance linguistic accuracy with ease of synthesis. 
 
-Chapter~\ref{chap:decreasing_granularity} introduced the concept of decreasing granularity in the context of sign language synthesis. We proposed a hierarchical model where high-level linguistic descriptions gradually transition into lower-level kinematic representations. This approach was shown to be effective in maintaining the linguistic integrity of the signs while ensuring smooth and natural transitions between movements.
+Chapter~\ref{ch:rigging_layers} introduced a layered rigging system for signing avatars, emphasizing the importance of rigging in realistic character animation. It presented a procedural rigging system tailored for sign language gestures, focusing on the upper body. The chapter discussed automating site generation using a raycasting algorithm and improving the rigging process with deformation, inverse kinematics (IK), and forward kinematics (FK) layers. It also introduced constraint-based posture optimization and morph constraints. Finally, the chapter evaluated the system’s performance, accuracy, and animation quality, highlighting the potential for future enhancements in sign language avatar animation. 
 
-In Chapter~\ref{chap:implementation}, we implemented the proposed decreasing granularity system and integrated it with the AZee framework. The system was designed to take abstract linguistic input and generate corresponding sign language sequences. We demonstrated that this system could produce more natural and contextually accurate signs compared to traditional methods that rely heavily on fixed, pre-recorded sign sequences.
+In Chapter~\ref{ch:multi-track}, the concept of multi-track and non-linear synthesis is introduced to improve sign language avatar animation. The chapter explores how multi-track control mimics natural human motion by preserving the dynamics of simultaneous gestures, facial expressions, and body movements. Non-linear synthesis ensures correct animation sequences and resolves conflicts between overlapping blocks. It discusses converting AZee Synced Scores into multi-track timelines and optimizing with constraint-based approaches. The chapter also highlights the integration of pre-animated blocks and evaluates the improvements in animation quality and flexibility using Blender's non-linear editor.
 
-Chapter~\ref{chap:evaluation} focused on the evaluation of the synthesized sign language sequences. We conducted both qualitative and quantitative assessments, involving native signers and linguistic experts. The results indicated that our approach significantly improved the expressiveness and accuracy of synthesized signs, particularly in complex or context-dependent scenarios.
+Chapter~\ref{ch:facial_expressions} presents facial expressions as a critical component in sign language communication, conveying emotional and grammatical information. The chapter introduces a method for synthesizing facial expressions using the AZee framework, focusing on action units (AUs) from the FACS system to create blendshapes for animating signing avatars. It explores face rigging techniques, motion capture, and the generation of motion curves to create dynamic, realistic facial expressions. The chapter evaluates the accuracy of synthesized expressions through subjective and quantitative measures, demonstrating the potential of this approach for improving the realism of signing avatars.
 
-Finally, in Chapter~\ref{chap:optimization}, we addressed one of the main challenges identified in our system: the real-time generation of sign language. We proposed an optimization technique that reduces the computational load without compromising the quality of the output. This advancement is particularly important for deploying the system in real-world applications, such as live sign language interpretation in public services or media.
+Chapter~\ref{ch:intermediate_blocks}, the generation of intermediate blocks in sign language synthesis is explored to improve the natural flow between signs. By leveraging motion curves and AZee templates, the chapter discusses how transitions between constrained blocks can be enhanced in multi-track representations. It introduces interpolation techniques, such as linear and spline interpolation, and reusable motion templates to create smooth, realistic animations. The chapter evaluates the results of template-based interpolation compared to standard methods, highlighting improvements in naturalness and coherence. It concludes with insights on limitations and potential future improvements in finger articulation and generalization of templates.
 
-Overall, our work has advanced the field of sign language synthesis by introducing a novel method that balances linguistic rigor with the flexibility needed for natural expression. While our system shows great promise, it also opens up several avenues for further exploration and improvement.
+Lastly Chapter~\ref{ch:pose_correction} introduces pose correction for sign language synthesis, focusing on improving naturalness and accuracy in sign language avatars. The chapter explores the integration of a pose prior model, trained on a French Sign Language motion capture dataset, to guide the correction process using Variational Autoencoders (VAE). The review covers classical Inverse Kinematics (IK) methods, modern data-driven approaches like Motion Matching and Phase-Functioned Neural Networks (PFNN), and latent space representations like VPoser. The chapter demonstrates how the pose correction system refines generated poses for smoother transitions and more realistic animations, while discussing the challenges and future improvements.
 
-\section{Reproducible Research}
+\section{Open Source}
 \label{ch:conclusion:opensource}
 
-One of the key contributions of this thesis is the open-source implementation of the decreasing granularity system for sign language synthesis. The code and datasets associated with our studies are publicly available, ensuring that the results can be reproduced and built upon by other researchers in the field. Below are the links to the GitHub repositories corresponding to each chapter:
+One of the key contributions of this thesis is the open-source implementation of the synthesizor for AZee. The system extends the original AZee language model and integrates it with a decreasing granularity framework to synthesize signs directly in blender~\ref{fig:azee_animator_interface}.
 
-\begin{itemize}
-    \item \textbf{Chapter 3 (Decreasing Granularity Model):}
-    \url{github.com/yourusername/GranularityModel}
-    
-    \item \textbf{Chapter 4 (AZee Integration and Synthesis):}
-    \url{github.com/yourusername/AZeeSynthesis}
-    
-    \item \textbf{Chapter 5 (Evaluation Datasets and Scripts):}
-    \url{github.com/yourusername/SignLanguageEval}
-\end{itemize}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/azee_animator_interface.png}
+    \caption{AZee animator interface}
+    \label{fig:azee_animator_interface}
+\end{figure}
 
-In addition to the repositories listed above, we have also developed a toolkit that enables researchers and developers to experiment with and deploy the sign language synthesis system in various applications. This toolkit is designed to be modular and extensible, allowing for easy integration with other linguistic models or sign language datasets.
+The animator interface allows users to write AZee code in a text editor and visualize the corresponding sign language animations in real-time. For this, the animator loads the AZee compiler as a python module and uses evaluates the generated AZee Scores directly on the avatar. The add-on uses blender's None Linear Editor (NLE) to manage the animation blocks and transitions of the multi-track system. The system also supports facial expressions, intermediate blocks and pose correction.
 
-\subsection*{AZee-Synthesis Toolkit}
+\subsection{AZee web renderer}
 
-The AZee-Synthesis Toolkit provides an end-to-end solution for generating sign language sequences from high-level linguistic descriptions. Built on the principles of the AZee framework, the toolkit supports a wide range of sign languages and can be easily adapted to new languages or dialects. Below is an example of how the toolkit can be used to generate a sign sequence:
+The blender synthesizor was also integrated with the AZVD~\cite{azvd} editor to generate sign language animations directly on a web interface~\ref{fig:azee_web_interface}.
 
-\begin{verbatim}
-from azee_toolkit import SignLanguageSynthesizer
-from azee_toolkit.models import AZeeModel
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/azee_web_interface.png}
+    \caption{AZee web renderer interface}
+    \label{fig:azee_web_interface}
+\end{figure}
 
-# Initialize the synthesizer with a pre-trained AZee model
-synthesizer = SignLanguageSynthesizer(model=AZeeModel.load_pretrained('path/to/model'))
+The web interface allows users to draw AZee visual descriptions which resolved to AZee Scores and then to animations. For this, the AZee code generated from AZVD in the front-end is sent to the server where an instance of the blender is running headlessly. The synthesizor evaluates the AZee code and returns the animation in video or GLB format to the front-end where it is displayed to the user.
 
-# Generate sign language sequence from linguistic description
-sign_sequence = synthesizer.synthesize("GREETINGS")
+\section{Key Insights}
+\label{ch:conclusion:key_insights}
 
-# Visualize the generated sequence
-sign_sequence.visualize()
-\end{verbatim}
+The research conducted in this thesis has yielded several key insights that can inform future work in sign language synthesis and related fields. These insights are summarized below:
 
-The toolkit also includes tools for fine-tuning the synthesis process, optimizing performance, and evaluating the output against benchmark datasets. It has been designed with both research and practical deployment in mind, offering a robust platform for the continued development of sign language technologies.
+\subsection{Granularity}
+\label{ch:conclusion:key_insights:granularity}
 
-\section{Contributions}
-\label{ch:conclusion:contributions}
+This thesis highlights the concept of granularity in both sign language representation and synthesis. The term \emph{shortcut} refers to animating linguistic constructs at a higher level of granularity, enabling more natural synthesis while preserving linguistic accuracy, though this comes at the cost of finer control over the animation. Traditional research has typically mapped granularity directly to animations. In contrast, this thesis examines granularity at the posture level, offering a new perspective on sign language synthesis.
 
-The research presented in this thesis has led to several significant contributions to the field of sign language synthesis:
+Much like how an artist rigs a character with various control points to manage movement, an AZee linguist employs a similar approach to structure sign language discourse. Each control point—whether an IK placement, blendshape, pre-trained pose corrector, or FK rotation—can be seen as a linguistic construct with a certain granularity. This approach allows for the creation of expressive, linguistically accurate animations, offering a more detailed and flexible way to synthesize sign language.
 
-\begin{itemize}
-    \item \textbf{A Novel Decreasing Granularity Framework:} In Chapter~\ref{chap:decreasing_granularity}, we introduced a hierarchical model that enables the synthesis of sign language at varying levels of detail. This model bridges the gap between high-level linguistic descriptions and low-level kinematic execution, ensuring that the synthesized signs are both accurate and natural.
+\subsection{Language and Motion}
+\label{ch:conclusion:key_insights:language_motion}
 
-    \item \textbf{Integration with the AZee Framework:} In Chapter~\ref{chap:implementation}, we successfully integrated our decreasing granularity model with the AZee framework, demonstrating its applicability to a wide range of sign languages. This integration allows for the generation of contextually appropriate signs that adhere to the linguistic rules of the target language.
-
-    \item \textbf{State-of-the-Art Sign Language Synthesis:} The system developed in this thesis outperforms existing methods in terms of expressiveness and contextual accuracy, as evidenced by the evaluations conducted in Chapter~\ref{chap:evaluation}. Our approach sets a new benchmark for the synthesis of complex sign language sequences.
-
-    \item \textbf{Open-Source Toolkit for Sign Language Synthesis:} We have released an open-source toolkit that encapsulates the methods and models developed in this thesis. This toolkit is designed to facilitate further research and the development of practical applications in the field of sign language technology.
-\end{itemize}
+The AZee model offers a structured approach to describe sign language, which is crucial because it differs from simply translating sign language to or from a spoken or written language. While an AZee discourse has a one-to-one relationship with its corresponding sign language utterance, the utterance itself can have multiple equivalent translations. Both motion and language are temporal and exist in high-dimensional spaces, but the type of information they carry is different. Body motion operates in a visual space influenced by identity, surroundings, and physical laws, whereas spoken or written language is a human construct, independent of such factors. This distinction doesn't apply to sign languages, as their motion space is tied to their linguistic structure. Thus. while a common \emph{space} between an English sentence and the motion of its sign language translation is unlikely, AZee can provide such a space between sign language descriptions and the motion they represent. This uniqueness is what makes the problem of sign language synthesis different from other newer generative translation techniques.
 
 \section{Future Directions}
 \label{ch:conclusion:future}
 
-While the contributions of this thesis mark significant progress in sign language synthesis, several avenues for future research remain open. Below, we outline potential research topics that could extend the work presented in this thesis.
+While the contributions of this thesis mark a progress in sign language synthesis, several avenues for future research remain open. Below, we outline potential research topics that could extend the work presented in this thesis.
 
 \subsection{Enhancing the Decreasing Granularity Model}
+\label{ch:conclusion:future:granularity}
 
 \begin{itemize}
     \item \textbf{Dynamic Granularity Adjustment:} Future research could explore methods for dynamically adjusting the level of granularity based on the context or user preferences. This would enable more personalized and adaptive sign language synthesis.
@@ -111,6 +103,15 @@ While the contributions of this thesis mark significant progress in sign languag
     
     \item \textbf{Ethical Considerations:} As sign language synthesis technology evolves, it is important to address ethical considerations, such as ensuring accessibility and avoiding the misrepresentation of signed communication. Future research should incorporate these considerations into the design and deployment of sign language technologies.
 \end{itemize}
+
+\subsection{More qualitative evaluation}
+
+\begin{itemize}
+    \item \textbf{Collaboration with Linguists and Sign Language Experts:} Continued collaboration with linguists and native signers will be crucial for refining the linguistic accuracy and expressiveness of the synthesized signs. This interdisciplinary approach will help ensure that the technology remains aligned with the needs and preferences of the Deaf and Hard of Hearing communities.
+    
+    \item \textbf{Ethical Considerations:} As sign language synthesis technology evolves, it is important to address ethical considerations, such as ensuring accessibility and avoiding the misrepresentation of signed communication. Future research should incorporate these considerations into the design and deployment of sign language technologies.
+\end{itemize}
+
 
 In conclusion, this thesis has laid a strong foundation for the development of advanced sign language synthesis systems. By building on the work presented here, future research has the potential to further enhance the accessibility and effectiveness of communication technologies for the Deaf and Hard of Hearing communities.
 
