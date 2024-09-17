@@ -53,7 +53,7 @@ Classical IK methods, though foundational, face several challenges in handling c
 \paragraph{Limitations of Classical Methods} These classical IK techniques, while computationally efficient, are prone to singularities, have limited support for complex joint constraints, and often result in unnatural or biomechanically unrealistic poses. As demonstrated in Figure~\ref{fig:problems_classical}, they struggle with overlapping chains and handling multiple end-effectors.
 
 \begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/pose_correction/images/problems_classical.png}
+  \centering \includegraphics[width = 5in]{chapters/pose_correction/images/problems_classical.png}
   \caption{Problems with classical IK methods}
   \label{fig:problems_classical}
 \end{figure}
@@ -175,7 +175,7 @@ A VAE is a type of generative model that learns a low-dimensional latent space r
     \node [every neuron/.try, neuron \i/.try] (input-\i) at (0,1.5-\i*0.6) {};
 
 \node at (0,-1) {\vdots};
-\node at (0,-1.5) {54};
+\node at (0,-1.5) {42};
 
 % Encoder L1
 \foreach \i in {1,2}
@@ -217,7 +217,7 @@ A VAE is a type of generative model that learns a low-dimensional latent space r
     \node [every neuron/.try, neuron \i/.try] (output-\i) at (12,1.5-\i*0.6) {};
 
 \node at (12,-1) {\vdots};
-\node at (12,-1.5) {54};
+\node at (12,-1.5) {42};
 
 % Draw the connections
 \foreach \i in {1,2,3}
@@ -309,10 +309,14 @@ Snapshots with standard synthesis and synthesis with pose correction and the cor
     \hline
     \textbf{Standard Synthesis} & \textbf{Synthesis with Pose Correction} & \textbf{AZee Code} \\
     \hline
-    \includegraphics[width = 1.5in]{chapters/pose_correction/images/standard_synthesis.png} & \includegraphics[width = 1.5in]{chapters/pose_correction/images/pose_correction_synthesis.png} & \begin{lstlisting}
-      AZeePose pose = AZeeSynthesize();
-      AZeeMotionMatch(pose);
-    \end{lstlisting} \\
+    \includegraphics[width = 1.5in]{chapters/pose_correction/images/standard_synthesis_armoire.png} & \includegraphics[width = 1.5in]{chapters/pose_correction/images/pose_correction_synthesis_armoire.png} & 
+      \emph{:armoire} \\
+    \hline
+    \includegraphics[width = 1.5in]{chapters/pose_correction/images/standard_synthesis_maintenant.png} & \includegraphics[width = 1.5in]{chapters/pose_correction/images/pose_correction_synthesis_maintenant.png} &
+      \emph{:maintenant} \\
+    \hline
+    \includegraphics[width = 1.5in]{chapters/pose_correction/images/standard_synthesis_abt_ref_irak.png} & \includegraphics[width = 1.5in]{chapters/pose_correction/images/pose_correction_synthesis_abt_ref_irak.png} &
+      \emph{:about-ref(:irak, Rssp)} \\
     \hline
   \end{tabular}
   \caption{Comparison of standard synthesis and synthesis with pose correction}
@@ -344,6 +348,6 @@ The integration of pose correction into the AZee system represents a significant
 
 For future, posers based on neural distance fields~\cite{tiwari2022pose} or diffusion~\cite{lu2023dposer} could be used for pose correction since the current poser has a bayesian bias. Also, continuity of the trained model with respect to signing spaces could be studied further improving the the learnt pose prior.
 
-While the integration of machine learning into SL synthesis offers numerous advantages, it also introduces new challenges. Data-driven and latent space methods typically require significant computational resources, both during training and inference. This can be a major barrier in real-time applications, where low latency is critical. Also the effectiveness of machine learning models depends heavily on the availability of high-quality training data. In many cases, obtaining sufficient mocap data can be difficult, especially for non-standard or stylized animations. Lastly, while machine learning models can generate realistic and high-quality animations, they often lack the fine-grained control that human animators require. Ensuring that these models produce outputs that align with artistic vision remains a significant challenge.
+While the integration of deep learning into SL synthesis offers numerous advantages, it also introduces new challenges. Data-driven and latent space methods typically require significant computational resources, both during training and inference. This can be a major barrier in real-time applications, where low latency is critical. Also the effectiveness of deep learning models depends heavily on the availability of high-quality training data. In many cases, obtaining sufficient mocap data can be difficult, especially for non-standard or stylized animations. Lastly, while deep learning models can generate realistic and high-quality animations, they often lack the fine-grained control that human animators require. Ensuring that these models produce outputs that align with artistic vision remains a significant challenge.
 
 \end{document}
