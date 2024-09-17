@@ -31,7 +31,7 @@ However for procedurally animating a signing avatar, the complexity of sign lang
 \subsection{AZee Blender interface}
 \label{ch:rigging_layers:proc_rig_signing_avatars:azee_blender_interface}
 
-The previous low level synthesizor for AZee~\cite{fabrizio} was based on an armature in blender. These bones and sites were mapped to a \emph{SkelSpec} structure. Similarly, AZee's abstract posture was mapped to the \emph{SkelSpec} structure as well. The \emph{SkelSpec} structure thus formed as an intermediate bridge between an Animated AZee Score and the armature~\ref{fig:old_interface}. 
+The previous low level synthesizor for AZee~\cite{nunnari2018animating} was based on an armature in blender. These bones and sites were mapped to a \emph{SkelSpec} structure. Similarly, AZee's abstract posture was mapped to the \emph{SkelSpec} structure as well. The \emph{SkelSpec} structure thus formed as an intermediate bridge between an Animated AZee Score and the armature~\ref{fig:old_interface}. 
 
 \begin{figure}
     \centering
@@ -189,7 +189,7 @@ FK provides animators with a high degree of control over each individual bone in
 \subsection{Constraint Based Posture Optimization}
 \label{ch:rigging_layers:proc_rig_signing_avatars:cb_posegen}
 
-The previous low level synthesizor for AZee~\cite{fabrizio} used a constraint based optimization algorithm to generate the armature pose for a frame. This algorithm~\ref{alg:old_constraint_optimization} collects all posture constaints given by the AZee Animated Score for every frame and solves for the posture by optimizing these constraints using distance functions. 
+The previous low level synthesizor for AZee~\cite{nunnari2018animating} used a constraint based optimization algorithm to generate the armature pose for a frame. This algorithm~\ref{alg:old_constraint_optimization} collects all posture constaints given by the AZee Animated Score for every frame and solves for the posture by optimizing these constraints using distance functions. 
 
 \begin{algorithm}
     \caption{Constraint-Based Optimization for Posture Synthesis}

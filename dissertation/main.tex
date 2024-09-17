@@ -1,9 +1,9 @@
 \documentclass[english,12pt,a4paper]{book}
-\providecommand{\main}{.}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[english]{babel}
-\usepackage[default,oldstyle, scale=.95]{opensans} % police Open Sans
+\usepackage[default,oldstyle, scale=.95]{opensans} % Using Open Sans font
+
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{newunicodechar}
@@ -11,8 +11,8 @@
 \usepackage{fancyhdr}
 \usepackage{amssymb}
 \usepackage{natbib}
-\usepackage{xcolor} % où color selon l'installation
-\definecolor{Prune}{RGB}{99,0,60} % l14-33 : couleurs de la charte graphique upsaclay
+\usepackage{xcolor}
+\definecolor{Prune}{RGB}{99,0,60}
 \definecolor{B1}{RGB}{49,62,72} 
 \definecolor{C1}{RGB}{124,135,143}
 \definecolor{D1}{RGB}{213,218,223}
@@ -32,9 +32,10 @@
 \definecolor{B5}{RGB}{64,183,105}
 \definecolor{C5}{RGB}{140,198,62}
 \definecolor{D5}{RGB}{213,223,61}
+
 \usepackage{mdframed}
-\usepackage{multirow} %% Pour mettre un texte sur plusieurs rangées
-\usepackage{multicol} %% Pour mettre un texte sur plusieurs colonnes
+\usepackage{multirow} 
+\usepackage{multicol} 
 \usepackage{tikz}
 \usepackage{graphicx}
 \usepackage[absolute]{textpos} 
@@ -44,27 +45,27 @@
 \usepackage{titlesec}
 \usepackage{hyperref}
 \usepackage{pgfplots}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath}
+\usepackage{textgreek}
+% Removed lmodern package
 \setlength{\emergencystretch}{3em}
-\hypersetup{ % paramétrage couleur des liens hypertextes, toujours garder colorlinks=true
+\hypersetup{
     colorlinks=true,
     linkcolor=black,
-    urlcolor=purple}
+    urlcolor=purple
+}
 
-\pagestyle{plain} % pour ne garder que les n°de page en milieu-bas et supprimer les indications de chapitre en marge haute
-
+\pagestyle{plain} 
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
-\usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{subfiles}
 
 \makeglossaries
 
 \begin{document}
+\providecommand{\main}{.}
 
 \begin{titlepage}
 
