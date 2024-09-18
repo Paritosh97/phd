@@ -6,7 +6,7 @@
 In this chapter, we delve into the foundational research areas central to this thesis. We begin by exploring how describing Sign Language (SL) forms the basis for input into an animation system. Next, we discuss avatars as a key component of SL synthesis. We then review the evolution of SL descriptions, tracing their progression from linear glosses to non-linear representations. Finally, we focus on the recent advancements in SL synthesis, discussing various techniques and their implications for the field.
 
 \section{Input: Sign Language Descriptions}
-\label{sec:sign_language_descriptions}
+\label{ch:background_work:sign_language_descriptions}
 
 A key challenge in Sign Language synthesis lies in the description of an SL utterance itself. The description of an utterance answers essential questions such as:
 
@@ -20,12 +20,12 @@ A key challenge in Sign Language synthesis lies in the description of an SL utte
 These descriptions then serve as an input to a Sign Language animation system. In this section, we first study the descriptive languages used to formalize SL and how they describe body motions. These descriptions are crucial as they serve as the input to the SL synthesis systems.
 
 \subsection{Lexical Approaches to Creating a Discourse}
-\label{subsec:lexical_approaches}
+\label{ch:background_work:sign_language_descriptions:lexical_approaches}
 
 Lexical approaches focus on individual signs and their components, such as handshapes, movements, and locations. These are essential for understanding the building blocks of SL and how signs are produced. Some popular lexical descriptions include:
 
 \subsubsection{Stokoe Notation}
-\label{subsubsec:stokoe_notation}
+\label{ch:background_work:sign_language_descriptions:lexical_approaches:stokoe_notation}
 
 Stokoe Notation\cite{stokoe1980sign} was developed to transcribe American Sign Language (ASL). It breaks down signs into three main components: location, handshape, and movement~\ref{fig:stoeke}. It is a simple and effective notation for basic transcription but focuses primarily on the manual components of signs. Figure~\ref{fig:stokoe} illustrates the basic components of the Stokoe Notation system.
 
@@ -36,7 +36,7 @@ Stokoe Notation\cite{stokoe1980sign} was developed to transcribe American Sign L
 \end{figure}
 
 \subsubsection{SignWriting}
-\label{subsubsec:signwriting}
+\label{ch:background_work:sign_language_descriptions:lexical_approaches:signwriting}
 
 SignWriting is a writing system developed by Valerie Sutton just after DanceWriting\cite{sutton1973sutton} in the 1970s to represent sign languages visually. It was later included as a part of the MovementWriting system. It is a featural script, representing the features of signs, such as handshapes, movements, and locations, rather than sounds. SignWriting is designed to be easy to read and write, with symbols that resemble the gestures they represent. The script is written in two dimensions, with symbols arranged in a grid-like structure to capture various aspects of signs. Figure~\ref{fig:signwriting_coffee} shows an example of how the word "coffee" is represented in SignWriting. SignWriting has been used to transcribe over 40 sign languages worldwide and is recognized by the International SignWriting Alphabet (ISWA) organization.
 
@@ -47,7 +47,7 @@ SignWriting is a writing system developed by Valerie Sutton just after DanceWrit
 \end{figure}
 
 \subsubsection{HamNoSys}
-\label{subsubsec:hamnosys}
+\label{ch:background_work:sign_language_descriptions:lexical_approaches:hamnosys}
 
 The Hamburg Sign Language Notation System (HamNoSys) is a phonetic transcription system for documenting sign languages globally, developed in 1985 at the University of Hamburg. Unlike Stokoe's notation, which was specifically created for American Sign Language, HamNoSys aims for broader application, transcending national sign language boundaries. While Stokoe notation later adapted to other sign languages, HamNoSys was designed from the outset to accommodate the diversity found in global sign languages.
 
@@ -62,7 +62,7 @@ HamNoSys offers a detailed representation of the nuanced components in an SL utt
 \end{figure}
 
 \subsection{AZee}
-\label{subsec:azee}
+\label{ch:background_work:sign_language_descriptions:azee}
 
 Unlike previously discussed lexical approaches, the AZee model is grounded in the concept of production rules, which link specific meanings to observable forms. This model operates on the principle that the meaning of a sign can be broken down into a set of features, which are then represented through production rules. These rules guide the generation of the sign's form, encompassing aspects like handshape, movement, and location. Designed to be both flexible and extensible, the AZee model is capable of representing a broad spectrum of signs and sign languages. It is particularly advantageous for sign language synthesis, offering a systematic and structured method for describing signs and their components.
 
@@ -121,12 +121,12 @@ In addition to the score types, the AZee model includes several other important 
 \end{figure}
 
 \section{Sign Language Synthesis}
-\label{sec:sign_language_synthesis}
+\label{ch:background_work:sign_language_synthesis}
 
 Sign Language synthesis is the process of generating sign language discourses from linguistic input. This process involves resolving a linguistic description on a digital human. This can be in the form of handshapes, movements, facial expressions, etc. Sign Language synthesis is a complex and interdisciplinary field that draws on linguistics, computer science, animation, and human-computer interaction. Several approaches have been developed to synthesize sign language animations, each with its unique strengths and challenges.
 
 \subsection{2D Techniques}
-\label{subsec:2d_techniques}
+\label{ch:background_work:sign_language_synthesis:2d_techniques}
 
 Various 2D synthesis~\cite{jiang2024signclipconnectingtextsign}~\cite{moryossef2024signmtrealtimemultilingualsign} already exist which generate signs directly from glosses. One of the newer techniques~\cite{walsh2024sign} addresses the common issue of regression to the mean in previous models, which often resulted in unnatural and under-articulated signing. The authors propose a method called "sign stitching," which involves normalizing signs into a canonical pose, cropping, stitching them together, and applying frequency domain filtering and resampling to produce cohesive, expressive sign language sequences. They also introduce a Noise Substitution Vector Quantization (NSVQ) transformer to integrate facial expressions, enhancing the naturalness of the signs. The approach is evaluated using a SignGAN model to generate photo-realistic signers, achieving state-of-the-art performance across multiple datasets and receiving positive feedback in user evaluations for its realism and expressiveness. The synthesis is in the form of a 2D video, fitted on the mediapipe a GAN.
 
@@ -147,22 +147,17 @@ Figures~\ref{fig:synthesis_mediaipe_2d} and~\ref{fig:synthesis_gan_2d} illustrat
 While such techniques are computationally less demanding, they lack the depth and realism of 3D animations and struggle with capturing complex spatial relationships in Sign Language.
 
 \subsection{3D Techniques}
-\label{subsec:3d_techniques}
+\label{ch:background_work:sign_language_synthesis:3d_techniques}
 
-3D techniques (albeit being more computationally expensive) generate SL animations using avatars that operate in a three-dimensional space. These methods provide a more immersive and realistic representation of SL. 3D synthesis can leverage advanced avatars, such as those created by MetaHuman or SMPL-X, to achieve high levels of detail and expressiveness.
-
-\subsubsection{Avatars and Sign Language Synthesis}
-\label{subsubsec:avatars_sign_language_synthesis}
-
-Avatars are digital representations of characters or individuals, often used in SL synthesis to animate the described signs. This subsection explores the components of avatar creation and animation, followed by their use in SL synthesis.
+3D techniques (albeit being more computationally expensive) generate SL animations using avatars that operate in a three-dimensional space. These methods provide a more immersive and realistic representation of SL. 3D synthesis can leverage advanced avatars, such as those created by MetaHuman or SMPL-X, to achieve high levels of detail and expressiveness. Avatars are digital representations of characters or individuals, and are quite poular in in SL synthesis to animate the described signs. This subsection explores the components of avatar creation and animation, followed by their use in SL synthesis.
 
 \subsubsection{Skeleton}
-\label{subsubsec:skeleton}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:skeleton}
 
 The skeleton of a digital avatar is a crucial component for enabling realistic movement and animation. It consists of a hierarchical structure of bones, joints, and constraints that mimic the human skeletal system. This section explores several popular skeleton systems used in avatar creation and animation.
 
 \paragraph{Mixamo}
-\label{par:mixamo}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:mixamo}
 
 Mixamo is a widely used online platform that provides a vast library of pre-rigged 3D characters and animations. Developed by Adobe, Mixamo offers an easy-to-use interface where users can upload their 3D models and automatically rig(add skeleton and other controllable features) them using Mixamo's auto-rigging tool. This tool identifies keypoints on the model and generates a skeleton with appropriate bone placements. Additionally, Mixamo offers a range of pre-made animations that can be applied to the rigged models, facilitating quick and efficient animation workflows. The platform supports various file formats and is compatible with many 3D software tools. A standard Mixamo skeleton consists of 65 bones, covering major body parts, including the spine, arms, legs, hands, and head. Figure~\ref{fig:mixamo_autorigging} shows the process of auto-rigging a 3D model using Mixamo, while Figure~\ref{fig:mixamo_skeleton} illustrates the standard Mixamo skeleton structure.
 
@@ -179,7 +174,7 @@ Mixamo is a widely used online platform that provides a vast library of pre-rigg
 \end{figure}
 
 \paragraph{SMPL-X}
-\label{par:smpl_x}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:smpl_x}
 
 SMPL-X (Skinned Multi-Person Linear Model eXtended) is a state-of-the-art parametric model for generating highly detailed and anatomically accurate 3D human avatars. SMPL-X encodes the shape and pose of a character using a low-dimensional space, allowing for efficient representation and manipulation. Thus, a configuration of about 100 numbers can represent the pose as well as the shape of the avatar. The hierarchy of a SMPL-X skeleton is shown in figure~\ref{fig:smpl_x_skeleton}, and the corresponding latent space representation in figure~\ref{fig:latent_space_smplx}.
 
@@ -196,14 +191,14 @@ SMPL-X (Skinned Multi-Person Linear Model eXtended) is a state-of-the-art parame
 \end{figure}
 
 \subsubsection{Mesh and Texture}
-\label{subsubsec:mesh_and_texture}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:mesh_and_texture}
 
 The mesh of a digital avatar is the 3D model that forms the surface representation of the character. It consists of vertices, edges, and faces that define the shape and structure of the avatar. Creating and manipulating meshes is a fundamental aspect of 3D modeling and animation, allowing for detailed and realistic character designs.
 
 Textures are 2D images applied to the surface of a 3D model to enhance its appearance and realism. Textures can represent various surface properties such as color, roughness, reflectivity, and transparency. Common types of textures include diffuse maps (color), specular maps (reflectivity), normal maps (surface detail), and roughness maps (surface smoothness). By combining different textures, artists can create visually compelling avatars with intricate surface details and lifelike appearances. These textures are often mapped onto the mesh of the avatar using UV mapping techniques to ensure proper alignment and scaling.
 
 \paragraph{Weight Painting}
-\label{par:weight_painting}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:mesh_and_texture:weight_painting}
 
 Weight painting is a technique used to define how much influence each bone in a skeleton has over the surrounding mesh vertices. It plays a crucial role in ensuring that the mesh deforms naturally and realistically when the skeleton is animated. Figure~\ref{fig:weight_painting} shows an example of weight painting in Blender, with the red color indicating high influence and blue indicating low influence.
 
@@ -214,7 +209,7 @@ Weight painting is a technique used to define how much influence each bone in a 
 \end{figure}
 
 \paragraph{Face Animation: Blend Shapes vs. Bones}
-\label{par:face_animation_blend_shapes_vs_bones}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:mesh_and_texture:face_animation_blend_shapes_vs_bones}
 
 Modeling and animating the face of an avatar is a complex task that involves creating detailed meshes and intricate animation controls to capture expressions and movements accurately. Blend shapes are used to create different facial expressions by interpolating between multiple versions of a mesh. This technique allows animators to blend between various expressions smoothly, such as smiling, frowning, or blinking. Adding bones to the facial mesh allows for more granular control over facial movements. Each bone can control different parts of the face, such as the jaw, eyebrows, and eyelids. This method is often used in conjunction with blend shapes to enhance expressiveness.
 
@@ -253,8 +248,8 @@ The process of animating facial expressions using blend shapes is shown in figur
   \label{fig:facial_bones} 
 \end{figure}
 
-\paragraph{Rigging}
-\label{par:rigging}
+\subsubsection{Rigging}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:rigging}
 
 A rig is the final system used by the artists to animate the avatars. This is done by implementing all the above systems in order, i.e., creating a skeleton, mesh, texture, weight painting, facial blend shapes, implementing IK and FK systems, and adding constraints. Figure~\ref{fig:rig_example} shows an example of a rigged character, the "Rain rig" by Blender Studio.
 
@@ -265,12 +260,12 @@ A rig is the final system used by the artists to animate the avatars. This is do
 \end{figure}
 
 \subsubsection{Procedural Avatar Creation}
-\label{subsubsec:procedural_avatar_creation}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:procedural_avatar_creation}
 
 Procedural avatar creation involves the use of algorithms and software tools to automatically generate 3D characters with minimal manual intervention. This approach can significantly speed up the character creation process since it automates the creation of all of the avatar components discussed above. This allows rapid development of detailed and diverse avatars. This section explores several prominent tools and models used for procedural avatar creation.
 
 \paragraph{MakeHuman}
-\label{par:makehuman}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:procedural_avatar_creation:makehuman}
 
 MakeHuman is an open-source tool specifically designed for the rapid prototyping of humanoid avatars. It allows users to create 3D human models through an intuitive interface where parameters such as gender, age, ethnicity, and body proportions can be adjusted using sliders. Figure~\ref{fig:makehuman_example} demonstrates the process of creating an avatar using MakeHuman.
 
@@ -281,7 +276,7 @@ MakeHuman is an open-source tool specifically designed for the rapid prototyping
 \end{figure}
 
 \paragraph{SMPL-X or Meshcapade}
-\label{par:smpl_x_meshcapade}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:procedural_avatar_creation:smpl_x_meshcapade}
 
 Just like MakeHuman, SMPL-X can create avatars with parameters such as weight, height, age, etc. However, SMPL-X can also be created using images of a person. This allows it to be more realistic than MakeHuman. Figure~\ref{fig:smpl_creation_example} shows the process of creating an SMPL-X avatar using the Meshcapade tool.
 
@@ -292,7 +287,7 @@ Just like MakeHuman, SMPL-X can create avatars with parameters such as weight, h
 \end{figure}
 
 \paragraph{MetaHuman}
-\label{par:metahuman}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:procedural_avatar_creation:metahuman}
 
 MetaHuman Creator (figure~\ref{fig:metahuman_example}), developed by Epic Games, is a tool for creating ultra-realistic digital humans. The tool's emphasis on realism and detail makes it a powerful resource for creating lifelike characters for games, films, and other interactive experiences. MetaHumans are the most realistic avatars available today, with high-quality textures, detailed facial expressions, and advanced animation controls.
 
@@ -303,12 +298,12 @@ MetaHuman Creator (figure~\ref{fig:metahuman_example}), developed by Epic Games,
 \end{figure}
 
 \subsubsection{Avatar Animation}
-\label{subsubsec:avatar_animation}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation}
 
 The methods used for animating avatars range from manual to automated processes, each offering unique benefits and challenges. This section explores the key methods used in avatar animation.
 
 \paragraph{Manual Keyframing}
-\label{par:manual_keyframing}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:manual_keyframing}
 
 Manual keyframing is a traditional animation technique where animators define specific poses, known as keyframes, at critical points in time. These keyframes mark the start and end points of any smooth transition or movement. The intermediate poses are then calculated using interpolation. This method provides animators with precise control over every aspect of the avatar’s movement, making it ideal for achieving nuanced and detailed animations.
 
@@ -329,7 +324,7 @@ Along with keyframing, motion curves\cite{10.1145/218380.218422} are used to con
 \end{figure}
 
 \paragraph{Mocap Retargeting}
-\label{par:mocap_retargeting}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:mocap_retargeting}
 
 Motion capture (mocap) retargeting involves capturing the movements of a real human actor and applying this data to a digital avatar. This process starts with recording an actor’s performance using a motion capture system, which tracks the actor’s movements through markers or sensors placed on their body. The recorded data is then mapped onto the avatar’s skeleton, a process known as retargeting. Mocap retargeting ensures highly realistic animations by directly transferring the nuances of human motion to the digital character. This technique is widely used in the entertainment industry, particularly in video games and films, to create lifelike animations.
 
@@ -344,12 +339,12 @@ Figure~\ref{fig:mocap} illustrates the process of motion capture and retargeting
 Motion capture (mocap) retargeting offers a significant boost in animation speed and realism, but it does come with its challenges. It requires specialized equipment and involves intricate data processing, particularly when filtering out noise. Additionally, reusing mocap data across different avatars can be complex due to variations in body proportions and joint placements. Furthermore, segmenting mocap data into different parts for reuse can be difficult, limiting its flexibility in animation projects.
 
 \paragraph{Kinematics}
-\label{par:kinematics}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:kinematics}
 
 Kinematics is used to define the motion of joints in a skeleton, allowing animators to create realistic and dynamic movements. Two key kinematic techniques used in avatar animation are forward kinematics (FK) and inverse kinematics (IK).
 
 \subparagraph{Forward Kinematics}
-\label{subpar:forward_kinematics}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:kinematics:forward_kinematics}
 
 Forward kinematics (FK) is a method where the position and rotation of each joint in a skeleton are specified explicitly by the animator. This means that to move a hand, for example, the animator must adjust the shoulder, elbow, and wrist joints individually. FK provides precise control over each joint, making it ideal for detailed and deliberate animations. However, it can be cumbersome for complex movements, as changes to one joint may require adjustments to multiple other joints to achieve a natural pose. Figure~\ref{fig:forward_kinematics_example} illustrates the forward kinematics process.
 
@@ -360,7 +355,7 @@ Forward kinematics (FK) is a method where the position and rotation of each join
 \end{figure}
 
 \subparagraph{Inverse Kinematics}
-\label{subpar:inverse_kinematics}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:kinematics:inverse_kinematics}
 
 Inverse kinematics (IK) simplifies the animation process by allowing the animator to position the end effector (e.g., a hand or foot) directly, and the software automatically calculates the necessary joint rotations to achieve this position. This technique is particularly useful for tasks like making a character’s hand reach a specific point or ensuring that feet remain planted on the ground. IK is widely used in character animation to create natural and realistic movements more efficiently than FK.
 
@@ -383,17 +378,17 @@ Figure~\ref{fig:inverse_kinematics_example} illustrates the inverse kinematics p
 \end{figure}
 
 \paragraph{Procedural Techniques}
-\label{par:procedural_techniques}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:procedural_techniques}
 
 Procedural animation techniques use algorithms and rules to generate motion automatically, rather than relying on manual keyframing or motion capture data. These techniques are particularly useful for creating dynamic and responsive animations that adapt to changing conditions or user interactions. Procedural animation can be applied to various aspects of avatar animation, including locomotion, facial expressions, and secondary motion.
 
 \subparagraph{Data-Driven Constraint-Based Motion Editing}
-\label{subpar:data_driven_constraint_based_motion_editing}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:procedural_techniques:data_driven_constraint_based_motion_editing}
 
 Data-driven constraint-based motion editing\cite{inbook} combines model-based and goal-directed techniques to enhance human motion animation. The system incorporates Prioritized Inverse Kinematics (PIK) to solve for joint movements that meet user-defined constraints. Animators can use key-frame and key-trajectory constraints to specify end-effector positions and paths, simplifying the animation process. The optimization step ensures smooth, continuous motions, avoiding common artifacts and preserving the natural flow of movement.
 
 \subparagraph{Deep Learning based Techniques}
-\label{subpar:deep_learning_based_techniques}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:procedural_techniques:deep_learning_based_techniques}
 
 Deep learning-based techniques have shown significant promise in procedural animation, particularly in the generation of realistic and dynamic movements. Neural networks can be trained on large datasets of motion data to learn complex patterns and generate new animations. For example, diffusion models have been used to synthesize human-like motion sequences with high fidelity and diversity from text prompts. Treating character animation as a cross-modal translation task where descriptive sentences serve as inputs to generate corresponding avatar animations. These techniques, however, require large amounts of data and computational resources to train effectively. Figure~\ref{fig:deep_learning_synthesis} shows an example of deep learning-based synthesis.
 
@@ -403,10 +398,10 @@ Deep learning-based techniques have shown significant promise in procedural anim
   \label{fig:deep_learning_synthesis} 
 \end{figure}
 
-\paragraph{Hybrid Techniques}
-\label{par:hybrid_techniques}
+\paragraph{Hybrid Workflows}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:hybrid_workflows}
 
-Hybrid animation techniques combine elements of manual keyframing, mocap retargeting, and procedural techniques to leverage the strengths of each method. By integrating these approaches, animators can achieve a balance between control, efficiency, and realism. For instance, an animator might use mocap data as a base and then refine specific movements with manual keyframes to enhance expressiveness. Additionally, procedural techniques can be applied to automate repetitive tasks or to ensure that certain constraints are met dynamically during the animation process. Hybrid methods offer a flexible and powerful workflow, allowing for the creation of complex animations that are both realistic and tailored to the specific needs of a project. Figure~\ref{fig:cascadeur} shows an example of a hybrid animation tool, Cascadeur.
+Hybrid worflows combine elements of manual keyframing, mocap retargeting, and procedural techniques to leverage the strengths of each method. By integrating these approaches, animators can achieve a balance between control, efficiency, and realism. For instance, an animator might use mocap data as a base and then refine specific movements with manual keyframes to enhance expressiveness. Additionally, procedural techniques can be applied to automate repetitive tasks or to ensure that certain constraints are met dynamically during the animation process. Hybrid methods offer a flexible and powerful workflow, allowing for the creation of complex animations that are both realistic and tailored to the specific needs of a project. Figure~\ref{fig:cascadeur} shows an example of a hybrid animation tool, Cascadeur.
 
 \begin{figure} 
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/cascadeur.png} 
@@ -415,7 +410,7 @@ Hybrid animation techniques combine elements of manual keyframing, mocap retarge
 \end{figure}
 
 \paragraph{Uncanny Valley}
-\label{par:uncanny_valley}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:uncanny_valley}
 
 The Uncanny Valley is a concept in robotics and 3D animation that describes the discomfort or eeriness people feel when they encounter a humanoid figure that is very close to, but not quite, human-like. This phenomenon was first identified by roboticist Masahiro Mori in 1970.
 
@@ -441,10 +436,13 @@ The factors contributing to the Uncanny Valley effect often include:
 
 Understanding and mitigating the Uncanny Valley effect is crucial for animators and developers aiming to create realistic and relatable avatars. One way to avoid the Uncanny Valley could be to use stylized avatars, which are intentionally designed to deviate from realism and have a unique aesthetic. Another approach is to keyframe more information in the animations themselves, ensuring that movements and expressions are as natural and lifelike as possible.
 
+\subsubsection{Sign Language Synthesis Systems}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems}
+
 In the context of sign language synthesis, several advanced systems have been developed to automate the generation and animation of sign language.
 
-\subsection{JASigning}
-\label{subsec:jasigning}
+\paragraph{JASigning}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:jasigning}
 
 JASigning is an advanced sign language avatar system developed within the scope of the ViSiCAST and eSIGN projects. It enables the automatic generation and animation of sign language through a predefined set of gestures and animations. These gestures can be dynamically combined to form coherent sign language sentences. JASigning is designed to support multiple sign languages and integrates with text-to-sign translation systems. The system uses HamNoSys in the form of an XML representation to describe signs and their components. JASigning has been used in various applications, including educational tools, communication aids, and virtual avatars.
 
@@ -456,48 +454,50 @@ Figure~\ref{fig:jasigning} shows an example of the JASigning system in action.
   \label{fig:jasigning} 
 \end{figure}
 
-\subsection{EMBR}
-\label{subsec:embr}
+\paragraph{EMBR}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:embr}
 
 Unlike the previous models, EMBR (Embodied Agents Behaviour Realizer) Script is a scripting language used to control virtual characters in general and is not restricted to sign language avatars. However, EMBRScript allows for animation specification through a sequence of key poses, each defined at specific time points for a precise specification of body movements, facial expressions, and other actions. This also makes it usable to describe signs with synthesis using an avatar in mind.
 
 EMBR is a real-time animation engine engineered to produce expressive gestures and sign language for virtual avatars. EMBR facilitates precise control over avatar movements, encompassing hand shapes, facial expressions, and body postures critical for accurate sign language depiction. The framework supports scripting and integrates with various input modalities, such as text or motion capture data, to generate realistic and contextually appropriate sign language animations. EMBR's flexibility and adaptability make it a valuable tool in research settings, particularly for studies focused on the nuances of non-verbal communication and the development of nuanced, context-sensitive gestures.
 
-\subsection{Synthesis based on Generative Models}
-\label{subsec:synthesis_based_on_generative_models}
+\paragraph{Synthesis based on Generative Models}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models}
 
 Generative models have shown promise in SL synthesis by learning the underlying structure of sign language data and generating new animations. These models can be trained on large datasets of sign language videos to capture the complex relationships between linguistic input and SL output. Some popular generative models used in SL synthesis include:
 
-\subsubsection{Gloss based}
-\label{subsubsec:gloss_based}
+\subparagraph{Gloss based}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models:gloss_based}
 
 Sign language animation from text focuses on generating realistic sign language videos from written text. The process involves text-to-gloss conversion, gloss-to-pose generation, and pose-to-sign rendering. Recent approaches utilize neural networks and generative models to enhance animation fluidity and realism. One method uses dictionary examples and a codebook of signs to create continuous sign language sequences, incorporating both manual and non-manual features. However, challenges remain in annotating the data and training the models effectively, particularly in the production of natural hand and facial movements.
 
-\subsubsection{SignAvatars}
-\label{subsubsec:signavatars}
+\subparagraph{SignAvatars}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models:signavatars}
 
 The SignAvatars~\cite{yu2023signavatars} dataset introduces a large-scale, multi-prompt 3D sign language motion dataset with 70,000 videos and 8.34 million frames from 153 signers. It includes isolated and continuous signs, annotated with 3D meshes and biomechanically-valid poses. The dataset supports tasks such as 3D sign language recognition and production from text scripts, individual words, and HamNoSys notation. A novel annotation pipeline ensures accurate 3D holistic annotations. Evaluation metrics indicate significant improvements in generating natural and consistent 3D sign language animations from diverse textual inputs using models like Sign-VQVAE.
 
-\subsubsection{Sgnify}
-\label{subsubsec:sgnify}
+\subparagraph{Sgnify}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models:sgnify}
 
 Recent advancements in 3D reconstruction from sign language (SL) videos~\cite{Forte_2023_CVPR}, focusing on isolated signs. SGNify leverages linguistic priors, such as hand-pose symmetry and invariance, to enhance the accuracy of hand-pose estimation in challenging SL videos. The approach outperforms existing 3D body-pose estimation methods, particularly in handling self-occlusions and motion blur. Quantitative and perceptual evaluations demonstrate that SGNify's reconstructions are more natural and comprehensible than previous methods, achieving sign recognition rates comparable to original video performances.
 
-\subsection{AZee based}
-\label{subsec:azee_based}
+\subsubsection{AZee based}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based}
 
-\subsubsection{Paula}
-\label{subsubsec:paula}
+This subsection explores AZee-based sign language synthesis systems, highlighting advancements in avatar animation using both hierarchical modeling and low-level synthesis techniques.
+
+\paragraph{Paula}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:paula}
 
 The system extends the Paula avatar using AZee descriptions. AZee encodes both form and functional linguistic aspects, while Paula ensures smooth human motion. The approach leverages a hierarchical model to specify movements using larger linguistic structures, improving naturalness. Key innovations include embedding geometric constraints and utilizing procedural techniques for dynamic, realistic animations. Proform placements are optimized by factoring semantic functions and applying common forms across multiple productions. This method addresses limitations in previous models, such as the lack of supporting torso motion and dynamic differences, leading to more fluid and expressive sign language animations.
 
-\subsubsection{Low-level synthesizer for AZee}
-\label{subsubsec:low_level_synthesizer_for_azee}
+\paragraph{Low-level synthesizer for AZee}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee}
 
 This work presents a bottom-up (or low-level generation using constraint optimization) synthesis solution for the AZee system using off-the-shelf IK solvers. The approach (discussed in detail in~\ref{ch:multi_track}) generates procedurally computed animations from AZee's symbolic descriptions, leveraging Blender's 3D editor and iTaSC solver. This method handles constraints as IK problems, translating skeletal poses into keyframes. Despite inherently robotic motion, it serves as a low-level fallback for the existing top-down system. Preliminary results show effective static pose generation and a trade-off between precision and computation time, enhancing the flexibility of sign language avatar systems by integrating procedural synthesis with predefined animations.
 
 \section{Conclusion}
-\label{sec:conclusion}
+\label{ch:background_work:conclusion}
 
 To summarize:
 

@@ -31,7 +31,8 @@
 \definecolor{B5}{RGB}{64,183,105}
 \definecolor{C5}{RGB}{140,198,62}
 \definecolor{D5}{RGB}{213,223,61}
-
+\usepackage{pgfplots}
+\usepackage{alphabeta}
 \usepackage{mdframed}
 \usepackage{multirow} 
 \usepackage{multicol} 
@@ -43,8 +44,11 @@
 \usepackage{geometry}
 \usepackage{titlesec}
 \usepackage{hyperref}
-\usepackage{pgfplots}
 \usepackage{textgreek}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{subcaption}
+\usepackage{subfiles}
 \setlength{\emergencystretch}{3em}
 \hypersetup{
     colorlinks=true,
@@ -52,15 +56,9 @@
     urlcolor=purple
 }
 
-\pagestyle{plain} 
+\pagestyle{plain}
 
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-
-\usepackage{subcaption}
-\usepackage{subfiles}
-
-\pgfplotsset{compat=1.18}
+\pgfplotsset{compat=1.17}
 
 \makeglossaries
 
