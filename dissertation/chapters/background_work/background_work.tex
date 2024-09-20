@@ -94,6 +94,192 @@ The AZee interpreter can parse this description recursively, generating a \emph{
   \label{fig:azee_score_example}
 \end{figure}
 
+
+todo fix this
+
+
+Both multi-track and non-linear editing have been widely used in various fields, including film production, video editing(figure~\ref{fig:video_edit}), and animation (figure~\ref{fig:nle_blender}). 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/video_editing.png}
+    \caption{Video editing software interfaces with multiple tracks for editing video and audio clips.}
+    \label{fig:video_edit}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/nle_blender.png}
+    \caption{Blender's non-linear editor interface showing multiple tracks for editing animation clips.}
+    \label{fig:nle_blender}
+\end{figure}
+
+However, their appliations in both procedural animation and sign language synthesis are limited.
+
+
+todo fix this
+
+\section{Related Work}
+\label{ch:pose_correction:related_work}
+
+In this section, we discuss the progression of techniques in generating natural poses for character animation, starting from classical IK methods and moving to modern data-driven approaches. We conclude with the use of pose priors in correcting poses for more realistic outcomes, as used in our sign language animation system.
+
+\subsection{Introduction to Inverse Kinematics (IK)}
+\label{ch:pose_correction:related_work:intro_ik}
+Inverse Kinematics (IK) is a well-established technique in character animation that computes joint angles to achieve a desired end-effector position. It has found widespread use, but limitations exist, particularly in dynamic and realistic animation contexts.
+
+\subsection{Classical IK Methods and Their Limitations}
+\label{ch:pose_correction:related_work:classical_ik}
+Classical IK methods, though foundational, face several challenges in handling complex constraints and delivering natural poses in all situations.
+
+\paragraph{Jacobian-Based Methods} Jacobian-based approaches~\cite{4648032} involve calculating the Jacobian matrix to linearize the relationship between joint angles and end-effector positions. By iteratively adjusting joint angles, these methods reduce the error between the current and target positions. Despite their robustness in real-time applications, they suffer from singularities, where solutions become unstable or unrealistic. An example is illustrated in Figure~\ref{fig:jacobian_based}.
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/pose_correction/images/jacobian_based.png}
+    \caption{Jacobian based IK solving (approximation of the first derivative)}
+    \label{fig:jacobian_based}
+\end{figure}
+
+\paragraph{Cyclic Coordinate Descent (CCD)} CCD~\cite{kenwright2012inverse} simplifies the IK problem by adjusting one joint at a time, minimizing the distance between the end-effector and the target. CCD is computationally efficient and easy to implement, which makes it popular in game engines. However, its greedy approach can lead to suboptimal solutions in more constrained or biomechanically complex setups, as shown in Figure~\ref{fig:ccdik}.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/pose_correction/images/ccdik.png}
+  \caption{Cyclic Coordinate Descent (CCD) IK solving (changes the rotation of a joint, one at a time)}
+  \label{fig:ccdik}
+\end{figure}
+
+\paragraph{Forward And Backward Reaching Inverse Kinematics (FABRIK)} FABRIK~\cite{aristidou2011fabrik} diverges from other methods by focusing on joint positions rather than angles. It works by iteratively adjusting joint positions in two passes—first from the end-effector to the root, and then from the root to the end-effector. FABRIK is known for its stability and simplicity, particularly in scenarios requiring natural joint configurations, as depicted in Figure~\ref{fig:fabrik}.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/pose_correction/images/fabrik.png}
+  \caption{Forward And Backward Reaching Inverse Kinematics (FABRIK) solving (updates coordinates in two passes)}
+  \label{fig:fabrik}
+\end{figure}
+
+\paragraph{Limitations of Classical Methods} These classical IK techniques, while computationally efficient, are prone to singularities, have limited support for complex joint constraints, and often result in unnatural or biomechanically unrealistic poses. As demonstrated in Figure~\ref{fig:problems_classical}, they struggle with overlapping chains and handling multiple end-effectors.
+
+\begin{figure}
+  \centering \includegraphics[width = 5in]{chapters/pose_correction/images/problems_classical.png}
+  \caption{Problems with classical IK methods}
+  \label{fig:problems_classical}
+\end{figure}
+
+\subsection{Improved Data-Driven IK Approaches}
+\label{ch:pose_correction:related_work:data_driven_ik}
+To address the shortcomings of classical IK methods, data-driven approaches have emerged, leveraging large datasets and machine learning to produce more flexible and realistic animations.
+
+\paragraph{Motion Matching} Motion Matching represents a significant shift from traditional techniques by dynamically selecting the most appropriate pose from a large database of motion capture (mocap) data based on user inputs and contextual parameters. Ubisoft's \emph{For Honor} utilized this technique to create more fluid and responsive character animations, as shown in Figure~\ref{fig:for_honor}. Motion Matching's ability to break down animations into fine-grained clips allows for seamless transitions and natural movements.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/pose_correction/images/for_honor.png}
+  \caption{Motion Matching in Ubisoft’s \emph{For Honor}}
+  \label{fig:for_honor}
+\end{figure}
+
+\paragraph{Phase-Functioned Neural Networks (PFNN)} PFNN~\cite{10.1145/3072959.3073663} extends the principles of motion matching by incorporating phase information into the neural network’s weights, allowing the network to generate animations that align with the cyclical nature of bipedal movement (walking, running). Unlike traditional methods that blend animation clips, PFNN encodes the entire animation process within the neural network, providing more control and flexibility, as illustrated in Figure~\ref{fig:pfnn}.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/pose_correction/images/pfnn.png}
+  \caption{Phase-Functioned Neural Networks (PFNN) for motion matching}
+  \label{fig:pfnn}
+\end{figure}
+
+\paragraph{Style-Based Inverse Kinematics (Style IK)} Style IK~\cite{grochow2004style} leverages machine learning to represent poses in a latent space using Scaled Gaussian Process Latent Variable Models (SGPLVM). By learning the distribution of poses, Style IK generates stylized animations that adhere to aesthetic or functional constraints, making it especially useful in scenarios where mocap data is unavailable or infeasible. Figure~\ref{fig:style_ik} shows how poses are mapped in latent space for Style IK.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/pose_correction/images/style_ik.png}
+  \caption{Pose in latent space using Style IK}
+  \label{fig:style_ik}
+\end{figure}
+
+While these data-driven methods resolve many issues inherent to classical IK, they bring challenges like the need for large amounts of training data and increased computational demands, particularly in real-time applications.
+
+\subsection{Latent Space Representations for Pose Generation}
+\label{ch:pose_correction:related_work:latent_space}
+Latent space representations have become crucial in reducing the complexity of pose and motion data, allowing for more efficient and realistic pose generation and manipulation.
+
+\paragraph{Variational Autoencoders (VAEs) and SMPLify-X} VAEs~\cite{kingma2013auto}, such as those used in SMPLify-X~\cite{pavlakos2019expressive}, learn a probabilistic model of human poses. They can generate and manipulate poses in a lower-dimensional latent space, which can then be sampled to meet specific constraints such as end-effector positions. SMPLify-X is particularly effective in estimating 3D poses from 2D images, as illustrated in Figure~\ref{fig:simplifyx}.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/pose_correction/images/simplifyx.png}
+  \caption{SMPLify-X generating poses from latent space}
+  \label{fig:simplifyx}
+\end{figure}
+
+\paragraph{VPoser for Pose Correction} VPoser~\cite{pavlakos2019expressive}, a specific implementation of a VAE, encodes human poses into a low-dimensional latent space. This latent space helps regularize pose generation, ensuring that generated poses are realistic and meet specific biomechanical criteria. VPoser plays a critical role in optimization processes by constraining pose generation to physically plausible configurations, as seen in Figure~\ref{fig:vposer}.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/pose_correction/images/vposer.png}
+  \caption{Pose regularization using VPoser in a latent space}
+  \label{fig:vposer}
+\end{figure}
+
+\subsection{Pose Priors and Corrective Methods}
+\label{ch:pose_correction:related_work:pose_priors}
+Pose priors provide a mechanism to generate plausible poses based on learned distributions from large datasets. These pose priors ensure that the generated poses are not only valid but also contextually appropriate.
+
+\paragraph{VPoser for Pose Correction in Sign Language Animation} In our system, we utilize VPoser to correct the poses generated by the sign language animation system. By training VPoser on a comprehensive dataset of human poses, we can snap the initial pose to the closest valid pose in the latent space, thereby ensuring realism and accuracy in sign language gestures. This method ensures that the final poses are biomechanically correct and visually appropriate.
+
+\subsection{Conclusion}
+\label{ch:pose_correction:related_work:conclusion}
+This review has traced the development of IK techniques, from classical methods to data-driven approaches that leverage latent spaces. The incorporation of pose priors, particularly through VPoser, offers a robust solution for pose correction in our sign language animation system, allowing for natural and contextually appropriate movements.
+
+
+todo fix this
+
+\subsection{Existing low-level AZee synthesizor}
+\label{ch:multi_track:related_work:old_azee_synthesizor}
+
+Although AZee is multi-track by nature (where the lingusit has the ability to crate the track), the low-level AZee synthesizor is based on a flattened \emph{AnimatedScore} representation that flattenes each track made by the linguist. This flattening layer loses the multi-track information and the dynamics of the original AZee description. 
+
+For example, consider the following low-level AZee description for \emph{:cupboard} when compiled with the AZee interpreter generates an AZee \emph{SyncedScore} using the algorithm~\ref{alg:azee_recursion}~\cite{filhol2017synthesizing} that is show in in figure~\ref{fig:azee_synced_score}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_synced_score.png}
+    \caption{AZee Synced Score generated from the low-level AZee description.}
+    \label{fig:azee_synced_score}
+\end{figure}
+
+Figure~\ref{fig:azee_flattened_score} shows the flattened version of this AZee Synced Score, where all the tracks are merged into a single track. This flattening is done by collecting all the constraints for each frame and applying them to the corresponding bone rotations during animation.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_flattened_score.png}
+    \caption{Flattened version of the AZee Synced Score.}
+    \label{fig:azee_flattened_score}
+\end{figure}
+
+This approach is also inextensible to be used with pre-animated motion data blocks for larger sequences since the flattened representation does not contain the original location of the corresponding animation block on the timeline. 
+
+\subsection{Paula}
+\label{ch:multi_track:related_work:paula}
+
+On the contrary, a multi-track approach to sign language synthesis has already been done by~\cite{filhol2017synthesizing}. Paula is a multi-track sign language synthesis system that strictly uses pre-recorded motion data. The system is based on a multi-track timeline where each track is created by the artist(or can be based on the AZee description). The Paula interface is shown in figure~\ref{fig:paula}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/paula.png}
+    \caption{Paula interface showing a multi-track timeline for sign language synthesis.}
+    \label{fig:paula}
+\end{figure}
+
+However, Paula doesn't support low-level synthesis from AZee descriptions. This poses a challenge in scalability since an artist is always needed to create the building blocks of the animation. Although, the interface is tailored specifically for creating sign language content, a human intervention is still needed. Another drawback of Paula is that it is based on a single avatar model, which limits the diversity of the animations that can be created.
+
+\subsection{Outside Sign Language Synthesis}
+\label{ch:multi_track:related_work:other_multi_track}
+
+The concept of multi-track timeline control for text-driven 3D human motion generation was also explored by~\cite{petrovich24stmc}. The work introduces a novel way to address the limitations of previous methods that lacked fine-grained control over action composition and timing. This approach allows users to define multiple textual prompts within overlapping temporal intervals, enabling precise control over complex actions (figure~\ref{fig:multi_track_other}). The proposed Spatio-Temporal Motion Collage (STMC) method, which operates at test-time, integrates with pre-trained motion diffusion models to generate realistic motions that adhere to the specified timeline. However, it is not for use in sign language synthesis, where precise and context-sensitive hand and body gestures are required, as it relies heavily on models not specifically designed for such detailed tasks.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/multi_track_other.png}
+    \caption{Multi-track timeline control for text-driven 3D human motion generation.}
+    \label{fig:multi_track_other}
+\end{figure}
+
+todo fix this
+
 A \emph{Score} in AZee can be of various types,
 
 \begin{itemize}

@@ -3,94 +3,16 @@
 \chapter{Multi-Track and Non-Linear Synthesis}
 \label{ch:multi_track}
 
-Human movement is a symphony of coordinated actions, where each part of the body plays a distinct role, yet all work together in harmony to create a seamless expression of intent. The essence of this coordination lies in the ability to perform multiple actions simultaneously or in carefully timed sequences, with each movement contributing to the larger tapestry of physical expression. Traditional approaches to understanding or replicating this complexity often fall short, reducing human motion to a linear series of bone rotations that lack the depth and nuance of true human movement.
+Human movement is a symphony of coordinated actions, where each part of the body plays a distinct role, yet all work together in harmony to create a seamless expression of intent. The essence of this coordination lies in the ability to perform multiple actions simultaneously or in carefully timed sequences, with each movement contributing to the larger tapestry of physical expression. Traditional approaches to animating human movement often oversimplify this complexity, reducing it to linear bone rotations. In contrast, multi-track control offers a more nuanced perspective by recognizing the layered, interconnected nature of gestures and postures, reflecting the true complexity of human movement.
 
-The concept of multi-track control offers a different perspective—one that acknowledges the layered nature of our physical existence. It recognizes that our movements are not isolated but interwoven, with each gesture or posture influencing and being influenced by others. By allowing multiple threads of action to unfold concurrently or in precise intervals, multi-track control mirrors the natural rhythm and flow of life. It captures the interplay between stillness and motion, the balance of tension and release, and the silent dialogue between different parts of the body as they move together yet independently. In doing so, it brings us closer to understanding the profound complexity of human movement, honoring the subtlety and grace inherent in every action.
+In the previous chapter, we discussed the creation of an avatar and the generation of signs using AZee \emph{Constraint Scores}. This chapter shifts focus to the animation of the avatar using the AZee \emph{Synced Score} structure. As discussed in section \ref{ch:background_work:sign_language_descriptions:azee} of chapter \ref{ch:background_work}, the AZee Synced Score is a recursive representation of the AZee description, where each block corresponds to a different \emph{lingusitic} aspect of the sign. We propose a novel approach to sign language synthesis using multi-track and non-linear editing techniques. By preserving the dynamics of individual animation blocks, this method enhances reusability, accuracy, and flexibility in the synthesis process.
 
-Similarly, non-linearity in movement reflects the dynamic and adaptive nature of human actions. Just as life rarely follows a straightforward path, our movements often involve layers of simultaneous actions that interact in complex ways. In fields like video editing or film production, non-linear control allows creators to work with multiple layers of footage, sounds, and effects, enabling them to craft scenes where various elements unfold together, contributing to a richer and more cohesive narrative.
-
-In the realm of sign language, the non-linear and multi-track nature of human movement is particularly evident. Sign language involves a combination of simultaneous gestures, facial expressions, and body movements, all working together to convey meaning. By adopting a non-linear, multi-track approach, we can more accurately capture the intricate coordination involved in signing, where gestures and expressions occur in parallel, influencing and overlapping with each other. This approach respects the complexity and interconnectivity inherent in sign language, allowing for a more nuanced and realistic portrayal of its dynamic and expressive nature. In doing so, it brings us closer to truly understanding and representing the fluidity and richness of sign language as it is naturally used, honoring its depth and complexity as a form of human communication.
-
-This chapter aims to present a novel approach to sign language synthesis using multi-track and non-linear editing techniques. It showcases improvements in animation quality and flexibility, demonstrating how these techniques preserve the dynamics of individual animation blocks and enhance procedural generation capabilities.
-
-The content of this chapter is structured as follows: Section~\ref{ch:multi_track:related_work} provides an overview of related work in the field of multi-track and non-linear editing, highlighting existing approaches and their applications. Section~\ref{ch:multi_track:score_to_timeline} introduces the concept of converting an AZee Synced Score into a multi-track timeline, outlining the process and benefits of this approach. Section~\ref{ch:multi_track:azee_nl} explores the implications of non-linear synthesis in AZee, discussing how the order of block evaluation can affect the final animation. Section~\ref{ch:multi_track:resolve_conflitcs} addresses the issue of resolving conflicts between blocks in the multi-track timeline, presenting rules and strategies for ensuring smooth and accurate animation. Section~\ref{ch:multi_track:second_pass} describes the second pass evaluation process, focusing on cyclic block sets, transpath blocks, and hold blocks. Section~\ref{ch:multi_track:preanim_blocks} discusses the integration of pre-animated blocks into the multi-track timeline, highlighting the benefits and challenges of this approach. Finally, Section~\ref{ch:multi_track:implem_results} presents the implementation details and results of the multi-track and non-linear synthesis approach, showcasing the improvements in animation quality and flexibility achieved through this method.
-
-\section{Related Work}
-\label{ch:multi_track:related_work}
-
-Both multi-track and non-linear editing have been widely used in various fields, including film production, video editing(figure~\ref{fig:video_edit}), and animation (figure~\ref{fig:nle_blender}). 
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/video_editing.png}
-    \caption{Video editing software interfaces with multiple tracks for editing video and audio clips.}
-    \label{fig:video_edit}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/nle_blender.png}
-    \caption{Blender's non-linear editor interface showing multiple tracks for editing animation clips.}
-    \label{fig:nle_blender}
-\end{figure}
-
-However, their appliations in both procedural animation and sign language synthesis are limited.
-
-\subsection{Existing low-level AZee synthesizor}
-\label{ch:multi_track:related_work:old_azee_synthesizor}
-
-Although AZee is multi-track by nature (where the lingusit has the ability to crate the track), the low-level AZee synthesizor is based on a flattened \emph{AnimatedScore} representation that flattenes each track made by the linguist. This flattening layer loses the multi-track information and the dynamics of the original AZee description. 
-
-For example, consider the following low-level AZee description for \emph{:cupboard} when compiled with the AZee interpreter generates an AZee \emph{SyncedScore} using the algorithm~\ref{alg:azee_recursion}~\cite{filhol2017synthesizing} that is show in in figure~\ref{fig:azee_synced_score}.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_synced_score.png}
-    \caption{AZee Synced Score generated from the low-level AZee description.}
-    \label{fig:azee_synced_score}
-\end{figure}
-
-Figure~\ref{fig:azee_flattened_score} shows the flattened version of this AZee Synced Score, where all the tracks are merged into a single track. This flattening is done by collecting all the constraints for each frame and applying them to the corresponding bone rotations during animation.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_flattened_score.png}
-    \caption{Flattened version of the AZee Synced Score.}
-    \label{fig:azee_flattened_score}
-\end{figure}
-
-This approach is also inextensible to be used with pre-animated motion data blocks for larger sequences since the flattened representation does not contain the original location of the corresponding animation block on the timeline. 
-
-\subsection{Paula}
-\label{ch:multi_track:related_work:paula}
-
-On the contrary, a multi-track approach to sign language synthesis has already been done by~\cite{filhol2017synthesizing}. Paula is a multi-track sign language synthesis system that strictly uses pre-recorded motion data. The system is based on a multi-track timeline where each track is created by the artist(or can be based on the AZee description). The Paula interface is shown in figure~\ref{fig:paula}.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/paula.png}
-    \caption{Paula interface showing a multi-track timeline for sign language synthesis.}
-    \label{fig:paula}
-\end{figure}
-
-However, Paula doesn't support low-level synthesis from AZee descriptions. This poses a challenge in scalability since an artist is always needed to create the building blocks of the animation. Although, the interface is tailored specifically for creating sign language content, a human intervention is still needed. Another drawback of Paula is that it is based on a single avatar model, which limits the diversity of the animations that can be created.
-
-\subsection{Outside Sign Language Synthesis}
-\label{ch:multi_track:related_work:other_multi_track}
-
-The concept of multi-track timeline control for text-driven 3D human motion generation was also explored by~\cite{petrovich24stmc}. The work introduces a novel way to address the limitations of previous methods that lacked fine-grained control over action composition and timing. This approach allows users to define multiple textual prompts within overlapping temporal intervals, enabling precise control over complex actions (figure~\ref{fig:multi_track_other}). The proposed Spatio-Temporal Motion Collage (STMC) method, which operates at test-time, integrates with pre-trained motion diffusion models to generate realistic motions that adhere to the specified timeline. However, it is not for use in sign language synthesis, where precise and context-sensitive hand and body gestures are required, as it relies heavily on models not specifically designed for such detailed tasks.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/multi_track_other.png}
-    \caption{Multi-track timeline control for text-driven 3D human motion generation.}
-    \label{fig:multi_track_other}
-\end{figure}
+The content of this chapter is structured as follows. First, Section~\ref{ch:multi_track:related_work} reviews related work in the field of multi-track and non-linear editing, with a focus on their applications in animation and sign language synthesis. Section~\ref{ch:multi_track:score_to_timeline} introduces the process of converting an AZee Synced Score into a multi-track timeline, outlining the benefits of this representation. Section~\ref{ch:multi_track:azee_nl} explores the implications of non-linear synthesis within the AZee framework, particularly how block evaluation order influences the final animation. In Section~\ref{ch:multi_track:resolve_conflitcs}, we discuss strategies for resolving conflicts between overlapping animation blocks to ensure smooth and accurate motion. Section~\ref{ch:multi_track:second_pass} details the second-pass evaluation process, focusing on cyclic block sets, transpath blocks, and hold blocks to refine the animation. Section~\ref{ch:multi_track:preanim_blocks} addresses the integration of pre-animated blocks into the multi-track timeline, emphasizing both the benefits and challenges of this approach. Finally, Section~\ref{ch:multi_track:implem_results} presents the implementation and results of our multi-track and non-linear synthesis approach, demonstrating improvements in animation quality, flexibility, and procedural generation.
 
 \section{AZee Synced Score to Multi-Track Timeline}
 \label{ch:multi_track:score_to_timeline}
 
-One of the areas which this work aims to address is the direct creation of a multi-track animation timeline from a multi-track AZee Synced Score. This approach allows for the preservation of the original multi-track information and dynamics present in the AZee description. The algorithm~\ref{alg:azee_timeline} shows how the AZee Synced Score is converted into a multi-track timeline.
+One of the areas which this work aims to address is the direct creation of a multi-track animation timeline from an AZee Synced Score structure. This approach allows for the preservation of the original multi-track information and dynamics present in the AZee description. The algorithm~\ref{alg:azee_timeline} shows how the AZee Synced Score is converted into a multi-track timeline.
 
 \begin{algorithm}
     \caption{AZee Recursion Algorithm (Simplified)}
@@ -136,7 +58,9 @@ The figure~\ref{fig:azee_timeline} shows the multi-track timeline generation for
 \section{AZee and Non-Linearity}
 \label{ch:multi_track:azee_nl}
 
-The order of synthesis of the blocks in the multi-track timeline is crucial for avoiding conflicts and ensuring the correct execution of constraints. Thus, an action which happens later in the timeline might be synthesized first. This makes the synthesis non-linear. Figure~\ref{fig:example_azee_non_linear} shows an example of non-linear synthesis.
+The order of synthesis of the blocks in the multi-track timeline is crucial for avoiding conflicts and ensuring the correct execution of constraints. Due to dependencies, an action which happens later in the timeline might be synthesized first. This makes the synthesis non-linear. 
+
+For example, the \emph{transpath} block TRANS\_H in the sign \emph{armoire} is evaluated after the block such as HANDS\_APART for the sign \emph{armoire}. This is because thsi constraint requires resolution of both initial and final position for the hand IK chain. Figure~\ref{fig:example_azee_non_linear} non-linear synthesis for the sign \emph{armoire}.
 
 \begin{figure}[h]
     \centering
@@ -148,19 +72,12 @@ The order of synthesis of the blocks in the multi-track timeline is crucial for 
 \section{Resolving Block Conflicts}
 \label{ch:multi_track:resolve_conflitcs}
 
-Since the blocks in the multi-track timeline can have constraints that affect the same body parts, conflicts can arise. These conflicts need to be resolved to ensure the correct execution of the constraints. The following rules are used to resolve conflicts:
+Since the blocks in the multi-track timeline can have constraints that affect the same body parts, conflicts can arise. For example, both blocks PALMS\_DOWN and HANDS\_CONTACT affect both the palm bones. Such conflicts need to be resolved to ensure the correct execution of the constraints. To resolve these conflicts, we use a dependancy graph of constraints for each block \emph{ConstraintDAG} and follow a set of rules to evaluate the blocks.
 
 \subsection{ConstraintDAG}
 \label{ch:multi_track:resolve_conflitcs:constraint_dag}
 
-The constraints in the blocks can be represented as a Directed Acyclic Graph (DAG) where the nodes are the constraints and the edges represent the dependencies between the constraints. During evaluation, a topological sort enables that no linguistic constraint is broken. The figure~\ref{fig:constraint_dag_armoire} shows example of a ConstraintDAG for the block HANDS_CONTACT for the sign\emph{cupboard}. A more complex DAG of constraints can be seen in figure~\ref{fig:constraint_dag_tree} for the sign \emph{tree}.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/constraint_dag.png}
-    \caption{ConstraintDAG for a single block discource for the sign \emph{tree}.}
-    \label{fig:constraint_dag_tree}
-\end{figure}
+The constraints in the blocks can be represented as a Directed Acyclic Graph (DAG) where the nodes are the constraints and the edges represent the dependencies between the constraints. During evaluation, a topological sort enables that no posture constraint is broken. The figure~\ref{fig:constraint_dag_armoire} shows example of a ConstraintDAG for the block HANDS_CONTACT for the sign\emph{armoire} (or cupboard) (sign \emph{armoire} in figure \ref{fig:armoire_sign}). A more complex DAG of constraints can be seen in figure~\ref{fig:constraint_dag_tree} for the sign \emph{tree} (sign tree in figure \ref{fig:tree_sign}).
 
 \begin{figure}[h]
     \centering
@@ -173,20 +90,40 @@ The constraints in the blocks can be represented as a Directed Acyclic Graph (DA
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/cupboard.jpg}
     \caption{Sign \emph{cupboard}~\cite{moody97}}
-    \label{fig:cupboard}
+    \label{fig:armoire_sign}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/constraint_dag.png}
+    \caption{ConstraintDAG for a single block discource for the sign \emph{tree}.}
+    \label{fig:constraint_dag_tree}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/tree.jpg}
+    \caption{Sign \emph{tree}}
+    \label{fig:tree_sign}
 \end{figure}
 
 \subsection{Rule 1: Timely Evaluation}
 \label{ch:multi_track:resolve_conflitcs:rule1}
-\textbf{Problem:} Overlapping blocks with different start times.
-\textbf{Solution:} Evaluate blocks chronologically to maintain logical sequence i.e. the block that starts first is evaluated first.
-\textbf{Example:} Let's consider the timeline in figure~\ref{fig:azee_timeline} for the sign \emph{cupboard} (figure~\ref{fig:cupboard}). Here, blocks PALMS\_DOWN(palms facing down) and HANDS\_APART(hands being apart) overlap(effect the same bones i.e. the hand chains). Thus, the block that starts first, PALMS\_DOWN, is evaluated first. The HANDS\_APART block is evaluated after the PALMS\_DOWN block is finished.
+
+\textbf{Problem:} Overlapping blocks with different start times. \\
+
+\textbf{Example:} Let's consider the timeline in figure~\ref{fig:azee_timeline} for the sign \emph{armoire} (figure~\ref{fig:armoire_sign}). Here, blocks PALMS\_DOWN (palms facing down) and HANDS\_APART (hands being apart) overlap(effect the same bones i.e. the hand chains at the same time).  \\
+
+\textbf{Solution:} Evaluate blocks chronologically to maintain logical sequence i.e. the block that starts first is evaluated first. Thus, the block, PALMS\_DOWN, is evaluated first before the block HANDS\_APART.  \\
 
 \subsection{Rule 2: Constraint Precedence}
 \label{ch:multi_track:resolve_conflitcs:rule2}
-\textbf{Problem:} Order of topological sorting in case of 0 constraint dependencies for a block.
-\textbf{Solution:} Follow the constraint precedence order: \emph{placement}, \emph{transpaths}, \emph{lookat}, \emph{trill}, \emph{orientation} and then \emph{morph}.
-\textbf{Example:} Let's consider the same timeline in figure~\ref{fig:azee_timeline}. The block HANDS\_CONTACT optimizes placements first, then the orienations of the palm(coming from the block PALMS\_DOWN).
+
+\textbf{Problem:} Order of topological sorting in case of no constraint dependencies for a block. \\
+
+\textbf{Example:} For same timeline in figure~\ref{fig:azee_timeline}, the block HANDS\_CONTACT containts two constraints, a placement of hands contacting each other at a small distance from the forehead, and the orientation of the wrist along the forearm. Both of these constraints \\
+
+\textbf{Solution:} Follow the constraint precedence order: \emph{placement}, \emph{transpaths}, \emph{lookat}, \emph{trill}, \emph{orientation} and then \emph{morph}The block HANDS\_CONTACT optimizes the posture for placements first, then the orienations of the palm(coming from the block PALMS\_DOWN). . \\
 
 Non-overlapping blocks can be evaluated in parallel since they won't break the posture. Example, blocks PERM and HANDS\_CONTACT is non-overlapping block set in the sign \emph{armoire}.
 
