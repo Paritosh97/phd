@@ -1,16 +1,16 @@
 \documentclass[../../main.tex]{subfiles}
 \begin{document}
-\chapter{Rigging and Layers}
-\label{ch:rigging_layers}
+\chapter{Avatar Creation and Pose Synthesis}
+\label{ch:avatar_creation_pose_synthesis}
 
 Before we can animate sign language, a well-crafted avatar is essential. This chapter explores the avatar creation process and integrates rigging layers to the pre-existing low-level AZee synthesizor. Rigging, which sets up a skeletal structure to drive a character's mesh, is critical for achieving realistic movement and deformation, particularly in capturing the nuanced expressions of sign language.
 
 The layered approach provides a sophisticated method for managing these complexities. By dividing the rigging process into distinct layers—each addressing specific aspects of movement and deformation—we gain greater control and flexibility. This strategy enables the synthesis system to function with multiple avatars and is faster and more accurate than the previous synthesizor.
 
-In this chapter, section~\ref{ch:rigging_layers:proc_rig_signing_avatars} introduces a procedural rigging system for signing avatars, which automates the rigging process and enables the generation of complex sign language gestures. Section~\ref{ch:rigging_layers:results} presents the results of the implementation, and section~\ref{ch:rigging_layers:evaluation} evaluates the performance, accuracy, and quality of the animation. Finally, section~\ref{ch:rigging_layers:conclusion} concludes the chapter and discusses future work.
+In this chapter, section~\ref{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars} introduces a procedural rigging system for signing avatars, which automates the rigging process and enables the generation of complex sign language gestures. Section~\ref{ch:avatar_creation_pose_synthesis:results} presents the results of the implementation, and section~\ref{ch:avatar_creation_pose_synthesis:evaluation} evaluates the performance, accuracy, and quality of the animation. Finally, section~\ref{ch:avatar_creation_pose_synthesis:conclusion} concludes the chapter and discusses future work.
 
 \section{Procedural Rigging for Signing Avatars}
-\label{ch:rigging_layers:proc_rig_signing_avatars}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars}
 
 Rigs have been used in computer animation for decades to control the movement and deformation of characters. Traditional rigging systems typically consist of a hierarchical structure of bones, controllers, and constraints that define how the character’s mesh deforms in response to movement.
 
@@ -26,7 +26,7 @@ A signing avatar differs significantly from the traditional systems. To begin wi
 However for procedurally animating a signing avatar, the complexity of sign language gestures and expressions poses unique challenges and necessitates a more sophisticated rigging system.
 
 \subsection{AZee Blender interface}
-\label{ch:rigging_layers:proc_rig_signing_avatars:azee_blender_interface}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:azee_blender_interface}
 
 The previous low level synthesizor for AZee~\cite{nunnari2018animating} was based on an armature in blender. These bones and sites were mapped to a \emph{SkelSpec} structure. Similarly, AZee's abstract posture was mapped to the \emph{SkelSpec} structure as well. The \emph{SkelSpec} structure thus formed as an intermediate bridge between an Animated AZee Score and the armature (figure~\ref{fig:old_interface}). 
 
@@ -47,7 +47,7 @@ Due to the complexity of the \emph{SkelSpec} structure, the animation had too mu
 \end{figure}
 
 \subsection{Sites on the Avatar}
-\label{ch:rigging_layers:proc_rig_signing_avatars:auto_site_generation}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:auto_site_generation}
 
 The AZee low-level language consists of 332 sites (appendix~\ref{appendix:sites}) which are crucial to create posture suing various types of constraints. For example, the \emph{place} constraint requires a site to be placed at a specific location on the avatar's mesh. These sites are used to define the constraints that drive the avatar's movement and deformation during animation. In the previous low level synthesizor for AZee, these sites were represented as empty objects which had to be created manually in blender. This was a tedious time consuming process process and could lead to errors (figure~\ref{fig:prev_sites}).
 
@@ -135,7 +135,7 @@ The generated sites can be visualized on the avatar in figure~\ref{fig:sites_baz
 \end{figure}
 
 \subsection{Creating the bone heirarchy}
-\label{ch:rigging_layers:proc_rig_signing_avatars:bone_layers}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers}
 
 The previous custom rig contained 57 bones (appendix~\ref{appendix:old_bone_list}). These bones were initially structured to accommodate the unique skeletal system requirements of the AZee framework, which utilizes a "rotation first" paradigm. However, since most 3D softwares operate on a "translation first" paradigm, a conversion process was necessary. This conversion involved mapping each AZee bone to two corresponding avatar bones: one for translation and one for rotation, with the rotation bone named by appending a ".rot" suffix to the original bone name (figure~\ref{fig:old_bone_structure}).
 
@@ -149,7 +149,7 @@ The previous custom rig contained 57 bones (appendix~\ref{appendix:old_bone_list
 The problem with this system however, is that it doesn't accoutn for mesh deformity. To address this, we used bone layers to organize the bones into separate groups based on their function and purpose. Bone layers are often used in 3D animation softwares to organize and manage bones in a rig. By grouping bones into separate layers, animators can control which bones are visible and selectable at any given time, making it easier to work with complex rigs and animations. The new system has 3 types of bone layers: the deformation bone layer, the inverse kinematics (IK) layer, and the forward kinematics (FK) layer.
 
 \subsection{Deformation Bone Layer}
-\label{ch:rigging_layers:proc_rig_signing_avatars:deform_bone_layer}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:deform_bone_layer}
 
 The deformation bone layer(figure~\ref{ref:deform_layer}) is the foundation of the avatar's rig. It includes the bones that directly influence the mesh of the character, controlling how the skin deforms in response to movement. This layer is responsible for the overall shape and posture of the avatar, ensuring that the character's movements are smooth and realistic.
 
@@ -163,7 +163,7 @@ In this layer, the bones are typically organized into a hierarchy, with the root
 \end{figure}
 
 \subsection{Forward Kinematics Layer}
-\label{ch:rigging_layers:proc_rig_signing_avatars:fk_layer}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:fk_layer}
 
 The forward kinematics (FK) layer (figure~\ref{fig:fk_layer}) controls the rotation of bones in a hierarchical manner, where the rotation of a parent bone affects all its children. This layer is used for broader, more deliberate movements, such as head tilts, body leans, or full-body rotations.
 
@@ -177,7 +177,7 @@ FK provides animators with a high degree of control over each individual bone in
 \end{figure}
 
 \subsection{Inverse Kinematics Layer}
-\label{ch:rigging_layers:proc_rig_signing_avatars:ik_layer}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:ik_layer}
 
 The inverse kinematics (IK) layer (figure~\ref{fig:ik_layer}) is responsible for positioning the avatar's fingers, limbs and spine by solving for the joint angles required to achieve a desired end-effector position.
 
@@ -191,7 +191,7 @@ A separate IK layer ensures that the FK configuration is not lost during constra
 \end{figure}
 
 \subsection{Constraint Based Posture Optimization}
-\label{ch:rigging_layers:proc_rig_signing_avatars:cb_posegen}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:cb_posegen}
 
 The previous low level synthesizor for AZee~\cite{nunnari2018animating} used a constraint based optimization algorithm to generate the armature pose for a frame. This algorithm~\ref{alg:old_constraint_optimization} collects all posture constaints given by the AZee Animated Score for every frame and solves for the posture by optimizing these constraints using distance functions. 
 
@@ -308,7 +308,7 @@ To omit impossible poses, the skeleton is also assigned joint limit constraints.
 \end{figure}
 
 \subsection{Animating Morphs Constraints}
-\label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints}
 
 The word "morph" comes from the Greek word \textit{morphē} (\textgreek{μορφή}), which means "form" or "shape." In modern usage, "morph" is often used as a shorthand for "morphing." In the field of computer graphics and animation, morphs are predefined shape keys that modify the mesh of the avatar independently of the skeletal structure, allowing for a fine control of the avatar's appearance that cannot be easily achieved through bone manipulation alone. This includes subtle facial expressions, muscle bulges, and other nuanced gestures that are critical for conveying meaning in sign language.
 
@@ -319,7 +319,7 @@ AZee didn't have any morph specification to control the avatar. Durign this work
 \]
 
 \subsubsection{Skeletal Morphs}
-\label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints:skel_morphs}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:skel_morphs}
 
 Skeletal morphs are a specific type of morphs that directly manipulate the skeletal structure of an avatar to produce a desired pose or motion. Unlike traditional bone-based manipulations that rely solely on inverse or forward kinematics, skeletal morphs allow for more nuanced and localized control over specific joints or groups of joints. This is particularly useful for complex hand gestures or other detailed movements that are difficult to achieve with bone rotations alone.
 
@@ -393,7 +393,7 @@ todo add diagrams in the figure
 \end{figure}
 
 \subsubsection{Facial Morphs}
-\label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints:facial_morphs}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:facial_morphs}
 
 Facial morphs in the AZee framework provide a means to represent the complex and nuanced expressions essential for conveying emotions and grammatical cues using subtle facial movements that are integral to effective communication in sign language (figure~\ref{fig:facial_example}).
 
@@ -407,7 +407,7 @@ Facial morphs in the AZee framework provide a means to represent the complex and
 Facial Morph targets are typically generated by sculpting the avatar's mesh into various shapes that correspond to different expressions or gestures. These sculpted shapes are then saved as "keys," which can be blended together during animation to produce the desired expression. This process allows for a high degree of flexibility in animation, as different keys can be combined in real-time to create a wide range of expressions. While this section offers a brief overview, the detailed modeling, implementation, and challenges associated with facial morphs are discussed extensively in Chapter~\ref{ch:facial_expressions}.
 
 \subsubsection{Integration with other layers}
-\label{ch:rigging_layers:proc_rig_signing_avatars:morph_constraints:intergation}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:intergation}
 
 The morph constraints are integrated along with the other constraints in the posture optimization algorithm. Top optimize skeletal morph constraints we calculate the FK values of the impacted bones for skeletal morphs and calculate the loss using rotation distance formula.
 
@@ -439,7 +439,7 @@ Where:
 \end{itemize}
 
 \section{Results and Implementation}
-\label{ch:rigging_layers:results}
+\label{ch:avatar_creation_pose_synthesis:results}
 
 The layered rigging system has been implemented and tested on the BAZeel (MakeHuman) avatar in blender. The final avatar with layers as well as sites can be seen in figure~\ref{fig:layers_example}.
 
@@ -451,12 +451,12 @@ The layered rigging system has been implemented and tested on the BAZeel (MakeHu
 \end{figure}
 
 \section{Evaluation}
-\label{ch:rigging_layers:evaluation}
+\label{ch:avatar_creation_pose_synthesis:evaluation}
 
 We evaluate the performance, accuracy, and quality of the animation generated by the layered rigging system.
 
 \subsection{Accuracy of the Animation}
-\label{ch:rigging_layers:evaluation:accuracy}
+\label{ch:avatar_creation_pose_synthesis:evaluation:accuracy}
 
 The accuracy of the animation can be evaluated using the Frechet gesture distance(todo frobenius distance) calculated using the generated animation and a reference animation based on the AZee body sites. Table~\ref{tab:accuracy_metrics} shows the results of the evaluation.
 
@@ -478,12 +478,12 @@ The accuracy of the animation can be evaluated using the Frechet gesture distanc
 \end{table}
 
 \subsection{Quality of Animation}
-\label{ch:rigging_layers:evaluation:quality}
+\label{ch:avatar_creation_pose_synthesis:evaluation:quality}
 
 As observed, the generated animations are robotic in nature and lack the fluidity and expressiveness of natural sign language gestures. However, everything which can be annotated using the AZee low level, can be synthesized using this technique. This provides us with a good starting block to animate sign language. Moreover, with the procedural rigging system, we can us this same system with other avatars as well.
 
 \subsection{Performance}
-\label{ch:rigging_layers:evaluation:performance}
+\label{ch:avatar_creation_pose_synthesis:evaluation:performance}
 
 The animation time compared to the previous synthesizor are shown in table~\ref{tab:faster_executions}.
 
@@ -505,7 +505,7 @@ The animation time compared to the previous synthesizor are shown in table~\ref{
 We observe that this synthesis is significantly faster because of direct integration with blender's armature. The automatic site generation and rigging also reduce the time taken to set up the avatar for animation.
 
 \section{Conclusion}
-\label{ch:rigging_layers:conclusion}
+\label{ch:avatar_creation_pose_synthesis:conclusion}
 
 todo fix this
 In this chapter, we have presented a layered rigging system for signing avatars that offers a more flexible and scalable approach to rigging and animation. By dividing the rigging process into distinct layers, each responsible for a different aspect of the avatar's movement and deformation, we can achieve a higher level of control and realism in the animations. The automatic site generation and rigging process significantly reduce the time and effort required to set up the avatar for animation, while the constraint-based posture optimization algorithm ensures that the avatar's movements are accurate and natural. The future work includes improving the quality of the animations, integrating facial expressions, and explores the use of machine learning techniques to enhance the realism and expressiveness of the synthesized discourse.
