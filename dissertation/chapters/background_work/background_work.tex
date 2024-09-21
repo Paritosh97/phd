@@ -3,31 +3,31 @@
 \chapter{Background Work}
 \label{ch:background_work}
 
-In this chapter, we delve into the foundational research areas central to this thesis. We begin by exploring how describing  forms the basis for input into an animation system. Next, we discuss avatars as a key component of SL synthesis. We then review the evolution of SL descriptions, tracing their progression from linear glosses to non-linear representations. Finally, we focus on the recent advancements in SL synthesis, discussing various techniques and their implications for the field.
+In this chapter, we delve into the foundational research areas central to this thesis. We begin by exploring how describing forms the basis for input into an animation system. Next, we discuss avatars as a key component of \gls{sl} synthesis. We then review the evolution of \gls{sl} descriptions, tracing their progression from linear glosses to non-linear representations. Finally, we focus on the recent advancements in \gls{sl} synthesis, discussing various techniques and their implications for the field.
 
-\section{Input: Sign Language Descriptions}
+\section{Input: \gls{sl} Descriptions}
 \label{ch:background_work:sign_language_descriptions}
 
-A key challenge in Sign Language synthesis lies in the description of an SL utterance itself. The description of an utterance answers essential questions such as:
+A key challenge in \gls{sl} synthesis lies in the description of an \gls{sl} \gls{utterance} itself. The description of an \gls{utterance} answers essential questions such as:
 
 \begin{itemize}
-  \item \textbf{Body Motions}: What body motions create a meaningful SL description?
+  \item \textbf{Body Motions}: What body motions create a meaningful \gls{sl} description?
   \item \textbf{Discourse Connection}: How do these motions connect to form a discourse?
   \item \textbf{Grammar and Syntax}: What are the grammatical and syntactical rules governing these signs?
   \item \textbf{Non-Manual Signals}: How can non-manual signals (such as facial expressions and body posture) be integrated with manual signs?
 \end{itemize}
 
-These descriptions then serve as an input to a Sign Language animation system. In this section, we first study the descriptive languages used to formalize SL and how they describe body motions. These descriptions are crucial as they serve as the input to the SL synthesis systems.
+In this section, we first study the descriptive languages used to formalize \gls{sl} and how they describe body motions. These descriptions are crucial as they will be the input to the \gls{sl} synthesis system.
 
 \subsection{Lexical Approaches to Creating a Discourse}
 \label{ch:background_work:sign_language_descriptions:lexical_approaches}
 
-Lexical approaches focus on individual signs and their components, such as handshapes, movements, and locations. These are essential for understanding the building blocks of SL and how signs are produced. Some popular lexical descriptions include:
+Lexical approaches focus on individual signs and their components, such as handshapes, movements, and locations. These are essential for understanding the building blocks of \gls{sl} and how signs are produced. Some popular lexical descriptions include:
 
 \subsubsection{Stokoe Notation}
 \label{ch:background_work:sign_language_descriptions:lexical_approaches:stokoe_notation}
 
-Stokoe Notation\cite{stokoe1980sign} was developed to transcribe American Sign Language (ASL). It breaks down signs into three main components: location, handshape, and movement~\ref{fig:stoeke}. It is a simple and effective notation for basic transcription but focuses primarily on the manual components of signs. Figure~\ref{fig:stokoe} illustrates the basic components of the Stokoe Notation system.
+Stokoe Notation~\cite{stokoe1980sign} was developed to transcribe \gls{asl}. It breaks down signs into three main components: location, handshape, and movement~\ref{fig:stoeke}. It is a simple and effective notation for basic transcription but focuses primarily on the manual components of signs. Figure~\ref{fig:stokoe} illustrates the basic components of the Stokoe Notation system.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/stokoe.png}
@@ -38,7 +38,7 @@ Stokoe Notation\cite{stokoe1980sign} was developed to transcribe American Sign L
 \subsubsection{SignWriting}
 \label{ch:background_work:sign_language_descriptions:lexical_approaches:signwriting}
 
-SignWriting is a writing system developed by Valerie Sutton just after DanceWriting\cite{sutton1973sutton} in the 1970s to represent sign languages visually. It was later included as a part of the MovementWriting system. It is a featural script, representing the features of signs, such as handshapes, movements, and locations, rather than sounds. SignWriting is designed to be easy to read and write, with symbols that resemble the gestures they represent. The script is written in two dimensions, with symbols arranged in a grid-like structure to capture various aspects of signs. Figure~\ref{fig:signwriting_coffee} shows an example of how the word "coffee" is represented in SignWriting. SignWriting has been used to transcribe over 40 sign languages worldwide and is recognized by the International SignWriting Alphabet (ISWA) organization.
+SignWriting is a writing system developed by Valerie Sutton just after DanceWriting~\cite{sutton1973sutton} in the 1970s to represent \gls{sl} visually. It was later included as a part of the MovementWriting system. It is a featural script, representing the features of signs, such as handshapes, movements, and locations. SignWriting is designed to be easy to read and write, with symbols that resemble the gestures they represent. The script is written in two dimensions, with symbols arranged in a grid-like structure to capture various aspects of signs. Figure~\ref{fig:signwriting_coffee} shows an example of how the word "coffee" is represented in SignWriting. SignWriting has been used to transcribe over 40 sign languages worldwide and is recognized by the \gls{iswa} organization.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/signwriting_coffee.png}
@@ -49,11 +49,11 @@ SignWriting is a writing system developed by Valerie Sutton just after DanceWrit
 \subsubsection{HamNoSys}
 \label{ch:background_work:sign_language_descriptions:lexical_approaches:hamnosys}
 
-The Hamburg Sign Language Notation System (HamNoSys) is a phonetic transcription system for documenting sign languages globally, developed in 1985 at the University of Hamburg. Unlike Stokoe's notation, which was specifically created for American Sign Language, HamNoSys aims for broader application, transcending national sign language boundaries. While Stokoe notation later adapted to other sign languages, HamNoSys was designed from the outset to accommodate the diversity found in global sign languages.
+The \gls{hamnosys} is a phonetic transcription system for documenting sign languages globally, developed in 1985 at the University of Hamburg. Unlike Stokoe's notation, which was specifically created for \gls{asl}, HamNoSys aims for broader application, transcending national \gls{hamnosys} boundaries. While Stokoe notation was later adapted to other sign languages, HamNoSys was designed from the outset to accommodate the diversity found in global sign languages.
 
 The notation system employs nearly 200 symbols, organized into five primary categories, each capturing different aspects of a sign. These categories are Handshape, Hand Orientation, Hand Location, Movement, Symmetry Operator, and Non-Manual Markers. To describe a sign, a sequence of symbols is used, with each symbol corresponding to a specific feature. The symbols are arranged in a precise order: first, Handshape, followed by Hand Orientation, Hand Location, Movement, Symmetry Operator, and finally, Non-Manual Markers. This structured sequence allows for a clear and detailed representation of the sign. Figure~\ref{fig:hamnosys_coffee} shows how the word "coffee" is represented in HamNoSys.
 
-HamNoSys offers a detailed representation of the nuanced components in an SL utterance rather than serving as a practical writing system. Its main purpose is linguistic, used primarily by linguists to analyze the specific features of individual signs. However, it has also found its applications in synthesis\cite{elliott2010towards} as well as sign detection\cite{mocialov2022unsupervised}.
+HamNoSys offers a detailed representation of the nuanced components in an \gls{sl} \gls{utterance} rather than serving as a practical writing system. Its main purpose is linguistic, used primarily by linguists to analyze the specific features of individual signs. However, it has also found its applications in synthesis~\cite{elliott2010towards} as well as sign detection~\cite{mocialov2022unsupervised}.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/hamnosys_coffee.png}
@@ -64,35 +64,62 @@ HamNoSys offers a detailed representation of the nuanced components in an SL utt
 \subsection{AZee}
 \label{ch:background_work:sign_language_descriptions:azee}
 
-Unlike previously discussed lexical approaches, the AZee model is grounded in the concept of production rules, which link specific meanings to observable forms. This model operates on the principle that the meaning of a sign can be broken down into a set of features, which are then represented through production rules. These rules guide the generation of the sign's form, encompassing aspects like handshape, movement, and location. Designed to be both flexible and extensible, the AZee model is capable of representing a broad spectrum of signs and sign languages. It is particularly advantageous for sign language synthesis, offering a systematic and structured method for describing signs and their components.
+Even though these previously discussed lexical approaches are effective in capturing the individual components of signs, they are limited in their ability to represent the dynamic and context-sensitive nature of \gls{sl} discourse. Thus, their appliations in \gls{sl} synthesis are limited. The AZee model however, is grounded in the concept of production rules, which link specific meanings to observable forms. This model operates on the principle that the meaning of a sign can be broken down into a set of features, which are then represented through production rules. These rules guide the generation of the sign's form, encompassing aspects like handshape, movement, and location. Designed to be both flexible and extensible, the AZee model is capable of representing a broad spectrum of signs and sign languages. It is particularly advantageous for \gls{sl} synthesis, offering a systematic and structured method for describing signs and their components.
 
-In this model, signs can be described using a low-level language, which directly correlates with the postures of an abstract avatar, allowing for the animation of the sign. This low-level code can also be integrated with a higher-level AZee language, enhancing its versatility. Recently, the AZee model has even been extended to function as a writing system~\cite{filhol2024software} (figure~\ref{fig:azvd}).
+\subsubsection{Representation of an \gls{utterance} in AZee}
+\label{ch:background_work:sign_language_descriptions:azee:representation}
 
-To understand how the AZee model works, consider the following example of the utterance meaning "a person aged 52". The AZee code for this utterance will be:
+The AZee model uses a hierarchical structure to represent signs, with each level capturing different aspects of the sign. At the lowest level, the model describes the physical form of the sign, such as handshapes, movements, and locations. These physical forms are then combined to create more complex signs, forming a hierarchical structure that mirrors the linguistic structure of the sign. To understand this better, consider the example of the \gls{utterance} "a person aged 52" in \gls{lsf} from the \emph{1R-JP} discourse from the 40 brèves corpus~\cite{challant2022first}. The AZee code for this \gls{utterance} would be:
 
 \begin{verbatim}
-:info-about
-	'topic
-	:person
-	'info
-	:info-about
-		'topic
-		:age
-		'info
-		:tens-units
-			'tens
-			.nb-5
-			'units
-			.nb-2
+  :info-about
+    'topic
+    :personne
+    'info
+    :info-about
+      'topic
+      :âge
+      'info
+      :tens-units
+        'tens
+        .nb-5
+        'units
+        .nb-2
 \end{verbatim}
 
-The AZee interpreter can parse this description recursively, generating a \emph{Score}(figure~\ref{fig:azee_score_example}) (inspired from musical scores) which is then used to animate the sign.
+The \gls{azee_interpreter} parses this description recursively, generating an \gls{azee_score}. An \gls{azee_score} being recursive in nature can contain other \gls{azee_score}s. The figure~\ref{fig:azee_score_example} shows the recursive structure for the \gls{utterance} "a person aged 52" using the AZee model. Each of the blocks in the figure represents an \gls{azee_score} .
 
+todo fix diagram with sync rules
 \begin{figure}[h]
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azee_score_example.png}
-  \caption{AZee visual description for a person aged 52}
+  \caption{AZee's recursive score representation for the utterance "a person aged 52"}
   \label{fig:azee_score_example}
 \end{figure}
+
+Note that the \gls{score} representation also gives us temporal inforamtion about the \gls{utterance}. Such a detailed representation is important to us as it can help in creation of a timeline and will also be the input for our \gls{sl} synthesis system. 
+
+\subsubsection{Low-Level Descriptions in AZee}
+\label{ch:background_work:sign_language_descriptions:azee:low_level}
+
+Apart from the high-level representation of an utterance as shown in figure ~\ref{fig:azee_score_example}, the AZee model also supports low-level descriptions that directly correlate with the postures of an abstract avatar. This low-level description is also a recursive \gls{azee_score} and contains a set of \gls{cstr_score}s. A \gls{cstr_score} is a score which contains a set of constraints on the posture that capture various components of the utterance, such as handshapes, movements, and locations. For example, let's consider the \gls{azee_score} for \emph{:personne} (person in \gls{lsf}, figure~\ref{fig:person_lsf}) in the above utterance. Figure ~\ref{fig:azee_score_person} shows the low-level description for this \gls{azee_score}. It contains 4 \gls{cstr_score}s, \emph{HAND\_START}, \emph{HAND\_END}, \emph{HEAD\_PATH}, and \emph{PERM}, each containing constraints on the posture of the avatar.
+
+todo create this diagram
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azee_score_person.png}
+  \caption{Low-level description for the \gls{cstr_score} \emph{:personne}}
+  \label{fig:azee_score_person}
+\end{figure}
+
+todo add this diagram
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/person_lsf.png}
+  \caption{Person in \gls{lsf}}
+  \label{fig:person_lsf}
+\end{figure}
+
+
+todo continue from explaining the low-level description of person. non linear part, constraints, etc.
+
 
 Both multi-track and non-linear editing have been widely used in various fields, including film production, video editing(figure~\ref{fig:video_edit}), and animation (figure~\ref{fig:nle_blender}). 
 
@@ -110,7 +137,7 @@ Both multi-track and non-linear editing have been widely used in various fields,
     \label{fig:nle_blender}
 \end{figure}
 
-However, their appliations in both procedural animation and sign language synthesis are limited.
+
 
 
 
@@ -153,7 +180,7 @@ On the contrary, a multi-track approach to sign language synthesis has already b
 
 However, Paula doesn't support low-level synthesis from AZee descriptions. This poses a challenge in scalability since an artist is always needed to create the building blocks of the animation. Although, the interface is tailored specifically for creating sign language content, a human intervention is still needed. Another drawback of Paula is that it is based on a single avatar model, which limits the diversity of the animations that can be created.
 
-\subsection{Outside Sign Language Synthesis}
+\subsection{Outside \gls{sl} Synthesis}
 \label{ch:multi_track:related_work:other_multi_track}
 
 The concept of multi-track timeline control for text-driven 3D human motion generation was also explored by~\cite{petrovich24stmc}. The work introduces a novel way to address the limitations of previous methods that lacked fine-grained control over action composition and timing. This approach allows users to define multiple textual prompts within overlapping temporal intervals, enabling precise control over complex actions (figure~\ref{fig:multi_track_other}). The proposed Spatio-Temporal Motion Collage (STMC) method, which operates at test-time, integrates with pre-trained motion diffusion models to generate realistic motions that adhere to the specified timeline. However, it is not for use in sign language synthesis, where precise and context-sensitive hand and body gestures are required, as it relies heavily on models not specifically designed for such detailed tasks.
@@ -196,7 +223,7 @@ In addition to the score types, the AZee model includes several other important 
 \section{Sign Language Synthesis}
 \label{ch:background_work:sign_language_synthesis}
 
-Sign Language synthesis is the process of generating sign language discourses from linguistic input. This process involves resolving a linguistic description on a digital human. This can be in the form of handshapes, movements, facial expressions, etc. Sign Language synthesis is a complex and interdisciplinary field that draws on linguistics, computer science, animation, and human-computer interaction. Several approaches have been developed to synthesize sign language animations, each with its unique strengths and challenges.
+Sign Language synthesis is the process of generating sign language discourses from linguistic input. This process involves resolving a linguistic description on a digital human. This can be in the form of handshapes, movements, facial expressions, etc. \gls{sl} synthesis is a complex and interdisciplinary field that draws on linguistics, computer science, animation, and human-computer interaction. Several approaches have been developed to synthesize sign language animations, each with its unique strengths and challenges.
 
 \subsection{2D Techniques}
 \label{ch:background_work:sign_language_synthesis:2d_techniques}
@@ -222,7 +249,7 @@ While such techniques are computationally less demanding, they lack the depth an
 \subsection{3D Techniques}
 \label{ch:background_work:sign_language_synthesis:3d_techniques}
 
-3D techniques (albeit being more computationally expensive) generate SL animations using avatars that operate in a three-dimensional space. These methods provide a more immersive and realistic representation of SL. 3D synthesis can leverage advanced avatars, such as those created by MetaHuman or SMPL-X, to achieve high levels of detail and expressiveness. Avatars are digital representations of characters or individuals, and are quite poular in in SL synthesis to animate the described signs. This subsection explores the components of avatar creation and animation, followed by their use in SL synthesis.
+3D techniques (albeit being more computationally expensive) generate \gls{sl} animations using avatars that operate in a three-dimensional space. These methods provide a more immersive and realistic representation of SL. 3D synthesis can leverage advanced avatars, such as those created by MetaHuman or SMPL-X, to achieve high levels of detail and expressiveness. Avatars are digital representations of characters or individuals, and are quite poular in in \gls{sl} synthesis to animate the described signs. This subsection explores the components of avatar creation and animation, followed by their use in \gls{sl} synthesis.
 
 \subsubsection{Skeleton}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:skeleton}
@@ -388,7 +415,7 @@ Figure~\ref{fig:keyframing} shows the process of manual keyframing to animate a 
   \label{fig:keyframing} 
 \end{figure}
 
-Along with keyframing, motion curves\cite{10.1145/218380.218422} are used to control the interpolation between keyframes. These curves define the speed and timing of the animation, allowing animators to create smooth and natural movements. Common types of motion curves include linear, ease-in, ease-out, and bezier curves. By adjusting the shape and slope of these curves, animators can fine-tune the animation to achieve the desired effect. Figure~\ref{fig:motion_curves} shows examples of different motion curves used to fine-tune an animation.
+Along with keyframing, motion curves~\cite{10.1145/218380.218422} are used to control the interpolation between keyframes. These curves define the speed and timing of the animation, allowing animators to create smooth and natural movements. Common types of motion curves include linear, ease-in, ease-out, and bezier curves. By adjusting the shape and slope of these curves, animators can fine-tune the animation to achieve the desired effect. Figure~\ref{fig:motion_curves} shows examples of different motion curves used to fine-tune an animation.
 
 \begin{figure} 
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/motion_curves.png} 
@@ -435,11 +462,11 @@ Inverse kinematics (IK) simplifies the animation process by allowing the animato
 IK solvers are algorithms that compute the necessary joint rotations to achieve a desired position of the end effector. Different IK solvers are available, each with its unique approach and strengths. Here are a few popular IK solvers:
 
 \begin{itemize} 
-  \item \textbf{iTaSc (Instantaneous Task Specification using Constraints)}: iTaSc\cite{4648032} operates by formulating the IK problem as a set of instantaneous task specifications, which are treated as constraints. These constraints can include positions, orientations, and other task-specific requirements. The method solves the IK problem by minimizing a cost function subject to these constraints. It utilizes optimization techniques to handle multiple, potentially conflicting constraints simultaneously, ensuring that the solution adheres to the defined task requirements.
+  \item \textbf{iTaSc (Instantaneous Task Specification using Constraints)}: iTaSc~\cite{4648032} operates by formulating the IK problem as a set of instantaneous task specifications, which are treated as constraints. These constraints can include positions, orientations, and other task-specific requirements. The method solves the IK problem by minimizing a cost function subject to these constraints. It utilizes optimization techniques to handle multiple, potentially conflicting constraints simultaneously, ensuring that the solution adheres to the defined task requirements.
 
-  \item \textbf{CCDIK (Cyclic Coordinate Descent Inverse Kinematics)}: CCDIK\cite{kenwright2012inverse} works by iteratively optimizing the position of each joint in the kinematic chain. Starting from the end effector, the algorithm adjusts each joint to minimize the distance between the end effector and the target position. This is done in a cyclic manner, where each joint is adjusted in sequence until the end effector reaches an acceptable proximity to the target. The process is repeated iteratively, ensuring that the adjustments of one joint do not significantly disrupt the adjustments of previous joints.
+  \item \textbf{CCDIK (Cyclic Coordinate Descent Inverse Kinematics)}: CCDIK~\cite{kenwright2012inverse} works by iteratively optimizing the position of each joint in the kinematic chain. Starting from the end effector, the algorithm adjusts each joint to minimize the distance between the end effector and the target position. This is done in a cyclic manner, where each joint is adjusted in sequence until the end effector reaches an acceptable proximity to the target. The process is repeated iteratively, ensuring that the adjustments of one joint do not significantly disrupt the adjustments of previous joints.
 
-  \item \textbf{FABRIK (Forward And Backward Reaching Inverse Kinematics)}: FABRIK\cite{aristidou2011fabrik} operates through a two-phase iterative process: forward reaching and backward reaching. In the forward reaching phase, the algorithm starts from the base of the kinematic chain and moves towards the end effector, adjusting each joint to align with the target position while respecting joint constraints. In the backward reaching phase, the algorithm starts from the end effector and moves back towards the base, further refining joint positions to ensure convergence towards the target. This alternating process continues until the end effector reaches the desired target within an acceptable tolerance.
+  \item \textbf{FABRIK (Forward And Backward Reaching Inverse Kinematics)}: FABRIK~\cite{aristidou2011fabrik} operates through a two-phase iterative process: forward reaching and backward reaching. In the forward reaching phase, the algorithm starts from the base of the kinematic chain and moves towards the end effector, adjusting each joint to align with the target position while respecting joint constraints. In the backward reaching phase, the algorithm starts from the end effector and moves back towards the base, further refining joint positions to ensure convergence towards the target. This alternating process continues until the end effector reaches the desired target within an acceptable tolerance.
 \end{itemize}
 
 Figure~\ref{fig:inverse_kinematics_example} illustrates the inverse kinematics process.
@@ -551,7 +578,7 @@ Latent space representations have become crucial in reducing the complexity of p
 \label{ch:pose_correction:related_work:pose_priors}
 Pose priors provide a mechanism to generate plausible poses based on learned distributions from large datasets. These pose priors ensure that the generated poses are not only valid but also contextually appropriate.
 
-\paragraph{VPoser for Pose Correction in Sign Language Animation} In our system, we utilize VPoser to correct the poses generated by the sign language animation system. By training VPoser on a comprehensive dataset of human poses, we can snap the initial pose to the closest valid pose in the latent space, thereby ensuring realism and accuracy in sign language gestures. This method ensures that the final poses are biomechanically correct and visually appropriate.
+\paragraph{VPoser for Pose Correction in \gls{sl} Animation} In our system, we utilize VPoser to correct the poses generated by the sign language animation system. By training VPoser on a comprehensive dataset of human poses, we can snap the initial pose to the closest valid pose in the latent space, thereby ensuring realism and accuracy in sign language gestures. This method ensures that the final poses are biomechanically correct and visually appropriate.
 
 \subsection{Conclusion}
 \label{ch:pose_correction:related_work:conclusion}
@@ -568,7 +595,7 @@ Procedural animation techniques use algorithms and rules to generate motion auto
 \subparagraph{Data-Driven Constraint-Based Motion Editing}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:procedural_techniques:data_driven_constraint_based_motion_editing}
 
-Data-driven constraint-based motion editing\cite{inbook} combines model-based and goal-directed techniques to enhance human motion animation. The system incorporates Prioritized Inverse Kinematics (PIK) to solve for joint movements that meet user-defined constraints. Animators can use key-frame and key-trajectory constraints to specify end-effector positions and paths, simplifying the animation process. The optimization step ensures smooth, continuous motions, avoiding common artifacts and preserving the natural flow of movement.
+Data-driven constraint-based motion editing~\cite{inbook} combines model-based and goal-directed techniques to enhance human motion animation. The system incorporates Prioritized Inverse Kinematics (PIK) to solve for joint movements that meet user-defined constraints. Animators can use key-frame and key-trajectory constraints to specify end-effector positions and paths, simplifying the animation process. The optimization step ensures smooth, continuous motions, avoiding common artifacts and preserving the natural flow of movement.
 
 \subparagraph{Deep Learning based Techniques}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:procedural_techniques:deep_learning_based_techniques}
@@ -808,7 +835,7 @@ EMBR is a real-time animation engine engineered to produce expressive gestures a
 \paragraph{Synthesis based on Generative Models}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models}
 
-Generative models have shown promise in SL synthesis by learning the underlying structure of sign language data and generating new animations. These models can be trained on large datasets of sign language videos to capture the complex relationships between linguistic input and SL output. Some popular generative models used in SL synthesis include:
+Generative models have shown promise in \gls{sl} synthesis by learning the underlying structure of sign language data and generating new animations. These models can be trained on large datasets of sign language videos to capture the complex relationships between linguistic input and \gls{sl} output. Some popular generative models used in \gls{sl} synthesis include:
 
 \subparagraph{Gloss based}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models:gloss_based}
@@ -823,7 +850,7 @@ The SignAvatars~\cite{yu2023signavatars} dataset introduces a large-scale, multi
 \subparagraph{Sgnify}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models:sgnify}
 
-Recent advancements in 3D reconstruction from sign language (SL) videos~\cite{Forte_2023_CVPR}, focusing on isolated signs. SGNify leverages linguistic priors, such as hand-pose symmetry and invariance, to enhance the accuracy of hand-pose estimation in challenging SL videos. The approach outperforms existing 3D body-pose estimation methods, particularly in handling self-occlusions and motion blur. Quantitative and perceptual evaluations demonstrate that SGNify's reconstructions are more natural and comprehensible than previous methods, achieving sign recognition rates comparable to original video performances.
+Recent advancements in 3D reconstruction from sign language (SL) videos~\cite{Forte_2023_CVPR}, focusing on isolated signs. SGNify leverages linguistic priors, such as hand-pose symmetry and invariance, to enhance the accuracy of hand-pose estimation in challenging \gls{sl} videos. The approach outperforms existing 3D body-pose estimation methods, particularly in handling self-occlusions and motion blur. Quantitative and perceptual evaluations demonstrate that SGNify's reconstructions are more natural and comprehensible than previous methods, achieving sign recognition rates comparable to original video performances.
 
 \subsubsection{AZee based}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based}
@@ -856,7 +883,7 @@ To summarize:
 
 Throughout this chapter, we have introduced, defined, and discussed a variety of concepts from three research areas that are key to this thesis: \textit{avatars}, \textit{sign language representation}, and \textit{sign language synthesis}. In the rest of the manuscript, we heavily rely on many of these concepts to investigate ways in which models for sign language synthesis can progressively learn and improve using newer techniques.
 
-Therefore, in Chapter~\ref{ch:avatar_creation_pose_synthesis} and Chapter~\ref{ch:multi_track}, we study ways to create and rig a Sign Language avatar as well as Multi Track Timeline generation from AZee respectively. Chapter~\ref{ch:intermediate_blocks_pose_correction} dives deeper into reusing animations using template matching and newer deep learning models for synthesis. Additionally, the studies presented in Chapter~\ref{ch:facial_expresions} discuss means to synthesize facial expressions for SL avatar. Lastly, Chapter~\ref{ch:conclusion} concludes the manuscript by summarizing the findings and discussing future research directions.
+Therefore, in Chapter~\ref{ch:avatar_creation_pose_synthesis} and Chapter~\ref{ch:multi_track}, we study ways to create and rig a \gls{sl} avatar as well as Multi Track Timeline generation from AZee respectively. Chapter~\ref{ch:intermediate_blocks_pose_correction} dives deeper into reusing animations using template matching and newer deep learning models for synthesis. Additionally, the studies presented in Chapter~\ref{ch:facial_expresions} discuss means to synthesize facial expressions for \gls{sl} avatar. Lastly, Chapter~\ref{ch:conclusion} concludes the manuscript by summarizing the findings and discussing future research directions.
 
 The background work specific to the various tasks and applications we address throughout the manuscript is presented and discussed in the corresponding chapters.
 \end{document}
