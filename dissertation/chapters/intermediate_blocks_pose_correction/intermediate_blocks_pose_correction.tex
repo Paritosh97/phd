@@ -13,66 +13,6 @@ This chapter focuses on the generation of intermediate blocks within the multi-t
 
 In this chapter, section~\ref{ch:intermediate_blocks_pose_correction:related_work} discusses the related work on AZee Templates, Motion Curves, and Motion Templates. Section~\ref{ch:intermediate_blocks_pose_correction:intermediate_block_generation} explores the generation of intermediate blocks, while section~\ref{ch:intermediate_blocks_pose_correction:results} presents the results of this process. Finally, section~\ref{ch:intermediate_blocks_pose_correction:conclusion_and_future_work} concludes the chapter and outlines potential future directions for this research.
 
-\section{Related Work}
-\label{ch:intermediate_blocks_pose_correction:related_work}
-
-In this section we will discuss the related work on AZee Templates, Motion Curves, and Motion Templates. 
-
-\subsection{AZee Templates}
-\label{ch:intermediate_blocks_pose_correction:related_work:azee_templates}
-
-AZee templates are abstract representations used in sign language synthesis, linking linguistic descriptions with animated motions. For example, an AZee template like \texttt{:info-about(:car,?color)} could match an expression such as \texttt{:info-about(:car,:red)}, where the variable \texttt{color} would be assigned the value \texttt{:red}. This template instructs the avatar to convey information about a car's color, where the specific color (red, in this case) is dynamically inserted based on the template match. This approach allows for the dynamic generation of animations based on linguistic input, enabling avatars to respond to a wide range of queries and commands.
-
-\subsection{Motion Curves}
-\label{ch:intermediate_blocks_pose_correction:related_work:motion_curves}
-
-Motion curves, (often refered as function curves or F-curves), have been extensively used in 3D character animation to control the timing and spacing of movements. These curves provide a graphical representation of a parameter's change over time, making them an essential tool in achieving realistic and fluid motion in animations(figure~\ref{fig:fcurves_blender}). Early foundational work by Witkin and Kass~\cite{witkin1988spacetime} introduced spacetime constraints, which used optimization techniques to control motion curves in generating realistic animations under physical constraints. This idea has evolved, and modern techniques now integrate deep learning models with motion curves to enhance control and automate the generation of complex animations.
-
-In the context of Sign Language,~\cite{inproceedings} discuss the use of 3D motion analysis to accurately capture and animate sign language gestures by extracting motion curve parameters from sensors like Microsoft Kinect. These motion curves, which represent the trajectories of movements made during signing, are essential for animating virtual signers in a natural and precise manner. The paper highlights how these curves are mathematically defined, including their type, plane of motion, and velocity, which are then used to recreate realistic sign language animations, enhancing applications like sign language recognition and machine translation.
-
-\begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/fcurves_blender.png}
-    \caption{F-curves in Blender}
-    \label{fig:fcurves_blender}
-\end{figure}
-
-In recent research, deep learning methods have been employed to interpret and adapt motion curves for inbetweening tasks(figure~\ref{fig:inbetweening_transformers})~\cite{10.1145/3550454.3555454}. However, traditional mathematical optimization techniques are still widely in use. For example~\cite{10.1145/3306346.3322938} used tangent-space optimization to control character interpolations by allowing animators to directly manipulate positions and orientations, minimizing the need for additional keyframes. It ensures smooth transitions while respecting constraints like joint limits and contact points, integrating seamlessly into existing animation workflows (figure~\ref{fig:inbetweening_disney}). 
-
-\begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/inbetweening_transformers.jpg}
-    \caption{Motion Inbetweening using 2 stage Transformers~\cite{10.1145/3306346.3322938}}
-    \label{fig:inbetweening_transformers}
-\end{figure}
-
-\begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/inbetweening_disney.png}
-    \caption{Rig Control using Tangent-Space Optimization}
-    \label{fig:inbetweening_disney}
-\end{figure}
-
-\subsection{Motion Templates}
-\label{ch:intermediate_blocks_pose_correction:related_work:motion_templates}
-
-Motion templates offer a reusable framework for applying pre-defined motion patterns across different characters or scenarios. These templates are essentially built upon motion curves that define the motion's parameters, allowing for efficient replication and adaptation of complex motions. The concept of motion templates has been widely adopted in various fields, from character animation to robotic motion planning. Modern approaches often combine motion templates with machine learning techniques to facilitate the adaptation of these templates to new contexts, such as different character anatomies or environmental conditions.
-
-In the context of character animation, motion templates can be particularly advantageous. The reusable nature of these templates allows for the consistent production of motion across different avatars while ensuring that the nuances of each motion are preserved. A method for controlling avatars using clustered motion segments from a large motion capture database was introduced by~\cite{10.1145/566654.566607}, enabling efficient real-time animation with intuitive user interfaces.
-
-The Paula avatar uses AZee geometric templates that can be applied across various signing scenarios. For example, a rule such as place-prf(proform-vehicle, midssp) allows for the placement of a vehicle proform in the middle of the signing space(figure~\ref{fig:azee_template_example}). This method leverages a consistent geometric system, enabling the natural synthesis of movements without relying on a fixed set of points, which is crucial for capturing the variability and dynamism inherent in sign language. This approach however, generates animations by focusing solely on higher-level linguistic structures rather than low-level constraints.
-
-\begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/azee_template_example.png}
-    \caption{AZee Templates used by the Paula avatar}
-    \label{fig:azee_template_example}
-\end{figure}
-
-For our experiments, we will be mainly using the \emph{40 brèves}~\cite{challant2022first} corpus. The frequency of the AZee rules in this corpus can be seen in figure~\ref{fig:azee_rule_frequency}.
-
-\begin{figure}
-    \centering \includegraphics[width = 5in]{chapters/intermediate_blocks/images/azee_rule_frequency.png}
-    \caption{Frequency of AZee rules in the \emph{40 brèves} corpus}
-    \label{fig:azee_rule_frequency}
-\end{figure}
-
 \section{Intermediate Block Generation}
 \label{ch:intermediate_blocks_pose_correction:intermediate_block_generation}
 
