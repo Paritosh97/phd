@@ -157,6 +157,11 @@ Lastly, an AZee description can also be drawn in the form of svg images using AZ
   \label{fig:azvd}
 \end{figure}
 
+\subsubsection{AZee Templates}
+\label{ch:background_work:sign_language_descriptions:azee:templates}
+
+AZee also allows for use of templates which are abstract representations of a \gls{sl} utterance, linking linguistic descriptions with animated motions. For example, an AZee template like \emph{:info-about(:âge,?info)} could match an AZee expression such as \emph{:info-about(:âge,:tens-units(:five,:two))}, where the variable \emph{info} would be assigned the function \emph{:tens-units(:five,:two)}. This template can be used to instruct the avatar to convey information about the person's, where the specific age (52, in this case) is dynamically inserted based on the template match. Currently, the Paula~\cite{mcdonald2016automated} system uses AZee templates to generate animations (more discussed in section~\refch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:paula).
+
 All of these features make the AZee model a powerful tool and a suitable input for our \gls{sl} synthesis system.
 
 \section{\gls{sl} Synthesis}
@@ -502,6 +507,38 @@ In the context of \gls{sl} synthesis, a multi-track timeline is used by Paula~\c
     \label{fig:paula}
 \end{figure}
 
+\paragraph{Motion Curves}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:motion_curves}
+
+Motion curves, have been extensively used in 3D character animation to control the timing and spacing of movements. These curves provide a graphical representation of a parameter's change over time, making them an essential tool in achieving realistic and fluid motion in animations(figure~\ref{fig:fcurves_blender}). Early foundational work by Witkin and Kass~\cite{witkin1988spacetime} introduced spacetime constraints, which used optimization techniques to control motion curves in generating realistic animations under physical constraints. This idea has evolved, and modern techniques now integrate deep learning models with motion curves to enhance control and automate the generation of complex animations. This is particularly useful in applications like motion inbetweening, where interpolating between keyframes requires precise control over motion curves to ensure smooth transitions and realistic movements (figure~\ref{fig:inbetweening_transformers})~\cite{10.1145/3550454.3555454}. However, traditional mathematical optimization techniques are still widely in use. For example~\cite{10.1145/3306346.3322938} used tangent-space optimization to control character interpolations by allowing animators to directly manipulate positions and orientations, minimizing the need for additional keyframes. It ensures smooth transitions while respecting \gls{posture_constraint}s like joint limits and contact points, integrating seamlessly into existing animation workflows (figure~\ref{fig:inbetweening_disney}). 
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/fcurves_blender.png}
+    \caption{F-curves in Blender}
+    \label{fig:fcurves_blender}
+\end{figure}
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/inbetweening_transformers.jpg}
+    \caption{Motion Inbetweening using 2 stage Transformers~\cite{10.1145/3306346.3322938}}
+    \label{fig:inbetweening_transformers}
+\end{figure}
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/inbetweening_disney.png}
+    \caption{Rig Control using Tangent-Space Optimization}
+    \label{fig:inbetweening_disney}
+\end{figure}
+
+In the context of \gl{sl} synthesis, SIGN MOTION~\cite{inproceedings} discuss the use of 3D motion analysis to accurately capture and animate \gls{sl} gestures by extracting motion curve parameters from sensors like Microsoft Kinect. These motion curves, which represent the trajectories of movements made during signing, are essential for animating virtual signers in a natural and precise manner. The paper highlights how these curves are mathematically defined, including their type, plane of motion, and velocity, which are then used to recreate realistic \gls{sl} animations, enhancing applications like \gls{sl} recognition and machine translation.
+
+\paragraph{Motion Templates}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:motion_templates}
+
+Motion templates offer a reusable framework for applying pre-defined motion patterns across different characters or scenarios. These templates are essentially built upon motion curves that define the motion's parameters, allowing for efficient replication and adaptation of complex motions. The concept of motion templates has been widely adopted in various fields, from character animation to robotic motion planning. Modern approaches often combine motion templates with machine learning techniques to facilitate the adaptation of these templates to new contexts, such as different character anatomies or environmental conditions.
+
+In the context of character animation, motion templates can be particularly advantageous. The reusable nature of these templates allows for the consistent production of motion across different avatars while ensuring that the nuances of each motion are preserved. A method for controlling avatars using clustered motion segments from a large motion capture database was introduced by~\cite{10.1145/566654.566607}, enabling efficient real-time animation with an intuitive user interfaces.
+
 \paragraph{Procedural Animation}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:procedural_animation}
 
@@ -532,6 +569,126 @@ Hybrid worflows combine elements of manual keyframing, mocap retargeting, and pr
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/cascadeur.png} 
   \caption{Cascadeur hybrid animation tool} 
   \label{fig:cascadeur} 
+\end{figure}
+
+\paragraph{Face Animation}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:mesh_and_texture:face_animation}
+
+Modeling and animating the face of an avatar is a complex task that involves creating detailed meshes and intricate animation controls to capture expressions and movements accurately. Blend shapes are used to create different facial expressions by interpolating between multiple versions of a mesh. This technique allows animators to blend between various expressions smoothly, such as smiling, frowning, or blinking. Adding bones to the facial mesh allows for more granular control over facial movements. Each bone can control different parts of the face, such as the jaw, eyebrows, and eyelids. This method is often used in conjunction with blend shapes to enhance expressiveness.
+
+\subparagraph{Pros and Cons}
+\begin{itemize}
+  \item \textbf{Blend Shapes}: Ideal for detailed and smooth transitions between expressions, but limited in flexibility.
+  \item \textbf{Bones}: Provide granular control, better for interactive or dynamic facial animations but are more complex to set up and manage.
+\end{itemize}
+
+The process of animating facial expressions using blend shapes is shown in figure~\ref{fig:blendshapes_smile}, where the progression of a smile is depicted from 0 to 1.0. Figure~\ref{fig:facial_bones} illustrates the use of facial bones for animating specific areas like the eyes, jaw, and tongue.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}{0.3\linewidth} 
+      \includegraphics[width=\linewidth]{chapters/background_work/images/blendshapes_example/blendshapes_example_1.png} 
+      \caption{Smile at 0} 
+  \end{subfigure} 
+  \hfill 
+  \begin{subfigure}{0.3\linewidth} 
+      \includegraphics[width=\linewidth]{chapters/background_work/images/blendshapes_example/blendshapes_example_2.png} 
+      \caption{Smile at 0.5} 
+  \end{subfigure} 
+  \hfill 
+  \begin{subfigure}{0.3\linewidth} 
+      \includegraphics[width=\linewidth]{chapters/background_work/images/blendshapes_example/blendshapes_example_3.png} 
+      \caption{Smile at 1} 
+  \end{subfigure}
+  \caption{Progression of smile using blend shapes from 0 to 1.0}
+  \label{fig:blendshapes_smile}
+\end{figure}
+
+\begin{figure} 
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/facial_bones.png} 
+  \caption{Facial bones for eyes, jaw, and tongue} 
+  \label{fig:facial_bones} 
+\end{figure}
+
+
+\paragraph{Face Rigging}
+\label{ch:facial_expressions:related_work:face_rigging}
+
+Face rigging is the process of creating a digital framework that allows for the animation of facial expressions. There are several approaches to face rigging, each with its own advantages and disadvantages.
+
+\subparagraph{Blendshape-Based Rigging}
+\label{ch:facial_expressions:related_work:face_rigging:blendshape_based_rigging}
+
+Blendshape-based rigging involves creating a set of predefined facial shapes (blendshapes) that represent various expressions (figure~\ref{ch:facial_expressions:fig:blendshapes}). These blendshapes can be blended together in different proportions to create a wide range of facial expressions. However, it requires a large number of blendshapes to capture all possible expressions.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/blendshapes.png}
+    \caption{Blendshapes for facial expressions}
+    \label{ch:facial_expressions:fig:blendshapes}
+\end{figure}
+
+\subparagraph{Skeleton-Based Rigging}
+\label{ch:facial_expressions:related_work:face_rigging:skeleton_based_rigging}
+
+Skeleton-based rigging, also known as joint-based rigging, uses a hierarchical system of bones and joints to control facial movements (figure~\ref{ch:facial_expressions:fig:skeleton_based_rigging}). It offers more control but can be less intuitive than blendshapes for subtle expressions.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/skeleton_based_rigging.png}
+    \caption{Skeleton-based rigging for facial expressions}
+    \label{ch:facial_expressions:fig:skeleton_based_rigging}
+\end{figure}
+
+\subparagraph{Hybrid Rigging}
+\label{ch:facial_expressions:related_work:face_rigging:hybrid_rigging}
+
+Hybrid rigging combines elements of blendshape-based and skeleton-based rigging to offer greater flexibility and control.
+
+\paragraph{Capturing Facial Expressions}
+\label{ch:facial_expressions:related_work:face_rigging:capture}
+
+Facial expressions can be captured manually or through performance-based techniques.
+
+\subparagraph{Manual Keyframing}
+\label{ch:facial_expressions:related_work:face_rigging:capture:manual_keyframing}
+
+Manual keyframing is a foundational animation technique, where animators manually set key poses (figure~\ref{ch:facial_expressions:fig:keyframing}). It is effective but may struggle to capture the variability required in \gls{sl} synthesis.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/keyframing.png}
+    \caption{Keyframing process, showing how key poses are set and interpolated to create a continuous animation.}
+    \label{ch:facial_expressions:fig:keyframing}
+\end{figure}
+
+\subparagraph{Performance-Based Motion Capture}
+\label{ch:facial_expressions:related_work:face_rigging:capture:performance_based_motion_capture}
+
+Performance-based motion capture captures human facial movements and uses this data to animate digital avatars. Tools like Apple's ARKit (figure~\ref{ch:facial_expressions:fig:motion_capture}) are examples of this approach.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/motion_capture.jpg}
+    \caption{Performance-based facial animation using Apple's ARKit}
+    \label{ch:facial_expressions:fig:motion_capture}
+\end{figure}
+
+\subparagraph{Facial Expressions Synthesis}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:face_animation:facial_expressions_synthesis}
+
+Most facial expression research is motivated by synthesis from voice signals. These methods are generally categorized into lip-sync techniques~\cite{yousaidthat, talkingface, lipmovements, lipsyncexpert}, which align mouth movements with audio, and full-face expression synthesis~\cite{eskimez, greenwood18, controllable_facial_synth}. Some approaches model speaking style with 3D animation parameters~\cite{cudeiro}, or create generalized latent audio expressions combined with a person-specific 3D model~\cite{FLAME}. Related work, MakeItTalk~\cite{Yang:2020:MakeItTalk}, introduces a two-stage deep learning model that predicts facial landmark displacements based on audio input, followed by an image-to-image translation method to generate the final facial expression. 
+
+\subparagraph{Emotion Recognition}
+\label{ch:facial_expressions:related_work:emotion_recognition}
+
+Emotion recognition systems use machine learning algorithms to analyze facial features and identify the underlying emotional state. The most common approach to define emotions is Ekman's Facial Action Coding System (FACS)~\cite{ekman1978facial}, which categorizes facial expressions into action units (AUs) (figure~\ref{ch:facial_expressions:fig:action_units}). EMOCA~\cite{danvevcek2022emoca} uses 3D face reconstruction to capture emotional expressions accurately, significantly improving expression quality over previous methods.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/action_units.jpg}
+    \caption{Facial Action Coding System (FACS) action units}
+    \label{ch:facial_expressions:fig:action_units}
 \end{figure}
 
 \paragraph{Uncanny Valley}
@@ -613,6 +770,20 @@ This subsection explores AZee-based \gls{sl} synthesis systems, highlighting adv
 
 \paragraph{Paula}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:paula}
+
+todo fix
+
+
+The Paula avatar uses AZee geometric templates that can be applied across various signing scenarios. For example, a rule such as place-prf(proform-vehicle, midssp) allows for the placement of a vehicle proform in the middle of the signing space(figure~\ref{fig:azee_template_example}). This method leverages a consistent geometric system, enabling the natural synthesis of movements without relying on a fixed set of points, which is crucial for capturing the variability and dynamism inherent in \gl{sl}. This approach however, generates animations by focusing solely on higher-level linguistic structures rather than low-level constraints.
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/azee_template_example.png}
+    \caption{AZee Templates used by the Paula avatar}
+    \label{fig:azee_template_example}
+\end{figure}
+
+
+todo fix
 
 The system extends the Paula avatar using AZee descriptions. AZee encodes both form and functional linguistic aspects, while Paula ensures smooth human motion. The approach leverages a hierarchical model to specify movements using larger linguistic structures, improving naturalness. Key innovations include embedding geometric \gls{posture_constraint}s and utilizing procedural techniques for dynamic, realistic animations. Proform placements are optimized by factoring semantic functions and applying common forms across multiple productions. This method addresses limitations in previous models, such as the lack of supporting torso motion and dynamic differences, leading to more fluid and expressive \gls{sl} animations.
 

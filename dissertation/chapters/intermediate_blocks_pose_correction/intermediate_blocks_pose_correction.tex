@@ -16,6 +16,7 @@ In this chapter, section~\ref{ch:intermediate_blocks_pose_correction:related_wor
 \section{Intermediate Block Generation}
 \label{ch:intermediate_blocks_pose_correction:intermediate_block_generation}
 
+
 Intermediate blocks are blocks of motion not specified by the AZee model. Building on the concepts of motion curves and templates, intermediate block generation is a process in creating smooth transitions between constrained and pre-animated blocks. Interpolation techniques, such as linear and spline interpolation, can be used to generate intermediate poses or frames that maintain the semantic consistency of the intended sign. Figure ~\ref{fig:info_about_intermediate_example} shows intermediate blocks generated for the AZee rule \emph{info-about(topic,info)}.
 
 \begin{figure}
@@ -28,6 +29,19 @@ The creation of this intermediate block relies on a template expression check wh
 
 \subsection{Reusing Motion Templates}
 \label{ch:intermediate_blocks_pose_correction:reusing_motion_templates}
+
+todo fix
+
+For our experiments, we will be mainly using the \emph{40 brèves}~\cite{challant2022first} corpus. The frequency of the AZee rules in this corpus can be seen in figure~\ref{fig:azee_rule_frequency}.
+
+\begin{figure}
+    \centering \includegraphics[width = 5in]{chapters/intermediate_blocks/images/azee_rule_frequency.png}
+    \caption{Frequency of AZee rules in the \emph{40 brèves} corpus}
+    \label{fig:azee_rule_frequency}
+\end{figure}
+
+todo fix
+
 
 Motion templates are pre-defined motion patterns that guide the synthesis of new animations. In the context of AZee driven synthesis, these templates serve as a blueprint for generating intermediate blocks and motion curves. The use of motion templates allows for greater consistency and control over the final animation, as the templates encode expert knowledge about how certain signs should be performed.
 
