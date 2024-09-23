@@ -193,7 +193,7 @@ While such techniques are computationally less demanding during inference. Requi
 \subsection{3D Techniques}
 \label{ch:background_work:sign_language_synthesis:3d_techniques}
 
-3D techniques generate \gls{sl} animations using avatars that operate in a three-dimensional space. These methods provide a more immersive and realistic representation of SL. 3D synthesis can leverage advanced avatars, such as those created by MetaHuman or SMPL-X, to achieve high levels of detail and expressiveness. Avatars are digital representations of characters or individuals, and are quite poular in in \gls{sl} synthesis to animate the described signs. This subsection explores the components of avatar creation and animation, followed by their use in \gls{sl} synthesis.
+3D techniques generate \gls{sl} animations using avatars that operate in a three-dimensional space. These methods provide a more immersive and realistic representation of \gls{sl}. 3D synthesis can leverage advanced avatars, such as those created by MetaHuman or SMPL-X, to achieve high levels of detail and expressiveness. Avatars are digital representations of characters or individuals, and are quite poular in in \gls{sl} synthesis to animate the described signs. This subsection explores the components of avatar creation and animation, followed by their use in \gls{sl} synthesis.
 
 \subsubsection{Skeleton}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:skeleton}
@@ -498,7 +498,7 @@ Apart from artists, researchers too have recently explored multi-track timeline 
     \label{fig:multi_track_other}
 \end{figure}
 
-In the context of \gls{sl} synthesis, a multi-track timeline is used by Paula~\cite{filhol2017synthesizing} (more discussed in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:paula}), a system that uses pre-recorded motion data to generate multi-track animations using AZee. Paula's interface is tailored for creating \gls{sl} content, with each track representing a different aspect of the sign language. Figure~\ref{fig:paula} shows the Paula interface with a multi-track timeline for \gls{sl} synthesis.
+In the context of \gls{sl} synthesis, a multi-track timeline is used by Paula~\cite{filhol2017synthesizing} (more discussed in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:paula}), a system that uses pre-recorded motion data to generate multi-track animations using AZee. Paula's interface is tailored for creating \gls{sl} content, with each track representing a different aspect of the \gls{sl}. Figure~\ref{fig:paula} shows the Paula interface with a multi-track timeline for \gls{sl} synthesis.
 
 \begin{figure}[h]
     \centering
@@ -761,58 +761,128 @@ The SignAvatars~\cite{yu2023signavatars} dataset introduces a large-scale, multi
 \subparagraph{Sgnify}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models:sgnify}
 
-Recent advancements in 3D reconstruction from \gls{sl} (SL) videos~\cite{Forte_2023_CVPR}, focusing on isolated signs. SGNify leverages linguistic priors, such as hand-pose symmetry and invariance, to enhance the accuracy of hand-pose estimation in challenging \gls{sl} videos. The approach outperforms existing 3D body-pose estimation methods, particularly in handling self-occlusions and motion blur. Quantitative and perceptual evaluations demonstrate that SGNify's reconstructions are more natural and comprehensible than previous methods, achieving sign recognition rates comparable to original video performances.
+Recent advancements in 3D reconstruction from \gls{sl} videos~\cite{Forte_2023_CVPR}, focusing on isolated signs. SGNify leverages linguistic priors, such as hand-pose symmetry and invariance, to enhance the accuracy of hand-pose estimation in challenging \gls{sl} videos. The approach outperforms existing 3D body-pose estimation methods, particularly in handling self-occlusions and motion blur. Quantitative and perceptual evaluations demonstrate that SGNify's reconstructions are more natural and comprehensible than previous methods, achieving sign recognition rates comparable to original video performances.
 
 \subsubsection{AZee based}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based}
 
-This subsection explores AZee-based \gls{sl} synthesis systems, highlighting advancements in avatar animation using both hierarchical modeling and low-level synthesis techniques.
+This subsection explores AZee-based \gls{sl} synthesis systems, highlighting advancements in avatar animation using both pre-animated and low-level synthesis techniques.
 
 \paragraph{Paula}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:paula}
 
-todo fix
+The Paula avatar system, integrated with AZee linguistic descriptions, represents a significant advancement in \gls{sl} synthesis. AZee provides a robust, high-level framework that encodes both form and functional aspects of \gls{sl}, while Paula ensures the translation of these descriptions into fluid, human-like motion. This combination addresses earlier challenges in \gls{sl} avatars, particularly the difficulty in creating natural and expressive signing.
 
+Initial work focused on developing a pipeline that connects AZee's abstract linguistic input directly to avatar animation~\cite{filhol2017synthesizing}. This method enabled the synthesis of natural signing by leveraging the structure of \gls{sl} discourse, focusing on the transitions between signs, which had previously been overlooked~\cite{mcdonald2021natural}. Smooth and context-aware transitions were found to be essential for creating fluid and cohesive animations, as these movements contribute significantly to the natural pacing of \gls{sl} discourse.
 
-The Paula avatar uses AZee geometric templates that can be applied across various signing scenarios. For example, a rule such as place-prf(proform-vehicle, midssp) allows for the placement of a vehicle proform in the middle of the signing space(figure~\ref{fig:azee_template_example}). This method leverages a consistent geometric system, enabling the natural synthesis of movements without relying on a fixed set of points, which is crucial for capturing the variability and dynamism inherent in \gl{sl}. This approach however, generates animations by focusing solely on higher-level linguistic structures rather than low-level constraints.
+An important challenge addressed by the system is the synthesis of productive signing forms such as classifier predicates and size and shape specifiers. These highly variable constructs had previously been difficult to animate, as they cannot be pre-recorded or standardized like frozen signs~\cite{filhol2020synthesis}. By defining a set of flexible rules that cover a wide range of proform constructs, the system allows for the natural generation of these elements. This flexibility enables the avatar to handle both the positioning and movement of objects in space with greater accuracy and variability, which is crucial for conveying meaning in \gls{sl}.
+
+As the system matured, further refinements focused on capturing the subtleties of movement that enhance the realism of \gls{sl} animation. For example, placing objects or classifiers in space involves more than simply positioning the hand; it requires dynamic variations based on context~\cite{mcdonald2019fine}. The avatar adapts its motion depending on whether it is placing a single object, multiple objects consecutively, or a set of items. In each case, the timing, pacing, and pauses between movements vary, contributing to more authentic animations.
+
+Another major area of improvement has been the handling of facial expressions and non-manual signals. Facial movements are critical for conveying both grammatical and affective information in \gls{sl}. However, they are particularly challenging to reproduce on avatars due to the complexity of human facial anatomy. Recent developments have improved the range of facial expressions the Paula avatar can produce, incorporating fine details such as wrinkles to enhance clarity and legibility, particularly when viewed on smaller screens~\cite{johnson2021towards}. This attention to detail ensures that the avatar can effectively communicate nuanced facial expressions, which are essential for the overall comprehension of signing.
+
+The Paula system also employs a hierarchical model that organizes signing into larger linguistic structures, allowing for smoother, more coherent animations~\cite{filhol2018extending}. This approach helps the avatar synthesize more natural-looking movement by considering the overall discourse, rather than focusing solely on individual signs or gestures. For example, geometric templates are used to position proforms—abstract representations of objects—in the signing space. These templates provide a consistent framework for handling spatial relations, ensuring that the avatar can dynamically adjust its movements across various signing scenarios.
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks/images/azee_template_example.png}
-    \caption{AZee Templates used by the Paula avatar}
-    \label{fig:azee_template_example}
+    \caption{AZee Templates used by the Paula avatar for positioning proforms in signing space}
+    \label{fig:azee_geo_template_example}
 \end{figure}
 
+By focusing on higher-level linguistic structures, the system avoids relying on a fixed set of predefined points, which is critical for capturing the inherent variability and dynamism of \gls{sl}. This method allows the Paula avatar to produce more expressive and flexible animations, particularly in scenarios involving spatial descriptions or interactions with multiple objects.
 
-todo fix
-
-The system extends the Paula avatar using AZee descriptions. AZee encodes both form and functional linguistic aspects, while Paula ensures smooth human motion. The approach leverages a hierarchical model to specify movements using larger linguistic structures, improving naturalness. Key innovations include embedding geometric \gls{posture_constraint}s and utilizing procedural techniques for dynamic, realistic animations. Proform placements are optimized by factoring semantic functions and applying common forms across multiple productions. This method addresses limitations in previous models, such as the lack of supporting torso motion and dynamic differences, leading to more fluid and expressive \gls{sl} animations.
+Overall, the combination of AZee’s linguistic richness with Paula’s realistic motion synthesis offers a robust solution for \gls{sl} animation. By addressing both the high-level discourse structure and the finer details of movement, the system produces animations that are not only accurate but also natural and engaging. However, even though Paula integrates AZee descriptions with pre-recorded motion data, it cannot synthesize from low-level AZee descriptions directly. This poses complexity in the system's scalability and flexibility, as the animation have to be animated by artists. This is where the low-level synthesizer for AZee comes in.
 
 \paragraph{Low-level synthesizer for AZee}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee}
 
-Although AZee is multi-track by nature (where the lingusit has the ability to crate the track), the low-level AZee synthesizor is based on a flattened \emph{AnimatedScore} representation that flattenes each track made by the linguist. This flattening layer loses the multi-track information and the dynamics of the original AZee description. 
+A low-level synthesizer for AZee~\cite{nunnari2018animating} has already been developed to address the limitations of the top-down approach used by Paula. The low-level synthesizer generates animations directly from AZee's \gls{score}, allowing for a better scalability in \gls{sl} synthesis since the linghuists input can be directly used to generate animations instead of relying on artists.
 
-For example, consider the following low-level AZee description for \emph{:cupboard} when compiled with the AZee interpreter generates an AZee \emph{SyncedScore} using the algorithm~\ref{alg:azee_recursion}~\cite{filhol2017synthesizing} that is show in in figure~\ref{fig:azee_synced_score}.
+\subparagraph{Animated Score}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:animated_score}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_synced_score.png}
-    \caption{AZee Synced Score generated from the low-level AZee description.}
-    \label{fig:azee_synced_score}
-\end{figure}
-
-Figure~\ref{fig:azee_flattened_score} shows the flattened version of this AZee Synced Score, where all the tracks are merged into a single track. This flattening is done by collecting all the \gls{posture_constraint}s for each frame and applying them to the corresponding bone rotations during animation.
+The Animated Score is a \emph{flattened} representation of the AZee \gls{cstr_score}. To understand this better, let's consider (figure~\ref{fig:azee_synced_score}) the \gls{azee_score} for the description of the sign \emph{:armoire} (\emph{cupboard} in \gls{lsf}).
 
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_flattened_score.png}
-    \caption{Flattened version of the AZee Synced Score.}
-    \label{fig:azee_flattened_score}
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_synced_score.png}
+  \caption{AZee Synced Score generated from the low-level AZee description.}
+  \label{fig:azee_synced_score}
 \end{figure}
 
-This approach is also inextensible to be used with pre-animated motion data blocks for larger sequences since the flattened representation does not contain the original location of the corresponding animation block on the timeline. 
+Although AZee is multi-track by nature (where the lingusit has the ability to crate the track), the low-level AZee synthesizor uses an \emph{Animated Score} which is a flattened version of an AZee Synced Score, where all the tracks are merged into a single track. This flattening is done by collecting all the \gls{posture_constraint}s for each frame and applying them to the corresponding bone rotations during animation. Figure~\ref{fig:azee_flattened_score} shows the flattened version of the AZee Synced Score in figure~{\ref{fig:azee_synced_score}}.
 
-This work presents a bottom-up (or low-level generation using constraint optimization) synthesis solution for the AZee system using off-the-shelf \gls{ik} solvers. The approach (discussed in detail in~\ref{ch:multi_track}) generates procedurally computed animations from AZee's symbolic descriptions, leveraging Blender's 3D editor and iTaSC solver. This method handles \gls{posture_constraint}s as \gls{ik} problems, translating skeletal poses into keyframes. Despite inherently robotic motion, it serves as a low-level fallback for the existing top-down system. Preliminary results show effective static pose generation and a trade-off between precision and computation time, enhancing the flexibility of \gls{sl} avatar systems by integrating procedural synthesis with predefined animations.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_flattened_score.png}
+  \caption{Flattened version of the AZee Synced Score.}
+  \label{fig:azee_flattened_score}
+\end{figure}
+
+During evaluation, the low-level synthesizer creates postures for each of the frame using this Animated Score. For this, they used the algorithm~\ref{alg:trimmed_constraint_based_optimization} for the pose optimization for each of the constraints to generate the postures. 
+
+\begin{algorithm}
+  \caption{Constraint-Based Optimization for Posture Synthesis}
+  \label{alg:trimmed_constraint_based_optimization}
+  \begin{algorithmic}[1]
+  \Require $\text{PostureConstraints} \ \mathit{posture\_constraint}$, $\text{Object} \ \mathit{armature\_object}$
+  \Ensure Armature object is posed according to the constraints
+  
+  \State \textbf{Initialize:} $i \gets 0$
+  \State $distance\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_site\_distance\_threshold}$
+  \State $angle\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_bone\_rot\_angle\_threshold \times \pi / 180}$
+  \State $max\_iterations \gets \mathit{bpy.context.scene.azee\_ik\_max\_iterations}$
+  
+  \While{$i < max\_iterations$}
+      \State \textbf{Apply Constraints:} \textsc{ApplyPositionConstraint}($\mathit{posture\_constraint}$), \textsc{ApplyOrientConstraints}($\mathit{posture\_constraint}$)
+      \State \textbf{Compute Offsets:} $place\_distance, orient\_angles \gets \textsc{ComputeDistance}(\mathit{posture\_constraint})$
+      \If {$\mathit{place\_distance} < \mathit{distance\_threshold}$ \textbf{and} $\max(\mathit{orient\_angles}) < \mathit{angle\_threshold}$}
+          \State \textbf{Break:} \textbf{end while}
+      \EndIf
+      \State $i \gets i + 1$
+  \EndWhile
+  
+  \Procedure{ApplyPositionConstraint}{$\mathit{posture\_constraint}$}
+      \If {$\mathit{posture\_constraint.place\_constraint} \neq \text{None}$}
+          \State \textbf{Apply IK:} \textsc{ApplyIKConstraint}($\mathit{posture\_constraint.place\_constraint.site\_pose\_bone}$, 
+          \textsc{CreateTemporaryTarget}($\mathit{posture\_constraint.place\_constraint.target\_vect}$), \textit{position})
+      \EndIf
+  \EndProcedure
+  
+  \Procedure{ApplyOrientConstraints}{$\mathit{posture\_constraint}$}
+      \ForAll {$orient\_constraint \in \mathit{posture\_constraint.orient\_constraints}$}
+          \State \textbf{Apply IK:} \textsc{ApplyIKConstraint}($orient\_constraint.pose\_bone$, 
+          \textsc{CreateTemporaryTarget}($orient\_constraint.get\_target\_quaternion()$), \textit{rotation}, 
+          $orient\_constraint.get\_axis\_relaxation\_mask()$)
+      \EndFor
+  \EndProcedure
+  
+  \Procedure{ComputeDistance}{$\mathit{posture\_constraint}$}
+      \State \Return \textsc{ComputeDistanceFromOffset}(\textsc{ComputePlaceOffset}($\mathit{posture\_constraint}$)), 
+      \textsc{ComputeAnglesFromOffsets}(\textsc{ComputeOrientOffsets}($\mathit{posture\_constraint}$))
+  \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+For the pose optimization, the algorithm~\ref{alg:trimmed_constraint_based_optimization} uses a distance threshold and an angle threshold to determine when the optimization has converged. The algorithm iterates through the constraints, applying them to the armature object and computing the offsets. If the distance and angle thresholds are met, the optimization process is terminated and the posture is keyframed. This process is repeated for each frame in the Animated Score, generating a sequence of keyframes that represent the desired animation. The synthesizer is implemented as an add-on in Blender and uses the iTaSC solver to solve the \gls{ik} problems. Figure \ref{fig:armoire_low_level} shows the synthesized animation for the sign \emph{:armoire} using the low-level synthesizer.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/armoire_low_level.png}
+  \caption{Synthesized animation for the sign \emph{:armoire} using the low-level synthesizer.}
+  \label{fig:armoire_low_level}
+\end{figure}
+
+Even though this approach allows a better coverage using AZee descriptions since it can directly generate animations from the linghuists input without relying on artists. It is inextensible to be used with pre-animated motion data blocks for larger sequences since the flattened representation does not contain the original reference of the corresponding animation block on the timeline. More importantly, it generates robotic animations since it does not consider the nuances of natural human motion. This work therefore is the other side of the coin to a high-level synthesis technique like Paula, which are hindered by the labor-intensive nature of hand-crafted animations.
+
+\paragraph{Granularity of \gls{sl} Synthesis}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:granularity_of_sl_synthesis}
+
+The granularity of \gls{sl} synthesis refers to the level of detail at which signs are represented and animated. High-level synthesis techniques focus on capturing the overall structure and meaning of signs, often using abstract linguistic descriptions to guide the animation process. These methods are efficient for generating coherent and contextually appropriate animations but may lack the fine-grained control needed to produce nuanced and expressive signing.
+
+In contrast, low-level synthesis techniques aim to capture the detailed movements and articulations of signs, focusing on the precise positioning and orientation of body parts. These methods offer greater flexibility and realism in animation but require more manual intervention and expertise to produce accurate and natural-looking signing.
+
+This distinction between high-level and low-level synthesis reflects a trade-off between efficiency and expressiveness in \gls{sl} animation and forms the basis of this thesis.
 
 \section{Conclusion}
 \label{ch:background_work:conclusion}
@@ -828,9 +898,8 @@ To summarize:
   \item By addressing these gaps, we aim to advance the state of \gls{sl} synthesis, making it more scalable and capable of generating natural and expressive animations.
 \end{itemize}
 
-Throughout this chapter, we have introduced, defined, and discussed a variety of concepts from three research areas that are key to this thesis: \textit{avatars}, \textit{\gls{sl} representation}, and \textit{\gls{sl} synthesis}. In the rest of the manuscript, we heavily rely on many of these concepts to investigate ways in which models for \gls{sl} synthesis can progressively learn and improve using newer techniques.
+Throughout this chapter, we have introduced, defined, and discussed a variety of concepts from three research areas that are key to this thesis: \textit{\gls{sl} representation}, \textit{avatars}, and \textit{\gls{sl} synthesis}. In the rest of the manuscript, we heavily rely on many of these concepts to investigate ways in which models for \gls{sl} synthesis can progressively learn and improve using newer techniques.
 
-Therefore, in Chapter~\ref{ch:avatar_creation_pose_synthesis} and Chapter~\ref{ch:multi_track}, we study ways to create and rig a \gls{sl} avatar as well as Multi Track Timeline generation from AZee respectively. Chapter~\ref{ch:intermediate_blocks_pose_correction} dives deeper into reusing animations using template matching and newer deep learning models for synthesis. Additionally, the studies presented in Chapter~\ref{ch:facial_expresions} discuss means to synthesize facial expressions for \gls{sl} avatar. Lastly, Chapter~\ref{ch:conclusion} concludes the manuscript by summarizing the findings and discussing future research directions.
+In Chapter~\ref{ch:avatar_creation_pose_synthesis} and chapter~\ref{ch:multi_track}, we study ways to create and rig a \gls{sl} avatar as well as explore multi-track timeline generation from AZee respectively. Chapter~\ref{ch:intermediate_blocks_pose_correction} dives deeper into reusing animations using template matching as well as generating better poses for synthesis. Additionally, the studies presented in chapter~\ref{ch:facial_expresions} discuss means to synthesize facial expressions for \gls{sl}. Lastly, Chapter~\ref{ch:conclusion} concludes the manuscript by summarizing the findings and discussing future research directions
 
-The background work specific to the various tasks and applications we address throughout the manuscript is presented and discussed in the corresponding chapters.
 \end{document}
