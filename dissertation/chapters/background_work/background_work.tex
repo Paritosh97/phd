@@ -14,7 +14,7 @@ A key challenge in \gls{sl} synthesis lies in the description of an \gls{sl} \gl
   \item \textbf{Body Motions}: What body motions create a meaningful \gls{sl} description?
   \item \textbf{Discourse Connection}: How do these motions connect to form a discourse?
   \item \textbf{Grammar and Syntax}: What are the grammatical and syntactical rules governing these signs?
-  \item \textbf{Non-Manual Signals}: How can non-manual signals (such as facial expressions and body posture) be integrated with manual signs?
+  \item \textbf{\gls{non_manual_signals}}: How can \gls{non_manual_signals} (such as facial expressions and body posture) be integrated with manual signs?
 \end{itemize}
 
 In this section, we first study the descriptive languages used to formalize \gls{sl} and how they describe body motions. These descriptions are crucial as they will be the input to the \gls{sl} synthesis system.
@@ -557,8 +557,8 @@ Deep learning-based techniques have shown significant promise in procedural anim
   \label{fig:deep_learning_synthesis} 
 \end{figure}
 
-\paragraph{Hybrid Workflows}
-\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:hybrid_workflows}
+\subparagraph{Hybrid Workflows}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:procedural_techniques:hybrid_workflows}
 
 Hybrid worflows combine elements of manual keyframing, mocap retargeting, and procedural techniques to leverage the strengths of each method. By integrating these approaches, animators can achieve a balance between control, efficiency, and realism. For instance, an animator might use mocap data as a base and then refine specific movements with manual keyframes to enhance expressiveness. Additionally, procedural techniques can be applied to automate repetitive tasks or to ensure that certain \gls{posture_constraint}s are met dynamically during the animation process. Hybrid workflows offer a flexible and powerful workflow, allowing for the creation of complex animations that are both realistic and tailored to the specific needs of a project. Figure~\ref{fig:cascadeur} shows an example of a hybrid animation tool, Cascadeur.
 
@@ -569,17 +569,14 @@ Hybrid worflows combine elements of manual keyframing, mocap retargeting, and pr
 \end{figure}
 
 \paragraph{Face Animation}
-\label{ch:background_work:sign_language_synthesis:3d_techniques:mesh_and_texture:face_animation}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation}
 
 This section explores rigging as well as animation of an avatar's face.
 
-\paragraph{Face Rigging}
-\label{ch:facial_expressions:related_work:face_rigging}
+\subparagraph{Face Rigging}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:face_rigging}
 
 Face rigging is the process of creating a digital framework that allows for the animation of facial expressions. There are several approaches to face rigging, each with its own advantages and disadvantages.
-
-\subparagraph{Blendshape-Based Rigging}
-\label{ch:facial_expressions:related_work:face_rigging:blendshape_based_rigging}
 
 Blendshape-based rigging involves creating a set of predefined facial shapes (blendshapes) that represent various expressions (figure~\ref{fig:blendshapes_smile}). Multiple versions of a mesh are stored to achieve this and interpolating between these meshes allows animators to blend between various expressions smoothly, such as smiling, frowning, or blinking. These blendshapes can be blended together in different proportions to create a wide range of facial expressions. However, it requires a large number of blendshapes to capture all possible expressions.
 
@@ -603,9 +600,6 @@ Blendshape-based rigging involves creating a set of predefined facial shapes (bl
   \label{fig:blendshapes_smile}
 \end{figure}
 
-\subparagraph{Skeleton-Based Rigging}
-\label{ch:facial_expressions:related_work:face_rigging:skeleton_based_rigging}
-
 Skeleton-based rigging uses a hierarchical system of bones and joints to control facial movements (figure~\ref{ch:facial_expressions:fig:skeleton_based_rigging}). Each bone can control different parts of the face, such as the jaw, eyebrows, and eyelids. This offers more granular control but can be less intuitive than blendshapes for subtle expressions.
 
 \begin{figure}
@@ -614,9 +608,6 @@ Skeleton-based rigging uses a hierarchical system of bones and joints to control
     \caption{Skeleton-based rigging for facial expressions}
     \label{ch:facial_expressions:fig:skeleton_based_rigging}
 \end{figure}
-
-\subparagraph{Hybrid Rigging}
-\label{ch:facial_expressions:related_work:face_rigging:hybrid_rigging}
 
 The use of blendshape-based rigging or skeleton-based rigging depends on the goal. More generally: 
 
@@ -627,13 +618,10 @@ The use of blendshape-based rigging or skeleton-based rigging depends on the goa
 
 Usually, the two techniques are combined to offer greater flexibility and control.
 
-\paragraph{Capturing Facial Expressions}
-\label{ch:facial_expressions:related_work:face_rigging:capture}
+\subparagraph{Capturing Facial Expressions}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:capturing_facial_expressions}
 
 Facial expressions can be captured manually or through performance-based techniques.
-
-\subparagraph{Manual Keyframing}
-\label{ch:facial_expressions:related_work:face_rigging:capture:manual_keyframing}
 
 Manual keyframing is a foundational animation technique, where animators manually set key poses (figure~\ref{ch:facial_expressions:fig:keyframing}). It is effective but may struggle to capture the variability required in \gls{sl} synthesis.
 
@@ -643,9 +631,6 @@ Manual keyframing is a foundational animation technique, where animators manuall
     \caption{Keyframing process, showing how key poses are set and interpolated to create a continuous animation.}
     \label{ch:facial_expressions:fig:keyframing}
 \end{figure}
-
-\subparagraph{Performance-Based Motion Capture}
-\label{ch:facial_expressions:related_work:face_rigging:capture:performance_based_motion_capture}
 
 Performance-based motion capture captures human facial movements and uses this data to animate digital avatars. Tools like Apple's ARKit (figure~\ref{ch:facial_expressions:fig:motion_capture}) are examples of this approach.
 
@@ -657,20 +642,20 @@ Performance-based motion capture captures human facial movements and uses this d
 \end{figure}
 
 \subparagraph{Facial Expressions Synthesis}
-\label{ch:background_work:sign_language_synthesis:3d_techniques:face_animation:facial_expressions_synthesis}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:facial_expressions_synthesis}
 
 Most facial expression research is motivated by synthesis from voice signals. These methods are generally categorized into lip-sync techniques~\cite{yousaidthat, talkingface, lipmovements, lipsyncexpert}, which align mouth movements with audio, and full-face expression synthesis~\cite{eskimez, greenwood18, controllable_facial_synth}. Some approaches model speaking style with 3D animation parameters~\cite{cudeiro}, or create generalized latent audio expressions combined with a person-specific 3D model~\cite{FLAME}. Related work, MakeItTalk~\cite{Yang:2020:MakeItTalk}, introduces a two-stage deep learning model that predicts facial landmark displacements based on audio input, followed by an image-to-image translation method to generate the final facial expression. 
 
 \subparagraph{Emotion Recognition}
-\label{ch:facial_expressions:related_work:emotion_recognition}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:emotion_recognition}
 
-Emotion recognition systems use machine learning algorithms to analyze facial features and identify the underlying emotional state. The most common approach to define emotions is Ekman's Facial Action Coding System (FACS)~\cite{ekman1978facial}, which categorizes facial expressions into action units (AUs) (figure~\ref{ch:facial_expressions:fig:action_units}). EMOCA~\cite{danvevcek2022emoca} uses 3D face reconstruction to capture emotional expressions accurately, significantly improving expression quality over previous methods.
+Emotion recognition systems use machine learning algorithms to analyze facial features and identify the underlying emotional state. The most common approach to define emotions is Ekman's \gls{facs}~\cite{ekman1978facial}, which categorizes facial expressions into action units (AUs) (figure~\ref{fig:action_units}). EMOCA~\cite{danvevcek2022emoca} uses 3D face reconstruction to capture emotional expressions accurately, significantly improving expression quality over previous methods.
 
 \begin{figure}
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/background_work/images/action_units.jpg}
-    \caption{Facial Action Coding System (FACS) action units}
-    \label{ch:facial_expressions:fig:action_units}
+    \caption{FACS action units}
+    \label{fig:action_units}
 \end{figure}
 
 \paragraph{Uncanny Valley}
@@ -733,7 +718,7 @@ Generative models have shown promise in \gls{sl} synthesis by learning the under
 \subparagraph{Gloss based}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models:gloss_based}
 
-\gls{sl} animation from text focuses on generating realistic \gls{sl} videos from written text. The process involves text-to-gloss conversion, gloss-to-pose generation, and pose-to-sign rendering. Recent approaches utilize neural networks and generative models to enhance animation fluidity and realism. One method uses dictionary examples and a codebook of signs to create continuous \gls{sl} sequences, incorporating both manual and non-manual features. However, challenges remain in annotating the data and training the models effectively, particularly in the production of natural hand and facial movements.
+\gls{sl} animation from text focuses on generating realistic \gls{sl} videos from written text. The process involves text-to-gloss conversion, gloss-to-pose generation, and pose-to-sign rendering. Recent approaches utilize neural networks and generative models to enhance animation fluidity and realism. One method uses dictionary examples and a codebook of signs to create continuous \gls{sl} sequences, incorporating both \gls{manual} and \gls{non_manual_signals}. However, challenges remain in annotating the data and training the models effectively, particularly in the production of natural hand and facial movements.
 
 \subparagraph{SignAvatars}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:synthesis_based_on_generative_models:signavatars}
@@ -761,7 +746,7 @@ An important challenge addressed by the system is the synthesis of productive si
 
 As the system matured, further refinements focused on capturing the subtleties of movement that enhance the realism of \gls{sl} animation. For example, placing objects or classifiers in space involves more than simply positioning the hand; it requires dynamic variations based on context~\cite{mcdonald2019fine}. The avatar adapts its motion depending on whether it is placing a single object, multiple objects consecutively, or a set of items. In each case, the timing, pacing, and pauses between movements vary, contributing to more authentic animations.
 
-Another major area of improvement has been the handling of facial expressions and non-manual signals. Facial movements are critical for conveying both grammatical and affective information in \gls{sl}. However, they are particularly challenging to reproduce on avatars due to the complexity of human facial anatomy. Recent developments have improved the range of facial expressions the Paula avatar can produce, incorporating fine details such as wrinkles to enhance clarity and legibility, particularly when viewed on smaller screens~\cite{johnson2021towards}. This attention to detail ensures that the avatar can effectively communicate nuanced facial expressions, which are essential for the overall comprehension of signing.
+Another major area of improvement has been the handling of facial expressions and \gls{non_manual_signals}. Facial movements are critical for conveying both grammatical and affective information in \gls{sl}. However, they are particularly challenging to reproduce on avatars due to the complexity of human facial anatomy. Recent developments have improved the range of facial expressions the Paula avatar can produce, incorporating fine details such as wrinkles to enhance clarity and legibility, particularly when viewed on smaller screens~\cite{johnson2021towards}. This attention to detail ensures that the avatar can effectively communicate nuanced facial expressions, which are essential for the overall comprehension of signing.
 
 The Paula system also employs a hierarchical model that organizes signing into larger linguistic structures, allowing for smoother, more coherent animations~\cite{filhol2018extending}. This approach helps the avatar synthesize more natural-looking movement by considering the overall discourse, rather than focusing solely on individual signs or gestures. For example, geometric templates are used to position proforms—abstract representations of objects—in the signing space. These templates provide a consistent framework for handling spatial relations, ensuring that the avatar can dynamically adjust its movements across various signing scenarios.
 

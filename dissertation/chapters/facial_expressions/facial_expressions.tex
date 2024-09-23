@@ -4,29 +4,39 @@
 \chapter{Facial Expressions}
 \label{ch:facial_expressions}
 
-Facial expressions are a crucial element of communication in both spoken and sign languages. In sign languages, they serve a dual purpose: conveying the emotional state of the signer and encoding grammatical information such as questions, negation, and emphasis. While spoken languages rely on tone and intonation for these functions, sign languages depend heavily on non-manual signals, particularly facial expressions, to fully convey the meaning of an utterance. Therefore, creating accurate and expressive facial animations in signing avatars is essential for producing realistic and comprehensible sign language content.
+Facial expressions are a crucial element of communication in both spoken and \gls{sl}s. In \gls{sl}s, they serve a dual purpose: conveying the emotional state of the signer and encoding grammatical information such as negation, and emphasis. While spoken languages rely on tone and intonation for these functions, \gls{sl}s depend heavily on \gls{non_manual_signals}, particularly facial expressions, to fully convey the meaning of an utterance. Therefore, creating accurate and expressive facial animations in signing avatars is essential for producing realistic and comprehensible \gls{sl} content.
 
-However, synthesizing facial expressions for signing avatars presents significant challenges due to the complexity and subtlety of these expressions. Unlike manual signs, which involve distinct hand and arm movements, facial expressions require the coordinated movement of various facial muscles, each contributing to the overall expression. Different facial features, such as eyebrows, eyes, and mouth, often move independently yet in harmony to produce coherent expressions. Moreover, the same facial expression can convey different meanings depending on the context, adding another layer of complexity to the task.
+However, synthesizing facial expressions for signing avatars presents significant challenges due to the complexity and subtlety of these expressions. Unlike manual signs, which involve distinct hand and arm movements, facial expressions require the coordinated movement of numerous facial muscles, each contributing to the overall expression. Different facial features, such as eyebrows, eyes, and mouth, often move independently yet in harmony to produce coherent expressions.
 
-This chapter tackles these challenges by introducing a method for synthesizing facial expressions using the AZee framework for French Sign Language (LSF). To achieve this, specific production rules for facial expressions were integrated into AZee. By employing action units (AUs) as the foundational elements of these expressions, we can generate blendshapes that precisely represent the required facial movements. These blendshapes are subsequently integrated into a facial rigging system, allowing for the dynamic and realistic animation of signing avatars.
+Previous chapters focused on the synthesis of skeletal features in \gls{sl}. In contrast, this chapter centers on the synthesis of facial expressions from the AZee model, emphasizing their critical role in the conveyance of grammatical information in \gls{sl}s.
 
-Previous chapters focused on the synthesis of manual features in sign language. In contrast, this chapter centers on the synthesis of facial expressions using the AZee framework, emphasizing their critical role in both emotional communication and the conveyance of grammatical information in sign languages. The precise synthesis of these expressions is therefore essential for enhancing the realism and effectiveness of signing avatars.
+The chapter is structured as follows: todo
 
-The chapter is structured as follows:  todo
+\section{Adding Facial Expressions to AZee}
+\label{ch:facial_expressions:adding_facial_expressions_to_azee}
 
-\section{Action Unit Analysis}
-\label{ch:facial_expressions:action_unit_analysis}
+The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first taks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (figure~\ref{fig:all_expressions_breves}). The frequency of each expression in the corpus is shown in figure~\ref{fig:expression_frequency}.
 
-Our method for facial expression synthesis is based on first formalizing the AZee facial expression rules in terms of action units (AUs). This section outlines the steps involved in our method, from the analysis of action units to the creation of blendshapes and the generation of motion curves.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/all_expressions_breves.png}
+    \caption{All facial expressions in the 40 brèves corpus}
+    \label{fig:all_expressions_breves}
+\end{figure}
 
-AUs represent the activation of specific facial muscles and are the basic components of facial expressions. Each AU corresponds to a particular movement, such as raising the eyebrows or pursing the lips, and can be combined with other AUs to create complex expressions.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/expression_frequency.png}
+    \caption{Frequency of facial expressions in the 40 brèves corpus}
+    \label{fig:expression_frequency}
+\end{figure}
 
-To analyze AUs, we used a combination of manual observation and automatic detection tools.
+\subsection{Defining AZee Rules in terms of Action Units}
+\label{ch:facial_expressions:defining_azee_rules_in_terms_of_action_units}
 
-\subsection{Automatic detection}
-\label{ch:facial_expressions:action_unit_analysis:automatic_detection}
+We discussed the \gls{facs} earlier in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:emotion_recognition}. \gls{facs} is a comprehensive system for describing facial expressions in terms of action units (AUs), which represent the activation of specific facial muscles. Each AU corresponds to a specific movement~\annex{facs_aus}. Thus, our first goal is to break down each AZee rule into its constituent AUs. 
 
-We the AU detector by~\cite{luo2022learning} on mediapipe extractions of still images (figure~\ref{ch:facial_expressions:fig:face_detect}).
+We use the AU detector by~\cite{luo2022learning} on mediapipe extractions of still images for each of the facial expressions from the corpus (figure~\ref{ch:facial_expressions:fig:face_detect}).
 
 %todo more detailed diagram(images -> mediapipe -> AU detector)
 \begin{figure}
@@ -36,12 +46,7 @@ We the AU detector by~\cite{luo2022learning} on mediapipe extractions of still i
     \label{ch:facial_expressions:fig:face_detect}
 \end{figure}
 
-While it is a good starting point, manual adjustments were required by a linguist to ensure accuracy.
-
-\subsection{Automatic detection}
-\label{ch:facial_expressions:action_unit_analysis:automatic_detection}
-
-We used a linguists input by adjusting the movements of individual facial features for each expression(figure~\ref{ch:facial_expressions:fig:face_adjust}).
+While it is a good starting point, manual adjustments were required by a linguist to ensure accuracy. This can be seen in figure~\ref{cfig:face_adjust} for the expression \emph{big-threatening}.
 
 % todo face adjust diagram(example medaipe AU face retargeted on a template mesh, then adjusted by a linguist)
 \begin{figure}
@@ -50,8 +55,6 @@ We used a linguists input by adjusting the movements of individual facial featur
     \caption{Manual adjustment of facial expressions to ensure accuracy.}
     \label{ch:facial_expressions:fig:face_adjust}
 \end{figure}
-
-The synthesized facial expressions were taken from our reference corpus (the 40 brèves corpus)~\cite{challant2024extending, challant2022first}, breaking down each expression into its constituent AUs. This approach allowed us to ensure that our blendshapes accurately reflected the intended expressions, capturing both the emotional and grammatical nuances required for sign language synthesis.
 
 \section{Blendshape Creation}
 \label{ch:facial_expressions:blendshape_creation}
@@ -280,7 +283,7 @@ Table~\ref{tab:facial_expressions_quantitative} shows the quantitative evaluatio
 
 The FED scores indicate that the synthesized expressions closely matched the ground truth expressions, demonstrating the effectiveness of our method in capturing the nuances of facial movements.
 
-We also compare the synthesized utterance (with facial expressions) with the original utterance (without facial expressions) to evaluate the impact of facial expressions on sign language comprehension. For this we synthesize the following AZee description.
+We also compare the synthesized utterance (with facial expressions) with the original utterance (without facial expressions) to evaluate the impact of facial expressions on \gls{sl} comprehension. For this we synthesize the following AZee description.
 
 \begin{verbatim}    
     todo
@@ -291,7 +294,7 @@ The following link shows the comparison between the two versions (and the SGNify
 \section{Conclusion}
 \label{ch:facial_expressions:conclusion}
 
-Facial expressions play a crucial role in sign language communication, conveying both emotional and grammatical information. In this chapter, we presented a method for synthesizing facial expressions using the AZee framework, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Our method involved analyzing AUs from the FACS system, creating blendshapes based on these AUs, and generating motion curves to animate the blendshapes. The synthesized facial expressions were evaluated subjectively by a linguist and quantitatively using the Frechet Expression Distance (FED) metric, demonstrating the effectiveness of our method in capturing the nuances of facial movements. The results show that the synthesized expressions closely matched the ground truth expressions, highlighting the potential of our method for enhancing the realism and expressiveness of signing avatars. Future work will focus on refining the blendshapes and motion curves to improve the accuracy and naturalness of the facial expressions, as well as exploring the integration of emotion recognition systems to generate facial expressions that align with the emotional tone of the signed message. By continuing to develop and refine our method, we aim to create more realistic and effective facial animations for sign language synthesis, enhancing the overall quality and accessibility of sign language content.
+Facial expressions play a crucial role in \gls{sl} communication, conveying both emotional and grammatical information. In this chapter, we presented a method for synthesizing facial expressions using the AZee framework, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Our method involved analyzing AUs from the FACS system, creating blendshapes based on these AUs, and generating motion curves to animate the blendshapes. The synthesized facial expressions were evaluated subjectively by a linguist and quantitatively using the Frechet Expression Distance (FED) metric, demonstrating the effectiveness of our method in capturing the nuances of facial movements. The results show that the synthesized expressions closely matched the ground truth expressions, highlighting the potential of our method for enhancing the realism and expressiveness of signing avatars. Future work will focus on refining the blendshapes and motion curves to improve the accuracy and naturalness of the facial expressions, as well as exploring the integration of emotion recognition systems to generate facial expressions that align with the emotional tone of the signed message. By continuing to develop and refine our method, we aim to create more realistic and effective facial animations for \gls{sl} synthesis, enhancing the overall quality and accessibility of \gls{sl} content.
 
 
 \end{document}
