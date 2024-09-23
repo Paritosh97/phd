@@ -6,7 +6,8 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{newunicodechar}
-\usepackage{glossaries}
+\usepackage[acronym,section]{glossaries}
+\usepackage[automake, acronym]{glossaries-extra}
 \usepackage{fancyhdr}
 \usepackage{amssymb}
 \usepackage{natbib}
@@ -126,7 +127,7 @@
 \footnotesize Thèse préparée dans l'unité(s) de recherche \textbf{LISN} (Université Paris-Saclay, CNRS), sous la direction de \textbf{Michael FILHOL}, Chargé de recherche CNRS \\
 \vspace{15mm}
 
-\textbf{Thèse soutenue à Paris-Saclay, le 12 décembre 2024, par}\\
+%\textbf{Thèse soutenue à Paris-Saclay, le 5 décembre 2024, par}\\
 \bigskip
 \Large {\color{Prune} \textbf{Paritosh SHARMA}} % Changer le Prénom et le NOM
 
@@ -145,8 +146,8 @@
 \arrayrulecolor{Prune}
 \textbf{Nicolas SABOURET} & Président \& Examinateur\\ 
 Professeur, Université Paris-Saclay \\
-\textbf{John McDonald} &  Rapporteur \& Examinateur \\ 
-Associate Professor, DePaul University \\ 
+\textbf{Floris Roelofsen} &  Rapporteur \& Examinateur \\ 
+Professor, University of Amsterdam \\ 
 \textbf{Ludovic Hoyet} &  Rapporteur \& Examinateur \\ 
 Chargé de recherche, INRIA \& Université de Rennes \\ 
 \textbf{Catherine Pelachaud} &  Examinatrice \\ 
@@ -223,26 +224,30 @@ Throughout our research, we focus on deepening the understanding and utility of 
 \end{multicols}
 \end{mdframed}
 
+% Chapter titles
 \titleformat{\chapter}[display]
-{\normalfont\huge\bfseries\color{black}} % Formatting for chapter title
-{\chaptertitlename\ \thechapter} % "Chapter" followed by chapter number
-{20pt} % Space between "Chapter" and chapter number
-{\Huge} % Formatting for chapter title
-[\vspace{2ex}] % Additional space after chapter title
+{\normalfont\huge\bfseries\color{black}}
+{\chaptertitlename\ \thechapter}
+{20pt}{\Huge}
+[\vspace{2ex}]
 
-\titlespacing*{\chapter}{0pt}{50pt}{40pt} % Adjusting spacing around chapter title
+% Section titles
+\titleformat{\section}[hang]{\bfseries\Large}{\thesection}{0.5em}
+{\vspace{0.1ex}}
 
-\titleformat{\section}[hang]{\bfseries\normalsize}{\thesection\ .}{0.5pt}
-{\vspace{0.1ex}
-}
-[\vspace{0.1ex}]
-\titlespacing{\section}{1.5pc}{4ex plus .1ex minus .2ex}{.8pc}
+% Subsection titles
+\titleformat{\subsection}[hang]{\bfseries\normalsize}{\thesubsection}{0.75em}
+{\vspace{0.1ex}}
 
-\titleformat{\subsection}[hang]{\bfseries\small}{\thesubsection\ .}{1pt}
-{\vspace{0.1ex}
-}
-[\vspace{0.1ex}]
-\titlespacing{\subsection}{3pc}{2ex plus .1ex minus .2ex}{.1pc}
+% Subsubsection titles
+\titleformat{\subsubsection}[hang]{\bfseries\small}{\thesubsubsection}{0.75em}
+{\vspace{0.1ex}}
+
+% Paragraph titles
+\titleformat{\paragraph}[runin]{\bfseries\normalsize}{\theparagraph}{1em}{}
+
+% Subparagraph titles
+\titleformat{\subparagraph}[runin]{\bfseries\footnotesize}{\thesubparagraph}{1em}{}
 
 \newpage
 \thispagestyle{empty}
@@ -267,16 +272,18 @@ Throughout our research, we focus on deepening the understanding and utility of 
 \newpage
 \listoftables
 \newpage
+
+% Include glossary and acronyms after the index pages
 \include{glossary/glossary.tex}
-\printglossary
-\printglossary[type=\acronymtype]
+\printglossary[type=\acronymtype,title={Acronyms}] % Print acronyms glossary
+\printglossary[type=main, title={Glossary}] % Print main glossary
 \newpage
 
 \newgeometry{top=4cm, bottom=4cm, left=4cm, right=4cm}
 
 \subfile{chapters/introduction/introduction.tex}
 \subfile{chapters/background_work/background_work.tex}
-\subfile{chapters/rigging_layers/rigging_layers.tex}
+\subfile{chapters/avatar_creation_pose_synthesis/avatar_creation_pose_synthesis.tex}
 \subfile{chapters/multi_track/multi_track.tex}
 \subfile{chapters/intermediate_blocks_pose_correction/intermediate_blocks_pose_correction.tex}
 \subfile{chapters/facial_expressions/facial_expressions.tex}

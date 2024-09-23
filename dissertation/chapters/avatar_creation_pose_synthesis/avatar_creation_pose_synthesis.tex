@@ -151,7 +151,7 @@ The problem with this system however, is that it doesn't accoutn for mesh deform
 \subsection{Deformation Bone Layer}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:deform_bone_layer}
 
-The deformation bone layer(figure~\ref{ref:deform_layer}) is the foundation of the avatar's rig. It includes the bones that directly influence the mesh of the character, controlling how the skin deforms in response to movement. This layer is responsible for the overall shape and posture of the avatar, ensuring that the character's movements are smooth and realistic.
+The deformation bone layer(figure~\ref{fig:deform_layer}) is the foundation of the avatar's rig. It includes the bones that directly influence the mesh of the character, controlling how the skin deforms in response to movement. This layer is responsible for the overall shape and posture of the avatar, ensuring that the character's movements are smooth and realistic.
 
 In this layer, the bones are typically organized into a hierarchy, with the root bone controlling the overall position and orientation of the avatar, and child bones controlling specific parts of the body, such as the limbs, spine, and head. Weight painting is used to determine how much influence each bone has over the surrounding mesh, allowing for precise control over how the character's skin deforms.
 
@@ -195,7 +195,7 @@ A separate IK layer ensures that the FK configuration is not lost during constra
 
 The previous low level synthesizor for AZee~\cite{nunnari2018animating} used a constraint based optimization algorithm to generate the armature pose for a frame. This algorithm collects all posture constaints given by the AZee Animated Score for every frame and solves for the posture by optimizing these constraints using distance functions. 
 
-However, their approach handles only placements and orientations and uses a flattened animated AZee Score. This was improved~\ref{alg:trimmed_multi_track_optimization} by generating from the multi-track synced score itself(more discussed in chapter~\ref{ch:multi-track}) with support for other constraints such as \emph{morph}, \emph{lookat} and \emph{trill}.
+However, their approach handles only placements and orientations and uses a flattened animated AZee Score. This was improved using the algorithm~\ref{alg:trimmed_multi_track_optimization} by generating from the multi-track synced score itself(more discussed in chapter~\ref{ch:multi_track}) with support for other constraints such as \emph{morph}, \emph{lookat} and \emph{trill}.
 
 \begin{algorithm}
     \caption{Constraint-Based Optimization for Posture Synthesis for a Multi-Track Timeline}
