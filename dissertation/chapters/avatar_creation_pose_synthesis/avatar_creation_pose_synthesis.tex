@@ -3,18 +3,18 @@
 \chapter{Avatar Creation and Pose Synthesis}
 \label{ch:avatar_creation_pose_synthesis}
 
-Before we can animate sign language, a well-crafted avatar is essential. This chapter explores the avatar creation process and integrates rigging layers to the pre-existing low-level AZee synthesizor. Rigging, which sets up a skeletal structure to drive a character's mesh, is critical for achieving realistic movement and deformation, particularly in capturing the nuanced expressions of sign language.
+Before we can animate \gls{sl}, a well-crafted avatar is essential. This chapter explores the avatar creation process and integrates rigging layers to the pre-existing low-level AZee synthesizor. Rigging, which sets up a skeletal structure to drive a character's mesh, is critical for achieving realistic movement and deformation, particularly in capturing the nuanced expressions of \gls{sl}.
 
 The layered approach provides a sophisticated method for managing these complexities. By dividing the rigging process into distinct layers—each addressing specific aspects of movement and deformation—we gain greater control and flexibility. This strategy enables the synthesis system to function with multiple avatars and is faster and more accurate than the previous synthesizor.
 
-In this chapter, section~\ref{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars} introduces a procedural rigging system for signing avatars, which automates the rigging process and enables the generation of complex sign language gestures. Section~\ref{ch:avatar_creation_pose_synthesis:results} presents the results of the implementation, and section~\ref{ch:avatar_creation_pose_synthesis:evaluation} evaluates the performance, accuracy, and quality of the animation. Finally, section~\ref{ch:avatar_creation_pose_synthesis:conclusion} concludes the chapter and discusses future work.
+In this chapter, section~\ref{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars} introduces a procedural rigging system for signing avatars, which automates the rigging process and enables the generation of complex \gls{sl} gestures. Section~\ref{ch:avatar_creation_pose_synthesis:results} presents the results of the implementation, and section~\ref{ch:avatar_creation_pose_synthesis:evaluation} evaluates the performance, accuracy, and quality of the animation. Finally, section~\ref{ch:avatar_creation_pose_synthesis:conclusion} concludes the chapter and discusses future work.
 
 \section{Procedural Rigging for Signing Avatars}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars}
 
 Rigs have been used in computer animation for decades to control the movement and deformation of characters. Traditional rigging systems typically consist of a hierarchical structure of bones, controllers, and constraints that define how the character’s mesh deforms in response to movement.
 
-A signing avatar differs significantly from the traditional systems. To begin with, no sign language uses the lower body in its articulation. This means that the rigging system for a signing avatar can be simplified to focus on the upper body as shown in figure~\ref{ref:upper_body_avatar}. 
+A signing avatar differs significantly from the traditional systems. To begin with, no \gls{sl} uses the lower body in its articulation. This means that the rigging system for a signing avatar can be simplified to focus on the upper body as shown in figure~\ref{ref:upper_body_avatar}. 
 
 \begin{figure}[h]
     \centering
@@ -23,7 +23,7 @@ A signing avatar differs significantly from the traditional systems. To begin wi
     \label{ref:upper_body_avatar}
 \end{figure}
 
-However for procedurally animating a signing avatar, the complexity of sign language gestures and expressions poses unique challenges and necessitates a more sophisticated rigging system.
+However for procedurally animating a signing avatar, the complexity of \gls{sl} gestures and expressions poses unique challenges and necessitates a more sophisticated rigging system.
 
 \subsection{AZee Blender interface}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:azee_blender_interface}
@@ -267,7 +267,7 @@ To omit impossible poses, the skeleton is also assigned joint limit constraints.
 \subsection{Animating Morphs Constraints}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints}
 
-The word "morph" comes from the Greek word \textit{morphē} (\textgreek{μορφή}), which means "form" or "shape." In modern usage, "morph" is often used as a shorthand for "morphing." In the field of computer graphics and animation, morphs are predefined shape keys that modify the mesh of the avatar independently of the skeletal structure, allowing for a fine control of the avatar's appearance that cannot be easily achieved through bone manipulation alone. This includes subtle facial expressions, muscle bulges, and other nuanced gestures that are critical for conveying meaning in sign language.
+The word "morph" comes from the Greek word \textit{morphē} (\textgreek{μορφή}), which means "form" or "shape." In modern usage, "morph" is often used as a shorthand for "morphing." In the field of computer graphics and animation, morphs are predefined shape keys that modify the mesh of the avatar independently of the skeletal structure, allowing for a fine control of the avatar's appearance that cannot be easily achieved through bone manipulation alone. This includes subtle facial expressions, muscle bulges, and other nuanced gestures that are critical for conveying meaning in \gls{sl}.
 
 AZee didn't have any morph specification to control the avatar. Durign this work, we populated them with skeletal and facial morphs. These morphs are changes in the configuration of the avatar, which can be specified by the linguist in a range from 0 to 1. For instance, closing of hands(a change in skeleton configuration) or raising the eyebrows(a change in the 3D mesh). The syntax of a morph constraint is as follows:
 
@@ -352,7 +352,7 @@ todo add diagrams in the figure
 \subsubsection{Facial Morphs}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:facial_morphs}
 
-Facial morphs in the AZee framework provide a means to represent the complex and nuanced expressions essential for conveying emotions and grammatical cues using subtle facial movements that are integral to effective communication in sign language (figure~\ref{fig:facial_example}).
+Facial morphs in the AZee framework provide a means to represent the complex and nuanced expressions essential for conveying emotions and grammatical cues using subtle facial movements that are integral to effective communication in \gls{sl} (figure~\ref{fig:facial_example}).
 
 \begin{figure}
     \centering
@@ -437,7 +437,7 @@ The accuracy of the animation can be evaluated using the Frechet gesture distanc
 \subsection{Quality of Animation}
 \label{ch:avatar_creation_pose_synthesis:evaluation:quality}
 
-As observed, the generated animations are robotic in nature and lack the fluidity and expressiveness of natural sign language gestures. However, everything which can be annotated using the AZee low level, can be synthesized using this technique. This provides us with a good starting block to animate sign language. Moreover, with the procedural rigging system, we can us this same system with other avatars as well.
+As observed, the generated animations are robotic in nature and lack the fluidity and expressiveness of natural \gls{sl} gestures. However, everything which can be annotated using the AZee low level, can be synthesized using this technique. This provides us with a good starting block to animate \gls{sl}. Moreover, with the procedural rigging system, we can us this same system with other avatars as well.
 
 \subsection{Performance}
 \label{ch:avatar_creation_pose_synthesis:evaluation:performance}

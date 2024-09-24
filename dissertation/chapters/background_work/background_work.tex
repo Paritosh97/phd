@@ -443,7 +443,7 @@ While these data-driven methods resolve many issues inherent to classical animat
 \subparagraph{Latent Space Representations for Pose Generation}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:deep_learning:latent_space}
 
-Latent space representations have become crucial in reducing the complexity of pose and motion data, allowing for more efficient and realistic pose generation and manipulation. VAEs~\cite{kingma2013auto}, such as those used in SMPLify-X~\cite{pavlakos2019expressive}, learn a probabilistic model of human poses. They can generate and manipulate poses in a lower-dimensional latent space, which can then be sampled to meet specific \gls{posture_constraint}s. SMPLify-X is particularly effective in estimating 3D poses from 2D images, as illustrated in Figure~\ref{fig:simplifyx}.
+Latent space representations have become crucial in reducing the complexity of pose and motion data, allowing for more efficient and realistic pose generation and manipulation. \gls{vae}s~\cite{kingma2013auto}, such as those used in SMPLify-X~\cite{pavlakos2019expressive}, learn a probabilistic model of human poses. They can generate and manipulate poses in a lower-dimensional latent space, which can then be sampled to meet specific \gls{posture_constraint}s. SMPLify-X is particularly effective in estimating 3D poses from 2D images, as illustrated in Figure~\ref{fig:simplifyx}.
 
 \begin{figure}
   \centering \includegraphics[width = 4in]{chapters/background_work/images/simplifyx.png}
@@ -523,7 +523,7 @@ Motion curves, have been extensively used in 3D character animation to control t
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/background_work/images/inbetweening_disney.png}
-    \caption{Tangent-Space Optimization use to create dive animation}
+    \caption{Tangent-Space Optimization used to create dive animation}
     \label{fig:inbetweening_disney}
 \end{figure}
 

@@ -6,9 +6,7 @@
 
 Facial expressions are a crucial element of communication in both spoken and \gls{sl}s. In \gls{sl}s, they serve a dual purpose: conveying the emotional state of the signer and encoding grammatical information such as negation, and emphasis. While spoken languages rely on tone and intonation for these functions, \gls{sl}s depend heavily on \gls{non_manual_signals}, particularly facial expressions, to fully convey the meaning of an utterance. Therefore, creating accurate and expressive facial animations in signing avatars is essential for producing realistic and comprehensible \gls{sl} content.
 
-However, synthesizing facial expressions for signing avatars presents significant challenges due to the complexity and subtlety of these expressions. Unlike manual signs, which involve distinct hand and arm movements, facial expressions require the coordinated movement of numerous facial muscles, each contributing to the overall expression. Different facial features, such as eyebrows, eyes, and mouth, often move independently yet in harmony to produce coherent expressions.
-
-Previous chapters focused on the synthesis of skeletal features in \gls{sl}. In contrast, this chapter centers on the synthesis of facial expressions from the AZee model, emphasizing their critical role in the conveyance of grammatical information in \gls{sl}s.
+However, synthesizing facial expressions for signing avatars presents significant challenges due to the complexity and subtlety of these expressions. Unlike manual signs, which involve distinct hand and arm movements, facial expressions require the coordinated movement of numerous facial muscles, each contributing to the overall expression. Different facial features, such as eyebrows, eyes, and mouth, often move independently yet in harmony to produce coherent expressions. Previous chapters focused on the synthesis of skeletal features in \gls{sl}. In contrast, this chapter centers on the synthesis of facial expressions from the AZee model, emphasizing their critical role in the conveyance of grammatical information in \gls{sl}s.
 
 The chapter is structured as follows: Section~\ref{ch:facial_expressions:background} provides an overview of the importance of facial expressions in \gls{sl}s and the challenges associated with their synthesis. Section~\ref{ch:facial_expressions:adding_facial_expressions_to_azee} describes the extension of the AZee model to include facial expressions, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Section~\ref{ch:facial_expressions:results} presents the results of our method, including a qualitative evaluation of the synthesized facial expressions and a quantitative comparison with ground truth expressions. Finally, Section~\ref{ch:facial_expressions:conclusion} concludes the chapter and outlines future directions for research.
 
@@ -209,6 +207,14 @@ v_i' = v_i + \sum_{j=1}^{k} \alpha_j \Delta v_i^j
 
 \section{Motion Curves for Blendshapes}
 \label{ch:facial_expressions:motion_curves_for_blendshapes}
+
+For shape keys, the motion curves (discussed earlier in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:motion_curves} of chapter~\ref{ch:background_work}) represent time in x axis, and the weight of the shape key in the y axis. Each shape key has one motion curve. Figure~\ref{fig:motion_curves_shape_keys} shows how motion curves can be used for shape keys for the facial expressions of the above example.
+
+\begin{figure}
+    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_shape_keys.png}
+    \caption{Motion Curves for Shape Keys}
+    \label{fig:motion_curves_shape_keys}
+\end{figure}
 
 After creating the blendshapes, we used motion curve based templates (as discussed earlier in chapter~\ref{ch:intermediate_blocks_pose_correction}) to control how these shapes are animated over time. Motion curves define the changes in the blendshape's influence over the course of an animation, allowing for smooth transitions between different facial expressions.
 
