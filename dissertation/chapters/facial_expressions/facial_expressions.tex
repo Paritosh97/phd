@@ -10,26 +10,12 @@ However, synthesizing facial expressions for signing avatars presents significan
 
 Previous chapters focused on the synthesis of skeletal features in \gls{sl}. In contrast, this chapter centers on the synthesis of facial expressions from the AZee model, emphasizing their critical role in the conveyance of grammatical information in \gls{sl}s.
 
-The chapter is structured as follows: todo
+The chapter is structured as follows: Section~\ref{ch:facial_expressions:background} provides an overview of the importance of facial expressions in \gls{sl}s and the challenges associated with their synthesis. Section~\ref{ch:facial_expressions:adding_facial_expressions_to_azee} describes the extension of the AZee model to include facial expressions, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Section~\ref{ch:facial_expressions:results} presents the results of our method, including a qualitative evaluation of the synthesized facial expressions and a quantitative comparison with ground truth expressions. Finally, Section~\ref{ch:facial_expressions:conclusion} concludes the chapter and outlines future directions for research.
 
-\section{Adding Facial Expressions to AZee}
+\section{Extended the \emph{morph} set in AZee}
 \label{ch:facial_expressions:adding_facial_expressions_to_azee}
 
-The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first taks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (figure~\ref{fig:all_expressions_breves}). The frequency of each expression in the corpus is shown in figure~\ref{fig:expression_frequency}.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/all_expressions_breves.png}
-    \caption{All facial expressions in the 40 brèves corpus}
-    \label{fig:all_expressions_breves}
-\end{figure}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/expression_frequency.png}
-    \caption{Frequency of facial expressions in the 40 brèves corpus}
-    \label{fig:expression_frequency}
-\end{figure}
+The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first taks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (\appendix{facial_expressions_40b_images, facial_expressions_40frequency}).
 
 \subsection{Defining AZee Rules in terms of Action Units}
 \label{ch:facial_expressions:defining_azee_rules_in_terms_of_action_units}
@@ -56,12 +42,65 @@ While it is a good starting point, manual adjustments were required by a linguis
     \label{ch:facial_expressions:fig:face_adjust}
 \end{figure}
 
-\section{Blendshape Creation}
+In total, we extended the low-level AZee language morph set with 94 morphs corresponding to most of the action units in the \gls{facs} system (figure~\ref{tab:added_units}) along with some additional blendshapes for the tongue. A few action units were not added~\ref{tab:not_added} since they were controlled by other skeletal constraints. Some morphs are also alternative blendshapes for the same action unit~\ref{tab:alternative_blendshapes} but with a different effect on the face.
+
+\section{Modeling Blendshapes for Facial Expressions}
 \label{ch:facial_expressions:blendshape_creation}
 
-Once the AUs were identified, we used FACSHuman~\cite{gilbert2021facshuman} blendshapes as reference to create shapekeys in blender that correspond to each AU (figure~\ref{ch:facial_expressions:fig:facshuman_blendshapes}). Shape keys (figure~\ref{ch:facial_expressions:fig:shape_keys}) are essentially different versions of a 3D model, each representing a specific change in vertices. By blending and interpolating these keys together, we can create a wide range of mesh shapes.
+Once the AUs were identified, we used FACSHuman~\cite{gilbert2021facshuman} blendshapes as reference to create shapekeys on our BAZeel avatar that correspond to each AU (figure~\ref{ch:facial_expressions:fig:facshuman_blendshapes}). Shape keys (figure~\ref{ch:facial_expressions:fig:shape_keys}) are essentially different versions of a 3D model, each representing a specific change in vertices. By blending and interpolating these keys together, we can create a wide range of mesh shapes.
 
-Since the FACSHuman blendshape work on any MakeHuman template mesh, this technique of synthesis is avatar independant. However, since the original model doesn't cover all the blendshapes(for all the face meshes), some blendshapes were created manually. The complete process involved iterating between manual adjustments and automated tools to ensure that the blendshapes accurately captured the intended expressions. The creation of blendshapes also involved ensuring that they could be seamlessly combined to create complex expressions. For example, the blendshape for AU4 (Brow Lowerer) was designed to work in conjunction with AU6 (Cheek Raiser) and AU12 (Lip Corner Puller) to create expressions of anger or determination. This required careful coordination of the vertex movements across different blendshapes to avoid unnatural deformations or artifacts in the final animation.
+Since the FACSHuman blendshape work on any MakeHuman template mesh, this technique of synthesis is avatar-independant. However, since the original model didn't cover all the blendshapes (for all of the facial meshes), some blendshapes were created manually. The creation of blendshapes also involved ensuring that they could be seamlessly combined to create complex expressions. For example, the blendshape for AU4 (Brow Lowerer) was designed to work in conjunction with AU6 (Cheek Raiser) and AU12 (Lip Corner Puller) to create expressions of anger or determination.
+
+Let \( V \) be the set of vertices of the 3D facial mesh, where \( V = \{ v_1, v_2, \dots, v_n \} \), and each vertex \( v_i \) has a position in 3D space \( v_i = (x_i, y_i, z_i) \). Each facial Action Unit (AU) \( A_j \) modifies the positions of the vertices based on predefined shape key transformations.
+
+\subsection{Shape Key Definition}
+\label{ch:facial_expressions:blendshape_creation:shape_key_definition}
+
+For each AU \( A_j \), let \( S_j \) be the shape key associated with that AU. \( S_j \) defines a vector of vertex displacements for extreme positions. Specifically, for a vertex \( v_i \), the shape key specifies a displacement \( \Delta v_i^j = (\Delta x_i^j, \Delta y_i^j, \Delta z_i^j) \), where:
+
+\[
+\Delta v_i^j = (x_i^j - x_i, y_i^j - y_i, z_i^j - z_i)
+\]
+
+Here, \( (x_i^j, y_i^j, z_i^j) \) are the extreme position coordinates of vertex \( v_i \) under AU \( A_j \).
+
+\subsection{AU Activation}
+\label{ch:facial_expressions:blendshape_creation:au_activation}
+
+Let \( \alpha_j \in [0, 1] \) be the activation level of AU \( A_j \), where:
+\begin{itemize}
+    \item \( \alpha_j = 0 \) means the AU is not activated (neutral position),
+    \item \( \alpha_j = 1 \) means the AU is fully activated (extreme position).
+\end{itemize}
+
+\subsection{Vertex Position Update}
+\label{ch:facial_expressions:blendshape_creation:vertex_position_update}
+
+For a given activation level \( \alpha_j \), the new position \( v_i' = (x_i', y_i', z_i') \) of vertex \( v_i \) under the influence of AU \( A_j \) is computed as:
+
+\[
+v_i' = v_i + \alpha_j \Delta v_i^j
+\]
+
+This can be expanded as:
+\[
+x_i' = x_i + \alpha_j \Delta x_i^j
+\]
+\[
+y_i' = y_i + \alpha_j \Delta y_i^j
+\]
+\[
+z_i' = z_i + \alpha_j \Delta z_i^j
+\]
+
+\subsection{Combined Effect of Multiple AUs}
+\label{ch:facial_expressions:blendshape_creation:combined_effect_of_multiple_aus}
+
+If multiple AUs \( \{ A_1, A_2, \dots, A_k \} \) are active simultaneously, the final position of vertex \( v_i \) is determined by the weighted sum of the displacements for each AU:
+
+\[
+v_i' = v_i + \sum_{j=1}^{k} \alpha_j \Delta v_i^j
+\]
 
 \begin{figure}
     \centering
@@ -76,8 +115,6 @@ Since the FACSHuman blendshape work on any MakeHuman template mesh, this techniq
     \caption{Blender interface. (a) Shape Key properties (b) 3D Viewport (c) Non-linear Editor (d) Action Editor (e) AZee editor}
     \label{ch:facial_expressions:fig:shape_keys}
 \end{figure}
-
-Lastly, we extended the low-level AZee language morph set with 94 blendshapes corresponding to most of the action units in the FACS system (figure~\ref{tab:added_units}) along with some additional blendshapes for the tongue. A few action units were not added~\ref{tab:not_added} since they were controlled by other skeletal constraints. Some morphs are also alternative blendshapes for the same action unit~\ref{tab:alternative_blendshapes} but with a different effect on the face.
 
 \begin{table}[h]
     \centering
@@ -145,7 +182,6 @@ Lastly, we extended the low-level AZee language morph set with 94 blendshapes co
     \label{tab:not_added} 
 \end{table}
 
-
 \vspace{1cm}
 
 \begin{table}
@@ -171,16 +207,14 @@ Lastly, we extended the low-level AZee language morph set with 94 blendshapes co
     \label{tab:alternative_blendshapes}
 \end{table}
 
-
-
-\subsection{Motion Curves for Blendshapes}
+\section{Motion Curves for Blendshapes}
 \label{ch:facial_expressions:motion_curves_for_blendshapes}
 
-After creating the blendshapes, we generated motion curves (more discussed in chapter~\ref{ch:intermediate_blocks_pose_correction}) to control how these shapes are animated over time. Motion curves define the changes in the blendshape's influence over the course of an animation, allowing for smooth transitions between different facial expressions.
+After creating the blendshapes, we used motion curve based templates (as discussed earlier in chapter~\ref{ch:intermediate_blocks_pose_correction}) to control how these shapes are animated over time. Motion curves define the changes in the blendshape's influence over the course of an animation, allowing for smooth transitions between different facial expressions.
 
-We extended our intermediate block generation algorithm to include motion curves for facial morphs. This involved creating additional curves that specify the timing and intensity of facial movements based on the template. By controlling the acceleration and deceleration of these movements, we were able to create more naturalistic animations that reflect the dynamic nature of facial expressions.
+We used the still images from the corpus as the apex of our curves (figure~\ref{ch:facial_expressions:fig:motion_curve_apex}). Next, we extended our existing intermediate block generation algorithm to include motion curves for facial morphs. This involved creating additional curves that specify the timing and intensity of facial movements based on the template. By controlling the acceleration and deceleration of these movements, we were able to create more naturalistic animations that reflect the dynamic nature of facial expressions.
 
-For example, in the expression "big-threatening," the motion curves were designed to gradually increase the influence of the blendshapes corresponding to AU10 (Upper Lip Raiser) and AU25 (Lips Part) while simultaneously decreasing the influence of AU4 (Brow Lowerer) as the expression transitions from a neutral state to one of aggression (figure~\ref{ch:facial_expressions:fig:motion_curve_example}). This careful modulation of the blendshape influences over time resulted in an expression that not only looked realistic but also conveyed the intended emotional and grammatical cues effectively.
+For example, in the expression \emph{big-threatening}, the motion curves were designed to gradually increase the influence of the blendshapes corresponding to AU10 (Upper Lip Raiser) and AU25 (Lips Part) while simultaneously decreasing the influence of AU4 (Brow Lowerer) as the expression transitions from a neutral state to one of aggression (figure~\ref{ch:facial_expressions:fig:motion_curve_example}).
 
 \begin{figure}
     \centering
@@ -189,12 +223,10 @@ For example, in the expression "big-threatening," the motion curves were designe
     \label{ch:facial_expressions:fig:motion_curve_example}
 \end{figure}
 
-%todo metahuman, flame, etc.
-
 \section{Results and Evaluation}
 \label{ch:facial_expressions:results}
 
-Synthesis of all the facial expressions from the 40 brèves corpus can be seen in table~\ref{tab:facial_expressions}. The expressions were created by combining the relevant blendshapes to produce realistic and expressive facial animations.
+Synthesis of all the facial expressions from the 40 brèves corpus (\appendix{facial_expressions_40b_images}) can be seen in table~\ref{tab:facial_expressions}. The expressions were created by combining the relevant blendshapes to produce realistic and expressive facial animations.
 
 % todo finish table
 \begin{table}
@@ -211,10 +243,7 @@ Synthesis of all the facial expressions from the 40 brèves corpus can be seen i
     \label{tab:facial_expressions}
 \end{table}
 
-\section{Evaluation}
-\label{ch:facial_expressions:evaluation}
-
-Table~\ref{tab:facial_expressions_evaluation} shows the subjective evaluation by a linguist of the facial expressions synthesized using the AZee framework. The expressions were assessed based on their accuracy, expressiveness, and effectiveness in conveying the intended emotional and grammatical cues.
+Table~\ref{tab:facial_expressions_evaluation} shows the subjective evaluation by the linguist who created the corpus of the facial expressions using AZee. The expressions were assessed on isolated still images of the apex of their blendshapes based on their accuracy, expressiveness, and effectiveness in conveying the intended emotional and grammatical cues.
 
 \begin{table*}
     \centering
@@ -259,7 +288,7 @@ Table~\ref{tab:facial_expressions_evaluation} shows the subjective evaluation by
 
 We observe that expressions that involved subtle mouth movements, such as "it-is-a-shame" or "something-sticks-out," were more challenging to model accurately, highlighting areas for further refinement.
 
-Table~\ref{tab:facial_expressions_quantitative} shows the quantitative evaluation of the facial expressions using the Frechet Expression Distance (FED). We also fitted FLAME~\cite{FLAME} on the ground truth facial expressions~\ref{ch:facial_expressions:fig:spectre} and compared them to the expressions synthesized using our method framework. The FED scores provide a measure of the similarity between the ground truth and synthesized expressions, with lower scores indicating a closer match.
+Table~\ref{tab:facial_expressions_quantitative} shows the quantitative evaluation of the facial expressions using the Frechet Expression Distance (FED). We also fitted FLAME~\cite{FLAME} on the ground truth facial expressions (figure~\ref{ch:facial_expressions:fig:spectre}) and compared them to the expressions synthesized using our method framework. The FED scores provide a measure of the similarity between the ground truth and synthesized expressions, with lower scores indicating a closer match.
 
 \begin{figure}
     \centering
@@ -294,7 +323,7 @@ The following link shows the comparison between the two versions (and the SGNify
 \section{Conclusion}
 \label{ch:facial_expressions:conclusion}
 
-Facial expressions play a crucial role in \gls{sl} communication, conveying both emotional and grammatical information. In this chapter, we presented a method for synthesizing facial expressions using the AZee framework, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Our method involved analyzing AUs from the FACS system, creating blendshapes based on these AUs, and generating motion curves to animate the blendshapes. The synthesized facial expressions were evaluated subjectively by a linguist and quantitatively using the Frechet Expression Distance (FED) metric, demonstrating the effectiveness of our method in capturing the nuances of facial movements. The results show that the synthesized expressions closely matched the ground truth expressions, highlighting the potential of our method for enhancing the realism and expressiveness of signing avatars. Future work will focus on refining the blendshapes and motion curves to improve the accuracy and naturalness of the facial expressions, as well as exploring the integration of emotion recognition systems to generate facial expressions that align with the emotional tone of the signed message. By continuing to develop and refine our method, we aim to create more realistic and effective facial animations for \gls{sl} synthesis, enhancing the overall quality and accessibility of \gls{sl} content.
+In this chapter, we presented a method for synthesizing facial expressions using the AZee framework, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Our method involved analyzing AUs from the \gls{facs} system and extending the morph set in the AZee language with 94 blendshapes. Next we created those blendshapes on our avatar based on a MakeHuman template mesh. We also used motion curves to animate these blendshapes. The synthesized facial expressions were evaluated subjectively by a linguist and quantitatively using the Frechet Expression Distance (FED) metric, demonstrating the effectiveness of our method in capturing the nuances of facial movements. The results show that the synthesized expressions closely matched the ground truth expressions, highlighting the potential of our method for enhancing the realism and expressiveness of signing avatars. Future work will focus on refining the blendshapes and motion curves to improve the accuracy and naturalness of the facial expressions, as well as exploring the integration of emotion recognition systems to generate facial expressions that align with the emotional tone of the signed message. By continuing to develop and refine our method, we aim to create more realistic and effective facial animations for \gls{sl} synthesis, enhancing the overall quality and accessibility of \gls{sl} content.
 
 
 \end{document}

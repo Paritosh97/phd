@@ -1,6 +1,4 @@
 \documentclass[../../main.tex]{subfiles}
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.18}
 \begin{document}
 \chapter{Intermediate Blocks, AZee Templates and Pose Correction}
 \label{ch:intermediate_blocks_pose_correction}
@@ -15,7 +13,6 @@ In this chapter, section~\ref{ch:intermediate_blocks_pose_correction:intermediat
 
 \section{Intermediate Block Generation}
 \label{ch:intermediate_blocks_pose_correction:intermediate_block_generation}
-
 
 Intermediate blocks are blocks of motion not specified by the AZee model. Building on the concepts of motion curves and templates, intermediate block generation is a process in creating smooth transitions between constrained and pre-animated blocks. Interpolation techniques, such as linear and spline interpolation, can be used to generate intermediate poses or frames that maintain the semantic consistency of the intended sign. Figure ~\ref{fig:info_about_intermediate_example} shows intermediate blocks generated for the AZee rule \emph{info-about(topic,info)}.
 

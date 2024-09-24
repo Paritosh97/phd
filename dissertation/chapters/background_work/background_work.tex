@@ -649,7 +649,16 @@ Most facial expression research is motivated by synthesis from voice signals. Th
 \subparagraph{Emotion Recognition}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:emotion_recognition}
 
-Emotion recognition systems use machine learning algorithms to analyze facial features and identify the underlying emotional state. The most common approach to define emotions is Ekman's \gls{facs}~\cite{ekman1978facial}, which categorizes facial expressions into action units (AUs) (figure~\ref{fig:action_units}). EMOCA~\cite{danvevcek2022emoca} uses 3D face reconstruction to capture emotional expressions accurately, significantly improving expression quality over previous methods.
+Emotion recognition systems use machine learning algorithms to analyze facial features and identify the underlying emotional state. The most common approach to define emotions is Ekman's \gls{facs}~\cite{ekman1978facial}, which categorizes facial expressions into action units (AUs) (figure~\ref{fig:action_units}). Various deep learning models have been developed to recognize AUs and emotions from facial images. One such model~\cite{luo2022learning} (figure~\ref{fig:au_detector}) combines edge features and inter-AU relations using a \gls{gcn}. This approach captures both spatial and contextual dependencies, allowing the model to better represent complex facial expressions and improve the accuracy of Action Unit recognition.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{chapters/background_work/images/au_detector.pdf}
+    \caption{AU Detector using GCNs}
+    \label{fig:au_detector}
+\end{figure}
+
+EMOCA~\cite{danvevcek2022emoca} is another work which uses uses 3D face reconstruction to capture emotional expressions accurately, significantly improving expression quality over previous methods.
 
 \begin{figure}
     \centering
