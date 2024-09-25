@@ -3,9 +3,9 @@
 \chapter{Avatar Creation and Pose Synthesis}
 \label{ch:avatar_creation_pose_synthesis}
 
-Before we can animate \gls{sl}, a well-crafted avatar is essential. This chapter explores the avatar creation process and integrates rigging layers to the pre-existing low-level AZee synthesizor. Rigging, which sets up a skeletal structure to drive a character's mesh, is critical for achieving realistic movement and deformation, particularly in capturing the nuanced expressions of \gls{sl}.
+Before we can animate \gls{sl}, a well-crafted avatar is essential. This chapter explores the avatar creation process and integrates rigging layers to the pre-existing low-level AZee synthesizer. Rigging, which sets up a skeletal structure to drive a character's mesh, is critical for achieving realistic movement and deformation, particularly in capturing the nuanced expressions of \gls{sl}.
 
-The layered approach provides a sophisticated method for managing these complexities. By dividing the rigging process into distinct layers—each addressing specific aspects of movement and deformation—we gain greater control and flexibility. This strategy enables the synthesis system to function with multiple avatars and is faster and more accurate than the previous synthesizor.
+A layered approach provides a sophisticated method for managing these complexities. By dividing the rigging process into distinct layers—each addressing specific aspects of movement and deformation—we gain greater control and flexibility. This strategy enables the synthesis system to function with multiple avatars and is faster and more accurate than the previous synthesizer.
 
 In this chapter, section~\ref{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars} introduces a procedural rigging system for signing avatars, which automates the rigging process and enables the generation of complex \gls{sl} gestures. Section~\ref{ch:avatar_creation_pose_synthesis:results} presents the results of the implementation, and section~\ref{ch:avatar_creation_pose_synthesis:evaluation} evaluates the performance, accuracy, and quality of the animation. Finally, section~\ref{ch:avatar_creation_pose_synthesis:conclusion} concludes the chapter and discusses future work.
 
@@ -18,7 +18,7 @@ A signing avatar differs significantly from the traditional systems. To begin wi
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/upper_body_avatar.png}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/upper_body_avatar.png}
     \caption{An example of an upper body avatar rig}
     \label{ref:upper_body_avatar}
 \end{figure}
@@ -28,41 +28,23 @@ However for procedurally animating a signing avatar, the complexity of \gls{sl} 
 \subsection{AZee Blender interface}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:azee_blender_interface}
 
-The previous low level synthesizor for AZee~\cite{nunnari2018animating} was based on an armature in blender. These bones and sites were mapped to a \emph{SkelSpec} structure. Similarly, AZee's abstract posture was mapped to the \emph{SkelSpec} structure as well. The \emph{SkelSpec} structure thus formed as an intermediate bridge between an Animated AZee Score and the armature (figure~\ref{fig:old_interface}). 
+The old synthesizer used a \emph{SkelSpec} structure (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_blender_interface}) to sync an AZee posture and a blender armature. Due to the complexity of this \emph{SkelSpec} structure, the animation had too much latency. One of the first contributions of our work was to create a new interface for the low level synthesizer for AZee. This new interface didn't have a \emph{SkelSpec} (figure~\ref{fig:new_interface}) and interacted directly with the blender armature. 
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/old_interface.png}
-    \caption{The old interface of the low level synthesizor for AZee}
-    \label{fig:old_interface}
-\end{figure}
-
-Due to the complexity of the \emph{SkelSpec} structure, the animation had too much latency. One of the first contributions of our work was to create a new interface for the low level synthesizor for AZee. This new interface didn't have a \emph{SkelSpec} (figure~\ref{fig:new_interface}) and interacted directly with the blender armature. 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/new_interface.png}
-    \caption{The new interface of the low level synthesizor for AZee}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/new_interface.png}
+    \caption{The new interface of the low level synthesizer for AZee}
     \label{fig:new_interface}
 \end{figure}
 
 \subsection{Sites on the Avatar}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:auto_site_generation}
 
-The AZee low-level language consists of 332 sites (appendix~\ref{appendix:sites}) which are crucial to create posture suing various types of constraints. For example, the \emph{place} constraint requires a site to be placed at a specific location on the avatar's mesh. These sites are used to define the constraints that drive the avatar's movement and deformation during animation. In the previous low level synthesizor for AZee, these sites were represented as empty objects which had to be created manually in blender. This was a tedious time consuming process process and could lead to errors (figure~\ref{fig:prev_sites}).
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/prev_sites.png}
-    \caption{Manually created sites in the previous low level synthesizor for AZee}
-    \label{fig:prev_sites}
-\end{figure}
-
-To automate this, we can use AZee's bone structure as reference as it remains consistent across avatars. For this, we use a \textbf{directional surface projection technique} (Figure~\ref{fig:site_surface_projection}), where points are projected from a bone's position in a specified direction to detect intersections with the avatar's surface. In this case, the projection is initiated from a bone's position within the avatar's mesh, and the intersection point is used to generate a site. This algorithm generates sites based on the bone's location and orientation, ensuring that the sites are accurately positioned on the avatar's mesh. Algorithm~\ref{alg:site_generation_with_projection} outlines the projection process for automatic site generation.
+The sites in the previous synthesizer were represented as blender empty objects and had to be manually created (explained in \ref~{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_sites}) to automate this site creation, we can use AZee's bone structure as reference as it remains consistent across avatars. For this, we use a \textbf{directional surface projection technique} (Figure~\ref{fig:site_surface_projection}), where points are projected from a bone's position in a specified direction to detect intersections with the avatar's surface. In this case, the projection is initiated from a bone's position within the avatar's mesh, and the intersection point is used to generate a site. This algorithm generates sites based on the bone's location and orientation, ensuring that the sites are accurately positioned on the avatar's mesh. Algorithm~\ref{alg:site_generation_with_projection} outlines the projection process for automatic site generation.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/site_surface_projection.png}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/site_surface_projection.png}
     \caption{Projection example for site generation}
     \label{fig:site_surface_projection}
 \end{figure}
@@ -112,21 +94,21 @@ The generated sites can be visualized on the avatar in figure~\ref{fig:sites_baz
     \centering
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{chapters/rigging_layers/images/sites_body_front.png}
+        \includegraphics[width=\textwidth]{chapters/avatar_creation_pose_synthesis/images/sites_body_front.png}
         \caption{Front View of Body Sites}
         \label{fig:sites_body_front}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{chapters/rigging_layers/images/sites_body_back.png}
+        \includegraphics[width=\textwidth]{chapters/avatar_creation_pose_synthesis/images/sites_body_back.png}
         \caption{Back View of Body Sites}
         \label{fig:sites_body_back}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{chapters/rigging_layers/images/sites_hand.png}
+        \includegraphics[width=\textwidth]{chapters/avatar_creation_pose_synthesis/images/sites_hand.png}
         \caption{Hand Sites}
         \label{fig:sites_hand}
     \end{subfigure}
@@ -137,19 +119,10 @@ The generated sites can be visualized on the avatar in figure~\ref{fig:sites_baz
 \subsection{Creating the bone heirarchy}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers}
 
-The previous custom rig contained 57 bones (appendix~\ref{appendix:old_bone_list}). These bones were initially structured to accommodate the unique skeletal system requirements of the AZee framework, which utilizes a "rotation first" paradigm. However, since most 3D softwares operate on a "translation first" paradigm, a conversion process was necessary. This conversion involved mapping each AZee bone to two corresponding avatar bones: one for translation and one for rotation, with the rotation bone named by appending a ".rot" suffix to the original bone name (figure~\ref{fig:old_bone_structure}).
+The previous system only used an armature with rotation and translation bones (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_heirarchy}). We chose to work from mixamo (section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:mixamo}) based avatar skeletons and also use account for mesh deformity based on the constraints. To address this, we used bone layers to organize the bones into separate groups based on their function and purpose. Bone layers are often used in 3D animation software to organize and manage bones in a rig. By grouping bones into separate layers, animators can control which bones are visible and selectable at any given time, making it easier to work with complex rigs and animations. The new system has 3 types of bone layers: the deformation bone layer, the inverse kinematics (IK) layer, and the forward kinematics (FK) layer.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/old_bone_structure.png}
-    \caption{Duplicate bones for rotation and translation}
-    \label{fig:old_bone_structure}
-\end{figure}
-
-The problem with this system however, is that it doesn't accoutn for mesh deformity. To address this, we used bone layers to organize the bones into separate groups based on their function and purpose. Bone layers are often used in 3D animation softwares to organize and manage bones in a rig. By grouping bones into separate layers, animators can control which bones are visible and selectable at any given time, making it easier to work with complex rigs and animations. The new system has 3 types of bone layers: the deformation bone layer, the inverse kinematics (IK) layer, and the forward kinematics (FK) layer.
-
-\subsection{Deformation Bone Layer}
-\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:deform_bone_layer}
+\subsubsection{Deformation Bone Layer}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers:deform_bone_layer}
 
 The deformation bone layer(figure~\ref{fig:deform_layer}) is the foundation of the avatar's rig. It includes the bones that directly influence the mesh of the character, controlling how the skin deforms in response to movement. This layer is responsible for the overall shape and posture of the avatar, ensuring that the character's movements are smooth and realistic.
 
@@ -157,13 +130,13 @@ In this layer, the bones are typically organized into a hierarchy, with the root
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/deform_layer.png}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/deform_layer.png}
     \caption{Deformation bone layer}
     \label{fig:deform_layer}
 \end{figure}
 
-\subsection{Forward Kinematics Layer}
-\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:fk_layer}
+\subsubsection{Forward Kinematics Layer}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers:fk_layer}
 
 The forward kinematics (FK) layer (figure~\ref{fig:fk_layer}) controls the rotation of bones in a hierarchical manner, where the rotation of a parent bone affects all its children. This layer is used for broader, more deliberate movements, such as head tilts, body leans, or full-body rotations.
 
@@ -171,13 +144,13 @@ FK provides animators with a high degree of control over each individual bone in
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/fk_layer.png}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/fk_layer.png}
     \caption{FK bone layer}
     \label{fig:fk_layer}
 \end{figure}
 
-\subsection{Inverse Kinematics Layer}
-\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:ik_layer}
+\subsubsection{Inverse Kinematics Layer}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers:ik_layer}
 
 The inverse kinematics (IK) layer (figure~\ref{fig:ik_layer}) is responsible for positioning the avatar's fingers, limbs and spine by solving for the joint angles required to achieve a desired end-effector position.
 
@@ -185,7 +158,7 @@ A separate IK layer ensures that the FK configuration is not lost during constra
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/ik_layer.png}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/ik_layer.png}
     \caption{IK bone layer}
     \label{fig:ik_layer}
 \end{figure}
@@ -193,73 +166,59 @@ A separate IK layer ensures that the FK configuration is not lost during constra
 \subsection{Constraint Based Posture Optimization}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:cb_posegen}
 
-The previous low level synthesizor for AZee~\cite{nunnari2018animating} used a constraint based optimization algorithm to generate the armature pose for a frame. This algorithm collects all posture constaints given by the AZee Animated Score for every frame and solves for the posture by optimizing these constraints using distance functions. 
+The previous low level synthesizer for AZee used a constraint based optimization algorithm (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:pose_generation) of chapter~\ref{ch:background_work}) to generate the armature pose for a frame. This algorithm collects all posture constraints given by the AZee Animated Score for every frame and solves for the posture by optimizing these constraints using distance functions. 
 
-However, their approach handles only placements and orientations and uses a flattened animated AZee Score. This was improved using the algorithm~\ref{alg:trimmed_multi_track_optimization} by generating from the multi-track synced score itself(more discussed in chapter~\ref{ch:multi_track}) with support for other constraints such as \emph{morph}, \emph{lookat} and \emph{trill}.
+However, their approach handles only placements and orientations and uses a flattened animated AZee Score. We improved on this using the algorithm~\ref{alg:trimmed_multi_track_optimization} by generating from the multi-track synced score itself (explained in section~\ref{ch:background_work:sign_language_descriptions:azee:representation}). We also added support for other constraints such as \emph{morph}, \emph{lookat} and \emph{trill}.
 
 \begin{algorithm}
-    \caption{Constraint-Based Optimization for Posture Synthesis for a Multi-Track Timeline}
-    \label{alg:trimmed_multi_track_optimization}
+    \caption{Constraint-Based Optimization for Posture Synthesis}
+    \label{alg:trimmed_optimization}
     \begin{algorithmic}[1]
-        \Require $\text{PostureConstraints} \ \mathit{posture\_constraint\_DAG}$, $\text{Object} \ \mathit{armature\_object}$, $\text{FrameRange} \ \mathit{frames}$
-        \Ensure Armature object is posed according to the constraints
+        \Require $\mathit{posture\_constraint\_DAG}$, $\mathit{armature\_object}$, $\mathit{frames}$
+        \Ensure Armature object posed per constraints
         
-        \State \textbf{Initialize:} $i \gets 0$
-        \State $distance\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_site\_distance\_threshold}$, $angle\_threshold \gets \mathit{bpy.context.scene.azee\_ik\_bone\_rot\_angle\_threshold \times \pi / 180}$
-        \State $max\_iterations \gets \mathit{bpy.context.scene.azee\_ik\_max\_iterations}$
-        \State $\mathit{sorted\_constraints} \gets \mathit{posture\_constraint\_DAG.topological\_sort()}$
-        \State $frames\_to\_keyframe \gets \textsc{DetermineFramesToKeyframe}(\mathit{frames}, \mathit{dynamic\_points})$
+        \State \textbf{Initialize:} $i \gets 0$, $max\_iterations \gets \mathit{scene.max\_iterations}$
+        \State $\mathit{sorted\_constraints} \gets \mathit{posture\_constraint\_DAG.sort()}$, $\mathit{frames\_to\_keyframe} \gets \textsc{DetermineFrames}(\mathit{frames})$
         
         \While{$i < max\_iterations$}
             \ForAll {$f \in \mathit{frames\_to\_keyframe}$}
-                \State $\mathit{cumulative\_loss} \gets 0.0$
+                \State $\mathit{loss} \gets 0$
                 \ForAll {$constraint \in \mathit{sorted\_constraints}$}
-                    \State \textbf{Apply Constraint:} \textsc{ApplyConstraint}($constraint$, $f$)
-                    \State $\mathit{cumulative\_loss} \gets cumulative\_loss + \mathit{constraint.get\_loss(f)}$
+                    \State \textsc{ApplyConstraint}($constraint$, $f$)
+                    \State $\mathit{loss} \gets loss + \mathit{constraint.get\_loss(f)}$
                 \EndFor
-                \If {$cumulative\_loss < \mathit{bpy.context.scene.azee\_animator\_threshold}$}
-                    \State \textbf{Break:} \textbf{end while}
+                \If {$loss < \mathit{scene.threshold}$}
+                    \State \textbf{Break}
                 \EndIf
-                \State \textbf{Insert Keyframe:} \textsc{InsertKeyframe}($f$)
+                \State \textsc{InsertKeyframe}($f$)
             \EndFor
             \State $i \gets i + 1$
         \EndWhile
         
-        \Procedure{ApplyConstraint}{$constraint, frame$}
+        \Procedure{ApplyConstraint}{$constraint, f$}
             \If {$constraint$ \textbf{is} PlacementConstraint}
-                \State \textsc{PlaceSite}($constraint.site$, \textsc{EvaluatePlacementTarget}($constraint$, $frame$))
+                \State \textsc{PlaceSite}($constraint.site$, \textsc{EvaluatePlacementTarget}($constraint$, $f$))
             \ElsIf {$constraint$ \textbf{is} OrientationConstraint}
-                \State \textsc{RotateBone}($constraint.bone$, \textsc{EvaluateOrientation}($constraint$, $frame$))
-            \ElsIf {$constraint$ \textbf{is} MorphConstraint}
-                \State \textsc{ApplyMorph}($constraint$, $frame$)
-            \ElsIf {$constraint$ \textbf{is} LookAtConstraint}
-                \State \textsc{RotateEyesToTarget}($constraint.eyes$, \textsc{EvaluateLookAtPoint}($constraint$, $frame$))
-            \ElsIf {$constraint$ \textbf{is} TrillConstraint}
-                \State \textsc{ApplyTrill}($constraint$, $frame$)
-            \ElsIf {$constraint$ \textbf{is} TranspathConstraint}
-                \State \textsc{FollowPath}($constraint.site$, \textsc{DeterminePath}($constraint$, $frame$))
+                \State \textsc{RotateBone}($constraint.bone$, \textsc{EvaluateOrientation}($constraint$, $f$))
             \Else
                 \State \textsc{HandleError}()
             \EndIf
         \EndProcedure
         
-        \Procedure{DetermineFramesToKeyframe}{$frames, dynamic\_points$}
-            \State \Return $\textsc{IdentifyKeyFrames}(\mathit{frames}) \cup \textsc{DynamicFrameRanges}(dynamic\_points)$
-        \EndProcedure
-        
-        \Procedure{InsertKeyframe}{$frame$}
-            \ForAll {$fcurve \in \mathit{armature\_object.animation\_data.action.fcurves}$}
-                \State \textsc{KeyframeInsert}($fcurve$, $frame$)
+        \Procedure{InsertKeyframe}{$f$}
+            \ForAll {$fcurve \in \mathit{armature\_object.animation\_data.fcurves}$}
+                \State \textsc{KeyframeInsert}($fcurve$, $f$)
             \EndFor
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
 
+
 To omit impossible poses, the skeleton is also assigned joint limit constraints. These constraints are used to prevent the avatar from entering physically impossible poses, such as extending or bending a joint beyond its natural range of motion. Figure~\ref{fig:joint_limits} shows an example of joint limits applied to the avatar's arm.
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/joint_limits.png}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/joint_limits.png}
     \caption{Joint limits applied to the avatar's arm}
     \label{fig:joint_limits}
 \end{figure}
@@ -269,7 +228,7 @@ To omit impossible poses, the skeleton is also assigned joint limit constraints.
 
 The word "morph" comes from the Greek word \textit{morphē} (\textgreek{μορφή}), which means "form" or "shape." In modern usage, "morph" is often used as a shorthand for "morphing." In the field of computer graphics and animation, morphs are predefined shape keys that modify the mesh of the avatar independently of the skeletal structure, allowing for a fine control of the avatar's appearance that cannot be easily achieved through bone manipulation alone. This includes subtle facial expressions, muscle bulges, and other nuanced gestures that are critical for conveying meaning in \gls{sl}.
 
-AZee didn't have any morph specification to control the avatar. Durign this work, we populated them with skeletal and facial morphs. These morphs are changes in the configuration of the avatar, which can be specified by the linguist in a range from 0 to 1. For instance, closing of hands(a change in skeleton configuration) or raising the eyebrows(a change in the 3D mesh). The syntax of a morph constraint is as follows:
+AZee didn't have any morph specification to control the avatar. During this work, we populated them with skeletal and facial morphs. These morphs are changes in the configuration of the avatar, which can be specified by the linguist in a range from 0 to 1. For instance, closing of hands(a change in skeleton configuration) or raising the eyebrows(a change in the 3D mesh). The syntax of a morph constraint is as follows:
 
 \[
 \texttt{morph } \text{\emph{'morph\_id'}} \ \texttt{weight[0, 1]}
@@ -290,14 +249,14 @@ In AZee, skeletal morphs are treated as constraints that define a forward kinema
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/adduction_abduction.jpg}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/adduction_abduction.jpg}
     \caption{Adduction and Abduction of the palm}
     \label{fig:adduction_abduction}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/hyper-extension_flexion.jpg}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/hyper-extension_flexion.jpg}
     \caption{Flextion and Hyperextension of the index finger}
     \label{fig:hyper-extension_flexion}
 \end{figure}
@@ -356,7 +315,7 @@ Facial morphs in the AZee framework provide a means to represent the complex and
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/facial_example.png}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/facial_example.png}
     \caption{Facial morph for \emph{:inter-subjecitivty}}
     \label{fig:facial_example}
 \end{figure}
@@ -402,10 +361,12 @@ The layered rigging system has been implemented and tested on the BAZeel (MakeHu
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/rigging_layers/images/layers_example.png}
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/layers_example.png}
     \caption{Example of the layered rigging system on the BAZeel avatar}
     \label{fig:layers_example}
 \end{figure}
+
+todo add more details in implementation
 
 \section{Evaluation}
 \label{ch:avatar_creation_pose_synthesis:evaluation}
@@ -424,7 +385,7 @@ The accuracy of the animation can be evaluated using the Frechet gesture distanc
         \textbf{Metric} & \textbf{Value} \\
         \hline
         Frechet Gesture Distance & todo \\
-        Old synthesizor & todo \\
+        Old synthesizer & todo \\
         Paula & todo \\
         Sgnify & todo \\
         Mocap(Retargeted) & todo \\
@@ -442,7 +403,7 @@ As observed, the generated animations are robotic in nature and lack the fluidit
 \subsection{Performance}
 \label{ch:avatar_creation_pose_synthesis:evaluation:performance}
 
-The animation time compared to the previous synthesizor are shown in table~\ref{tab:faster_executions}.
+The animation time compared to the previous synthesizer are shown in table~\ref{tab:faster_executions}.
 
 \begin{table}
     \centering

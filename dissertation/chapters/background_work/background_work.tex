@@ -66,6 +66,9 @@ HamNoSys offers a detailed representation of the nuanced components in an \gls{s
 
 Even though these previously discussed lexical approaches are effective in capturing the individual components of signs, they are limited in their ability to represent the dynamic and context-sensitive nature of \gls{sl} discourse. This is because they simplify signs as \gls{glosses}. As a reason, their applications in \gls{sl} synthesis are limited. The AZee model, however, is grounded in the concept of production rules, which link specific meanings to observable forms. This model operates on the principle that the meaning of a sign can be broken down into a set of features, which are then represented through production rules. These rules guide the generation of the sign's form, encompassing aspects like handshape, movement, and location. Designed to be both flexible and extensible, the AZee model is capable of representing a broad spectrum of signs and \gls{sl}s. It is particularly advantageous for \gls{sl} synthesis, offering a systematic and structured method for describing signs and their components.
 
+% todo add azee is best representation of SL and cite Camille
+% thus any other system are not that good 
+
 \subsubsection{Representation of an \gls{utterance} in AZee}
 \label{ch:background_work:sign_language_descriptions:azee:representation}
 
@@ -149,9 +152,10 @@ In addition to these, the AZee model includes several other important operators 
 \subsubsection{AZee Templates}
 \label{ch:background_work:sign_language_descriptions:azee:templates}
 
+% todo fix definition - they help in idetifying patterns etc
 AZee also allows for use of templates which are abstract representations of a \gls{sl} utterance, linking linguistic descriptions with animated motions. For example, an AZee template like \emph{:info-about(:âge,?info)} could match an AZee expression such as \emph{:info-about(:âge,:tens-units(:five,:two))}, where the variable \emph{info} would be assigned the function \emph{:tens-units(:five,:two)}. This template can be used to procedurally create animations, where the person's age (52, in this case) is dynamically inserted based on the template match.
 
-Lastly, an AZee description can also be drawn in the form of \gls{svg} images using AZVD~\cite{filhol2024software}. Figure~\ref{fig:azvd} shows the visual description for the \gls{utterance} "a person aged 52".
+Lastly, an AZee description can also be drawn in the form of \gls{svg} images using AZVD~\cite{filhol2024software}. Figure~\ref{fig:azvd} shows the verbalizing diagrams for the \gls{utterance} "a person aged 52".
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azvd.png}
@@ -495,7 +499,7 @@ Apart from artists, researchers too have recently explored multi-track timeline 
     \label{fig:multi_track_other}
 \end{figure}
 
-In the context of \gls{sl} synthesis, a multi-track timeline is used by Paula~\cite{filhol2017synthesizing} (more discussed in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:paula}), a system that uses pre-recorded motion data to generate multi-track animations using AZee. Paula's interface is tailored for creating \gls{sl} content, with each track representing a different aspect of the \gls{sl}. Figure~\ref{fig:paula} shows the Paula interface with a multi-track timeline for \gls{sl} synthesis.
+In the context of \gls{sl} synthesis, a multi-track timeline is used by Paula~\cite{filhol2017synthesizing} (more discussed in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:paula}), a system that uses pre-animated motion data to generate multi-track animations using AZee. Paula's interface is tailored for creating \gls{sl} content, with each track representing a different aspect of the \gls{sl}. Figure~\ref{fig:paula} shows the Paula interface with a multi-track timeline for \gls{sl} synthesis.
 
 \begin{figure}[h]
     \centering
@@ -772,7 +776,7 @@ Overall, the combination of AZee’s linguistic richness with Paula’s realisti
 \paragraph{Low-level synthesizer for AZee}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee}
 
-A low-level synthesizer for AZee~\cite{nunnari2018animating} has already been developed to address the limitations of the top-down approach used by Paula. The low-level synthesizer generates animations directly from AZee's \gls{azee_score}, allowing for a better scalability in \gls{sl} synthesis since the linghuists input can be directly used to generate animations instead of relying on artists.
+A low-level synthesizer for AZee~\cite{nunnari2018animating} has already been developed to address the limitations of the top-down approach used by Paula. The low-level synthesizer generates animations directly from AZee's \gls{azee_score}, allowing for a better scalability in \gls{sl} synthesis since the linguists input can be directly used to generate animations instead of relying on artists.
 
 \subparagraph{Animated Score}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:animated_score}
@@ -787,6 +791,45 @@ The Animated Score is a \emph{flattened} representation of the AZee \gls{cstr_sc
 \end{figure}
 
 Although AZee is multi-track by nature (where the lingusit has the ability to crate the track), the low-level AZee synthesizor uses an \emph{Animated Score} which is a flattened version of an AZee Synced Score, where all the tracks are merged into a single track. This flattening is done by collecting all the \gls{posture_constraint}s for each frame and applying them to the corresponding bone rotations during animation. Figure~\ref{fig:azee_score_armoire_combined} visualizes this flattening process shows the flattened version of the AZee Synced Score.
+
+\subparagraph{AZee Blender interface}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_blender_interface}
+
+The synthesizer was based on an armature in blender. The bones and sites of this armature were mapped to a \emph{SkelSpec} structure. Similarly, AZee's abstract posture was mapped to the \emph{SkelSpec} structure as well. The \emph{SkelSpec} structure thus formed as an intermediate bridge between an Animated \gls{azee_score} and the armature (figure~\ref{fig:old_interface}). 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/background_work/images/old_interface.png}
+    \caption{The old interface of the low level synthesizer for AZee}
+    \label{fig:old_interface}
+\end{figure}
+
+\subparagraph{Bone heirarchy}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_heirarchy}
+
+The synthesizer uses an armature contained 57 bones (appendix~\ref{appendix:old_bone_list}). These bones were structured to accommodate the unique skeletal system requirements of the AZee framework, which utilizes a "rotation first" paradigm. However, since most 3D softwares (including blender) operate on a "translation first" paradigm, a conversion process was necessary. This conversion involved mapping each AZee bone to two corresponding armature bones: one for translation and one for rotation, with the rotation bone named by appending a ".rot" suffix to the original bone name (figure~\ref{fig:old_bone_structure}).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/old_bone_structure.png}
+    \caption{Duplicate bones for rotation and translation}
+    \label{fig:old_bone_structure}
+\end{figure}
+
+\subparagraph{AZee Sites}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_sites}
+
+The AZee low-level language consists of 332 sites (appendix~\appendix{\ref{azee_sites}}) which are crucial to create posture using various types of constraints. For example, the \emph{place} constraint requires a site to be placed at a specific location on the avatar's mesh. These sites are used to define the constraints that drive the avatar's movement and deformation during animation. In this synthesizer for AZee, these sites were represented as empty objects which had to be created manually in blender (figure~\ref{fig:prev_sites}).
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{chapters/background_work/images/prev_sites.png}
+    \caption{Manually created sites in the previous low level synthesizer for AZee}
+    \label{fig:prev_sites}
+\end{figure}
+
+\subparagraph{Pose Generation}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:pose_generation}
 
 During evaluation, the low-level synthesizer creates postures for each of the frame using this Animated Score. For this, they used the algorithm~\ref{alg:trimmed_constraint_based_optimization} for the pose optimization for each of the constraints to generate the postures. 
 
@@ -858,8 +901,15 @@ This distinction between high-level and low-level synthesis reflects a trade-off
 
 To summarize:
 
+%todo put research questions here
+%todo acknowledge johns work its good for shortcuts etc and also uses azee a bit
+%todo todo acknowledge otehr work as well
+%todo acknowledge azee as well as it is a good source of input
+%todo acknowledge opensource stuff
+%acknowledge fabrizio as well as it is good and he used azee BUT he flattened.
+%take parts of everything and link to my contribution
 \begin{itemize} 
-  \item Linear systems for \gls{sl} representation are limited in their expressive capacity and fail to capture the complexity of natural \gls{sl}.
+  \item Linear systems for \gls{sl} representation are limited in their expressive capacity and fail to capture the complexity of natural \gls{sl}. %todo therefore we will not use them
   \item Non-linear systems provide better coverage and more accurately reflect the nuances of \gls{sl}.
   \item Systems like Paula and AZee, which incorporate both form and functional aspects, offer a promising approach but are hindered by the labor-intensive nature of hand-crafted animations.
   \item There is a need for low-level synthesis techniques to complement these high-level models, allowing for greater flexibility and coverage.
