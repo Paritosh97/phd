@@ -263,45 +263,44 @@ In AZee, skeletal morphs are treated as constraints that define a forward kinema
 
 Figure~\ref{fig:skeletal_morphs} shows a table of skeletal morphs and their corresponding effects on the avatar's skeleton.
 
-todo add diagrams in the figure
 \begin{figure}
     \centering
     \begin{tabular}{|c|c|}
         \hline
-        \textbf{Morph ID} & \textbf{Effect} \\
+        \textbf{Morph ID} & \textbf{Effect} \\ 
         \hline
         % Finger Morphs
-        \texttt{index\_bend\_L} & Bends the left index finger \\
-        \texttt{middle\_bend\_L} & Bends the left middle finger \\
-        \texttt{ring\_bend\_L} & Bends the left ring finger \\
-        \texttt{little\_bend\_L} & Bends the left little finger \\
-        \texttt{index\_bend\_R} & Bends the right index finger \\
-        \texttt{middle\_bend\_R} & Bends the right middle finger \\
-        \texttt{ring\_bend\_R} & Bends the right ring finger \\
-        \texttt{little\_bend\_R} & Bends the right little finger \\
-        \texttt{index\_hook\_L} & Hooks the left index finger \\
-        \texttt{middle\_hook\_L} & Hooks the left middle finger \\
-        \texttt{ring\_hook\_L} & Hooks the left ring finger \\
-        \texttt{little\_hook\_L} & Hooks the left little finger \\
-        \texttt{index\_hook\_R} & Hooks the right index finger \\
-        \texttt{middle\_hook\_R} & Hooks the right middle finger \\
-        \texttt{ring\_hook\_R} & Hooks the right ring finger \\
-        \texttt{little\_hook\_R} & Hooks the right little finger \\
-        \texttt{thumb\_bend\_L} & Bends the left thumb \\
-        \texttt{thumb\_hook\_L} & Hooks the left thumb \\
-        \texttt{thumb\_opposed\_L} & Moves the left thumb to an opposed position \\
-        \texttt{thumb\_bend\_R} & Bends the right thumb \\
-        \texttt{thumb\_hook\_R} & Hooks the right thumb \\
-        \texttt{thumb\_opposed\_R} & Moves the right thumb to an opposed position \\
-        \texttt{fingers\_spread\_L} & Spreads the fingers on the left hand \\
-        \texttt{fingers\_spread\_R} & Spreads the fingers on the right hand \\
+        \texttt{index\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_bend_L.png} \\ 
+        \texttt{middle\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_bend_L.png} \\ 
+        \texttt{ring\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_bend_L.png} \\ 
+        \texttt{little\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_bend_L.png} \\ 
+        \texttt{index\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_bend_R.png} \\ 
+        \texttt{middle\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_bend_R.png} \\ 
+        \texttt{ring\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_bend_R.png} \\ 
+        \texttt{little\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_bend_R.png} \\ 
+        \texttt{index\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_hook_L.png} \\ 
+        \texttt{middle\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_hook_L.png} \\ 
+        \texttt{ring\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_hook_L.png} \\ 
+        \texttt{little\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_hook_L.png} \\ 
+        \texttt{index\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_hook_R.png} \\ 
+        \texttt{middle\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_hook_R.png} \\ 
+        \texttt{ring\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_hook_R.png} \\ 
+        \texttt{little\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_hook_R.png} \\ 
+        \texttt{thumb\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_bend_L.png} \\ 
+        \texttt{thumb\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_hook_L.png} \\ 
+        \texttt{thumb\_opposed\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_opposed_L.png} \\ 
+        \texttt{thumb\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_bend_R.png} \\ 
+        \texttt{thumb\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_hook_R.png} \\ 
+        \texttt{thumb\_opposed\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_opposed_R.png} \\ 
+        \texttt{fingers\_spread\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/fingers_spread_L.png} \\ 
+        \texttt{fingers\_spread\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/fingers_spread_R.png} \\ 
         \hline
         % Body Posture Morphs
-        \texttt{shoulder\_raise\_L} & Raises the left shoulder \\
-        \texttt{shoulder\_raise\_R} & Raises the right shoulder \\
-        \texttt{shoulder\_shrug\_L} & Shrugs the left shoulder \\
-        \texttt{shoulder\_shrug\_R} & Shrugs the right shoulder \\
-        \texttt{spine\_extended} & Extends the spine \\
+        \texttt{shoulder\_raise\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_raise_L.png} \\ 
+        \texttt{shoulder\_raise\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_raise_R.png} \\ 
+        \texttt{shoulder\_shrug\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_shrug_L.png} \\ 
+        \texttt{shoulder\_shrug\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_shrug_R.png} \\ 
+        \texttt{spine\_extended} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/spine_extended.png} \\ 
         \hline
     \end{tabular}
     \caption{Table of skeletal morphs and their effects}
