@@ -40,7 +40,7 @@ The old synthesizer used a \emph{SkelSpec} structure (explained in section~\ref{
 \subsection{Sites on the Avatar}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:auto_site_generation}
 
-The sites in the previous synthesizer were represented as blender empty objects and had to be manually created (explained in \ref~{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_sites}) to automate this site creation, we can use AZee's bone structure as reference as it remains consistent across avatars. For this, we use a \textbf{directional surface projection technique} (Figure~\ref{fig:site_surface_projection}), where points are projected from a bone's position in a specified direction to detect intersections with the avatar's surface. In this case, the projection is initiated from a bone's position within the avatar's mesh, and the intersection point is used to generate a site. This algorithm generates sites based on the bone's location and orientation, ensuring that the sites are accurately positioned on the avatar's mesh. Algorithm~\ref{alg:site_generation_with_projection} outlines the projection process for automatic site generation.
+The sites in the previous synthesizer were represented as blender empty objects and had to be manually created (explained in \ref~{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_sites}) to automate this site creation, we can use AZee's bone structure as reference as it remains consistent across avatars. For this, we use a \textbf{directional surface projection technique} (figure~\ref{fig:site_surface_projection}), where points are projected from a bone's position in a specified direction to detect intersections with the avatar's surface. In this case, the projection is initiated from a bone's position within the avatar's mesh, and the intersection point is used to generate a site. This algorithm generates sites based on the bone's location and orientation, ensuring that the sites are accurately positioned on the avatar's mesh. Algorithm~\ref{alg:site_generation_with_projection} outlines the projection process for automatic site generation.
 
 \begin{figure}[ht]
     \centering
@@ -265,47 +265,67 @@ Figure~\ref{fig:skeletal_morphs} shows a table of skeletal morphs and their corr
 
 \begin{figure}
     \centering
-    \begin{tabular}{|c|c|}
+    \begin{tabular}{|c|c|c|c|}
         \hline
-        \textbf{Morph ID} & \textbf{Effect} \\ 
+        \textbf{Left Morphs (L)} & \textbf{Effect} & \textbf{Right Morphs (R)} & \textbf{Effect} \\ 
         \hline
         % Finger Morphs
-        \texttt{index\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_bend_L.png} \\ 
-        \texttt{middle\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_bend_L.png} \\ 
-        \texttt{ring\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_bend_L.png} \\ 
-        \texttt{little\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_bend_L.png} \\ 
-        \texttt{index\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_bend_R.png} \\ 
-        \texttt{middle\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_bend_R.png} \\ 
-        \texttt{ring\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_bend_R.png} \\ 
-        \texttt{little\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_bend_R.png} \\ 
-        \texttt{index\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_hook_L.png} \\ 
-        \texttt{middle\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_hook_L.png} \\ 
-        \texttt{ring\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_hook_L.png} \\ 
-        \texttt{little\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_hook_L.png} \\ 
-        \texttt{index\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_hook_R.png} \\ 
-        \texttt{middle\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_hook_R.png} \\ 
-        \texttt{ring\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_hook_R.png} \\ 
-        \texttt{little\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_hook_R.png} \\ 
-        \texttt{thumb\_bend\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_bend_L.png} \\ 
-        \texttt{thumb\_hook\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_hook_L.png} \\ 
-        \texttt{thumb\_opposed\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_opposed_L.png} \\ 
-        \texttt{thumb\_bend\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_bend_R.png} \\ 
-        \texttt{thumb\_hook\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_hook_R.png} \\ 
-        \texttt{thumb\_opposed\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_opposed_R.png} \\ 
-        \texttt{fingers\_spread\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/fingers_spread_L.png} \\ 
-        \texttt{fingers\_spread\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/fingers_spread_R.png} \\ 
+        \texttt{index\_bend\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_bend_L_morph.png} & 
+        \texttt{index\_bend\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_bend_R_morph.png} \\
+
+        \texttt{middle\_bend\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_bend_L_morph.png} &
+        \texttt{middle\_bend\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_bend_R_morph.png} \\
+
+        \texttt{ring\_bend\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_bend_L_morph.png} &
+        \texttt{ring\_bend\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_bend_R_morph.png} \\
+
+        \texttt{little\_bend\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_bend_L_morph.png} & 
+        \texttt{little\_bend\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_bend_R_morph.png} \\
+
+        \texttt{index\_hook\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_hook_L_morph.png} &
+        \texttt{index\_hook\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/index_hook_R_morph.png} \\
+
+        \texttt{middle\_hook\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_hook_L_morph.png} & 
+        \texttt{middle\_hook\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/middle_hook_R_morph.png} \\
+
+        \texttt{ring\_hook\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_hook_L_morph.png} &
+        \texttt{ring\_hook\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/ring_hook_R_morph.png} \\
+
+        \texttt{little\_hook\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_hook_L_morph.png} &
+        \texttt{little\_hook\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/little_hook_R_morph.png} \\
+
+        \texttt{thumb\_bend\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_bend_L.png} &
+        \texttt{thumb\_bend\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_bend_R.png} \\
+
+        \texttt{thumb\_hook\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_hook_L.png} &
+        \texttt{thumb\_hook\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_hook_R.png} \\
+
+        \texttt{thumb\_opposed\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_opposed_L.png} &
+        \texttt{thumb\_opposed\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_opposed_R.png} \\
+
+        \texttt{thumb\_spread\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_spread_L.png} &
+        \texttt{thumb\_spread\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/thumb_spread_R.png} \\
+
+        \texttt{fingers\_spread\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/fingers_spread_L_morph.png} &
+        \texttt{fingers\_spread\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/fingers_spread_R_morph.png} \\
+
+        % Shoulder Morphs
+        \texttt{shoulder\_raise\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_raise_L_morph.png} &
+        \texttt{shoulder\_raise\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_raise_R_morph.png} \\
+
+        \texttt{shoulder\_shrug\_L} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_shrug_L_morph.png} &
+        \texttt{shoulder\_shrug\_R} & \includegraphics[width=0.1\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_shrug_R_morph.png} \\
+
         \hline
-        % Body Posture Morphs
-        \texttt{shoulder\_raise\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_raise_L.png} \\ 
-        \texttt{shoulder\_raise\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_raise_R.png} \\ 
-        \texttt{shoulder\_shrug\_L} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_shrug_L.png} \\ 
-        \texttt{shoulder\_shrug\_R} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/shoulder_shrug_R.png} \\ 
-        \texttt{spine\_extended} & \includegraphics[width=0.15\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/spine_extended.png} \\ 
+        % Spine extended spanning both columns and centered
+        \multicolumn{2}{|c|}{\texttt{spine\_extended}} &
+        \multicolumn{2}{c|}{\centering\includegraphics[width=0.25\textwidth]{chapters/avatar_creation_pose_synthesis/images/morph_renders/spine_extended_morph.png}} \\
         \hline
     \end{tabular}
     \caption{Table of skeletal morphs and their effects}
     \label{fig:skeletal_morphs}
 \end{figure}
+
 
 \subsubsection{Facial Morphs}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:facial_morphs}
