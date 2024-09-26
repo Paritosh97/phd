@@ -1,4 +1,5 @@
 \documentclass[../../main.tex]{subfiles}
+\usepackage{fp}
 \begin{document}
 \chapter{Avatar Creation and Pose Synthesis}
 \label{ch:avatar_creation_pose_synthesis}
@@ -422,24 +423,42 @@ As observed, the generated animations are robotic in nature and lack the fluidit
 \subsection{Performance}
 \label{ch:avatar_creation_pose_synthesis:evaluation:performance}
 
-The animation time compared to the previous synthesizer are shown in table~\ref{tab:faster_executions}.
+The animation speedupe compared to the previous synthesizer for some \gls{lsf} signs are shown in table~\ref{tab:faster_executions}.
 
 \begin{table}
     \centering
     \begin{tabular}{|c|c|}
         \hline
-        \textbf{Interface} & \textbf{Execution time (s)} \\
+        \textbf{Interface} & \textbf{Speedup} \\
         \hline
-        Sign & Time ratio \\
-        \emph{tree} & todo \\
-        \emph{good} & todo \\
+        Sign & Speedup \\
+        \emph{arbre} (tree) & \FPeval{\result}{1.58/0.63} \\
+        \emph{bien} (good) & \FPeval{\result}{2.93/1.03} \\
+        \emph{hier} (yesterday) & \FPeval{\result}{5.8/2.2} \\
+        \emph{armoire} (cupboard) & \FPeval{\result}{21.85/8.6} \\
         \hline
     \end{tabular}
-    \caption{Comparison of execution times between the old and new interfaces}
+    \caption{Speedup compared to the previous synthesizor}
     \label{tab:faster_executions}
 \end{table}
 
-We observe that this synthesis is significantly faster because of direct integration with blender's armature. The automatic site generation and rigging also reduce the time taken to set up the avatar for animation.
+We conducted our experiments on a machine with the following specifications:
+\begin{itemize}
+    \item Processor: Intel Xeon 6248R
+    \item RAM: 32GB
+    \item GPU: NVIDIA GeForce RTX A6000
+    \item OS: Windows 10
+\end
+
+The configuration for the posture optimization algorithm was as follows:
+\begin{itemize}
+    \item Iterations: 20
+    \item Distance threshold: 0.1
+    \item Rotation threshold: 5 degrees
+    \item Solver: iTaSc
+\end{itemize}
+
+We observe that our newer method for synthesis is significantly faster because of direct integration with blender. The automatic site generation and rigging also reduce the time taken to set up the avatar for animation.
 
 \section{Conclusion}
 \label{ch:avatar_creation_pose_synthesis:conclusion}
