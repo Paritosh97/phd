@@ -1,5 +1,6 @@
 \providecommand{\main}{../..}
 \documentclass[../../main]{subfiles}
+\usepackage{longtable}
 \begin{document}
 \chapter{Facial Expressions}
 \label{ch:facial_expressions}
@@ -8,7 +9,7 @@ Facial expressions are a crucial element of communication in both spoken and \gl
 
 However, synthesizing facial expressions for signing avatars presents significant challenges due to the complexity and subtlety of these expressions. Unlike manual signs, which involve distinct hand and arm movements, facial expressions require the coordinated movement of numerous facial muscles, each contributing to the overall expression. Different facial features, such as eyebrows, eyes, and mouth, often move independently yet in harmony to produce coherent expressions. Previous chapters focused on the synthesis of skeletal features in \gls{sl}. In contrast, this chapter centers on the synthesis of facial expressions from the AZee model, emphasizing their critical role in the conveyance of grammatical information in \gls{sl}s.
 
-The chapter is structured as follows: Section~\ref{ch:facial_expressions:background} provides an overview of the importance of facial expressions in \gls{sl}s and the challenges associated with their synthesis. Section~\ref{ch:facial_expressions:adding_facial_expressions_to_azee} describes the extension of the AZee model to include facial expressions, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Section~\ref{ch:facial_expressions:results} presents the results of our method, including a qualitative evaluation of the synthesized facial expressions and a quantitative comparison with ground truth expressions. Finally, Section~\ref{ch:facial_expressions:conclusion} concludes the chapter and outlines future directions for research.
+The chapter is structured as follows: todo
 
 \section{Extended the \emph{morph} set in AZee}
 \label{ch:facial_expressions:adding_facial_expressions_to_azee}
@@ -234,39 +235,49 @@ For example, in the expression \emph{big-threatening}, the motion curves were de
 
 Synthesis of 22 facial expressions from the 40 brèves corpus can be seen in table~\ref{tab:facial_expressions}. The expressions were created by combining the relevant blendshapes to produce realistic and expressive facial animations.
 
-\begin{table}
-    \centering
-    \begin{tabular}{|c|c|c|}
-        \hline
-        \textbf{AZee rule} & \textbf{Original Expression} & \textbf{Synthesized Expression} \\
-        \hline
-        \emph{almost_reaching:} & chapters/facial_expressions/images/original_facial_expressions/almost_reaching.png & chapters/facial_expressions/images/synthesized_expressions/almost_reaching.png \\
-        \emph{big_threatening:} & chapters/facial_expressions/images/original_facial_expressions/big_threatening.png & chapters/facial_expressions/images/synthesized_expressions/big_threatening.png \\
-        \emph{closer_look:} & chapters/facial_expressions/images/original_facial_expressions/closer_look.png & chapters/facial_expressions/images/synthesized_expressions/closer_look.png \\
-        \emph{continuously:} & chapters/facial_expressions/images/original_facial_expressions/continuously.png & chapters/facial_expressions/images/synthesized_expressions/continuously.png \\
-        \emph{do_you_realise:} & chapters/facial_expressions/images/original_facial_expressions/do_you_realise.png & chapters/facial_expressions/images/synthesized_expressions/do_you_realise.png \\
-        \emph{impressive_grandiose:} & chapters/facial_expressions/images/original_facial_expressions/impressive_grandiose.png & chapters/facial_expressions/images/synthesized_expressions/impressive_grandiose.png \\
-        \emph{inter_subjectivity:} & chapters/facial_expressions/images/original_facial_expressions/inter_subjectivity.png & chapters/facial_expressions/images/synthesized_expressions/inter_subjectivity.png \\
-        \emph{it_is_a_shame:} & chapters/facial_expressions/images/original_facial_expressions/it_is_a_shame.png & chapters/facial_expressions/images/synthesized_expressions/it_is_a_shame.png \\
-        \emph{most_probably:} & chapters/facial_expressions/images/original_facial_expressions/most_probably.png & chapters/facial_expressions/images/synthesized_expressions/most_probably.png \\
-        \emph{much_almost_too_much:} & chapters/facial_expressions/images/original_facial_expressions/much_almost_too_much.png & chapters/facial_expressions/images/synthesized_expressions/much_almost_too_much.png \\
-        \emph{nothing_sticks_out:} & chapters/facial_expressions/images/original_facial_expressions/nothing_sticks_out.png & chapters/facial_expressions/images/synthesized_expressions/nothing_sticks_out.png \\
-        \emph{peacefully:} & chapters/facial_expressions/images/original_facial_expressions/peacefully.png & chapters/facial_expressions/images/synthesized_expressions/peacefully.png \\
-        \emph{something_sticks_out:} & chapters/facial_expressions/images/original_facial_expressions/something_sticks_out.png & chapters/facial_expressions/images/synthesized_expressions/something_sticks_out.png \\
-        \emph{takes_a_while:} & chapters/facial_expressions/images/original_facial_expressions/takes_a_while.png & chapters/facial_expressions/images/synthesized_expressions/takes_a_while.png \\
-        \emph{too_scared_to_look:} & chapters/facial_expressions/images/original_facial_expressions/too_scared_to_look.png & chapters/facial_expressions/images/synthesized_expressions/too_scared_to_look.png \\
-        \emph{trouble_disturbance:} & chapters/facial_expressions/images/original_facial_expressions/trouble_disturbance.png & chapters/facial_expressions/images/synthesized_expressions/trouble_disturbance.png \\
-        \emph{uneasy_awkward:} & chapters/facial_expressions/images/original_facial_expressions/uneasy_awkward.png & chapters/facial_expressions/images/synthesized_expressions/uneasy_awkward.png \\
-        \emph{with_chaos:} & chapters/facial_expressions/images/original_facial_expressions/with_chaos.png & chapters/facial_expressions/images/synthesized_expressions/with_chaos.png \\
-        \emph{with_no_precision:} & chapters/facial_expressions/images/original_facial_expressions/with_no_precision.png & chapters/facial_expressions/images/synthesized_expressions/with_no_precision.png \\
-        \emph{with_surprise:} & chapters/facial_expressions/images/original_facial_expressions/with_surprise.png & chapters/facial_expressions/images/synthesized_expressions/with_surprise.png \\
-        \emph{with_uncertainty:} & chapters/facial_expressions/images/original_facial_expressions/with_uncertainty.png & chapters/facial_expressions/images/synthesized_expressions/with_uncertainty.png \\
-        \emph{with_worry:} & chapters/facial_expressions/images/original_facial_expressions/with_worry.png & chapters/facial_expressions/images/synthesized_expressions/with_worry.png \\
-        \hline
-    \end{tabular}
-    \caption{AZee rules and their synthesized facial expressions}
-    \label{tab:facial_expressions}
-\end{table}
+\begin{longtable}{|l|c|r|}
+    \caption{Synthesized Expressions} \label{tab:facial_expressions} \\
+    \hline
+    \textbf{AZee rule} & \textbf{Original Expression} & \textbf{Synthesized Expression} \\
+    \hline
+    \endfirsthead
+
+    \hline
+    \textbf{AZee rule} & \textbf{Original Expression} & \textbf{Synthesized Expression} \\
+    \hline
+    \endhead
+
+    \hline
+    \endfoot
+
+    \hline
+    \endlastfoot
+
+    \emph{almost-reaching:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/almost_reaching.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/almost_reaching.png} \\
+    \emph{big-threatening:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/big_threatening.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/big_threatening.png} \\
+    \emph{closer-look:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/closer_look.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/closer_look.png} \\
+    \emph{continuously:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/continuously.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/continuously.png} \\
+    \emph{do-you-realise:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/do_you_realise.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/do_you_realise.png} \\
+    \emph{impressive-grandiose:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/impressive_grandiose.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/impressive_grandiose.png} \\
+    \emph{inter-subjectivity:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/inter_subjectivity.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/inter_subjectivity.png} \\
+    \emph{it-is-a-shame:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/it_is_a_shame.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/it_is_a_shame.png} \\
+    \emph{most-probably:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/most_probably.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/most_probably.png} \\
+    \emph{much-almost-too-much:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/much_almost_too_much.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/much_almost_too_much.png} \\
+    \emph{nothing-sticks-out:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/nothing_sticks_out.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/nothing_sticks_out.png} \\
+    \emph{peacefully:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/peacefully.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/peacefully.png} \\
+    \emph{something-sticks-out:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/sth_sticks_out.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/something_sticks_out.png} \\
+    \emph{takes-a-while:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/takes_a_while.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/takes_a_while.png} \\
+    \emph{too-scared-to-look:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/too_scared_to_look.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/too_scared_to_look.png} \\
+    \emph{trouble-disturbance:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/trouble_disturbance.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/trouble_disturbance.png} \\
+    \emph{uneasy-awkward:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/uneasy_awkward.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/uneasy_awkward.png} \\
+    \emph{with-chaos:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/with_chaos.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/with_chaos.png} \\
+    \emph{with-no-precision:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/with_no_precision.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/with_no_precision.png} \\
+    \emph{with-surprise:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/with_surprise.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/with_surprise.png} \\
+    \emph{with-uncertainty:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/with_uncertainty.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/with_uncertainty.png} \\
+    \emph{with-worry:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/with_worry.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/with_worry.png} \\
+\end{longtable}
+
+
 
 Table~\ref{tab:facial_expressions_evaluation} shows the subjective evaluation by the linguist who created the corpus of the facial expressions using AZee. The expressions were assessed on isolated still images of the apex of their blendshapes based on their accuracy, expressiveness, and effectiveness in conveying the intended emotional and grammatical cues.
 
