@@ -15,7 +15,7 @@ In this chapter, section~\ref{ch:avatar_creation_pose_synthesis:proc_rig_signing
 
 Rigs have been used in computer animation for decades to control the movement and deformation of characters. Traditional rigging systems typically consist of a hierarchical structure of bones, controllers, and constraints that define how the character’s mesh deforms in response to movement.
 
-A signing avatar differs significantly from the traditional systems. To begin with, no \gls{sl} uses the lower body in its articulation. This means that the rigging system for a signing avatar can be simplified to focus on the upper body as shown in figure~\ref{ref:upper_body_avatar}. 
+A signing avatar differs significantly from traditional systems. To begin with, no \gls{sl} uses the lower body in its articulation. This means that the rigging system for a signing avatar can be simplified to focus on the upper body as shown in figure~\ref{ref:upper_body_avatar}. 
 
 \begin{figure}[h]
     \centering
@@ -41,12 +41,12 @@ The old synthesizer used a \emph{SkelSpec} structure (explained in section~\ref{
 \subsection{Sites on the Avatar}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:auto_site_generation}
 
-The sites in the previous synthesizer were represented as blender empty objects and had to be manually created (explained in \ref~{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_sites}) to automate this site creation, we can use AZee's bone structure as reference as it remains consistent across avatars. For this, we use a \textbf{directional surface projection technique} (figure~\ref{fig:site_surface_projection}), where points are projected from a bone's position in a specified direction to detect intersections with the avatar's surface. In this case, the projection is initiated from a bone's position within the avatar's mesh, and the intersection point is used to generate a site. This algorithm generates sites based on the bone's location and orientation, ensuring that the sites are accurately positioned on the avatar's mesh. Algorithm~\ref{alg:site_generation_with_projection} outlines the projection process for automatic site generation.
+The sites in the previous synthesizer were represented as blender empty objects and had to be manually created (explained in \ref~{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_sites}) to automate this site creation, we can use AZee's bone structure as reference as it remains consistent across avatars. For this, we use \textbf{directional surface projection} (figure~\ref{fig:site_surface_projection}), where points are projected from a bone's position in a specified direction to detect intersections with the avatar's surface. In this case, the projection is initiated from a bone's position within the avatar's mesh, and the intersection point is used to generate a site. This algorithm generates sites based on the bone's location and orientation, ensuring that the sites are accurately positioned on the avatar's mesh. Algorithm~\ref{alg:site_generation_with_projection} outlines the projection process for automatic site generation.
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/site_surface_projection.png}
-    \caption{Projection example for site generation}
+    \caption{Projection example for left elbow site}
     \label{fig:site_surface_projection}
 \end{figure}
 
@@ -120,12 +120,12 @@ The generated sites can be visualized on the avatar in figure~\ref{fig:sites_baz
 \subsection{Creating the bone heirarchy}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers}
 
-The previous system only used an armature with rotation and translation bones (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_heirarchy}). We chose to work from mixamo (section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:mixamo}) based avatar skeletons and also use account for mesh deformity based on the constraints. To address this, we used bone layers to organize the bones into separate groups based on their function and purpose. Bone layers are often used in 3D animation software to organize and manage bones in a rig. By grouping bones into separate layers, animators can control which bones are visible and selectable at any given time, making it easier to work with complex rigs and animations. The new system has 3 types of bone layers: the deformation bone layer, the inverse kinematics (IK) layer, and the forward kinematics (FK) layer.
+The previous system only used an armature with rotation and translation bones (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_heirarchy}). We chose to work from mixamo (section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:mixamo}) based avatar skeletons and also use account for mesh deformity based on the constraints. To address this, we used bone layers to organize the bones into separate groups based on their function and purpose. Bone layers are often used in 3D animation software to organize and manage bones in a rig. By grouping bones into separate layers, animators can control which bones are visible and selectable at any given time, making it easier to work with complex rigs and animations. The new system has 3 types of bone layers: the deformation bone layer, the \gls{ik} layer, and the \gls{fk} layer.
 
 \subsubsection{Deformation Bone Layer}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers:deform_bone_layer}
 
-The deformation bone layer(figure~\ref{fig:deform_layer}) is the foundation of the avatar's rig. It includes the bones that directly influence the mesh of the character, controlling how the skin deforms in response to movement. This layer is responsible for the overall shape and posture of the avatar, ensuring that the character's movements are smooth and realistic.
+The deformation bone layer (figure~\ref{fig:deform_layer}) is the foundation of the avatar's rig. It includes the bones that directly influence the mesh of the character, controlling how the skin deforms in response to movement. This layer is responsible for the overall shape and posture of the avatar, ensuring that the character's movements are smooth and realistic.
 
 In this layer, the bones are typically organized into a hierarchy, with the root bone controlling the overall position and orientation of the avatar, and child bones controlling specific parts of the body, such as the limbs, spine, and head. Weight painting is used to determine how much influence each bone has over the surrounding mesh, allowing for precise control over how the character's skin deforms.
 
@@ -136,28 +136,28 @@ In this layer, the bones are typically organized into a hierarchy, with the root
     \label{fig:deform_layer}
 \end{figure}
 
-\subsubsection{Forward Kinematics Layer}
+\subsubsection{FK Layer}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers:fk_layer}
 
-The forward kinematics (FK) layer (figure~\ref{fig:fk_layer}) controls the rotation of bones in a hierarchical manner, where the rotation of a parent bone affects all its children. This layer is used for broader, more deliberate movements, such as head tilts, body leans, or full-body rotations.
+The \gls{fk} layer (figure~\ref{fig:fk_layer}) controls the rotation of bones in a hierarchical manner, where the rotation of a parent bone affects all its children. This layer is used for broader, more deliberate movements, such as head tilts, body leans, or full-body rotations.
 
-FK provides animators with a high degree of control over each individual bone in the rig, allowing for precise adjustments to the character's pose. Unlike IK, where the position of the end effector is specified, FK requires the animator to manually rotate each bone in the chain, starting from the root and working down to the extremities. This can be more time-consuming but offers greater flexibility in achieving complex poses.
+\gls{fk} provides animators with a high degree of control over each individual bone in the rig, allowing for precise adjustments to the character's pose. Unlike \gls{ik}, where the position of the end effector is specified, \gls{fk} requires the animator to manually rotate each bone in the chain, starting from the root and working down to the extremities. This can be more time-consuming but offers greater flexibility in achieving complex poses.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.3\textwidth]{chapters/avatar_creation_pose_synthesis/images/fk_layer.png}
     \caption{FK bone layer}
     \label{fig:fk_layer}
 \end{figure}
 
-\subsubsection{Inverse Kinematics Layer}
+\subsubsection{IK Layer}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers:ik_layer}
 
-The inverse kinematics (IK) layer (figure~\ref{fig:ik_layer}) is responsible for positioning the avatar's fingers, limbs and spine by solving for the joint angles required to achieve a desired end-effector position.
+The \gls{ik} layer (figure~\ref{fig:ik_layer}) is responsible for positioning the avatar's fingers, limbs and spine by solving for the joint angles required to achieve a desired end-effector position.
 
-A separate IK layer ensures that the FK configuration is not lost during constraint evaluation. If the posture is in IK mode i.e. is solving for a placement, the deform layers copy the orientations resolved by the IK layer.
+A separate \gls{ik} layer ensures that the \gls{fk} configuration is not lost during constraint evaluation. If the posture is in \gls{ik} mode i.e. is solving for a placement, the deform layers copy the orientations resolved by the \gls{ik} layer.
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.4\textwidth]{chapters/avatar_creation_pose_synthesis/images/ik_layer.png}
     \caption{IK bone layer}
@@ -214,15 +214,43 @@ However, their approach handles only placements and orientations and uses a flat
     \end{algorithmic}
 \end{algorithm}
 
+\subsection{Joint Limits}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:joint_limits}
 
-To omit impossible poses, the skeleton is also assigned joint limit constraints. These constraints are used to prevent the avatar from entering physically impossible poses, such as extending or bending a joint beyond its natural range of motion. Figure~\ref{fig:joint_limits} shows an example of joint limits applied to the avatar's arm.
+To prevent the avatar from entering physically impossible poses, we assigned joint limit constraints to the skeleton. These joint limits ensure that the avatar adheres to natural anatomical boundaries, avoiding extreme or unnatural movements like hyperextension or hyperflexion beyond what is realistically possible for human joints.
 
-\begin{figure}
+Joint limits help guide the skeleton during animation, particularly when the system uses inverse kinematics or procedural rigging, by ensuring that no joint moves beyond its allowed range. For instance, finger joints such as the \gls{mcp}, \gls{pip}, and \gls{dip} joints have defined ranges of motion that prevent unrealistic bending or rotation.
+
+An example of the joint limits applied to the \gls{mcp}, \gls{pip}, and \gls{dip} joints in the fingers is visualized in Figure~\ref{fig:joint_limits_finger}. The plot demonstrates the flexion and extension limits for each of these joints.
+
+\begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{chapters/avatar_creation_pose_synthesis/images/joint_limits.png}
-    \caption{Joint limits applied to the avatar's arm}
-    \label{fig:joint_limits}
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=0.8\textwidth,
+        height=0.5\textwidth,
+        symbolic x coords={MCP (Knuckle), PIP, DIP},
+        xtick=data,
+        ymin=0, ymax=120,
+        bar width=12pt,
+        ybar,
+        xlabel={Finger Joint},
+        ylabel={Degrees},
+        nodes near coords,
+        enlarge x limits=0.3,
+        legend style={at={(0.5,-0.15)},anchor=north,legend columns=-1},
+        title={Range of Motion for Finger Joints (MCP, PIP, DIP)}
+    ]
+        \addplot coordinates {(MCP (Knuckle),90) (PIP,100) (DIP,80)};
+        \addplot coordinates {(MCP (Knuckle),45) (PIP,0) (DIP,5)};
+        \legend{Flexion, Extension}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Range of motion for finger joints showing the flexion and extension limits for MCP, PIP, and DIP joints.}
+    \label{fig:joint_limits_finger}
 \end{figure}
+
+Joint limit constraints ensure that each joint, including those in the fingers, remains within the specified anatomical range of motion, as visualized in Figure~\ref{fig:joint_limits_finger}. This prevents the avatar from adopting poses that would be physically impossible or cause damage in real-life scenarios.
 
 \subsection{Animating Morphs Constraints}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints}
@@ -238,7 +266,7 @@ AZee didn't have any morph specification to control the avatar. During this work
 \subsubsection{Skeletal Morphs}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:skel_morphs}
 
-Skeletal morphs are a specific type of morphs that directly manipulate the skeletal structure of an avatar to produce a desired pose or motion. Unlike traditional bone-based manipulations that rely solely on inverse or forward kinematics, skeletal morphs allow for more nuanced and localized control over specific joints or groups of joints. This is particularly useful for complex hand gestures or other detailed movements that are difficult to achieve with bone rotations alone.
+Skeletal morphs are a specific type of morphs that directly manipulate the skeletal structure of an avatar to produce a desired pose or motion. Unlike traditional bone-based manipulations that rely solely on inverse or \gls{fk}, skeletal morphs allow for more nuanced and localized control over specific joints or groups of joints. This is particularly useful for complex hand gestures or other detailed movements that are difficult to achieve with bone rotations alone.
 
 In AZee, skeletal morphs are treated as constraints that define a forward kinematic change in the avatar's skeletal configuration. These morphs can influence various aspects of the skeleton, such as:
 
@@ -345,7 +373,7 @@ Facial Morph targets are typically generated by sculpting the avatar's mesh into
 \subsubsection{Integration with other layers}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:intergation}
 
-The morph constraints are integrated along with the other constraints in the posture optimization algorithm. Top optimize skeletal morph constraints we calculate the FK values of the impacted bones for skeletal morphs and calculate the loss using rotation distance formula.
+The morph constraints are integrated along with the other constraints in the posture optimization algorithm. Top optimize skeletal morph constraints we calculate the \gls{fk} values of the impacted bones for skeletal morphs and calculate the loss using rotation distance formula.
 
 \[
 d_R = \min\left( 2 \cos^{-1}\left( \left| q_1 \cdot q_2 \right| \right), 2\pi - 2 \cos^{-1}\left( \left| q_1 \cdot q_2 \right| \right) \right)
@@ -386,59 +414,48 @@ The layered rigging system has been implemented and tested on the BAZeel (MakeHu
     \label{fig:layers_example}
 \end{figure}
 
-todo add more details in implementation
+The animator is developed as an add-on for blender \annex{animator_class_diagram} and uses the AZee interpreter as a package to parse the AZee descriptions. The BAZeel avatar was developed using the MakeHuman tool with the default Mixamo rig. 
 
 \section{Evaluation}
 \label{ch:avatar_creation_pose_synthesis:evaluation}
 
-We evaluate the performance, accuracy, and quality of the animation generated by the layered rigging system.
-
-\subsection{Accuracy of the Animation}
-\label{ch:avatar_creation_pose_synthesis:evaluation:accuracy}
-
-The accuracy of the animation can be evaluated using the Frechet gesture distance(todo frobenius distance) calculated using the generated animation and a reference animation based on the AZee body sites. Table~\ref{tab:accuracy_metrics} shows the results of the evaluation.
-
-\begin{table}
-    \centering
-    \begin{tabular}{|c|c|}
-        \hline
-        \textbf{Metric} & \textbf{Value} \\
-        \hline
-        Frechet Gesture Distance & todo \\
-        Old synthesizer & todo \\
-        Paula & todo \\
-        Sgnify & todo \\
-        Mocap(Retargeted) & todo \\
-        \hline
-    \end{tabular}
-    \caption{Evaluation metrics for the accuracy of the animation}
-    \label{tab:accuracy_metrics}
-\end{table}
+We evaluate the quality and the performance of the animation generated by the layered rigging system.
 
 \subsection{Quality of Animation}
 \label{ch:avatar_creation_pose_synthesis:evaluation:quality}
 
-As observed, the generated animations are robotic in nature and lack the fluidity and expressiveness of natural \gls{sl} gestures. However, everything which can be annotated using the AZee low level, can be synthesized using this technique. This provides us with a good starting block to animate \gls{sl}. Moreover, with the procedural rigging system, we can us this same system with other avatars as well.
+The quality of our animations is directly influenced by the AZee descriptions used. Since AZee descriptions can vary in quality, this work will focus solely on whether the constraints specified by the descriptions are satisfied in the resulting animations, without evaluating the quality of the descriptions themselves.
+
+For our tests, the configuration for the posture optimization algorithm were as follows:
+\begin{itemize}
+    \item Iterations: 20
+    \item Distance threshold: 0.1
+    \item Rotation threshold: 5 degrees
+    \item Solver: \gls{itasc}
+\end{itemize}
+
+A comparison video of selected \gls{lsf} signs, generated by the new synthesizer versus the old one, is available at \url{https://phd.paritosh-sharma.com/dissertation/comparison_ch3}. The newer system demonstrates improved constraint satisfaction, especially for the sign \emph{:mercredi} (\gls{lsf} for "Wednesday"), using the same posture optimization configuration.
+
+Despite both systems meeting the AZee constraints, the resulting animations remain somewhat robotic and lack the natural fluidity of expressive \gls{sl} gestures. This is because our system solely utilizes the low-level constraint optimization for keyframing the avatar. However, since anything annotated with AZee can be synthesized by our system, this provides a strong foundation for \gls{sl} animation.
 
 \subsection{Performance}
 \label{ch:avatar_creation_pose_synthesis:evaluation:performance}
 
-The animation speedupe compared to the previous synthesizer for some \gls{lsf} signs are shown in table~\ref{tab:faster_executions}.
+The synthesis time of our newer system compared to the previous synthesizor for some \gls{lsf} signs are shown in table~\ref{tab:faster_executions}. Note that this not account for the time taken to interpret the AZee descriptions. Thus, the older synthesizor goes from an \emph{Animated Score} to keyframes on the blender armature while the newer system goes from a \emph{Synced Score} to keyframes on the blender armature on a \emph{multi-track} timeline (discussed in more detail in chapter~\ref{ch:multi_track}).
 
 \begin{table}
     \centering
-    \begin{tabular}{|c|c|}
+    \begin{tabular}{|c|c|c|}
         \hline
-        \textbf{Interface} & \textbf{Speedup} \\
+        \textbf{AZee description} & \textbf{Synthesis Time (Old Synthesizor)} & \textbf{Synthesis Time (New Synthesizor)}\\
         \hline
-        Sign & Speedup \\
-        \emph{arbre} (tree) & \FPeval{\result}{1.58/0.63} \\
-        \emph{bien} (good) & \FPeval{\result}{2.93/1.03} \\
-        \emph{hier} (yesterday) & \FPeval{\result}{5.8/2.2} \\
-        \emph{armoire} (cupboard) & \FPeval{\result}{21.85/8.6} \\
+        \emph{:arbre} (tree) & 1.58 & \textbf{0.63} \\
+        \emph{:bien} (good) & 2.93 & \textbf{1.03} \\
+        \emph{:hier} (yesterday) & 5.8 & \textbf{2.2} \\
+        \emph{:armoire} (cupboard) & 21.85 & \textbf{8.6} \\
         \hline
     \end{tabular}
-    \caption{Speedup compared to the previous synthesizor}
+    \caption{Synthesis time (in seconds) for both synthesizors}
     \label{tab:faster_executions}
 \end{table}
 
@@ -450,20 +467,34 @@ We conducted our experiments on a machine with the following specifications:
     \item OS: Windows 10
 \end
 
-The configuration for the posture optimization algorithm was as follows:
-\begin{itemize}
-    \item Iterations: 20
-    \item Distance threshold: 0.1
-    \item Rotation threshold: 5 degrees
-    \item Solver: iTaSc
-\end{itemize}
+We observe that our newer method for synthesis is significantly faster because of direct integration with Blender. The automatic site generation and rigging also reduce the time taken to set up the avatar for animation.
 
-We observe that our newer method for synthesis is significantly faster because of direct integration with blender. The automatic site generation and rigging also reduce the time taken to set up the avatar for animation.
+%\subsection{Accuracy of the Animation}
+%\label{ch:avatar_creation_pose_synthesis:evaluation:accuracy}
+
+%The accuracy of the animation can be evaluated using the Frechet gesture distance(todo frobenius distance) %calculated using the generated animation and a reference animation based on the AZee body sites. Table~\ref%%{tab:accuracy_metrics} shows the results of the evaluation.
+
+%\begin{table}
+%     \centering
+%     \begin{tabular}{|c|c|}%         \hline
+%         \textbf{Metric} & \textbf{Value} \\
+%         \hline
+%         Frechet Gesture Distance & todo \\
+%         Old synthesizer & todo \\
+%         Paula & todo \\
+%         Sgnify & todo \\
+%         Mocap(Retargeted) & todo \\
+%         \hline
+%     \end{tabular}
+%     \caption{Evaluation metrics for the accuracy of the animation}
+%     \label{tab:accuracy_metrics}
+% \end{table}
 
 \section{Conclusion}
 \label{ch:avatar_creation_pose_synthesis:conclusion}
 
-todo fix this
-In this chapter, we have presented a layered rigging system for signing avatars that offers a more flexible and scalable approach to rigging and animation. By dividing the rigging process into distinct layers, each responsible for a different aspect of the avatar's movement and deformation, we can achieve a higher level of control and realism in the animations. The automatic site generation and rigging process significantly reduce the time and effort required to set up the avatar for animation, while the constraint-based posture optimization algorithm ensures that the avatar's movements are accurate and natural. The future work includes improving the quality of the animations, integrating facial expressions, and explores the use of machine learning techniques to enhance the realism and expressiveness of the synthesized discourse.
+In this chapter, we presented our methodology to create the signing avatar which we can animate using the AZee descriptions. We used a popular open-source avatar creation tool MakeHuman to create our avatar. We introduced an automatic site generation and rigging process to significantly reduce the time and effort required to set up an avatar for \gls{sl} animation. We also improved the link between AZee's abstract skeleton representation and blender's armature by interfacing them directly with each other. Also, we observed that by dividing the rig into distinct layers, each responsible for a different aspect of the avatar's movement and deformation, we have a more efficient system. Lastly, we observe that our constraint-based posture optimization algorithm is more accurate as well as faster than the previous synthesizer.
+
+However, the animations generated by the system are still robotic and lack the fluidity and expressiveness of natural \gls{sl} gestures. The future work includes improving the quality of the animations, integrating facial expressions, and explores the use of machine learning techniques to enhance the realism and expressiveness of the synthesized discourse.
 
 \end{document}
