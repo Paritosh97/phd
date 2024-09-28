@@ -1,4 +1,5 @@
 \documentclass[../../main.tex]{subfiles}
+\usepackage{listings}
 \begin{document}
 \chapter{Multi-Track and Non-Linear Synthesis}
 \label{ch:multi_track}
@@ -50,7 +51,7 @@ The figure~\ref{fig:azee_timeline} shows the generated multi-track timeline for 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/azee_timeline.png}
+    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/azee_timeline.png}
     \caption{Multi-track timeline generation from an AZee Synced Score.}
     \label{fig:azee_timeline}
 \end{figure}
@@ -58,49 +59,49 @@ The figure~\ref{fig:azee_timeline} shows the generated multi-track timeline for 
 \section{ConstraintDAG}
 \label{ch:multi_track:constraint_dag}
 
-Since we are not flattening the AZee Synced Score, the constraints in the blocks can have dependencies on each other. Also, we have to solve for constraints inside each block to generate an animation. For this, we choose to represent each block's constraints as a \gls{dag}, where the nodes are the constraints and the edges represent the dependencies between them. During evaluation, a topological sort allows us to find the solving order for the constraints. Figure~\ref{fig:constraint_dag_armoire} shows an example of a ConstraintDAG for the block HANDS\_CONTACT for the sign \emph{armoire} (figure \ref{fig:armoire_sign}). A more complex DAG of constraints can be seen in figure~\ref{fig:constraint_dag_tree} for the sign \emph{tree} (sign tree in figure \ref{fig:tree_sign}).
+Since we are not flattening the AZee Synced Score, the constraints in the blocks can have dependencies on each other. Also, we have to solve for constraints inside each block to generate an animation. For this, we choose to represent each block's constraints as a \gls{dag}, where the nodes are the constraints and the edges represent the dependencies between them. During evaluation, a topological sort allows us to find the solving order for the constraints. Figure~\ref{fig:constraint_dag_armoire} shows an example of a ConstraintDAG for the block HANDS\_CONTACT for the sign \emph{armoire} (figure \ref{fig:armoire_sign}). A more complex DAG of constraints can be seen in figure~\ref{fig:constraint_dag_tree} for the sign \emph{arbre} (\gls{lsf} tree) (figure \ref{fig:tree_sign}).
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/constraint_dag_cupboard.png}
-    \caption{ConstraintDAG for a single block discourse for the block HANDS\_CONTACT from the sign \emph{armoire}.}
+    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/constraint_dag_cupboard.png}
+    \caption{ConstraintDAG for a single block discourse for the block HANDS\_CONTACT from the sign \emph{armoire}}
     \label{fig:constraint_dag_armoire}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/cupboard.jpg}
-    \caption{Sign \emph{armoire}~\cite{moody97}.}
+    \includegraphics[width=0.5\textwidth]{chapters/multi_track/images/cupboard.jpg}
+    \caption{Sign \emph{armoire}~\cite{moody97} with AZee blocks}
     \label{fig:armoire_sign}
 \end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/constraint_dag.png}
-    \caption{ConstraintDAG for a single block discourse for the sign \emph{tree}.}
+    \caption{ConstraintDAG for a single block discourse for the sign \emph{arbre}.}
     \label{fig:constraint_dag_tree}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/tree.jpg}
-    \caption{Sign \emph{tree}.}
+    \includegraphics[width=0.5\textwidth]{chapters/multi_track/images/tree.png}
+    \caption{Sign \emph{arbre}~\cite{boutetetal}}
     \label{fig:tree_sign}
 \end{figure}
 
 \section{AZee and Non-Linearity}
 \label{ch:multi_track:azee_nl}
 
-Just like the order of the constraints inside the blocks, the order of synthesis of the blocks in the multi-track timeline is crucial as well in order to avoid conflicts and ensure the correct execution of constraints. Due to these dependencies, an action that happens later in the timeline might be synthesized first. As a result, the synthesis process becomes non-linear.
-
-For example, the \emph{transpath} block TRANS\_H in the sign \emph{armoire} is evaluated after the block such as HANDS\_APART for the sign \emph{armoire}. This is because this constraint requires resolution of both initial and final positions for the hand IK chain. Figure~\ref{fig:example_azee_non_linear} shows non-linear synthesis for the sign \emph{armoire}.
-
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/example_azee_non_linear.png}
+    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/example_azee_non_linear.png}
     \caption{Example of non-linear synthesis in AZee.}
     \label{fig:example_azee_non_linear}
 \end{figure}
+
+Just like the order of the constraints inside the blocks, the order of synthesis of the blocks in the multi-track timeline is crucial as well in order to avoid conflicts and ensure the correct execution of constraints. Due to these dependencies, an action that happens later in the timeline might be synthesized first. As a result, the synthesis process becomes non-linear.
+
+For example, the \emph{transpath} block TRANS\_H in the sign \emph{armoire} is evaluated after the block such as HANDS\_APART for the sign \emph{armoire}. This is because this constraint requires resolution of both initial and final positions for the hand IK chain. Figure~\ref{fig:example_azee_non_linear} shows non-linear synthesis for the sign \emph{armoire}.
 
 \section{Resolving Block Conflicts}
 \label{ch:multi_track:resolve_conflicts}
@@ -135,7 +136,7 @@ A second pass is done on the timeline to synthesize cyclic block sets, transpath
 \subsection{Cyclic Block Set}
 \label{ch:multi_track:second_pass:cyclic_blocks}
 
-Cyclic block sets, as the name suggests, are blocks with cyclic dependencies on each other. Figure~\ref{fig:cyclic_blocks} shows a cyclic block set for HANDS\_CONTACT and PALMS\_DOWN. This problem could arise if blocks affect a common hierarchy of the skeleton (any changes in the parent will affect the child even if the blocks don't affect that part of the skeleton), or even if they affect each other directly. To deal with such sets, the blocks are evaluated again in a second pass by optimizing for a \emph{cumulative flattened loss}, i.e., cumulating the loss of all constraints of the block set for the frame and optimizing them together through iterations.
+Cyclic block sets, as the name suggests, are blocks with cyclic dependencies on each other. Figure~\ref{fig:cyclic_blocks} shows a cyclic block set for HANDS\_CONTACT and PALMS\_DOWN. This problem could arise if blocks affect a common hierarchy of the skeleton (any changes in the parent will affect the child even if the blocks don't affect that part of the skeleton), or even if they affect each other directly. To deal with such sets, the blocks are evaluated again in a second pass by optimizing for a \emph{cumulative flattened loss}, i.e., collecting the loss of all constraints of the block set for the frame and optimizing them together through iterations.
 
 \begin{figure}[h]
     \centering
@@ -147,96 +148,93 @@ Cyclic block sets, as the name suggests, are blocks with cyclic dependencies on 
 \subsubsection{Baking Cyclic Blocks}
 \label{ch:multi_track:second_pass:cyclic_blocks:baking_cyclic_blocks}
 
-Even though the constraints are optimized together, each individual block in the cyclic block set is baked separately to preserve the multi-track structure of the discourse. This is done by collecting the \emph{change in motion curves} of each block and applying them separately to the skeleton after the optimization step (figure~\ref{fig:baking_cyclic_blocks}).
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/baking_cyclic_blocks.png}
-    \caption{Baking cyclic block sets.}
-    \label{fig:baking_cyclic_blocks}
-\end{figure}
+Even though the constraints are optimized together, each individual block in the cyclic block set is baked separately to preserve the multi-track structure of the discourse. This is done by collecting the \emph{change in motion curves} of each block and applying them separately to the skeleton after the optimization step.
 
 \subsection{Transpath Blocks}
 \label{ch:multi_track:second_pass:transpath_blocks}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/transpath_blocks.png}
+    \caption{Transpath blocks in \emph{armoire}}
+    \label{fig:transpath_blocks}
+\end{figure}
 
 Transpath blocks are blocks that contain one or more transpath constraints. As discussed earlier in section~\ref{ch:background_work:sign_language_descriptions:azee:low_level} of chapter~\ref{ch:background_work}, a transpath constraint moves a body site along a path. It acts as a transition (interpolation) block but with a controlled path for a particular body site for its preceding and following block. Figure~\ref{fig:transpath_blocks} shows an example of transpath blocks for the sign \emph{armoire}. Just like cyclic block sets, transpath blocks are evaluated in a second pass.
 
 Transpath blocks are baked by evaluating the transpath constraint for each frame and applying the change in motion curve of the body site with respect to the preceding and the succeeding block. These motion curves are then baked as a new block.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/transpath_blocks.png}
-    \caption{Transpath blocks in \emph{armoire}.}
-    \label{fig:transpath_blocks}
-\end{figure}
-
 \subsection{Hold Blocks}
 \label{ch:multi_track:second_pass:hold_blocks}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/hold_blocks.png}
+    \caption{Hold blocks for the rule \emph{:info-about(:topic, :info)}}
+    \label{fig:hold_blocks}
+\end{figure}
 
 Hold blocks are blocks that hold another block for a certain duration. Figure~\ref{fig:hold_blocks} shows an example of hold blocks for the rule \emph{:info-about(:topic, :info)}. Hold blocks are also evaluated in the second pass since they hold another block (which has to be evaluated in the 1st pass).
 
 Hold blocks are baked by extending the end of the motion curves of the block being held. This extension is not applied to the last values of motion curves but to a set of values that are calculated by the hold block itself.
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/hold_blocks.png}
-    \caption{Hold blocks for the rule \emph{:info-about(:topic, :info)}.}
-    \label{fig:hold_blocks}
-\end{figure}
-
 \section{Pre-animated blocks}
 \label{ch:multi_track:preanim_blocks}
 
-The timeline can also contain pre-animated blocks. These blocks are blocks that contain pre-animated motion data. The pre-animated blocks are evaluated and baked first since they are independent of other blocks (figure~\ref{fig:preanim_blocks}) and should not influence the other blocks in the timeline.
-
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/preanim_blocks.png}
+    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/preanim_blocks.png}
     \caption{Pre-animated blocks in the multi-track timeline.}
     \label{fig:preanim_blocks}
 \end{figure}
+
+The timeline can also contain pre-animated blocks. These blocks are blocks that contain pre-animated motion data. The pre-animated blocks are evaluated and baked first since they are independent of other blocks (figure~\ref{fig:preanim_blocks}) and should not influence the other blocks in the timeline.
 
 \section{Implementation and Results}
 \label{ch:multi_track:implem_results}
 
 The multi-track timeline is implemented in blender's \gls{nle}. Each AZee Score, when animated, generates a blender action which is put on the \gls{nle} as a strip with a duration specified by the AZee \emph{sync rules}. The following table~\ref{tab:azee_to_blender} shows some AZee expressions with their timelines and synthesized animations.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
-    \begin{tabular}{|c|c|c|}
+    \begin{tabular}{|c|p{4.5cm}|p{2cm}|}
         \hline
-        \textbf{AZee expression} & \textbf{Timeline} & \textbf{Animation} \\
+        \textbf{AZee expression} & \textbf{Timeline} & \textbf{Animation \newline (see Appendix \ref{appendix:videos})} \\
         \hline
-        \texttt{:armoire} & \includegraphics[width=0.3\textwidth]{chapters/multi_track/images/azee_timeline.png} & \url{https://phd.paritosh-sharma.com/result_ch4_armoire.mp4} \\
-        \texttt{:bien} & \includegraphics[width=0.3\textwidth]{chapters/multi_track/images/bien_timeline.png} & \url{https://phd.paritosh-sharma.com/result_ch4_bien.mp4} \\
-        \parbox{5cm}{\texttt{:info-about \\
-              \hspace{0.5cm} 'topic \\
-              \hspace{0.5cm} :personne \\
-              \hspace{0.5cm} 'info \\
-              \hspace{0.5cm} :info-about \\
-              \hspace{1cm} 'topic \\
-              \hspace{1cm} :âge \\
-              \hspace{1cm} 'info \\
-              \hspace{1cm} :tens-units \\
-              \hspace{1.5cm} 'tens \\
-              \hspace{1.5cm} .nb-5 \\
-              \hspace{1.5cm} 'units \\
-              \hspace{1.5cm} .nb-2}} & \includegraphics[width=0.3\textwidth]{chapters/multi_track/images/result_ch4_persone_age_52_timeline.png} & \url{https://phd.paritosh-sharma.com/result_ch4_persone_age_52.mp4} \\
+        \texttt{:armoire} & \includegraphics[width=\linewidth]{chapters/multi_track/images/azee_timeline.png} & Video 2 \\
+        \hline
+        \texttt{:bien} & \includegraphics[width=\linewidth]{chapters/multi_track/images/bien_timeline.png} & Video 3 \\
+        \hline
+        \parbox{5cm}{
+          \raggedright
+          \texttt{:info-about} \newline
+          \makebox[1cm]{} \texttt{'topic} \newline
+          \makebox[1cm]{} \texttt{:personne} \newline
+          \makebox[1cm]{} \texttt{'info} \newline
+          \makebox[1cm]{} \texttt{:info-about} \newline
+          \makebox[2cm]{} \texttt{'topic} \newline
+          \makebox[2cm]{} \texttt{:âge} \newline
+          \makebox[2cm]{} \texttt{'info} \newline
+          \makebox[2cm]{} \texttt{:tens-units} \newline
+          \makebox[3cm]{} \texttt{'tens} \newline
+          \makebox[3cm]{} \texttt{.nb-5} \newline
+          \makebox[3cm]{} \texttt{'units} \newline
+          \makebox[3cm]{} \texttt{.nb-2}
+        } & \includegraphics[width=\linewidth]{chapters/multi_track/images/result_ch4_persone_age_52_timeline.png} & Video 4 \\
         \hline
     \end{tabular}
     \caption{Multi-track timeline and synthesized animations for some AZee expressions}
     \label{tab:azee_to_blender}
 \end{table}
 
-
-\section{Discussion}
-\label{ch:multi_track:discussion}
+\section{Conclusion}
+\label{ch:multi_track:conclusion}
 
 The multi-track timeline approach to \gls{sl} synthesis offers several advantages over the existing methods. Preserving the multi-track information and dynamics present in the AZee description provides us the stepping stones to integrate pre-animated motion data which was not possible with the previous low-level AZee synthesizor. The non-linear synthesis allows for the correct execution order of blocks and avoids conflicts. On top of that, hybrid constructs such as \emph{dynamic points} (a point changing its location over time) can be easily integrated into the timeline (figure~\ref{fig:dynpoint_example}).
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/dynpoint_example.png}
+    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/dynpoint_example.png}
     \caption{Example of a dynamic point in the multi-track timeline.}
     \label{fig:dynpoint_example}
 \end{figure}

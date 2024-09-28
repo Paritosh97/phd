@@ -14,12 +14,12 @@ The chapter is structured as follows: todo
 \section{Defining facial expressions in AZee}
 \label{ch:facial_expressions:adding_facial_expressions_to_azee}
 
-The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first taks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (\appendix{facial_expressions_40b_images, facial_expressions_40frequency}).
+The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first taks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (\ref{facial_expressions_40b_images, facial_expressions_40frequency}).
 
 \subsection{Defining AZee Rules in terms of Action Units}
 \label{ch:facial_expressions:defining_azee_rules_in_terms_of_action_units}
 
-We discussed the \gls{facs} earlier in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:emotion_recognition}. \gls{facs} is a comprehensive system for describing facial expressions in terms of action units (AUs), which represent the activation of specific facial muscles. Each AU corresponds to a specific movement~\annex{facs_aus}. Thus, our first goal is to break down each AZee rule into its constituent AUs. 
+We discussed the \gls{facs} earlier in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:emotion_recognition}. \gls{facs} is a comprehensive system for describing facial expressions in terms of action units (AUs), which represent the activation of specific facial muscles. Each AU corresponds to a specific movement~\ref{facs_aus}. Thus, our first goal is to break down each AZee rule into its constituent AUs. 
 
 We use the AU detector by~\cite{luo2022learning} on mediapipe extractions of still images for each of the facial expressions from the corpus (figure~\ref{ch:facial_expressions:fig:face_detect}).
 
@@ -31,7 +31,7 @@ We use the AU detector by~\cite{luo2022learning} on mediapipe extractions of sti
     \label{ch:facial_expressions:fig:face_detect}
 \end{figure}
 
-While it is a good starting point, manual adjustments were required by a linguist to ensure accuracy. This can be seen in figure~\ref{cfig:face_adjust} for the expression \emph{big-threatening}.
+While it is a good starting point, manual adjustments were required by a linguist to ensure accuracy. This can be seen in figure~\ref{fig:face_adjust} for the expression \emph{big-threatening}.
 
 % todo face adjust diagram(example medaipe AU face retargeted on a template mesh, then adjusted by a linguist)
 \begin{figure}
