@@ -199,21 +199,35 @@ The timeline can also contain pre-animated blocks. These blocks are blocks that 
 \section{Implementation and Results}
 \label{ch:multi_track:implem_results}
 
-The multi-track timeline is implemented in blender's \gls{nle}. Each AZee Score, when animated, generates a blender action which is put on the \gls{nle} as a strip with a duration specified by the AZee \emph{sync rules}. The following table~\ref{tab:azee_to_blender} shows a non-exhaustive list of animated signs in blender with their corresponding generated timeline.
+The multi-track timeline is implemented in blender's \gls{nle}. Each AZee Score, when animated, generates a blender action which is put on the \gls{nle} as a strip with a duration specified by the AZee \emph{sync rules}. The following table~\ref{tab:azee_to_blender} shows some AZee expressions with their timelines and synthesized animations.
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{|c|c|}
+    \begin{tabular}{|c|c|c|}
         \hline
-        \textbf{Sign} & \textbf{Timeline} \\
+        \textbf{AZee expression} & \textbf{Timeline} & \textbf{Animation} \\
         \hline
-        \emph{armoire} & figure todo \\
-        \emph{...} & ... \\
+        \texttt{:armoire} & \includegraphics[width=0.3\textwidth]{chapters/multi_track/images/azee_timeline.png} & \url{https://phd.paritosh-sharma.com/result_ch4_armoire.mp4} \\
+        \texttt{:bien} & \includegraphics[width=0.3\textwidth]{chapters/multi_track/images/bien_timeline.png} & \url{https://phd.paritosh-sharma.com/result_ch4_bien.mp4} \\
+        \parbox{5cm}{\texttt{:info-about \\
+              \hspace{0.5cm} 'topic \\
+              \hspace{0.5cm} :personne \\
+              \hspace{0.5cm} 'info \\
+              \hspace{0.5cm} :info-about \\
+              \hspace{1cm} 'topic \\
+              \hspace{1cm} :âge \\
+              \hspace{1cm} 'info \\
+              \hspace{1cm} :tens-units \\
+              \hspace{1.5cm} 'tens \\
+              \hspace{1.5cm} .nb-5 \\
+              \hspace{1.5cm} 'units \\
+              \hspace{1.5cm} .nb-2}} & \includegraphics[width=0.3\textwidth]{chapters/multi_track/images/result_ch4_persone_age_52_timeline.png} & \url{https://phd.paritosh-sharma.com/result_ch4_persone_age_52.mp4} \\
         \hline
     \end{tabular}
-    \caption{Animated signs in blender with their corresponding generated timeline.}
+    \caption{Multi-track timeline and synthesized animations for some AZee expressions}
     \label{tab:azee_to_blender}
 \end{table}
+
 
 \section{Discussion}
 \label{ch:multi_track:discussion}
