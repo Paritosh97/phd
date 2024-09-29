@@ -314,6 +314,8 @@ Synthesis of 22 facial expressions from the 40 brèves corpus can be seen in tab
     \emph{with-worry:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/with_worry.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/with_worry.png} \\
 \end{longtable}
 
+Video~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch6_all_aus.mp4}} shows the range of all the blendshapes in AZee\s morph set. Video~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch6_all_expressions.mp4}} shows all the synthesized facial expressions with their interpolations.
+
 Table~\ref{tab:facial_expressions_evaluation} shows the subjective evaluation by the linguist who created the corpus of the facial expressions using AZee. The expressions were assessed on isolated still images of the apex of their blendshapes based on their accuracy, expressiveness, and effectiveness in conveying the intended emotional and grammatical cues.
 
 \begin{table*}[h]
@@ -366,13 +368,13 @@ We observe that expressions that involved subtle mouth movements, such as "it-is
     \label{ch:facial_expressions:fig:spectre}
 \end{figure}
 
-We also compare the synthesized utterance (with facial expressions) with the original utterance (without facial expressions) to evaluate the impact of facial expressions on \gls{sl} comprehension. For this we synthesize the AZee description \emph{big-threatening(hot())}.
+We also compare the synthesized utterance \emph{big-threatening(hot())} (with facial expressions) and the utterance \emph{hot()} (without facial expressions) to evaluate the impact of facial expressions on \gls{sl} comprehension along with the original video. The results can be seen in the supplementary video\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch6_comparison.mp4}}. We observe how non-manuals can enhance the meaning of the sign.
 
 \section{Conclusion}
 \label{ch:facial_expressions:conclusion}
 
 In this chapter, we presented a method for synthesizing facial expressions using the AZee framework, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Our method involved analyzing AUs from the \gls{facs} system and extending the morph set in the AZee language with 94 blendshapes. Next we created those blendshapes on our avatar based on a MakeHuman template mesh. We also used motion curves to animate these blendshapes. The synthesized facial expressions were evaluated subjectively by the linguist who created them. The results show that even though some of the expressions were challenging to model accurately, our method was able to generate some expressions which were effective in conveying the intended form of the corresponding AZee rule.
 
-For future, we plan to use more modern systems to refine the blendshapes and motion curves to improve the accuracy and naturalness of the facial expressions. A good starting point for this would be to animate these rules using a point cloud based capturing systems and then study the capture data to accurately define blendshapes as well as motion templates. Use of emotion recognition systems such as~\cite{EMOCA} can be used on the existing dataset to define the flame~\cite{FLAME} principle components. However, establishing a link between the AZee rule and these principle components which drive the mesh will be a challenge. Some synthesized facial expressions using the FLAME model on a default SMPL-X avatar can be seen in the annex section \ref{annex:facial_expressions:flame}.
+For future, we plan to use more modern systems to refine the blendshapes and motion curves to improve the accuracy and naturalness of the facial expressions. A good starting point for this would be to animate these rules using a point cloud based capturing systems and then study the capture data to accurately define blendshapes as well as motion templates. Use of emotion recognition systems such as~\cite{EMOCA} can be used on the existing dataset to define the flame~\cite{FLAME} principle components. However, establishing a link between the AZee rule and these principle components which drive the mesh will be a challenge. Some synthesized facial expressions using the FLAME model on a default SMPL-X avatar can be seen in the annex section \ref{app:facial_expressions:flame}.
 
 \end{document}

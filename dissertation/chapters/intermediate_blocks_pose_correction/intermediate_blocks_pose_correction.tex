@@ -36,20 +36,30 @@ Before filling in the intermediate blocks with some motion template, we need to 
 \subsection{Creating Motion Templates}
 \label{ch:intermediate_blocks_pose_correction:creating_motion_templates}
 
-Motion templates (as discussed in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:motion_templates} of chapter~\ref{ch:background_work}) are pre-defined motion patterns that guide the synthesis of new animations. In the context of AZee-driven synthesis, these templates serve as a blueprint for filling the intermediate blocks with relevant motion curves. For our experiments, we will be mainly using the \emph{40 brèves}~\cite{challant2022first} corpus. We chosee to study on the first 5 rules in this corpus based on their frequency \ref{fig:azee_rules_frequency}.
+Motion templates (as discussed in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:motion_templates} of chapter~\ref{ch:background_work}) are pre-defined motion patterns that guide the synthesis of new animations. In the context of AZee-driven synthesis, these templates serve as a blueprint for filling the intermediate blocks with relevant motion curves. For our experiments, we will be mainly using the \emph{40 brèves}~\cite{challant2022first} corpus. We chose to base this study on the first 5 rules in this corpus based on their frequency \ref{fig:azee_rules_frequency}.
 
-\paragraph{Procedurally Generated Motion Templates}
-\label{ch:intermediate_blocks_pose_correction:creating_motion_templates:procedural}
+Motion templaes can be data-driven or artistic. Data driven templates are based on motion data extracted from the AZee rule and corresponding motion data. Artistically created templates, on the other hand, are designed by hand based on the AZee rule and desired motion features.
 
-The procedurally generated templates can be based on the AZee rule and corresponding motion data. For example, motion curves for the rule \texttt{info-about} can be seen in the following figure~\ref{fig:motion_curves_template_procedural}.
+\paragraph{Data-Driven Motion Templates}
+\label{ch:intermediate_blocks_pose_correction:creating_motion_templates:data_driven}
+
+For creating data-driven templates, we first extract motion curves from the AZee annotated motion capture data. We use the rosetta dataset~\cite{bertin2022rosetta} which is already AZee annotated. We choose to only include the upper body bones in the dataset since AZee doesn't contain lower body bones. Next, we retargeted the \gls{mocap} data on our BAZeel avatar, which is compatible with the AZee skeleton structure (figure~\ref{fig:retargeted}).
 
 \begin{figure}
-    \centering \includegraphics[width = 4in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_template_procedural.png}
-    \caption{Procedurally Generated motion curves for template \emph{info-about}}
-    \label{fig:motion_curves_template_procedural}
+  \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks_pose_correction/images/retargeted.png}
+  \caption{Retargeted mocap data to BAZeel avatar}
+  \label{fig:retargeted}
 \end{figure}
 
-The template was created by extracting bone rotations as quaternions using template SMPL-X reconstructions of the avatar~\cite{Forte_2023_CVPR} and then converting them into motion curves (figure~\ref{fig:motion_curves_smplx}). The final blended rotation can be calculated using \gls{slerp} between the \( n \) quaternions \( q_1, q_2, \dots, q_n \):
+We converted the \gls{mocap} data into \gls{fk} pose arrays. The \gls{fk} pose array consists of the rotation values of each joint in the AZee skeleton (figure~\ref{fig:azee_fk_pose}). This representation is more suitable for our purposes since it allows us to directly create the templates based on the joint rotations.
+
+\begin{figure}
+  \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks_pose_correction/images/azee_fk_pose.png}
+  \caption{AZee FK Pose Array}
+  \label{fig:azee_fk_pose}
+\end{figure}
+
+To create the templates we used the affected bone chains based on the low level description of the rule. For example, for the rule \emph{side-info}, we used the head, neck, and bust bones. We then extracted the motion curves for each bone and normalized them to the range \([-1, 1]\). The final blended rotations can be calculated using \gls{slerp} between the \( n \) quaternions \( q_1, q_2, \dots, q_n \):
 
 \[
 q_{\text{blend}} = \text{Slerp}\left(\dots \text{Slerp}\left(\text{Slerp}(q_1, q_2, t_1), q_3, t_2 \right) \dots , q_n, t_{n-1} \right)
@@ -65,12 +75,12 @@ Where:
     where \( \theta = \arccos(q_i \cdot q_j) \) is the angle between the quaternions.
 \end{itemize}
 
-Figure~\ref{fig:motion_curves_mocap} similar template creation but using AZee annotated motion capture~\cite{bertin2022rosetta} retargeted on our avatar.
+Figure~\ref{fig:motion_curves_datadriven} shows template creation process.
 
 \begin{figure}
-    \centering \includegraphics[width = 4in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_mocap.png}
-    \caption{Motion Curves from AZee annotated Mocap for the chin up in }
-    \label{fig:motion_curves_mocap}
+    \centering \includegraphics[width = 4in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_template_datadriven.png}
+    \caption{Data-Driven template creation for template \emph{side-info}}
+    \label{fig:motion_curves_datadriven}
 \end{figure}
 
 \paragraph{Artistically Created Motion Templates}
@@ -108,7 +118,13 @@ Motion templates can also be created artistically, based on the linguistic conte
 
 For reference, figure~\ref{fig:about_ref_irak} shows how the head and the spine chain move towards the reference point (\gls{rssp}), while the neck compensates for the rotation. The motion template reflects the same. 
 
-\section{Pose Correction with AZee Low Level synthesis}
+\begin{figure}
+    \centering \includegraphics[width = 4in]{chapters/intermediate_blocks_pose_correction/images/about_ref_irak.png}
+    \caption{Motion for the AZee rule \emph{about-ref(:irak, Rssp)}}
+    \label{fig:about_ref_irak}
+\end{figure}
+
+\section{Pose Correction with AZee Low-Level synthesis}
 \label{ch:pose_correction:pose_correction_with_azee}
 
 One part in enhancing the naturalness of \gls{sl} animations is to also ensure that the poses generated by the AZee system are contextually appropriate and realistic. Pose correction techniques can help achieve this by aligning the synthesized poses with the motion data in the dataset. In this section, we discuss the application of pose correction techniques to the AZee low-level synthesis system. By integrating pose correction, data-driven \ref{ik}, and latent space representations into the AZee framework, we aim to enhance the realism and expressiveness of \gls{sl} animations.
@@ -116,22 +132,7 @@ One part in enhancing the naturalness of \gls{sl} animations is to also ensure t
 \subsection{Preparing the dataset}
 \label{ch:pose_correction:pose_correction_with_azee:dataset}
 
-The first step in integrating pose correction into AZee is to train a \gls{vae} on set of \gls{sl} poses. For this task, we use a dataset of mocap data collected from the Rosetta dataset~\cite{bertin2022rosetta}. The dataset consists of 167066 poses which we assume to be representative enough to capture the diversity of poses and movements associated with different signs, providing a rich source of training data for the \gls{vae}. We choose to only include the upper body bones in the dataset since AZee doesn't contain lower body bones. Next, we retargeted the mocap data on our BAZeel avatar, which is compatible with the AZee skeleton structure (figure~\ref{fig:retargeted}).
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks_pose_correction/images/retargeted.png}
-  \caption{Retargeted mocap data to BAZeel avatar}
-  \label{fig:retargeted}
-\end{figure}
-
-
-To represent motion data in a format suitable for the VAE, we converted the mocap data into FK pose arrays. The FK pose array consists of the rotation values of each joint in the AZee skeleton (figure~\ref{fig:azee_fk_pose}). This representation is more suitable for the \gls{vae} training process, as it captures the pose information in a compact and standardized format.
-
-\begin{figure}
-  \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks_pose_correction/images/azee_fk_pose.png}
-  \caption{AZee FK Pose Array}
-  \label{fig:azee_fk_pose}
-\end{figure}
+The first step in integrating pose correction into AZee is to train a \gls{vae} on a set of \gls{sl} poses. For this task, we use a dataset of \gls{mocap} data collected from the Rosetta dataset~\cite{bertin2022rosetta}. The dataset consists of 167066 poses which we assume to be representative enough to capture the diversity of poses and movements associated with different signs, providing a rich source of training data for the \gls{vae}. For training, we use the same \gls{fk} pose array representation as discussed in section~\ref{ch:intermediate_blocks_pose_correction:creating_motion_templates:data_driven}. We divided the dataset is divided into training, validation, and test sets.
 
 \subsection{Training VPoser}
 \label{ch:pose_correction:pose_correction_with_azee:training}
@@ -240,7 +241,7 @@ A \gls{vae} (earlier discussed in section~\ref{ch:background_work:sign_language_
 \label{fig:vae}
 \end{figure}
 
-Trained on a dataset containing 167,066 poses. The dataset is divided into training, validation, and test sets. During training, batches of poses are processed, with each batch consisting of 512 samples. The training is carried out on a CUDA-enabled GPU, utilizing mixed precision training for efficiency. The VPoser model architecture consists of a latent space with 32 dimensions, and the neural network has 512 neurons per layer. 
+During training, batches of poses are processed, with each batch consisting of 512 samples. The training is carried out on a CUDA-enabled GPU, utilizing mixed precision training for efficiency. The \gls{vae} architecture consists of a latent space with 32 dimensions, and the neural network has 512 neurons per layer. 
 
 The loss function used during training includes two primary components: 
 \begin{itemize}
@@ -255,7 +256,7 @@ The total loss is the sum of the reconstruction loss and KL divergence loss. The
 
 With the \gls{vae} trained, we can now implement a pose correction system that leverages the learned latent space to match poses generated by the AZee system to the most appropriate pose in the dataset.
 
-Algorithm~\ref{alg:pose_correction} outlines the pose correction process. Given a target pose generated by the AZee synthesizor, we first encode the pose into the latent space using the VPoser encoder. We then compute the distance between the encoded pose and each pose in the dataset, selecting the pose with the smallest distance as the best match. Finally, we decode the matched pose back into the AZee FK pose array and apply it to the character.
+Algorithm~\ref{alg:pose_correction} outlines the pose correction process. Given a target pose generated by the AZee synthesizor, we first encode the pose into the latent space using the VPoser encoder. We then compute the distance between the encoded pose and each pose in the dataset, selecting the pose with the smallest distance as the best match. Finally, we decode the matched pose back into the AZee \gls{fk} pose array and apply it to the character.
 
 \begin{algorithm}
   \caption{AZee constraint optimization with pose correction algorithm}
@@ -283,19 +284,24 @@ Algorithm~\ref{alg:pose_correction} outlines the pose correction process. Given 
   \end{algorithmic}
   \end{algorithm}
 
-\section{Results}
+\section{Results and Implementation}
 \label{ch:intermediate_blocks_pose_correction:results}
+
+\subsection{Results and Implementation for Intermediate Block Generation}
+\label{ch:intermediate_blocks_pose_correction:results:intermediate_block_generation}
+
+We chose to extend our previous animator in blender to include the intermediate block generation process. The intermediate blocks are represented as strips in the \gls{nle}. The created templates are stored as \gls{XML} files and can be loaded into the animator. 
 
 Table~\ref{tab:intermediate_blocks_comparison}shows the results of the intermediate block generation process. We compare the results of using standard interpolation techniques with the proposed template-based interpolation method. The table shows the difference in naturalness and coherence between the two methods, highlighting the benefits of using motion curves and templates to generate intermediate blocks.
 
-%todo in results, show how this template looks better
+%todo fix the table
 \begin{figure}
     \centering
     \begin{tabular}{|c|c|c|}
     \hline
     \textbf{AZee Rule} & \textbf{Linear Interpolation} & \textbf{Template based Interpolation} \\
     \hline
-    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/standard_interpolation_todo1.png} & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/template_interpolation_todo1.png} \\
+    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/standard_interpolation_todo1.png} & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_mocap.png} \\
     \hline
     TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/standard_interpolation_todo2.png} & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/template_interpolation_todo2.png} \\
     \hline
@@ -304,9 +310,14 @@ Table~\ref{tab:intermediate_blocks_comparison}shows the results of the intermedi
     \label{tab:intermediate_blocks_comparison}
 \end{figure}
 
-The complete animations can be seen in the following video: \url{todo}
+The complete animations can be seen in the video~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch5_templates.mp4}}.
 
-An increase in naturalness when animating using the intermediate blocks technique can be seen. Moreover, this work provides us isnights regarding the motion profile which an AZee rule asbtracts.
+An increase in naturalness when animating using the intermediate blocks technique can be seen. Moreover, this work provides us inights regarding the motion profile which an AZee rule abstracts.
+
+\subsection{Results and Implementation for Pose Correction}
+\label{ch:intermediate_blocks_pose_correction:results:intermediate_block_generation}
+
+We created the pose corrector as a separate module in the existing AZee animator. The pose corrector is responsible for matching the poses generated by the AZee system to the most appropriate pose in the dataset. As the algorithm~\ref{alg:pose_correction} shows, the pose correction process is applied just after the AZee constraints are optimized.
 
 Snapshots with standard synthesis and synthesis with pose correction and the corresponding AZee code for the same are shown in table~\ref{tab:results}.
 
@@ -331,7 +342,7 @@ Snapshots with standard synthesis and synthesis with pose correction and the cor
   \label{tab:results}
 \end{table}
 
-The synthesized videos can also be viewed at \href{todo}.
+The synthesized videos can also be viewed at the following link~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch5_pose_correction.mp4}}.
 
 The pose correction system seems to produces more natural and contextually appropriate animations compared to standard joint-limit based synthesis. However, due to retargeting losses, the integration of pose correction into \gls{sl} synthesis is still in the early stages. We also observe that the corrector might change the pose of the character in a way that is not always desirable~\ref{fig:problem_pose_correction}.
 
@@ -341,7 +352,7 @@ The pose correction system seems to produces more natural and contextually appro
   \label{fig:problem_pose_correction}
 \end{figure}
 
-Lastly, figure~\ref{fig:losses} shows how retargeting the mocap data to the AZee skeleton structure results in a loss of information. This loss can affect the quality of the generated animations and is an area for future improvement.
+Lastly, figure~\ref{fig:losses} shows how retargeting the \gls{mocap} data to the AZee skeleton structure results in a loss of information. This loss can affect the quality of the generated animations and is an area for future improvement.
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks_pose_correction/images/losses.png}
@@ -355,10 +366,12 @@ Lastly, figure~\ref{fig:losses} shows how retargeting the mocap data to the AZee
 In this chapter, we explored techniques to make our synthesis system more natural. By leveraging the AZee model and existing motion data, we were able to fill in the gaps left by the linguistic model and create more expressive and coherent animations. 
 
 %limitations
-While the current system of motion templates proves effective for generating smooth transitions in most body movements, it faces significant challenges when dealing with finer details such as finger articulation. The complexity of finger movements in \gls{sl}, especially during rapid transitions, requires high precision in motion curves and templates. Unfortunately, the current implementation lacks the necessary granularity, resulting in robotic transitions. Moreover, capturing thte nuances of coarticulation between handshapes be it with mocap or using pose estimation remains an open challenge. Another limitation stems from too much data in the motion templates. This might bring in information such as the identity of the signer, which may not always generalize well. This can be mitigated by using a more generalized set of motion templates that can be applied across different signing scenarios.
+While the current system of motion templates proves effective for generating smooth transitions in most body movements, it faces significant challenges when dealing with finer details such as finger articulation. The complexity of finger movements in \gls{sl}, especially during rapid transitions, requires high precision in motion curves and templates. Unfortunately, the current implementation lacks the necessary granularity, resulting in robotic transitions. Moreover, capturing thte nuances of coarticulation between handshapes be it with \gls{mocap} or using artistic templates an open challenge. Another limitation stems from too much data in the motion templates. This might bring in information such as the identity of the signer, which may not always generalize well. This can be mitigated by using a more generalized set of motion templates that can be applied across different signing scenarios.
 
-Similarly, while the integration of pose correction into \gls{sl} synthesis in out animator, it also introduces new challenges. Data-driven and latent space methods typically require significant computational resources, both during training and inference. This can be a major barrier in applications where low latency is critical. Also the effectiveness of deep learning models depends heavily on the availability of high-quality training data. In many cases, obtaining sufficient mocap data can be difficult, especially for non-standard or stylized animations. Lastly, while deep learning models can generate realistic and high-quality animations, they often lack the fine-grained control that human animators require. Ensuring that these models produce outputs that align with artistic vision remains a significant challenge.
+Similarly, while the integration of pose correction into \gls{sl} synthesis in out animator, it also introduces new challenges. Data-driven and latent space methods typically require significant computational resources, both during training and inference. This can be a major barrier in applications where low latency is critical. Also the effectiveness of deep learning models depends heavily on the availability of high-quality training data. In many cases, obtaining sufficient \gls{mocap} data can be difficult, especially for non-standard or stylized animations. Lastly, while deep learning models can generate realistic and high-quality animations, they often lack the fine-grained control that human animators require. Ensuring that these models produce outputs that align with artistic vision remains a significant challenge.
 
-Future areas to improve our work technique could include a more detailed quantitative analysis of motion capture data based on a broader range of AZee rules, as well as further refinement of finger tracking and facial expressions in the motion templates. Diffusion based inbetweening models~\cite{cohan2024flexible} could also be used for better intermediate block generation. Newer posers based on neural distance fields~\cite{tiwari2022pose} or diffusion~\cite{lu2023dposer} could be used for pose correction since the current poser has a bayesian bias. Also, continuity of the trained model with respect to signing spaces could be studied further improving the the learnt pose prior.
+Future areas to improve our work technique could include a more detailed quantitative analysis of motion capture data based on a broader range of AZee rules, as well as further refinement of finger tracking and facial expressions in the motion templates. Since obtaining good quality \gls{mocap} data is also a challenge, pose estimation based on image data could be explored as an alternative~\ref{app:intermediate_blocks_pose_correction:pose_est_templates}. Since, motion curves for intermediate blocks might not have one-to-one correspondence with the AZee rules, newer techniques such as Diffusion based inbetweening~\cite{cohan2024flexible} could also be used for better intermediate block generation. 
+
+Similarly, newer posers based on neural distance fields~\cite{tiwari2022pose} or diffusion~\cite{lu2023dposer} could be used for pose correction since the current poser has a bayesian bias. Also, continuity of the trained model with respect to signing spaces could be studied further improving the the learnt pose prior.
 
 \end{document}
