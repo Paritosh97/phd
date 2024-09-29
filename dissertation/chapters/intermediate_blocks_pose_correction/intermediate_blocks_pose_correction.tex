@@ -5,14 +5,14 @@
 
 Creativity in human expression often emerges from the interplay between structured rules and natural, fluid motion. In the context of (\gls{sl}) animation, while the AZee model offers a structured linguistic framework, it remains abstract and disconnected from the rich, dynamic nature of human motion. Natural human movement, including transitions and subtle nuances, is not dictated solely by linguistic constraints. It requires more than following a set of postures; it demands a synthesis that reflects the flexibility and fluidity inherent in real-life communication. To capture the full expressive power of \gls{sl}, we must extend beyond AZee's formal descriptions and incorporate real-world data that can enhance motion and gesture authenticity.
 
-In this chapter, we address this gap by focusing on two key areas: the generation of intermediate blocks using motion templates and the application of pose correction techniques. Intermediate blocks provide the smooth transitions between postures that are essential for natural movement, ensuring that the resulting animation feels fluid and coherent. Motion templates serve as predefined motion patterns that can guide these transitions, drawing from both artistic input and real-world data. Lastly, we introduce a pose correction module that leverages a French \gls{sl} motion capture dataset to ensure that synthesized poses are contextually appropriate and realistic. Together, these components aim to enhance the naturalness of \gls{sl} animation, filling in the missing details left by the linguistic model and creating a more seamless and expressive experience.
+In this chapter, we address this gap by focusing on two key areas: the generation of intermediate blocks using motion templates and the application of pose correction techniques. Intermediate blocks provide the smooth transitions between postures that are essential for natural movement, ensuring that the resulting animation feels fluid and coherent. Motion templates serve as predefined motion patterns that can guide these transitions, drawing from both artistic input and real-world data. Lastly, we introduce a pose correction module that leverages a \gls{lsf} motion capture dataset to ensure that synthesized poses are contextually appropriate and realistic. Together, these components aim to enhance the naturalness of \gls{sl} animation, filling in the missing details left by the linguistic model and creating a more seamless and expressive experience.
 
 In this chapter, section~\ref{ch:intermediate_blocks_pose_correction:intermediate_block_generation} discusses the generation of intermediate blocks using motion templates, while section~\ref{ch:intermediate_blocks_pose_correction:pose_correction_with_azee} explores the application of pose correction techniques to the AZee low-level synthesis system. Section~\ref{ch:intermediate_blocks_pose_correction:results} presents the results of these techniques, highlighting the improvements in naturalness and coherence achieved through motion templates and pose correction. Finally, section~\ref{ch:intermediate_blocks_pose_correction:conclusion_and_future_work} concludes the chapter and outlines future areas for improvement.
 
 \section{Intermediate Block Generation}
 \label{ch:intermediate_blocks_pose_correction:intermediate_block_generation}
 
-Intermediate blocks are blocks of motion not specified by the AZee model. Building on the concepts of motion curves, as discussed earlier in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:motion_curves} of chapter~\ref{ch:background_work}, these blocks ensure smooth transitions between posture sequences. Figure~\ref{fig:info_about_intermediate_example} shows intermediate blocks generated for the AZee rule \emph{info-about(topic,info)}. To create these blocks, we iterate over each block \( B_1 \) in the set \( S = \text{cstr\_blocks} \cup \text{transpath\_blocks.keys()} \cup \text{hold\_blocks.keys()} \), and find the closest block \( B_2 \in S \) such that \( B_1.\text{end} < B_2.\text{start} \). Among all such \( B_2 \)'s, the one with the smallest \( B_2.\text{start} \) is selected, and a transition block is generated between \( B_1 \) and \( B_2 \), filling in the gaps left by AZee’s structure.
+Intermediate blocks are segments of motion not explicitly specified by the AZee model. Building on the concept of motion curves, as discussed earlier in Section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:motion_curves} of Chapter~\ref{ch:background_work}, these blocks ensure smooth transitions between posture sequences. Figure~\ref{fig:info_about_intermediate_example} illustrates intermediate blocks generated for the AZee rule \emph{info-about(topic,info)}. To create these blocks, we examine each motion segment \( B_1 \) in the set \( S \), which includes constraint blocks, transpath blocks, hold blocks and pre-animated blocks. For each \( B_1 \), we find the closest subsequent segment \( B_2 \) in \( S \), ensuring that \( B_2 \) starts after \( B_1 \) ends. Among all possible \( B_2 \) candidates, the one with the earliest start time is selected, and a transition block is generated to connect \( B_1 \) and \( B_2 \), filling in the motion gaps left by AZee’s structure.
 
 \begin{figure}
     \centering \includegraphics[width = 5in]{chapters/intermediate_blocks_pose_correction/images/info_about_intermediate_example.png}
@@ -20,13 +20,12 @@ Intermediate blocks are blocks of motion not specified by the AZee model. Buildi
     \label{fig:info_about_intermediate_example}
 \end{figure}
 
-Simplest way to generate intermediate blocks is to use linear or some other spline in these blocks. However, we propose the use of motion templates, which provide predefined motion patterns that can guide the interpolation within these blocks.
+Simplest way to fill in intermediate blocks is to use linear or some other spline in these blocks. However, we propose the use of motion templates, which provide predefined motion patterns that can guide the interpolation within these blocks.
 
 \subsection{Identifying Motion Templates}
 \label{ch:intermediate_blocks_pose_correction:identifying_motion_templates}
 
 Before filling in the intermediate blocks with some motion template, we need to identify them using an AZee template check (as discussed in section~\ref{ch:background_work:sign_language_descriptions:azee:templates} of chapter~\ref{ch:background_work}). The template check is a top-down search algorithm that selects the best motion template to match on the AZee expression. Figure~\ref{fig:top_down_search_template} shows the template check for the AZee expression \emph{info-about(cat,cute)}. The algorithm starts by searching for the most specific template that matches the expression, then gradually broadens the search until a suitable template is found.
-
 
 \begin{figure}
     \centering \includegraphics[width = 4in]{chapters/intermediate_blocks_pose_correction/images/top_down_search_template.png}
@@ -50,7 +49,7 @@ The procedurally generated templates can be based on the AZee rule and correspon
     \label{fig:motion_curves_template_procedural}
 \end{figure}
 
-The template was created by extracting bone rotations as quaternions using mediapipe pose estimation and then converting them into motion curves (figure~\ref{fig:motion_curves_mediapipe}). The final blended rotation can be calculated using \gls{slerp} between \( n \) quaternions \( q_1, q_2, \dots, q_n \):
+The template was created by extracting bone rotations as quaternions using template SMPL-X reconstructions of the avatar~\cite{Forte_2023_CVPR} and then converting them into motion curves (figure~\ref{fig:motion_curves_smplx}). The final blended rotation can be calculated using \gls{slerp} between the \( n \) quaternions \( q_1, q_2, \dots, q_n \):
 
 \[
 q_{\text{blend}} = \text{Slerp}\left(\dots \text{Slerp}\left(\text{Slerp}(q_1, q_2, t_1), q_3, t_2 \right) \dots , q_n, t_{n-1} \right)
@@ -66,13 +65,7 @@ Where:
     where \( \theta = \arccos(q_i \cdot q_j) \) is the angle between the quaternions.
 \end{itemize}
 
-\begin{figure}
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_mediapipe.png}
-    \caption{Motion Curves from Mediapipe Pose Estimation}
-    \label{fig:motion_curves_mediapipe}
-\end{figure}
-
-Figure~\ref{fig:motion_curves_mocap} similar template creation but using AZee annotated motion capture~\cite{bertin2022rosetta}.
+Figure~\ref{fig:motion_curves_mocap} similar template creation but using AZee annotated motion capture~\cite{bertin2022rosetta} retargeted on our avatar.
 
 \begin{figure}
     \centering \includegraphics[width = 4in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_mocap.png}
@@ -294,6 +287,7 @@ Algorithm~\ref{alg:pose_correction} outlines the pose correction process. Given 
 \label{ch:intermediate_blocks_pose_correction:results}
 
 Table~\ref{tab:intermediate_blocks_comparison}shows the results of the intermediate block generation process. We compare the results of using standard interpolation techniques with the proposed template-based interpolation method. The table shows the difference in naturalness and coherence between the two methods, highlighting the benefits of using motion curves and templates to generate intermediate blocks.
+
 %todo in results, show how this template looks better
 \begin{figure}
     \centering

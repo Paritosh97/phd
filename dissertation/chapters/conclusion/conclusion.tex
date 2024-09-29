@@ -20,6 +20,15 @@ Chapter~\ref{ch:intermediate_blocks_pose_correction}, the generation of intermed
 
 Chapter~\ref{ch:facial_expressions} presents facial expressions as a critical component in \gls{sl} communication, conveying emotional and grammatical information. The chapter introduces a method for synthesizing facial expressions using the AZee framework, focusing on action units (AUs) from the FACS system to create blendshapes for animating signing avatars. It explores face rigging techniques, motion capture, and the generation of motion curves to create dynamic, realistic facial expressions. The chapter evaluates the accuracy of synthesized expressions through subjective and quantitative measures, demonstrating the potential of this approach for improving the realism of signing avatars.
 
+% todo restructre and fix
+The contributions of this research are expected to be multifaceted, offering both theoretical and practical advancements in the field of \gls{sl} synthesis:
+
+\begin{itemize}
+    \item \textbf{Introducing novel algorithms for \gls{sl} synthesis:} This research will contribute new techniques and methodologies for synthesizing \gls{sl}, particularly in the areas of avatar rigging, motion interpolation and facial expression generation. These algorithms are designed to improve the realism and fluidity of \gls{sl} animations, making them more natural and understandable for users.
+    \item \textbf{Demonstrating improvements in the scalability of \gls{sl}:} The research will include evaluations of the proposed methods, demonstrating their effectiveness in producing \gls{sl} animations.
+    \item \textbf{Providing a framework that can be adapted to various \gls{sl} and contexts:} The ultimate goal of this research is to create a flexible and adaptable framework that can be applied to different \gls{sl} and used in a variety of contexts, from education and media to public services.
+\end{itemize}
+
 \section{Open Source}
 \label{ch:conclusion:opensource}
 
@@ -44,6 +53,24 @@ The blender synthesizor was also integrated with the AZVD~\cite{filhol2024softwa
 \end{figure}
 
 The web interface allows users to draw AZee visual descriptions which resolved to AZee Scores and then to animations. For this, the AZee code generated from AZVD in the front-end is sent to the server where an instance of the blender is running headlessly. The synthesizor evaluates the AZee code and returns the animation in video or GLB format to the front-end where it is displayed to the user.
+
+\section{Publications}
+
+Work presented in this thesis has been the subject of the following publications:
+
+\begin{enumerate}
+    \item Paritosh Sharma, Michael Filhol. "Sign Language Synthesis using Pose Priors." In \textit{Proceedings of the 9th International Conference on Movement and Computing (MOCO '24)}, ACM, 2024, Utrecht, Netherlands.
+    
+    \item Paritosh Sharma, Camille Challant, Michael Filhol. "Facial Expressions for Sign Language Synthesis using FACSHuman and AZee." In \textit{SIGNLANG}, 2024.
+    
+    \item Paritosh Sharma, Michael Filhol. "Extending Morphs in AZee Using Pose Space Deformations." In \textit{2023 IEEE International Conference on Acoustics, Speech, and Signal Processing Workshops (ICASSPW)}, IEEE, 2023, pp. 1-5.
+    
+    \item Paritosh Sharma, Michael Filhol. "Intermediate Block Generation for Multi-Track Sign Language Synthesis." In \textit{Proceedings of the ACM SIGGRAPH/Eurographics Symposium on Computer Animation (SCA '23)}, ACM, 2023, Los Angeles, CA, USA.
+    
+    \item Paritosh Sharma. "A Layered Approach to Constrain Signing Avatars." In \textit{VISIGRAPP\_DC 2023}, Scitevents, Feb 2023, Lisbon, Portugal.
+    
+    \item Paritosh Sharma, Michael Filhol. "Multi-Track Bottom-Up Synthesis from Non-Flattened AZee Scores." In \textit{7th Workshop on Sign Language Translation and Avatar Technology (SLTAT 7)}, Jun 2022, Marseille, France.
+\end{enumerate}
 
 \section{Key Insights}
 \label{ch:conclusion:key_insights}
@@ -99,7 +126,7 @@ While the contributions of this thesis mark a progress in \gls{sl} synthesis, se
 
 \begin{itemize}
     \item \textbf{Collaboration with Linguists and \gls{sl} Experts:} Continued collaboration with linguists and native signers will be crucial for refining the linguistic accuracy and expressiveness of the synthesized signs. This interdisciplinary approach will help ensure that the technology remains aligned with the needs and preferences of the Deaf and Hard of Hearing communities.
-    
+    %remove accessibility
     \item \textbf{Ethical Considerations:} As \gls{sl} synthesis technology evolves, it is important to address ethical considerations, such as ensuring accessibility and avoiding the misrepresentation of signed communication. Future research should incorporate these considerations into the design and deployment of \gls{sl} technologies.
 \end{itemize}
 
@@ -108,11 +135,11 @@ While the contributions of this thesis mark a progress in \gls{sl} synthesis, se
 
 \begin{itemize}
     \item \textbf{Collaboration with Linguists and \gls{sl} Experts:} Continued collaboration with linguists and native signers will be crucial for refining the linguistic accuracy and expressiveness of the synthesized signs. This interdisciplinary approach will help ensure that the technology remains aligned with the needs and preferences of the Deaf and Hard of Hearing communities.
-    
+    % remove accessibility
     \item \textbf{Ethical Considerations:} As \gls{sl} synthesis technology evolves, it is important to address ethical considerations, such as ensuring accessibility and avoiding the misrepresentation of signed communication. Future research should incorporate these considerations into the design and deployment of \gls{sl} technologies.
 \end{itemize}
 
-
+%remove accessibility
 In conclusion, this thesis has laid a strong foundation for the development of advanced \gls{sl} synthesis systems. By building on the work presented here, future research has the potential to further enhance the accessibility and effectiveness of communication technologies for the Deaf and Hard of Hearing communities.
 
 
