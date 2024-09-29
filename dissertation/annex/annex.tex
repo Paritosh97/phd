@@ -1,22 +1,502 @@
 \documentclass[../main.tex]{subfiles}
+\usepackage{forest}
+\usepackage{tikz}
+\usepackage{svg}
 \begin{document}
 
 \chapter{Annex}
 
 \section{Annex for Chapter 2}
-\label{app:background_work}
+\label{annex:background_work}
+
+\subsection{Bone List for Previous Synthesizor}
+\label{annex:background_work:old_bone_list}
+
+\begin{longtable}{|l|l|l|l|}
+    \hline
+    belly & left\_thumb1 & left\_little2 & right\_wrist \\ \hline
+    waist & left\_thumb2 & left\_little3 & right\_hand \\ \hline
+    thorax & left\_thumb3 & left\_little4 & right\_scaphoid \\ \hline
+    left\_clavicle & left\_thumb4 & left\_ring1 & right\_trapezium \\ \hline
+    left\_shoulder & left\_middle1 & left\_ring2 & right\_thumb1 \\ \hline
+    left\_elbow & left\_middle2 & left\_ring3 & right\_thumb2 \\ \hline
+    left\_wrist & left\_middle3 & left\_ring4 & right\_thumb3 \\ \hline
+    left\_hand & left\_middle4 & left\_index1 & right\_thumb4 \\ \hline
+    left\_scaphoid & left\_little1 & left\_index2 & right\_middle1 \\ \hline
+    left\_trapezium & left\_ring1 & left\_index3 & right\_middle2 \\ \hline
+    left\_thumb1 & left\_ring2 & left\_index4 & right\_middle3 \\ \hline
+    left\_thumb2 & left\_ring3 & right\_clavicle & right\_middle4 \\ \hline
+    left\_thumb3 & left\_ring4 & right\_shoulder & right\_little1 \\ \hline
+    left\_thumb4 & left\_index1 & right\_elbow & right\_little2 \\ \hline
+    left\_middle1 & left\_index2 & right\_wrist & right\_little3 \\ \hline
+    left\_middle2 & left\_index3 & right\_hand & right\_little4 \\ \hline
+    left\_middle3 & left\_index4 & right\_scaphoid & right\_ring1 \\ \hline
+    left\_middle4 & right\_clavicle & right\_trapezium & right\_ring2 \\ \hline
+    left\_little1 & right\_shoulder & right\_thumb1 & right\_ring3 \\ \hline
+    left\_little2 & right\_elbow & right\_thumb2 & right\_ring4 \\ \hline
+    left\_little3 & right\_wrist & right\_thumb3 & right\_index1 \\ \hline
+    left\_little4 & right\_hand & right\_thumb4 & right\_index2 \\ \hline
+    left\_ring1 & right\_scaphoid & right\_middle1 & right\_index3 \\ \hline
+    left\_ring2 & right\_trapezium & right\_middle2 & right\_index4 \\ \hline
+    left\_ring3 & right\_thumb1 & right\_middle3 & neck \\ \hline
+    left\_ring4 & right\_thumb2 & right\_middle4 & head \\ \hline
+    left\_index1 & right\_thumb3 & right\_little1 & head\_end \\ \hline
+    left\_index2 & right\_thumb4 & right\_little2 & right\_eye \\ \hline
+    left\_index3 & right\_middle1 & right\_little3 & right\_eye\_end \\ \hline
+    left\_index4 & right\_middle2 & right\_little4 & left\_eye \\ \hline
+    right\_clavicle & right\_middle3 & right\_ring1 & left\_eye\_end \\ \hline
+    right\_shoulder & right\_middle4 & right\_ring2 &  \\ \hline
+    right\_elbow & right\_little1 & right\_ring3 &  \\ \hline
+\end{longtable}
+
+\subsection{AZee's Abstract Bone Structure}
+\label{annex:background_work:azee_abstract_bones}
+
+\begin{forest}
+    for tree={
+        grow=south,
+        edge={->},
+        parent anchor=south,
+        child anchor=north,
+        align=center,
+        l=2cm,
+        s sep=2mm,
+        tier/.wrap pgfmath arg={tier#1}{level()},
+        font=\scriptsize  % Adjust the text size here
+    }
+    [back\_1
+        [back\_2
+            [clav\_L
+                [arm\_L
+                    [f\_arm\_L
+                        [palm\_L
+                            [thumb\_L\_1
+                                [thumb\_L\_2
+                                    [thumb\_L\_3]
+                                ]
+                            ]
+                            [index\_L\_1
+                                [index\_L\_2
+                                    [index\_L\_3]
+                                ]
+                            ]
+                            [middle\_L\_1
+                                [middle\_L\_2
+                                    [middle\_L\_3]
+                                ]
+                            ]
+                            [ring\_L\_1
+                                [ring\_L\_2
+                                    [ring\_L\_3]
+                                ]
+                            ]
+                            [little\_L\_1
+                                [little\_L\_2
+                                    [little\_L\_3]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+            [clav\_R
+                [arm\_R
+                    [f\_arm\_R
+                        [palm\_R
+                            [thumb\_R\_1
+                                [thumb\_R\_2
+                                    [thumb\_R\_3]
+                                ]
+                            ]
+                            [index\_R\_1
+                                [index\_R\_2
+                                    [index\_R\_3]
+                                ]
+                            ]
+                            [middle\_R\_1
+                                [middle\_R\_2
+                                    [middle\_R\_3]
+                                ]
+                            ]
+                            [ring\_R\_1
+                                [ring\_R\_2
+                                    [ring\_R\_3]
+                                ]
+                            ]
+                            [little\_R\_1
+                                [little\_R\_2
+                                    [little\_R\_3]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+            [neck
+                [head
+                    [eye\_L]
+                    [eye\_R]
+                ]
+            ]
+        ]
+    ]
+\end{forest}
+
+\subsection{AZee Site List}
+\label{annex:background_work:azee_sites}
+
+\begin{longtable}{|p{2cm}|p{3cm}|p{5cm}|}
+    \hline
+    \textbf{Body Site} & \textbf{Attached Bone} & \textbf{Description} \\ \hline
+    AB & back\_1 & Abdominal area connected to the back of the torso \\ \hline
+    AB\_L & back\_1 & Left side of the abdominal area \\ \hline
+    AB\_R & back\_1 & Right side of the abdominal area \\ \hline
+    ABST\_L & back\_1 & Left side of the abdominal stretch area \\ \hline
+    ABST\_R & back\_1 & Right side of the abdominal stretch area \\ \hline
+    ABST & back\_1 & Central abdominal stretch area \\ \hline
+    ARM\_L & arm\_L & Left upper arm \\ \hline
+    ARMpit\_L & back\_2 & Left armpit area \\ \hline
+    ARMpit\_R & back\_2 & Right armpit area \\ \hline
+    ARM\_R & arm\_R & Right upper arm \\ \hline
+    ARMsh\_L & arm\_L & Left shoulder area \\ \hline
+    ARMsh\_R & arm\_R & Right shoulder area \\ \hline
+    BEB & head & Upper back of the head (cranial base) \\ \hline
+    CB\_L & head & Left side of the cranial base \\ \hline
+    CB\_R & head & Right side of the cranial base \\ \hline
+    CDL\_L & head & Left side of the cranium at the back \\ \hline
+    CDL\_R & head & Right side of the cranium at the back \\ \hline
+    CH & head & Top and center of the head \\ \hline
+    CH\_L & head & Left side of the head (temporal region) \\ \hline
+    CH\_R & head & Right side of the head (temporal region) \\ \hline
+    CK\_L & head & Left cheek \\ \hline
+    CK\_R & head & Right cheek \\ \hline
+    EAR\_L & head & Left ear area \\ \hline
+    EAR\_R & head & Right ear area \\ \hline
+    EBe\_L & head & Outer left eyebrow area \\ \hline
+    EBe\_R & head & Outer right eyebrow area \\ \hline
+    EBi\_L & head & Inner left eyebrow area \\ \hline
+    EBi\_R & head & Inner right eyebrow area \\ \hline
+    EB\_L & head & Left eyebrow \\ \hline
+    EB\_R & head & Right eyebrow \\ \hline
+    ELi\_L & arm\_L & Inner left elbow \\ \hline
+    ELi\_R & arm\_R & Inner right elbow \\ \hline
+    EL\_L & arm\_L & Outer left elbow \\ \hline
+    EL\_R & arm\_R & Outer right elbow \\ \hline
+    EYE\_L & head & Left eye \\ \hline
+    EYE\_R & head & Right eye \\ \hline
+    F\_ARMi\_L & f\_arm\_L & Inner left forearm \\ \hline
+    F\_ARMi\_R & f\_arm\_R & Inner right forearm \\ \hline
+    F\_ARM\_L & f\_arm\_L & Left forearm \\ \hline
+    F\_ARM\_R & f\_arm\_R & Right forearm \\ \hline
+    FH & head & Forehead \\ \hline
+    FH\_L & head & Left side of the forehead \\ \hline
+    FH\_R & head & Right side of the forehead \\ \hline
+    H\_BACK\_L & palm\_L & Back of the left hand \\ \hline
+    H\_BACK\_R & palm\_R & Back of the right hand \\ \hline
+    HEAD & head & Entire head \\ \hline
+    HEAD\_L & head & Left side of the head \\ \hline
+    HEAD\_R & head & Right side of the head \\ \hline
+    H\_EDGE\_L & palm\_L & Left edge of the palm \\ \hline
+    H\_EDGE\_R & palm\_R & Right edge of the palm \\ \hline
+    I\_BACK\_L\_1 & index\_L\_1 & Back of the first section of the left index finger \\ \hline
+    I\_BACK\_R\_1 & index\_R\_1 & Back of the first section of the right index finger \\ \hline
+    I\_BACK\_L\_2 & index\_L\_2 & Back of the second section of the left index finger \\ \hline
+    I\_BACK\_R\_2 & index\_R\_2 & Back of the second section of the right index finger \\ \hline
+    I\_INT\_L\_1 & index\_L\_1 & Inner side of the first section of the left index finger \\ \hline
+    I\_INT\_R\_1 & index\_R\_1 & Inner side of the first section of the right index finger \\ \hline
+    I\_INT\_L\_2 & index\_L\_2 & Inner side of the second section of the left index finger \\ \hline
+    I\_INT\_R\_2 & index\_R\_2 & Inner side of the second section of the right index finger \\ \hline
+    I\_KN\_L\_1 & index\_L\_1 & Left index finger knuckle (first joint) \\ \hline
+    I\_KN\_R\_1 & index\_R\_1 & Right index finger knuckle (first joint) \\ \hline
+    I\_KN\_L\_2 & index\_L\_2 & Left index finger knuckle (second joint) \\ \hline
+    I\_KN\_R\_2 & index\_R\_2 & Right index finger knuckle (second joint) \\ \hline
+    I\_KN\_L\_3 & index\_L\_3 & Left index finger knuckle (third joint) \\ \hline
+    I\_KN\_R\_3 & index\_R\_3 & Right index finger knuckle (third joint) \\ \hline
+    I\_KNi\_L\_1 & index\_L\_1 & Inner first knuckle of the left index finger \\ \hline
+    I\_KNi\_R\_1 & index\_R\_1 & Inner first knuckle of the right index finger \\ \hline
+    I\_KNi\_L\_2 & index\_L\_2 & Inner second knuckle of the left index finger \\ \hline
+    I\_KNi\_R\_2 & index\_R\_2 & Inner second knuckle of the right index finger \\ \hline
+    I\_KNi\_L\_3 & index\_L\_3 & Inner third knuckle of the left index finger \\ \hline
+    I\_KNi\_R\_3 & index\_R\_3 & Inner third knuckle of the right index finger \\ \hline
+    I\_KNl\_L\_1 & index\_L\_1 & Lateral first knuckle of the left index finger \\ \hline
+    I\_KNl\_R\_1 & index\_R\_1 & Lateral first knuckle of the right index finger \\ \hline
+    I\_KNl\_L\_2 & index\_L\_2 & Lateral second knuckle of the left index finger \\ \hline
+    I\_KNl\_R\_2 & index\_R\_2 & Lateral second knuckle of the right index finger \\ \hline
+    I\_KNl\_L\_3 & index\_L\_3 & Lateral third knuckle of the left index finger \\ \hline
+    I\_KNl\_R\_3 & index\_R\_3 & Lateral third knuckle of the right index finger \\ \hline
+    I\_TIP\_L & index\_L\_3 & Tip of the left index finger \\ \hline
+    I\_TIP\_R & index\_R\_3 & Tip of the right index finger \\ \hline
+    L\_BACK\_L\_1 & little\_L\_1 & Back of the first section of the left little finger \\ \hline
+    L\_BACK\_R\_1 & little\_R\_1 & Back of the first section of the right little finger \\ \hline
+    L\_BACK\_L\_2 & little\_L\_2 & Back of the second section of the left little finger \\ \hline
+    L\_BACK\_R\_2 & little\_R\_2 & Back of the second section of the right little finger \\ \hline
+    L\_INT\_L\_1 & little\_L\_1 & Inner side of the first section of the left little finger \\ \hline
+    L\_INT\_R\_1 & little\_R\_1 & Inner side of the first section of the right little finger \\ \hline
+    L\_INT\_L\_2 & little\_L\_2 & Inner side of the second section of the left little finger \\ \hline
+    L\_INT\_R\_2 & little\_R\_2 & Inner side of the second section of the right little finger \\ \hline
+    L\_KN\_L\_1 & little\_L\_1 & Left little finger knuckle (first joint) \\ \hline
+    L\_KN\_R\_1 & little\_R\_1 & Right little finger knuckle (first joint) \\ \hline
+    L\_KN\_L\_2 & little\_L\_2 & Left little finger knuckle (second joint) \\ \hline
+    L\_KN\_R\_2 & little\_R\_2 & Right little finger knuckle (second joint) \\ \hline
+    L\_KN\_L\_3 & little\_L\_3 & Left little finger knuckle (third joint) \\ \hline
+    L\_KN\_R\_3 & little\_R\_3 & Right little finger knuckle (third joint) \\ \hline
+    L\_KNi\_L\_1 & little\_L\_1 & Inner first knuckle of the left little finger \\ \hline
+    L\_KNi\_R\_1 & little\_R\_1 & Inner first knuckle of the right little finger \\ \hline
+    L\_KNi\_L\_2 & little\_L\_2 & Inner second knuckle of the left little finger \\ \hline
+    L\_KNi\_R\_2 & little\_R\_2 & Inner second knuckle of the right little finger \\ \hline
+    L\_KNi\_L\_3 & little\_L\_3 & Inner third knuckle of the left little finger \\ \hline
+    L\_KNi\_R\_3 & little\_R\_3 & Inner third knuckle of the right little finger \\ \hline
+    L\_KNl\_L\_1 & little\_L\_1 & Lateral first knuckle of the left little finger \\ \hline
+    L\_KNl\_R\_1 & little\_R\_1 & Lateral first knuckle of the right little finger \\ \hline
+    L\_KNl\_L\_2 & little\_L\_2 & Lateral second knuckle of the left little finger \\ \hline
+    L\_KNl\_R\_2 & little\_R\_2 & Lateral second knuckle of the right little finger \\ \hline
+    L\_KNl\_L\_3 & little\_L\_3 & Lateral third knuckle of the left little finger \\ \hline
+    L\_KNl\_R\_3 & little\_R\_3 & Lateral third knuckle of the right little finger \\ \hline
+    L\_TIP\_L & little\_L\_3 & Tip of the left little finger \\ \hline
+    L\_TIP\_R & little\_R\_3 & Tip of the right little finger \\ \hline
+    M\_BACK\_L\_1 & middle\_L\_1 & Back of the first section of the left middle finger \\ \hline
+    M\_BACK\_R\_1 & middle\_R\_1 & Back of the first section of the right middle finger \\ \hline
+    M\_BACK\_L\_2 & middle\_L\_2 & Back of the second section of the left middle finger \\ \hline
+    M\_BACK\_R\_2 & middle\_R\_2 & Back of the second section of the right middle finger \\ \hline
+    M\_INT\_L\_1 & middle\_L\_1 & Inner side of the first section of the left middle finger \\ \hline
+    M\_INT\_R\_1 & middle\_R\_1 & Inner side of the first section of the right middle finger \\ \hline
+    M\_INT\_L\_2 & middle\_L\_2 & Inner side of the second section of the left middle finger \\ \hline
+    M\_INT\_R\_2 & middle\_R\_2 & Inner side of the second section of the right middle finger \\ \hline
+    M\_KN\_L\_1 & middle\_L\_1 & Left middle finger knuckle (first joint) \\ \hline
+    M\_KN\_R\_1 & middle\_R\_1 & Right middle finger knuckle (first joint) \\ \hline
+    M\_KN\_L\_2 & middle\_L\_2 & Left middle finger knuckle (second joint) \\ \hline
+    M\_KN\_R\_2 & middle\_R\_2 & Right middle finger knuckle (second joint) \\ \hline
+    M\_KN\_L\_3 & middle\_L\_3 & Left middle finger knuckle (third joint) \\ \hline
+    M\_KN\_R\_3 & middle\_R\_3 & Right middle finger knuckle (third joint) \\ \hline
+    M\_TIP\_L & middle\_L\_3 & Tip of the left middle finger \\ \hline
+    M\_TIP\_R & middle\_R\_3 & Tip of the right middle finger \\ \hline
+    NK & neck & Neck (center) \\ \hline
+    NK\_L & neck & Left side of the neck \\ \hline
+    NK\_R & neck & Right side of the neck \\ \hline
+    NO & head & Nose \\ \hline
+    NO\_L & head & Left side of the nose \\ \hline
+    NO\_R & head & Right side of the nose \\ \hline
+    PA\_L & palm\_L & Left palm \\ \hline
+    PA\_R & palm\_R & Right palm \\ \hline
+    R\_BACK\_L\_1 & ring\_L\_1 & Back of the first section of the left ring finger \\ \hline
+    R\_BACK\_R\_1 & ring\_R\_1 & Back of the first section of the right ring finger \\ \hline
+    R\_BACK\_L\_2 & ring\_L\_2 & Back of the second section of the left ring finger \\ \hline
+    R\_BACK\_R\_2 & ring\_R\_2 & Back of the second section of the right ring finger \\ \hline
+    R\_INT\_L\_1 & ring\_L\_1 & Inner side of the first section of the left ring finger \\ \hline
+    R\_INT\_R\_1 & ring\_R\_1 & Inner side of the first section of the right ring finger \\ \hline
+    R\_INT\_L\_2 & ring\_L\_2 & Inner side of the second section of the left ring finger \\ \hline
+    R\_INT\_R\_2 & ring\_R\_2 & Inner side of the second section of the right ring finger \\ \hline
+    R\_KN\_L\_1 & ring\_L\_1 & Left ring finger knuckle (first joint) \\ \hline
+    R\_KN\_R\_1 & ring\_R\_1 & Right ring finger knuckle (first joint) \\ \hline
+    R\_KN\_L\_2 & ring\_L\_2 & Left ring finger knuckle (second joint) \\ \hline
+    R\_KN\_R\_2 & ring\_R\_2 & Right ring finger knuckle (second joint) \\ \hline
+    R\_KN\_L\_3 & ring\_L\_3 & Left ring finger knuckle (third joint) \\ \hline
+    R\_KN\_R\_3 & ring\_R\_3 & Right ring finger knuckle (third joint) \\ \hline
+    R\_TIP\_L & ring\_L\_3 & Tip of the left ring finger \\ \hline
+    R\_TIP\_R & ring\_R\_3 & Tip of the right ring finger \\ \hline
+    SH\_L & arm\_L & Left shoulder \\ \hline
+    SH\_R & arm\_R & Right shoulder \\ \hline
+    ST & back\_2 & Upper back region \\ \hline
+    ST\_L & back\_2 & Left side of the upper back \\ \hline
+    ST\_R & back\_2 & Right side of the upper back \\ \hline
+    T\_BACK\_L\_1 & thumb\_L\_1 & Back of the first section of the left thumb \\ \hline
+    T\_BACK\_R\_1 & thumb\_R\_1 & Back of the first section of the right thumb \\ \hline
+    T\_BACK\_L\_2 & thumb\_L\_2 & Back of the second section of the left thumb \\ \hline
+    T\_BACK\_R\_2 & thumb\_R\_2 & Back of the second section of the right thumb \\ \hline
+    T\_INT\_L\_1 & thumb\_L\_1 & Inner side of the first section of the left thumb \\ \hline
+    T\_INT\_R\_1 & thumb\_R\_1 & Inner side of the first section of the right thumb \\ \hline
+    T\_INT\_L\_2 & thumb\_L\_2 & Inner side of the second section of the left thumb \\ \hline
+    T\_INT\_R\_2 & thumb\_R\_2 & Inner side of the second section of the right thumb \\ \hline
+    T\_KN\_L\_1 & thumb\_L\_1 & Left thumb knuckle (first joint) \\ \hline
+    T\_KN\_R\_1 & thumb\_R\_1 & Right thumb knuckle (first joint) \\ \hline
+    T\_KN\_L\_2 & thumb\_L\_2 & Left thumb knuckle (second joint) \\ \hline
+    T\_KN\_R\_2 & thumb\_R\_2 & Right thumb knuckle (second joint) \\ \hline
+    T\_KN\_L\_3 & thumb\_L\_3 & Left thumb knuckle (third joint) \\ \hline
+    T\_KN\_R\_3 & thumb\_R\_3 & Right thumb knuckle (third joint) \\ \hline
+    T\_TIP\_L & thumb\_L\_3 & Tip of the left thumb \\ \hline
+    T\_TIP\_R & thumb\_R\_3 & Tip of the right thumb \\ \hline
+    WRi\_L & palm\_L & Left wrist (inner side) \\ \hline
+    WRi\_R & palm\_R & Right wrist (inner side) \\ \hline
+    WR\_L & palm\_L & Left wrist \\ \hline
+    WR\_R & palm\_R & Right wrist \\ \hline
+    T\_INT\_L\_3 & thumb\_L\_3 & Inner side of the third section of the left thumb \\ \hline
+    T\_INT\_R\_3 & thumb\_R\_3 & Inner side of the third section of the right thumb \\ \hline
+    T\_l\_L\_1 & thumb\_L\_1 & Lateral side of the first section of the left thumb \\ \hline
+    T\_l\_R\_1 & thumb\_R\_1 & Lateral side of the first section of the right thumb \\ \hline
+    T\_l\_L\_2 & thumb\_L\_2 & Lateral side of the second section of the left thumb \\ \hline
+    T\_l\_R\_2 & thumb\_R\_2 & Lateral side of the second section of the right thumb \\ \hline
+    T\_l\_L\_3 & thumb\_L\_3 & Lateral side of the third section of the left thumb \\ \hline
+    T\_l\_R\_3 & thumb\_R\_3 & Lateral side of the third section of the right thumb \\ \hline
+    T\_NA\_L & thumb\_L\_2 & Nail of the left thumb \\ \hline
+    T\_NA\_R & thumb\_R\_2 & Nail of the right thumb \\ \hline
+    T\_PAD\_L & thumb\_L\_2 & Pad of the left thumb \\ \hline
+    T\_PAD\_R & thumb\_R\_2 & Pad of the right thumb \\ \hline
+    T\_TIP\_L & thumb\_L\_3 & Tip of the left thumb \\ \hline
+    T\_TIP\_R & thumb\_R\_3 & Tip of the right thumb \\ \hline
+    viande\_L & palm\_L & Muscle area of the left palm \\ \hline
+    viande\_R & palm\_R & Muscle area of the right palm \\ \hline
+    WRt\_L & palm\_L & Left wrist top \\ \hline
+    WRt\_R & palm\_R & Right wrist top \\ \hline
+    I\_t\_L\_1 & index\_L\_1 & Top of the first section of the left index finger \\ \hline
+    I\_t\_R\_1 & index\_R\_1 & Top of the first section of the right index finger \\ \hline
+    I\_t\_L\_2 & index\_L\_2 & Top of the second section of the left index finger \\ \hline
+    I\_t\_R\_2 & index\_R\_2 & Top of the second section of the right index finger \\ \hline
+    I\_t\_L\_3 & index\_L\_3 & Top of the third section of the left index finger \\ \hline
+    I\_t\_R\_3 & index\_R\_3 & Top of the third section of the right index finger \\ \hline
+    M\_t\_L\_1 & middle\_L\_1 & Top of the first section of the left middle finger \\ \hline
+    M\_t\_R\_1 & middle\_R\_1 & Top of the first section of the right middle finger \\ \hline
+    M\_t\_L\_2 & middle\_L\_2 & Top of the second section of the left middle finger \\ \hline
+    M\_t\_R\_2 & middle\_R\_2 & Top of the second section of the right middle finger \\ \hline
+    M\_t\_L\_3 & middle\_L\_3 & Top of the third section of the left middle finger \\ \hline
+    M\_t\_R\_3 & middle\_R\_3 & Top of the third section of the right middle finger \\ \hline
+    L\_t\_L\_1 & little\_L\_1 & Top of the first section of the left little finger \\ \hline
+    L\_t\_R\_1 & little\_R\_1 & Top of the first section of the right little finger \\ \hline
+    L\_t\_L\_2 & little\_L\_2 & Top of the second section of the left little finger \\ \hline
+    L\_t\_R\_2 & little\_R\_2 & Top of the second section of the right little finger \\ \hline
+    L\_t\_L\_3 & little\_L\_3 & Top of the third section of the left little finger \\ \hline
+    L\_t\_R\_3 & little\_R\_3 & Top of the third section of the right little finger \\ \hline
+    R\_t\_L\_1 & ring\_L\_1 & Top of the first section of the left ring finger \\ \hline
+    R\_t\_R\_1 & ring\_R\_1 & Top of the first section of the right ring finger \\ \hline
+    R\_t\_L\_2 & ring\_L\_2 & Top of the second section of the left ring finger \\ \hline
+    R\_t\_R\_2 & ring\_R\_2 & Top of the second section of the right ring finger \\ \hline
+    R\_t\_L\_3 & ring\_L\_3 & Top of the third section of the left ring finger \\ \hline
+    R\_t\_R\_3 & ring\_R\_3 & Top of the third section of the right ring finger \\ \hline
+    F\_ARMi\_L & f\_arm\_L & Inner side of the left forearm \\ \hline
+    F\_ARMi\_R & f\_arm\_R & Inner side of the right forearm \\ \hline
+    I\_KNi\_L\_1 & index\_L\_1 & Inner first knuckle of the left index finger \\ \hline
+    I\_KNi\_R\_1 & index\_R\_1 & Inner first knuckle of the right index finger \\ \hline
+    I\_KNi\_L\_2 & index\_L\_2 & Inner second knuckle of the left index finger \\ \hline
+    I\_KNi\_R\_2 & index\_R\_2 & Inner second knuckle of the right index finger \\ \hline
+    I\_KNi\_L\_3 & index\_L\_3 & Inner third knuckle of the left index finger \\ \hline
+    I\_KNi\_R\_3 & index\_R\_3 & Inner third knuckle of the right index finger \\ \hline
+    M\_KNi\_L\_1 & middle\_L\_1 & Inner first knuckle of the left middle finger \\ \hline
+    M\_KNi\_R\_1 & middle\_R\_1 & Inner first knuckle of the right middle finger \\ \hline
+    M\_KNi\_L\_2 & middle\_L\_2 & Inner second knuckle of the left middle finger \\ \hline
+    M\_KNi\_R\_2 & middle\_R\_2 & Inner second knuckle of the right middle finger \\ \hline
+    M\_KNi\_L\_3 & middle\_L\_3 & Inner third knuckle of the left middle finger \\ \hline
+    M\_KNi\_R\_3 & middle\_R\_3 & Inner third knuckle of the right middle finger \\ \hline
+    L\_KNi\_L\_1 & little\_L\_1 & Inner first knuckle of the left little finger \\ \hline
+    L\_KNi\_R\_1 & little\_R\_1 & Inner first knuckle of the right little finger \\ \hline
+    L\_KNi\_L\_2 & little\_L\_2 & Inner second knuckle of the left little finger \\ \hline
+    L\_KNi\_R\_2 & little\_R\_2 & Inner second knuckle of the right little finger \\ \hline
+    L\_KNi\_L\_3 & little\_L\_3 & Inner third knuckle of the left little finger \\ \hline
+    L\_KNi\_R\_3 & little\_R\_3 & Inner third knuckle of the right little finger \\ \hline
+    R\_KNi\_L\_1 & ring\_L\_1 & Inner first knuckle of the left ring finger \\ \hline
+    R\_KNi\_R\_1 & ring\_R\_1 & Inner first knuckle of the right ring finger \\ \hline
+    R\_KNi\_L\_2 & ring\_L\_2 & Inner second knuckle of the left ring finger \\ \hline
+    R\_KNi\_R\_2 & ring\_R\_2 & Inner second knuckle of the right ring finger \\ \hline
+    R\_KNi\_L\_3 & ring\_L\_3 & Inner third knuckle of the left ring finger \\ \hline
+    R\_KNi\_R\_3 & ring\_R\_3 & Inner third knuckle of the right ring finger \\ \hline
+    T\_KNl\_L\_1 & thumb\_L\_1 & Lateral first knuckle of the left thumb \\ \hline
+    T\_KNl\_R\_1 & thumb\_R\_1 & Lateral first knuckle of the right thumb \\ \hline
+    T\_KNl\_L\_2 & thumb\_L\_2 & Lateral second knuckle of the left thumb \\ \hline
+    T\_KNl\_R\_2 & thumb\_R\_2 & Lateral second knuckle of the right thumb \\ \hline
+    T\_KNl\_L\_3 & thumb\_L\_3 & Lateral third knuckle of the left thumb \\ \hline
+    T\_KNl\_R\_3 & thumb\_R\_3 & Lateral third knuckle of the right thumb \\ \hline
+    T\_KNt\_L\_1 & thumb\_L\_1 & Top first knuckle of the left thumb \\ \hline
+    T\_KNt\_R\_1 & thumb\_R\_1 & Top first knuckle of the right thumb \\ \hline
+    T\_KNt\_L\_2 & thumb\_L\_2 & Top second knuckle of the left thumb \\ \hline
+    T\_KNt\_R\_2 & thumb\_R\_2 & Top second knuckle of the right thumb \\ \hline
+    T\_KNt\_L\_3 & thumb\_L\_3 & Top third knuckle of the left thumb \\ \hline
+    T\_KNt\_R\_3 & thumb\_R\_3 & Top third knuckle of the right thumb \\ \hline
+    T\_l\_L\_3 & thumb\_L\_3 & Lateral side of the third section of the left thumb \\ \hline
+    T\_l\_R\_3 & thumb\_R\_3 & Lateral side of the third section of the right thumb \\ \hline
+    I\_NA\_L & index\_L\_3 & Nail of the left index finger \\ \hline
+    I\_NA\_R & index\_R\_3 & Nail of the right index finger \\ \hline
+    I\_PAD\_L & index\_L\_3 & Pad of the left index finger \\ \hline
+    I\_PAD\_R & index\_R\_3 & Pad of the right index finger \\ \hline
+    M\_PAD\_L & middle\_L\_3 & Pad of the left middle finger \\ \hline
+    M\_PAD\_R & middle\_R\_3 & Pad of the right middle finger \\ \hline
+    L\_PAD\_L & little\_L\_3 & Pad of the left little finger \\ \hline
+    L\_PAD\_R & little\_R\_3 & Pad of the right little finger \\ \hline
+    R\_PAD\_L & ring\_L\_3 & Pad of the left ring finger \\ \hline
+    R\_PAD\_R & ring\_R\_3 & Pad of the right ring finger \\ \hline
+    M\_NA\_L & middle\_L\_3 & Nail of the left middle finger \\ \hline
+    M\_NA\_R & middle\_R\_3 & Nail of the right middle finger \\ \hline
+    L\_NA\_L & little\_L\_3 & Nail of the left little finger \\ \hline
+    L\_NA\_R & little\_R\_3 & Nail of the right little finger \\ \hline
+    R\_NA\_L & ring\_L\_3 & Nail of the left ring finger \\ \hline
+    R\_NA\_R & ring\_R\_3 & Nail of the right ring finger \\ \hline
+    R\_l\_L\_1 & ring\_L\_1 & Lateral side of the first section of the left ring finger \\ \hline
+    R\_l\_R\_1 & ring\_R\_1 & Lateral side of the first section of the right ring finger \\ \hline
+    R\_l\_L\_2 & ring\_L\_2 & Lateral side of the second section of the left ring finger \\ \hline
+    R\_l\_R\_2 & ring\_R\_2 & Lateral side of the second section of the right ring finger \\ \hline
+    R\_l\_L\_3 & ring\_L\_3 & Lateral side of the third section of the left ring finger \\ \hline
+    R\_l\_R\_3 & ring\_R\_3 & Lateral side of the third section of the right ring finger \\ \hline
+    M\_l\_L\_1 & middle\_L\_1 & Lateral side of the first section of the left middle finger \\ \hline
+    M\_l\_R\_1 & middle\_R\_1 & Lateral side of the first section of the right middle finger \\ \hline
+    M\_l\_L\_2 & middle\_L\_2 & Lateral side of the second section of the left middle finger \\ \hline
+    M\_l\_R\_2 & middle\_R\_2 & Lateral side of the second section of the right middle finger \\ \hline
+    M\_l\_L\_3 & middle\_L\_3 & Lateral side of the third section of the left middle finger \\ \hline
+    M\_l\_R\_3 & middle\_R\_3 & Lateral side of the third section of the right middle finger \\ \hline
+    L\_l\_L\_1 & little\_L\_1 & Lateral side of the first section of the left little finger \\ \hline
+    L\_l\_R\_1 & little\_R\_1 & Lateral side of the first section of the right little finger \\ \hline
+    L\_l\_L\_2 & little\_L\_2 & Lateral side of the second section of the left little finger \\ \hline
+    L\_l\_R\_2 & little\_R\_2 & Lateral side of the second section of the right little finger \\ \hline
+    L\_l\_L\_3 & little\_L\_3 & Lateral side of the third section of the left little finger \\ \hline
+    L\_l\_R\_3 & little\_R\_3 & Lateral side of the third section of the right little finger \\ \hline
+    I\_KNt\_L\_1 & index\_L\_1 & Top first knuckle of the left index finger \\ \hline
+    I\_KNt\_R\_1 & index\_R\_1 & Top first knuckle of the right index finger \\ \hline
+    I\_KNt\_L\_2 & index\_L\_2 & Top second knuckle of the left index finger \\ \hline
+    I\_KNt\_R\_2 & index\_R\_2 & Top second knuckle of the right index finger \\ \hline
+    I\_KNt\_L\_3 & index\_L\_3 & Top third knuckle of the left index finger \\ \hline
+    I\_KNt\_R\_3 & index\_R\_3 & Top third knuckle of the right index finger \\ \hline
+    L\_KNt\_L\_1 & little\_L\_1 & Top first knuckle of the left little finger \\ \hline
+    L\_KNt\_R\_1 & little\_R\_1 & Top first knuckle of the right little finger \\ \hline
+    L\_KNt\_L\_2 & little\_L\_2 & Top second knuckle of the left little finger \\ \hline
+    L\_KNt\_R\_2 & little\_R\_2 & Top second knuckle of the right little finger \\ \hline
+    L\_KNt\_L\_3 & little\_L\_3 & Top third knuckle of the left little finger \\ \hline
+    L\_KNt\_R\_3 & little\_R\_3 & Top third knuckle of the right little finger \\ \hline
+    SH\_L & arm\_L & Left shoulder \\ \hline
+    SH\_R & arm\_R & Right shoulder \\ \hline
+    ST\_L & back\_2 & Left side of the upper back \\ \hline
+    ST\_R & back\_2 & Right side of the upper back \\ \hline
+    ST & back\_2 & Central upper back \\ \hline
+    T\_BACK\_L\_1 & thumb\_L\_1 & Back of the first section of the left thumb \\ \hline
+    T\_BACK\_R\_1 & thumb\_R\_1 & Back of the first section of the right thumb \\ \hline
+    T\_BACK\_L\_2 & thumb\_L\_2 & Back of the second section of the left thumb \\ \hline
+    T\_BACK\_R\_2 & thumb\_R\_2 & Back of the second section of the right thumb \\ \hline
+    T\_BACK\_L\_3 & thumb\_L\_3 & Back of the third section of the left thumb \\ \hline
+    T\_BACK\_R\_3 & thumb\_R\_3 & Back of the third section of the right thumb \\ \hline
+    MO & head & Mouth area \\ \hline
+    MO\_L & head & Left side of the mouth \\ \hline
+    MO\_R & head & Right side of the mouth \\ \hline
+    LOBE\_L & head & Left ear lobe \\ \hline
+    LOBE\_R & head & Right ear lobe \\ \hline
+    NO & head & Nose \\ \hline
+    NO\_L & head & Left side of the nose \\ \hline
+    NO\_R & head & Right side of the nose \\ \hline
+    TE\_L & head & Left temple \\ \hline
+    TE\_R & head & Right temple \\ \hline
+    TO & head & Tongue \\ \hline
+    NSP & head & Nasal septum \\ \hline
+    CK\_L & head & Left cheek \\ \hline
+    CK\_R & head & Right cheek \\ \hline
+    CH & head & Chin \\ \hline
+    CH\_L & head & Left side of the chin \\ \hline
+    CH\_R & head & Right side of the chin \\ \hline
+    BEB & head & Upper back of the head \\ \hline
+    CB\_L & head & Left side of the cranial base \\ \hline
+    CB\_R & head & Right side of the cranial base \\ \hline
+    CDL\_L & head & Left side of the cranium at the back \\ \hline
+    CDL\_R & head & Right side of the cranium at the back \\ \hline
+    FH\_L & head & Left side of the forehead \\ \hline
+    FH\_R & head & Right side of the forehead \\ \hline
+    \end{longtable}
 
 \section{Annex for Chapter 3}
-\label{app:avatar_creation_pose_synthesis}
+\label{annex:avatar_creation_pose_synthesis}
 
-\section{Annex for Chapter 4}
-\label{app:multi_track}
+\subsection{Animator Architecture}
+\label{annex:avatar_creation_pose_synthesis:animator_architecture}
+
+\includesvg[width=5in]{chapters/avatar_creation_pose_synthesis/images/classes_animator}
 
 \section{Annex for Chapter 5}
-\label{app:intermediate_blocks_pose_correction}
+\label{annex:intermediate_blocks_pose_correction}
 
 \subsection{AZee Rules Frequency}
-\label{app:intermediate_blocks_pose_correction:azee_rules_frequency}
+\label{annex:intermediate_blocks_pose_correction:azee_rules_frequency}
 
 \begin{figure}[h]
     \centering
@@ -26,7 +506,7 @@
 \end{figure}
 
 \subsection{Pose Estimation based templates}
-\label{app:intermediate_blocks_pose_correction:pose_est_templates}
+\label{annex:intermediate_blocks_pose_correction:pose_est_templates}
 
 In future, the procedurally generated templates can also be based on the AZee rule and corresponding motion data based on motion curves from videos directly using pose estimation techniques~\ref{fig:motion_curves_template_procedural_pose_est}.
 
@@ -36,11 +516,23 @@ In future, the procedurally generated templates can also be based on the AZee ru
     \label{fig:motion_curves_template_procedural_pose_est}
 \end{figure}
 
+The above example uses a SMPL-X mesh fitted to the video using SGNify~\cite{SGNify} and OpenPose~\cite{cao2018openpose} for pose estimation. The motion curves are generated using the rotation parameters of the SMPL-X skeleton.
+
 \section{Annex for Chapter 6}
-\label{app:facial_expressions}
+\label{annex:facial_expressions}
+
+\subsection{AZee Non-Manuals}
+\label{annex:facial_expressions:azee_non_manuals}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=4in]{chapters/facial_expressions/images/azee_non_manuals.png}
+    \caption{AZee Non-Manuals}
+    \label{fig:azee_non_manuals}
+\end{figure}
 
 \subsection{Facial expressions using FLAME}
-\label{app:facial_expressions:flame}
+\label{annex:facial_expressions:flame}
 
 \begin{longtable}{|l|c|r|}
     \caption{Synthesized Expressions} \label{tab:facial_expressions} \\

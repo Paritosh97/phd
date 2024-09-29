@@ -807,7 +807,7 @@ The synthesizer was based on an armature in blender. The bones and sites of this
 \subparagraph{Bone heirarchy}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_heirarchy}
 
-The synthesizer uses an armature contained 57 bones (appendix~\ref{old_bone_list}). These bones were structured to accommodate the unique skeletal system requirements of the AZee framework, which utilizes a "rotation first" paradigm. However, since most 3D softwares (including blender) operate on a "translation first" paradigm, a conversion process was necessary. This conversion involved mapping each AZee bone to two corresponding armature bones: one for translation and one for rotation, with the rotation bone named by appending a ".rot" suffix to the original bone name (figure~\ref{fig:old_bone_structure}).
+The synthesizer uses an armature contained 128 bones (see section~\ref{annex:background_work:old_bone_list} of annex). These bones were structured to accommodate the unique skeletal system requirements of the AZee framework, which utilizes a "rotation first" paradigm. However, since most 3D softwares (including blender) operate on a "translation first" paradigm, a conversion process was necessary. This conversion involved mapping each AZee bone (see section~\ref{annex:background_work:azee_abstract_bones} of annex) to two corresponding armature bones: one for translation and one for rotation, with the rotation bone named by appending a ".rot" suffix to the original bone name (figure~\ref{fig:old_bone_structure}).
 
 \begin{figure}
     \centering
@@ -819,7 +819,7 @@ The synthesizer uses an armature contained 57 bones (appendix~\ref{old_bone_list
 \subparagraph{AZee Sites}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_sites}
 
-The AZee low-level language consists of 332 sites (appendix~\ref{azee_sites}) which are crucial to create posture using various types of constraints. For example, the \emph{place} constraint requires a site to be placed at a specific location on the avatar's mesh. These sites are used to define the constraints that drive the avatar's movement and deformation during animation. In this synthesizer for AZee, these sites were represented as empty objects which had to be created manually in blender (figure~\ref{fig:prev_sites}).
+The AZee low-level language consists of 332 sites (see section~\ref{annex:background_work:azee_sites} of annex) which are crucial to create posture using various types of constraints. For example, the \emph{place} constraint requires a site to be placed at a specific location on the avatar's mesh. These sites are used to define the constraints that drive the avatar's movement and deformation during animation. In this synthesizer for AZee, these sites were represented as empty objects which had to be created manually in blender (figure~\ref{fig:prev_sites}).
 
 \begin{figure}
     \centering
