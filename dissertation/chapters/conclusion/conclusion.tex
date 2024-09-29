@@ -3,7 +3,7 @@
 \chapter{Conclusion}
 \label{ch:conclusion}
 
-In this chapter, we present a summary and overview of the contributions made in this thesis on \textit{\gls{sl} Synthesis by a Decreasing Granularity System from AZee}. We outline the research conducted throughout the thesis in Section~\ref{ch:conclusion:summary}. todo
+In this chapter, we present a summary and overview of the contributions made in this thesis on \textit{\gls{sl} Synthesis by a Decreasing Granularity System from AZee}. In Section~\ref{ch:conclusion:summary}, we summarize the main findings and insights from the research. In Section~\ref{ch:conclusion:contributions}, we outline the publications and open-source implementations that have resulted from this work. In Section~\ref{ch:conclusion:key_insights}, we present key insights that have emerged from the research, including the importance of granularity in \gls{sl} synthesis and the relationship between language and motion. Finally, in Section~\ref{ch:conclusion:future}, we outline potential future directions for research in \gls{sl} synthesis, including enhancing the decreasing granularity model, expanding the capabilities of the AZee framework, and exploring real-time synthesis applications.
 
 \section{Summary}
 \label{ch:conclusion:summary}
@@ -12,49 +12,16 @@ This thesis explores innovative approaches to synthesizing \gls{sl} using a decr
 
 In Chapter~\ref{ch:background_work}, we reviewed the foundational work in describing \gls{sl}s, and synthesis techniques, particularly focusing on synthesis from AZee. AZee provides a structured way to describe \gls{sl} at varying levels of granularity. However, existing methods often struggle to balance linguistic accuracy with ease of synthesis. 
 
-Chapter~\ref{ch:avatar_creation_pose_synthesis} introduced a layered rigging system for signing avatars, emphasizing the importance of rigging in realistic character animation. It presented a procedural rigging system tailored for \gls{sl} gestures, focusing on the upper body. The chapter discussed automating site generation using a raycasting algorithm and improving the rigging process with deformation, inverse kinematics (IK), and forward kinematics (FK) layers. It also introduced constraint-based posture optimization and morph constraints. Finally, the chapter evaluated the system’s performance, accuracy, and animation quality, highlighting the potential for future enhancements in \gls{sl} avatar animation. 
+Chapter~\ref{ch:avatar_creation_pose_synthesis} introduced our methodology to create a signing avatar, emphasizing the importance of rigging in realistic character animation. It presented a procedural rigging system tailored for AZee inside blender. The chapter discussed automating site generation and improving the rigging process with deformation, inverse kinematics (IK), and forward kinematics (FK) layers. It also introduced our algorithm for constraint-based posture optimization. Finally, the chapter evaluated the system’s animation quality and performance, highlighting the potential for future enhancements in \gls{sl} avatar animation. 
 
-In Chapter~\ref{ch:multi_track}, the concept of multi-track and non-linear synthesis is introduced to improve \gls{sl} avatar animation. The chapter explores how multi-track control mimics natural human motion by preserving the dynamics of simultaneous gestures, facial expressions, and body movements. Non-linear synthesis ensures correct animation sequences and resolves conflicts between overlapping blocks. It discusses converting AZee Synced Scores into multi-track timelines and optimizing with constraint-based approaches. The chapter also highlights the integration of pre-animated blocks and evaluates the improvements in animation quality and flexibility using Blender's non-linear editor.
+In Chapter~\ref{ch:multi_track}, the concept of multi-track and non-linear synthesis is introduced to improve \gls{sl} avatar animation. The chapter explores how multi-track control mimics natural human motion by preserving the dynamics of simultaneous gestures, facial expressions, and body movements. Non-linear synthesis ensures correct animation sequences and resolves conflicts between overlapping blocks. It discusses converting AZee Synced Scores into multi-track timelines and then solving for the posture using constraint-based  optimization. The chapter also highlights the integration of pre-animated blocks and evaluates the improvements in animation quality and flexibility using Blender's \gls{nle}.
 
-Chapter~\ref{ch:intermediate_blocks_pose_correction}, the generation of intermediate blocks in \gls{sl} synthesis is explored to improve the natural flow between signs. By leveraging motion curves and AZee templates, the chapter discusses how transitions between constrained blocks can be enhanced in multi-track representations. It introduces interpolation techniques, such as linear and spline interpolation, and reusable motion templates to create smooth, realistic animations. The chapter evaluates the results of template-based interpolation compared to standard methods, highlighting improvements in naturalness and coherence. It concludes with insights on limitations and potential future improvements in finger articulation and generalization of templates. todo merge ->  introduces pose correction for \gls{sl} synthesis, focusing on improving naturalness and accuracy in \gls{sl} avatars. The chapter explores the integration of a pose prior model, trained on a French \gls{sl} motion capture dataset, to guide the correction process using Variational Autoencoders (VAE). The review covers classical Inverse Kinematics (IK) methods, modern data-driven approaches like Motion Matching and Phase-Functioned Neural Networks (PFNN), and latent space representations like VPoser. The chapter demonstrates how the pose correction system refines generated poses for smoother transitions and more realistic animations, while discussing the challenges and future improvements.
+In Chapter~\ref{ch:intermediate_blocks_pose_correction}, we discuss how synthesis can be improved using real world captured data. The generation of intermediate blocks in \gls{sl} synthesis is explored to improve the natural flow between signs. By leveraging motion curves and AZee templates, the chapter discusses how transitions can be enhanced in a multi-track representation. It introduces reusable motion templates to create smooth, realistic animations for some common AZee rules. The chapter also explores use of pose correction for \gls{sl} synthesis, focusing on improving naturalness and accuracy in \gls{sl} avatars. For this, we integrate a pose prior model, trained on a \gls{lsf} motion capture dataset, to guide the correction process using \gls{vae}. The chapter evaluates the results of both template-based interpolation and pose correction compared to previosu methods, highlighting improvements in naturalness and coherence. It concludes with insights on limitations and potential future improvements in finger articulation and generalization of templates. 
 
-Chapter~\ref{ch:facial_expressions} presents facial expressions as a critical component in \gls{sl} communication, conveying emotional and grammatical information. The chapter introduces a method for synthesizing facial expressions using the AZee framework, focusing on action units (AUs) from the FACS system to create blendshapes for animating signing avatars. It explores face rigging techniques, motion capture, and the generation of motion curves to create dynamic, realistic facial expressions. The chapter evaluates the accuracy of synthesized expressions through subjective and quantitative measures, demonstrating the potential of this approach for improving the realism of signing avatars.
+Chapter~\ref{ch:facial_expressions} presents integration of facial expressions in The chapter introduces a method for synthesizing facial expressions using the AZee framework, focusing on action units from the \gls{facs} system to create blendshapes for animating signing avatars. It explores blendshape modeling, use of blendshapes with AZee, and templating facial expressions using motion curves to create dynamic and realistic facial expressions. The chapter evaluates the accuracy of synthesized expressions through subjective measures, demonstrating the potential of this approach for improving the realism of signing avatars.
 
-% todo restructre and fix
-The contributions of this research are expected to be multifaceted, offering both theoretical and practical advancements in the field of \gls{sl} synthesis:
-
-\begin{itemize}
-    \item \textbf{Introducing novel algorithms for \gls{sl} synthesis:} This research will contribute new techniques and methodologies for synthesizing \gls{sl}, particularly in the areas of avatar rigging, motion interpolation and facial expression generation. These algorithms are designed to improve the realism and fluidity of \gls{sl} animations, making them more natural and understandable for users.
-    \item \textbf{Demonstrating improvements in the scalability of \gls{sl}:} The research will include evaluations of the proposed methods, demonstrating their effectiveness in producing \gls{sl} animations.
-    \item \textbf{Providing a framework that can be adapted to various \gls{sl} and contexts:} The ultimate goal of this research is to create a flexible and adaptable framework that can be applied to different \gls{sl} and used in a variety of contexts, from education and media to public services.
-\end{itemize}
-
-\section{Open Source}
-\label{ch:conclusion:opensource}
-
-One of the key contributions of this thesis is the open-source implementation of the synthesizor for AZee. The system extends the original AZee language model and integrates it with a decreasing granularity framework to synthesize signs directly in blender~\ref{fig:azee_animator_interface}.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/azee_animator_interface.png}
-    \caption{AZee animator interface}
-    \label{fig:azee_animator_interface}
-\end{figure}
-
-The animator interface allows users to write AZee code in a text editor and visualize the corresponding \gls{sl} animations in real-time. For this, the animator loads the AZee compiler as a python module and uses evaluates the generated AZee Scores directly on the avatar. The add-on uses blender's None Linear Editor (NLE) to manage the animation blocks and transitions of the multi-track system. The system also supports facial expressions, intermediate blocks and pose correction.
-
-The blender synthesizor was also integrated with the AZVD~\cite{filhol2024software} editor to generate \gls{sl} animations directly on a web interface~\ref{fig:azee_web_interface}.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/azee_web_interface.png}
-    \caption{AZee web renderer interface}
-    \label{fig:azee_web_interface}
-\end{figure}
-
-The web interface allows users to draw AZee visual descriptions which resolved to AZee Scores and then to animations. For this, the AZee code generated from AZVD in the front-end is sent to the server where an instance of the blender is running headlessly. The synthesizor evaluates the AZee code and returns the animation in video or GLB format to the front-end where it is displayed to the user.
-
-\section{Publications}
+\section{Contributions}
+\label{ch:conclusion:contributions}
 
 Work presented in this thesis has been the subject of the following publications:
 
@@ -72,6 +39,28 @@ Work presented in this thesis has been the subject of the following publications
     \item Paritosh Sharma, Michael Filhol. "Multi-Track Bottom-Up Synthesis from Non-Flattened AZee Scores." In \textit{7th Workshop on Sign Language Translation and Avatar Technology (SLTAT 7)}, Jun 2022, Marseille, France.
 \end{enumerate}
 
+Apart from the above publications, one of the key contributions of this thesis is the open-source implementation of the synthesizor for AZee. The system extends the original AZee language model and integrates it with a decreasing granularity framework to synthesize signs directly in blender~\ref{fig:conclusion:azee_animator_interface}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/conclusion/images/blender-interface.png}
+    \caption{AZee animator interface}
+    \label{fig:conclusion:azee_animator_interface}
+\end{figure}
+
+The animator interface allows users to write AZee code in a text editor and visualize the corresponding \gls{sl} animations in real-time. For this, the animator loads the AZee compiler as a python module and uses evaluates the generated AZee Scores directly on the avatar. The add-on uses blender's \gls{nle} to manage the animation blocks and transitions of the multi-track system. The system also supports facial expressions, intermediate blocks and pose correction.
+
+The blender synthesizor was also integrated with the \gls{azvd}~\cite{filhol2024software} editor to generate \gls{sl} animations directly on a web interface (see Figure~\ref{fig:conclusion:azee_web_interface}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/conclusion/images/azee_web_interface.png}
+    \caption{AZee web renderer interface}
+    \label{fig:conclusion:azee_web_interface}
+\end{figure}
+
+The web interface allows users to draw AZee visual descriptions which resolved to AZee Scores and then to animations. For this, the AZee code generated from \gls{azvd} in the front-end is sent to the server where an instance of the blender is running headlessly. The synthesizor evaluates the AZee code and returns the animation in video or GLB format to the front-end where it is displayed to the user (see section~\ref{annex:conclusion:azvd} in annex for architecture).
+
 \section{Key Insights}
 \label{ch:conclusion:key_insights}
 
@@ -82,65 +71,38 @@ The research conducted in this thesis has yielded several key insights that can 
 
 This thesis highlights the concept of granularity in both \gls{sl} representation and synthesis. The term \emph{shortcut} refers to animating linguistic constructs at a higher level of granularity, enabling more natural synthesis while preserving linguistic accuracy, though this comes at the cost of finer control over the animation. Traditional research has typically mapped granularity directly to animations. In contrast, this thesis examines granularity at the posture level, offering a new perspective on \gls{sl} synthesis.
 
-Much like how an artist rigs a character with various control points to manage movement, an AZee linguist employs a similar approach to structure \gls{sl} discourse. Each control point—whether an IK placement, blendshape, pre-trained pose corrector, or FK rotation—can be seen as a linguistic construct with a certain granularity. This approach allows for the creation of expressive, linguistically accurate animations, offering a more detailed and flexible way to synthesize \gls{sl}.
+Much like how an artist rigs a character with various control points to manage movement, an AZee linguist employs a similar approach to structure \gls{sl} discourse. Each control point—whether an \gls{ik} placement, blendshape, pre-trained pose corrector, or FK rotation—can be seen as a linguistic construct with a certain granularity. This approach allows for the creation of expressive, linguistically accurate animations, offering a more detailed and flexible way to synthesize \gls{sl}.
 
 \subsection{Language and Motion}
 \label{ch:conclusion:key_insights:language_motion}
 
-The AZee model offers a structured approach to describe \gls{sl}, which is crucial because it differs from simply translating \gls{sl} to or from a spoken or written language. While an AZee discourse has a one-to-one relationship with its corresponding \gls{sl} utterance, the utterance itself can have multiple equivalent translations. Both motion and language are temporal and exist in high-dimensional spaces, but the type of information they carry is different. Body motion operates in a visual space influenced by identity, surroundings, and physical laws, whereas spoken or written language is a human construct, independent of such factors. This distinction doesn't apply to \gls{sl}s, as their motion space is tied to their linguistic structure. Thus. while a common \emph{space} between an English sentence and the motion of its \gls{sl} translation is unlikely, AZee can provide such a space between \gls{sl} descriptions and the motion they represent. This uniqueness is what makes the problem of \gls{sl} synthesis different from other newer generative translation techniques.
+The AZee model offers a structured approach to describe \gls{sl}, which is crucial because it differs from simply translating \gls{sl} to or from a spoken or written language. While an AZee discourse has a one-to-one relationship with its corresponding \gls{sl} utterance, the utterance itself can have multiple equivalent translations. Both motion and language are temporal and exist in high-dimensional spaces, but the type of information they carry is different. Body motion operates in a visual space influenced by identity, surroundings, and physical laws, whereas spoken or written language is a human construct, independent of such factors. This distinction doesn't apply to \gls{sl}s, as their motion space is tied to their linguistic structure. Thus. while a common \emph{space} between an English sentence and the motion of its \gls{sl} translation is unlikely, AZee can provide such a space between \gls{sl} descriptions and the motion they represent. This uniqueness is what makes the problem of \gls{sl} synthesis different from other text to motion tasks.
 
 \section{Future Directions}
 \label{ch:conclusion:future}
 
 While the contributions of this thesis mark a progress in \gls{sl} synthesis, several avenues for future research remain open. Below, we outline potential research topics that could extend the work presented in this thesis.
 
-\subsection{Enhancing the Decreasing Granularity Model}
+\subsection{Granularity}
 \label{ch:conclusion:future:granularity}
 
-\begin{itemize}
-    \item \textbf{Dynamic Granularity Adjustment:} Future research could explore methods for dynamically adjusting the level of granularity based on the context or user preferences. This would enable more personalized and adaptive \gls{sl} synthesis.
-    
-    \item \textbf{Integration with Neural Networks:} Incorporating deep learning techniques, such as neural networks, could enhance the model’s ability to generalize across different \gls{sl}s and dialects. This integration could also improve the synthesis of signs that involve complex or subtle movements.
-\end{itemize}
+Even though language and motion are linked in case of \gls{sl}s. Their respective granularities are not. For example, a placement of the hand can be a single linguistic construct, but it can be broken down into multiple control points for animation. Similarly, a nested structure in AZee can be represented as a single control point in the animation. Future research could explore how to balance these granularities to improve the quality and efficiency of \gls{sl} synthesis.
 
-\subsection{Expanding AZee Framework Capabilities}
-\label{ch:conclusion:future:azee}
-
-\begin{itemize}
-    \item \textbf{Support for Additional \gls{sl}s:} While the current system supports a range of \gls{sl}s, expanding its capabilities to include more languages and regional dialects would increase its applicability and impact.
-    
-    \item \textbf{Multimodal Integration:} Combining the \gls{sl} synthesis system with other modalities, such as facial expressions and body posture, could lead to a more comprehensive and natural representation of signed communication.
-\end{itemize}
-
-\subsection{Real-Time \gls{sl} Synthesis}
-\label{ch:conclusion:future:realtime}
-
-\begin{itemize}
-    \item \textbf{Optimization for Low-Latency Environments:} Future research should focus on optimizing the system for real-time applications, such as live interpretation services. This would involve reducing computational load while maintaining the quality of the synthesized signs.
-    
-    \item \textbf{User-Centered Evaluation:} Conducting extensive user studies to evaluate the system’s performance in real-world scenarios would provide valuable insights for further refinement and development.
-\end{itemize}
-
-\subsection{Interdisciplinary Research}
-\label{ch:conclusion:future:interdisciplinary}
-
-\begin{itemize}
-    \item \textbf{Collaboration with Linguists and \gls{sl} Experts:} Continued collaboration with linguists and native signers will be crucial for refining the linguistic accuracy and expressiveness of the synthesized signs. This interdisciplinary approach will help ensure that the technology remains aligned with the needs and preferences of the Deaf and Hard of Hearing communities.
-    %remove accessibility
-    \item \textbf{Ethical Considerations:} As \gls{sl} synthesis technology evolves, it is important to address ethical considerations, such as ensuring accessibility and avoiding the misrepresentation of signed communication. Future research should incorporate these considerations into the design and deployment of \gls{sl} technologies.
-\end{itemize}
-
-\subsection{More qualitative evaluation}
+\subsection{Evaluation}
 \label{ch:conclusion:future:evaluation}
 
-\begin{itemize}
-    \item \textbf{Collaboration with Linguists and \gls{sl} Experts:} Continued collaboration with linguists and native signers will be crucial for refining the linguistic accuracy and expressiveness of the synthesized signs. This interdisciplinary approach will help ensure that the technology remains aligned with the needs and preferences of the Deaf and Hard of Hearing communities.
-    % remove accessibility
-    \item \textbf{Ethical Considerations:} As \gls{sl} synthesis technology evolves, it is important to address ethical considerations, such as ensuring accessibility and avoiding the misrepresentation of signed communication. Future research should incorporate these considerations into the design and deployment of \gls{sl} technologies.
-\end{itemize}
+Most of the evaluation in this thesis was done qualitatively. This is because quantitative evaluation techniques either rely on reference animations or use training losses (in case of generative methods) which are not always meaningful in the context of \gls{sl} synthesis. Future research could explore new evaluation metrics that better capture the quality and accuracy of \gls{sl} synthesis, such as user studies or expert evaluations.
 
-%remove accessibility
-In conclusion, this thesis has laid a strong foundation for the development of advanced \gls{sl} synthesis systems. By building on the work presented here, future research has the potential to further enhance the accessibility and effectiveness of communication technologies for the Deaf and Hard of Hearing communities.
+\subsection{Realistic Avatars}
+\label{ch:conclusion:future:realistic_avatars}
 
+For this thesis, we used a simplified open-source avatar model to keep our system open-source, focus more on synthesis andalstly to avoid Uncanny Valley (since most ofthis thesis focuses on generation using minimum constraints). Future research could explore more realistic avatars such as MetaHumans (figure~\ref{fig:conclusion:metahuman_bazeel}) which include much more high resolution textures. This would be particularly useful for applications where the realism of the avatar is crucial, such as in educational or entertainment settings. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{chapters/conclusion/images/metahuman_bazeel.png}
+    \caption{MetaHuman Bazeel}
+    \label{fig:conclusion:metahuman_bazeel}
+\end{figure}
 
 \end{document}

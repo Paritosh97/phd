@@ -16,12 +16,12 @@ The chapter is structured as follows: Section~\ref{ch:facial_expressions:adding_
 \section{Defining facial expressions in AZee}
 \label{ch:facial_expressions:adding_facial_expressions_to_azee}
 
-The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first taks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (\ref{facial_expressions_40b_images, facial_expressions_40frequency}).
+The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first taks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (see section~\ref{app:facial_expressions:azee_facial_rules} of annex).
 
 \subsection{Defining AZee Rules in terms of Action Units}
 \label{ch:facial_expressions:defining_azee_rules_in_terms_of_action_units}
 
-We discussed the \gls{facs} earlier in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:emotion_recognition}. \gls{facs} is a comprehensive system for describing facial expressions in terms of action units (AUs), which represent the activation of specific facial muscles. Each AU corresponds to a specific movement~\ref{facs_aus}. Thus, our first goal is to break down each AZee rule into its constituent AUs. 
+We discussed the \gls{facs} earlier in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:emotion_recognition}. \gls{facs} is a comprehensive system for describing facial expressions in terms of action units (AUs), which represent the activation of specific facial muscles. AUs can also be combined to create facial expressions. Thus, our first goal is to break down each AZee rule into its constituent AUs. 
 
 We use the AU detector by~\cite{luo2022learning} on mediapipe extractions of still images for each of the facial expressions from the corpus (figure~\ref{ch:facial_expressions:fig:face_detect}).
 
@@ -32,7 +32,7 @@ We use the AU detector by~\cite{luo2022learning} on mediapipe extractions of sti
     \label{ch:facial_expressions:fig:face_detect}
 \end{figure}
 
-While it is a good starting point, manual adjustments were required by a linguist to ensure accuracy. This can be seen in figure~\ref{fig:face_adjust} for the expression \emph{big-threatening}.
+While it is a good starting point, manual adjustments were required by a linguist to ensure accuracy. This can be seen in figure~\ref{ch:facial_expressions:fig:face_adjust} for the expression \emph{big-threatening}.
 
 \begin{figure}[h!]
     \centering
@@ -256,6 +256,12 @@ For shape keys, the motion curves (discussed earlier in section~\ref{ch:backgrou
 
 After creating the blendshapes, we used motion curve based templates (as discussed earlier in chapter~\ref{ch:intermediate_blocks_pose_correction}) to control how these shapes are animated over time. Motion curves define the changes in the blendshape's influence over the course of an animation, allowing for smooth transitions between different facial expressions.
 
+\begin{figure}[h]
+    \centering \includegraphics[width = 4in]{chapters/facial_expressions/images/motion_curve_apex.png}
+    \caption{Apex of \emph{big-threatening}}
+    \label{ch:facial_expressions:fig:motion_curve_apex}
+\end{figure}
+
 We used the still images from the corpus as the apex of our curves (figure~\ref{ch:facial_expressions:fig:motion_curve_apex}). Next, we extended our existing intermediate block generation algorithm to include motion curves for facial morphs. This involved creating additional curves that specify the timing and intensity of facial movements based on the template. By controlling the acceleration and deceleration of these movements, we were able to create more naturalistic animations that reflect the dynamic nature of facial expressions.
 
 For example, in the expression \emph{big-threatening}, the motion curves were designed to gradually increase the influence of the blendshapes corresponding to AU10 (Upper Lip Raiser) and AU25 (Lips Part) while simultaneously decreasing the influence of AU4 (Brow Lowerer) as the expression transitions from a neutral state to one of aggression (figure~\ref{ch:facial_expressions:fig:motion_curve_example}).
@@ -314,7 +320,7 @@ Synthesis of 22 facial expressions from the 40 brèves corpus can be seen in tab
     \emph{with-worry:} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/original_facial_expressions/with_worry.png} & \includegraphics[width=0.15\textwidth]{chapters/facial_expressions/images/synthesized_expressions/with_worry.png} \\
 \end{longtable}
 
-Video~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch6_all_aus.mp4}} shows the range of all the blendshapes in AZee\s morph set. Video~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch6_all_expressions.mp4}} shows all the synthesized facial expressions with their interpolations.
+Video~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch6allaus.mp4}} shows the range of all the blendshapes in AZee's morph set. Video~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch6allexpressions.mp4}} shows all the synthesized facial expressions with their interpolations.
 
 Table~\ref{tab:facial_expressions_evaluation} shows the subjective evaluation by the linguist who created the corpus of the facial expressions using AZee. The expressions were assessed on isolated still images of the apex of their blendshapes based on their accuracy, expressiveness, and effectiveness in conveying the intended emotional and grammatical cues.
 
@@ -360,13 +366,6 @@ Table~\ref{tab:facial_expressions_evaluation} shows the subjective evaluation by
 \end{table*}
 
 We observe that expressions that involved subtle mouth movements, such as "it-is-a-shame" or "something-sticks-out," were more challenging to model accurately, highlighting areas for further refinement.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/sgnify.png}
-    \caption{Facial expressions generated using FLAME by fitting SPECTRE}
-    \label{ch:facial_expressions:fig:spectre}
-\end{figure}
 
 We also compare the synthesized utterance \emph{big-threatening(hot())} (with facial expressions) and the utterance \emph{hot()} (without facial expressions) to evaluate the impact of facial expressions on \gls{sl} comprehension along with the original video. The results can be seen in the supplementary video\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch6_comparison.mp4}}. We observe how non-manuals can enhance the meaning of the sign.
 
