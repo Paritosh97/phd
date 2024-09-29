@@ -1,4 +1,5 @@
 \documentclass[../../main.tex]{subfiles}
+\usepackage{longtable}
 \begin{document}
 \chapter{Intermediate Blocks, AZee Templates and Pose Correction}
 \label{ch:intermediate_blocks_pose_correction}
@@ -138,7 +139,6 @@ The first step in integrating pose correction into AZee is to train a \gls{vae} 
 \label{ch:pose_correction:pose_correction_with_azee:training}
 
 A \gls{vae} (earlier discussed in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:deep_learning:latent_space} of chapter~\ref{ch:background_work}) is an autoencoder that learns a low-dimensional latent space representation of the input data. In the context of character animation, a \gls{vae} can be used to capture the distribution of poses in a dataset, allowing for the generation of new poses that are statistically similar to the training data. The \gls{vae} consists of an encoder network that maps input poses to a latent space and a decoder network that reconstructs the input poses from the latent space (figure~\ref{fig:vae}).
-
 
 \begin{figure}[h]
 \centering
@@ -290,27 +290,141 @@ Algorithm~\ref{alg:pose_correction} outlines the pose correction process. Given 
 \subsection{Results and Implementation for Intermediate Block Generation}
 \label{ch:intermediate_blocks_pose_correction:results:intermediate_block_generation}
 
-We chose to extend our previous animator in blender to include the intermediate block generation process. The intermediate blocks are represented as strips in the \gls{nle}. The created templates are stored as \gls{XML} files and can be loaded into the animator. 
+We chose to extend our previous animator in blender to include the intermediate block generation process. The intermediate blocks are represented as strips in the \gls{nle}.
 
-Table~\ref{tab:intermediate_blocks_comparison}shows the results of the intermediate block generation process. We compare the results of using standard interpolation techniques with the proposed template-based interpolation method. The table shows the difference in naturalness and coherence between the two methods, highlighting the benefits of using motion curves and templates to generate intermediate blocks.
+Table~\ref{tab:intermediate_blocks_comparison} shows the results of the intermediate block generation process. The table shows the motion curve profiles for the most common AZee rules.
 
-%todo fix the table
-\begin{figure}
-    \centering
-    \begin{tabular}{|c|c|c|}
+\caption{Motion curves of some intermediate blocks for some AZee rules}
+\label{tab:intermediate_blocks}
+\begin{longtable}{|c|c|}
     \hline
-    \textbf{AZee Rule} & \textbf{Linear Interpolation} & \textbf{Template based Interpolation} \\
+    \textbf{AZee Rule} & \textbf{Template based} \\
     \hline
-    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/standard_interpolation_todo1.png} & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_mocap.png} \\
+    \endfirsthead
     \hline
-    TODO & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/standard_interpolation_todo2.png} & \includegraphics[width=1.5in]{chapters/intermediate_blocks_pose_correction/images/template_interpolation_todo2.png} \\
+    \textbf{AZee Rule} & \textbf{Template based} \\
     \hline
-    \end{tabular}
-    \caption{Comparison with normal interpolation}
-    \label{tab:intermediate_blocks_comparison}
-\end{figure}
+    \endhead
+    \hline
+    \endfoot
+    \emph{info-about} & 
+    \begin{tikzpicture}
+        \begin{axis}[
+            grid=major,
+            width=1.8in,
+            height=1.5in,
+            axis line style={-stealth},
+            xtick={},
+            ytick={},
+            legend style={at={(0.5,-0.2)},anchor=north,legend columns=1}
+        ]
+        \node[anchor=west] at (rel axis cs:1,0) {t}; % Label 't' at the end of x-axis
+        % Signing phase
+        \addplot[blue, thick, domain=0:0.2] {0.5*sin(deg(5*pi*x))};
+        
+        % Hold phase 1
+        \addplot[blue, thick, domain=0.2:0.3] {0};
+        
+        % Relaxation phase
+        \addplot[blue, thick, domain=0.3:0.5] {-0.4*sin(deg(5*pi*(x-0.3)))};
+        
+        % Signing phase 2
+        \addplot[blue, thick, domain=0.5:0.7] {0.5*sin(deg(5*pi*(x-0.5)))};
+        
+        % Hold phase 2
+        \addplot[blue, thick, domain=0.7:0.8] {0};
+        \addlegendentry{Spine}
+        \end{axis}
+    \end{tikzpicture} \\
+    \hline
+    \emph{side-info} & 
+    \begin{tikzpicture}
+        \begin{axis}[
+            grid=major,
+            width=1.5in,
+            height=1.5in,
+            axis line style={-stealth},
+            xtick={},
+            ytick={},
+            legend style={at={(0.5,-0.2)},anchor=north,legend columns=1}
+        ]
+        \node[anchor=west] at (rel axis cs:1,0) {t}; % Label 't' at the end of x-axis
+        % Chin and spine movement
+        \addplot[green, thick, domain=0:1] {0.4*sin(deg(pi*x))}; 
+        \addlegendentry{Chin Movement (focus)}
+        
+        \addplot[blue, thick, domain=0:1] {0.2*sin(deg(pi*x))};
+        \addlegendentry{Spine Movement (slight lift)}
+        \end{axis}
+    \end{tikzpicture} \\
+    \hline
+    \emph{about-ref} & 
+    \begin{tikzpicture}
+        \begin{axis}[
+            grid=major,
+            width=1.5in,
+            height=1.5in,
+            axis line style={-stealth},
+            xtick={},
+            ytick={},
+            legend style={at={(0.5,-0.2)},anchor=north,legend columns=1}
+        ]
+        \node[anchor=west] at (rel axis cs:1,0) {t}; % Label 't' at the end of x-axis
+        % Bust, head tilt, and neck rotation
+        \addplot[blue, thick, domain=0:1] {sin(deg(pi*x))};
+        \addlegendentry{Bust Rotation}
+        
+        \addplot[green, thick, domain=0:1] {0.8*sin(deg(pi*x))};
+        \addlegendentry{Head Tilt}
+        
+        \addplot[red, thick, domain=0:1] {-0.5*sin(deg(pi*x))};
+        \addlegendentry{Neck Rotation (compensating)}
+        \end{axis}
+    \end{tikzpicture} \\
+    \hline
+    \emph{instance-of} & 
+    \begin{tikzpicture}
+        \begin{axis}[
+            grid=major,
+            width=1.5in,
+            height=1.5in,
+            axis line style={-stealth},
+            xtick={},
+            ytick={},
+            legend style={at={(0.5,-0.2)},anchor=north,legend columns=1}
+        ]
+        \node[anchor=west] at (rel axis cs:1,0) {t}; % Label 't' at the end of x-axis
+        % Chin movement (subtle) and spine movement (back)
+        \addplot[green, thick, domain=0:1] {0.3*sin(deg(pi*x))}; 
+        \addlegendentry{Chin Movement (subtle up)}
+        
+        \addplot[blue, thick, domain=0:1] {-0.4*sin(deg(pi*x))};
+        \addlegendentry{Spine Movement (goes back)}
+        \end{axis}
+    \end{tikzpicture} \\
+    \hline
+    \emph{in-context} & 
+    \begin{tikzpicture}
+        \begin{axis}[
+            grid=major,
+            width=1.5in,
+            height=1.5in,
+            axis line style={-stealth},
+            xtick={},
+            ytick={},
+            legend style={at={(0.5,-0.2)},anchor=north,legend columns=1}
+        ]
+        \node[anchor=west] at (rel axis cs:1,0) {t}; % Label 't' at the end of x-axis
+        % Body preparation for signing
+        \addplot[blue, thick, domain=0:1] {sin(deg(1.5*pi*x))};
+        \addlegendentry{Body Movement (preparing to sign)}
+        
+        \end{axis}
+    \end{tikzpicture} \\
+    \hline
+\end{longtable}
 
-The complete animations can be seen in the video~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch5_templates.mp4}}.
+We compare the results of using standard interpolation techniques with the proposed template-based interpolation method in the video~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch5_templates.mp4}}.
 
 An increase in naturalness when animating using the intermediate blocks technique can be seen. Moreover, this work provides us inights regarding the motion profile which an AZee rule abstracts.
 
@@ -321,7 +435,6 @@ We created the pose corrector as a separate module in the existing AZee animator
 
 Snapshots with standard synthesis and synthesis with pose correction and the corresponding AZee code for the same are shown in table~\ref{tab:results}.
 
-%todo better table
 \begin{table}
   \centering
   \begin{tabular}{|c|c|c|}
@@ -342,8 +455,6 @@ Snapshots with standard synthesis and synthesis with pose correction and the cor
   \label{tab:results}
 \end{table}
 
-The synthesized videos can also be viewed at the following link~\footnote{\url{https://www.phd.paritosh-sharma.com/dissertation/ch5_pose_correction.mp4}}.
-
 The pose correction system seems to produces more natural and contextually appropriate animations compared to standard joint-limit based synthesis. However, due to retargeting losses, the integration of pose correction into \gls{sl} synthesis is still in the early stages. We also observe that the corrector might change the pose of the character in a way that is not always desirable~\ref{fig:problem_pose_correction}.
 
 \begin{figure}
@@ -356,7 +467,7 @@ Lastly, figure~\ref{fig:losses} shows how retargeting the \gls{mocap} data to th
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks_pose_correction/images/losses.png}
-  \caption{Losses in retargeting mocap data}
+  \caption{Retargeting losses for pointing on the \gls{rssp}}
   \label{fig:losses}
 \end{figure}
 
@@ -372,6 +483,6 @@ Similarly, while the integration of pose correction into \gls{sl} synthesis in o
 
 Future areas to improve our work technique could include a more detailed quantitative analysis of motion capture data based on a broader range of AZee rules, as well as further refinement of finger tracking and facial expressions in the motion templates. Since obtaining good quality \gls{mocap} data is also a challenge, pose estimation based on image data could be explored as an alternative~\ref{app:intermediate_blocks_pose_correction:pose_est_templates}. Since, motion curves for intermediate blocks might not have one-to-one correspondence with the AZee rules, newer techniques such as Diffusion based inbetweening~\cite{cohan2024flexible} could also be used for better intermediate block generation. 
 
-Similarly, newer posers based on neural distance fields~\cite{tiwari2022pose} or diffusion~\cite{lu2023dposer} could be used for pose correction since the current poser has a bayesian bias. Also, continuity of the trained model with respect to signing spaces could be studied further improving the the learnt pose prior.
+Similarly, newer posers based on neural distance fields~\cite{tiwari2022pose} or diffusion~\cite{lu2023dposer} could be used for pose correction since the current poser has a bayesian bias. Also, continuity of the trained model with respect to signing spaces could be studied further improving the the learnt pose prior. Lastly, since natural human gestures are independant of the language, a more generalized pose correction model could be trained on a more generalized dataset.
 
 \end{document}
