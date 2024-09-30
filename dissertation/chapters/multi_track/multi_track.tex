@@ -1,12 +1,13 @@
 \documentclass[../../main.tex]{subfiles}
 \usepackage{listings}
+\usepackage{tablefootnote}
 \begin{document}
 \chapter{Multi-Track and Non-Linear Synthesis}
 \label{ch:multi_track}
 
 Human movement is a symphony of coordinated actions, where each part of the body plays a distinct role, yet all work together in harmony to create a seamless expression of intent. The essence of this coordination lies in the ability to perform multiple actions simultaneously or in carefully timed sequences, with each movement contributing to the larger tapestry of physical expression.
 
-Traditional approaches to animating human movement often oversimplify this complexity, reducing it to linear bone rotations. In contrast, multi-track control offers a more nuanced perspective by recognizing the layered, interconnected nature of gestures and postures, reflecting the true complexity of human movement. In the previous chapter, we discussed the creation of an avatar and the generation of signs using AZee's constraints. This chapter shifts focus to the structure animation of the avatar itself using the AZee \emph{Synced Score} structure. As discussed in section \ref{ch:background_work:sign_language_descriptions:azee} of chapter \ref{ch:background_work}, the AZee Synced Score is a recursive representation of the AZee description, where each block corresponds to a different \emph{linguistic} aspect of the sign. The previous synthesizer for AZee descriptions used a \emph{flattened} Animated Score to generate the animation (explained in section \ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:animated_score} of chapter~\ref{ch:background_work}). However, this flattening process loses the multi-track information present in the original AZee description. In this work, we aim to preserve the dynamics of the individual blocks in the AZee Synced Score and synthesize them directly on a multi-track timeline. By preserving the dynamics of individual animation blocks, this method enhances reusability, accuracy, and flexibility in the synthesis process.
+Traditional approaches to animating human movement often oversimplify this complexity, reducing it to linear bone rotations. In contrast, multi-track control offers a more nuanced perspective by recognizing the layered, interconnected nature of gestures and postures, reflecting the true complexity of human movement. In the previous chapter, we discussed the creation of an avatar and the generation of signs using AZee's constraints. This chapter shifts focus to the time structure of the animation working from the AZee \emph{Synced Score} structure. As discussed in section \ref{ch:background_work:sign_language_descriptions:azee} of chapter \ref{ch:background_work}, the AZee Synced Score is a recursive representation of the AZee description, where each block represents the motion that holds the specification of the sign. The previous synthesizer for AZee descriptions used a \emph{flattened} Animated Score to generate the animation (explained in section \ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:animated_score} of chapter~\ref{ch:background_work}). However, this flattening process loses the multi-track information present in the original AZee description. In this work, we aim to preserve the dynamics of the individual blocks in the AZee Synced Score and synthesize them directly on a multi-track timeline. By preserving the dynamics of individual animation blocks, this method enhances reusability, accuracy, and flexibility in the synthesis process.
 
 The content of this chapter is structured as follows. Section~\ref{ch:multi_track:score_to_timeline} introduces the process of converting an AZee Synced Score into a multi-track timeline, outlining the benefits of this representation. Section~\ref{ch:multi_track:azee_nl} explores the implications of non-linear synthesis within the AZee framework, particularly how block evaluation order influences the final animation. In Section~\ref{ch:multi_track:resolve_conflicts}, we discuss strategies for resolving conflicts between overlapping animation blocks to ensure smooth and accurate motion. Section~\ref{ch:multi_track:second_pass} details the second-pass evaluation process, focusing on cyclic block sets, transpath blocks, and hold blocks to refine the animation. Section~\ref{ch:multi_track:preanim_blocks} addresses the integration of pre-animated blocks into the multi-track timeline, emphasizing both the benefits and challenges of this approach. Finally, Section~\ref{ch:multi_track:implem_results} presents the implementation and results of our multi-track and non-linear synthesis approach, demonstrating improvements in animation quality, flexibility, and procedural generation.
 
@@ -55,9 +56,6 @@ The figure~\ref{fig:azee_timeline} shows the generated multi-track timeline for 
     \caption{Multi-track timeline generation from an AZee Synced Score.}
     \label{fig:azee_timeline}
 \end{figure}
-
-\section{ConstraintDAG}
-\label{ch:multi_track:constraint_dag}
 
 Since we are not flattening the AZee Synced Score, the constraints in the blocks can have dependencies on each other. Also, we have to solve for constraints inside each block to generate an animation. For this, we choose to represent each block's constraints as a \gls{dag}, where the nodes are the constraints and the edges represent the dependencies between them. During evaluation, a topological sort allows us to find the solving order for the constraints. Figure~\ref{fig:constraint_dag_armoire} shows an example of a ConstraintDAG for the block HANDS\_CONTACT for the sign \emph{armoire} (figure \ref{fig:armoire_sign}). A more complex DAG of constraints can be seen in figure~\ref{fig:constraint_dag_tree} for the sign \emph{arbre} (\gls{lsf} tree) (figure \ref{fig:tree_sign}).
 
@@ -188,6 +186,8 @@ Hold blocks are baked by extending the end of the motion curves of the block bei
     \label{fig:preanim_blocks}
 \end{figure}
 
+% describe the blocks here
+
 The timeline can also contain pre-animated blocks. These blocks are blocks that contain pre-animated motion data. The pre-animated blocks are evaluated and baked first since they are independent of other blocks (figure~\ref{fig:preanim_blocks}) and should not influence the other blocks in the timeline.
 
 \section{Implementation and Results}
@@ -201,9 +201,9 @@ The multi-track timeline is implemented in blender's \gls{nle}. Each AZee Score,
         \hline
         \textbf{AZee expression} & \textbf{Timeline} & \textbf{Animation} \\
         \hline
-        \texttt{:armoire} & \includegraphics[width=\linewidth]{chapters/multi_track/images/azee_timeline.png} & Video 2~\footnote{www.phd.paritosh-sharma.com/dissertation/ch4armoire.mp4} \\
+        \texttt{:armoire} & \includegraphics[width=\linewidth]{chapters/multi_track/images/azee_timeline.png} & Video ~\tablefootnote{\url{www.phd.paritosh-sharma.com/dissertation/ch4armoire.mp4}} \\
         \hline
-        \texttt{:bien} & \includegraphics[width=\linewidth]{chapters/multi_track/images/bien_timeline.png} & Video 3~\footnote{www.phd.paritosh-sharma.com/dissertation/ch4bien.mp4} \\
+        \texttt{:bien} & \includegraphics[width=\linewidth]{chapters/multi_track/images/bien_timeline.png} & Video 2~\tablefootnote{\url{www.phd.paritosh-sharma.com/dissertation/ch4bien.mp4}} \\
         \hline
         \parbox{5cm}{
           \raggedright
@@ -220,23 +220,30 @@ The multi-track timeline is implemented in blender's \gls{nle}. Each AZee Score,
           \makebox[3cm]{} \texttt{.nb-5} \newline
           \makebox[3cm]{} \texttt{'units} \newline
           \makebox[3cm]{} \texttt{.nb-2}
-        } & \includegraphics[width=\linewidth]{chapters/multi_track/images/result_ch4_persone_age_52_timeline.png} & Video 4~\footnote{www.phd.paritosh-sharma.com/dissertation/ch4person52.mp4} \\
+        } & \includegraphics[width=\linewidth]{chapters/multi_track/images/result_ch4_persone_age_52_timeline.png} & Video 3~\tablefootnote{\url{www.phd.paritosh-sharma.com/dissertation/ch4person52.mp4}} \\
         \hline
     \end{tabular}
     \caption{Multi-track timeline and synthesized animations for some AZee expressions}
     \label{tab:azee_to_blender}
 \end{table}
 
-\section{Conclusion}
-\label{ch:multi_track:conclusion}
-
-The multi-track timeline approach to \gls{sl} synthesis offers several advantages over the existing methods. Preserving the multi-track information and dynamics present in the AZee description provides us the stepping stones to integrate pre-animated motion data which was not possible with the previous low-level AZee synthesizer. The non-linear synthesis allows for the correct execution order of blocks and avoids conflicts. On top of that, hybrid constructs such as \emph{dynamic points} (a point changing its location over time) can be easily integrated into the timeline (figure~\ref{fig:dynpoint_example}).
+We observe that each of the movement on the avatar's skeleton is based on the track created by AZee Synced Score. For more complex utterances, the importance of this is more obvious compared to simple stitching of glosses which most of the earlier models proposed. This also enables us to use hybrid constructs in AZee such as \emph{dynamic points} (a point changing its location over time) where motion inside parallel blocks affect each other. This can be seen for the sign \emph{mercredi} (Wednesday in \gls{lsf}) (figure~\ref{fig:dynpoint_example}).
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/dynpoint_example.png}
-    \caption{Example of a dynamic point in the multi-track timeline.}
+    \caption{Example of a dynamic point in the multi-track timeline for \emph{mercredi}}
     \label{fig:dynpoint_example}
 \end{figure}
+
+\section{Conclusion}
+\label{ch:multi_track:conclusion}
+
+The multi-track timeline approach to \gls{sl} synthesis offers several advantages over the existing methods. Preserving the multi-track information and dynamics present in the AZee description provides us the stepping stones to integrate pre-animated motion data which was not possible with the previous low-level AZee synthesizer. The non-linear synthesis allows for the correct execution order of blocks and avoids conflicts. However, there are future avenues open for this research such as:
+
+\begin{itemize}
+    \item \textbf{Parallelism in block generation} Our system cannot generate multiple independent blocks at the same time in parallel. This could greatly speedup the time for animation
+    \item \textbf{Smartly keyframing} An effort was made to "smartly" keyframe postures to increase synthesis speed, however it didn't work when the AZee Scores contained complex structures such as \emph{dynamic points} (created as a centripetal Catmull–Rom spline) in the linguistic discourse. Thus, we optimize the constraints for every frame of the block which is not the most efficient way to animate the block.
+\end{itemize}
 
 \end{document}

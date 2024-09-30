@@ -8,7 +8,7 @@ Before we can animate \gls{sl}, a well-crafted avatar is essential. This chapter
 
 A layered approach provides a sophisticated method for managing these complexities. By dividing the rigging process into distinct layers—each addressing specific aspects of movement and deformation—we gain greater control and flexibility. This strategy enables the synthesis system to function with multiple avatars and is faster and more accurate than the previous synthesizer.
 
-In this chapter, section~\ref{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars} introduces a procedural rigging system for signing avatars, which automates the rigging process and enables the generation of complex \gls{sl} gestures. Section~\ref{ch:avatar_creation_pose_synthesis:results} presents the results of the implementation, and section~\ref{ch:avatar_creation_pose_synthesis:evaluation} evaluates the performance, accuracy, and quality of the animation. Finally, section~\ref{ch:avatar_creation_pose_synthesis:conclusion} concludes the chapter and discusses future work.
+In this chapter, section~\ref{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars} introduces a procedural rigging system for signing avatars, which automates the rigging process and enables the generation of complex \gls{sl} gestures. Section~\ref{ch:avatar_creation_pose_synthesis:results} presents our results and evaluates the performance and quality of the animation. Finally, section~\ref{ch:avatar_creation_pose_synthesis:conclusion} concludes the chapter and discusses future work.
 
 \section{Procedural Rigging for Signing Avatars}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars}
@@ -29,7 +29,7 @@ However, for procedurally animating a signing avatar, the complexity of \gls{sl}
 \subsection{AZee Blender interface}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:azee_blender_interface}
 
-The old synthesizer used a \emph{SkelSpec} structure (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_blender_interface}) to sync an AZee posture and a blender armature. Due to the complexity of this \emph{SkelSpec} structure, the animation had too much latency. One of the first contributions of our work was to create a new interface for the low level synthesizer for AZee. This new interface didn't have a \emph{SkelSpec} (figure~\ref{fig:new_interface}) and interacted directly with the blender armature. 
+The old synthesizer used a \emph{SkelSpec} structure (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_blender_interface} of chapter~\ref{ch:background_work}) to sync an AZee posture and a blender armature. Due to the complexity of this \emph{SkelSpec} structure, the animation had too much latency. One of the first contributions of our work was to create a new interface for the low level synthesizer for AZee. This new interface didn't have a \emph{SkelSpec} (figure~\ref{fig:new_interface}) and interacted directly with the blender armature. 
 
 \begin{figure}
     \centering
@@ -41,7 +41,7 @@ The old synthesizer used a \emph{SkelSpec} structure (explained in section~\ref{
 \subsection{Sites on the Avatar}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:auto_site_generation}
 
-The sites in the previous synthesizer were represented as blender empty objects and had to be manually created (explained in ~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_sites}) to automate this site creation, we can use AZee's bone structure as reference as it remains consistent across avatars. For this, we use \textbf{directional surface projection} (figure~\ref{fig:site_surface_projection}), where points are projected from a bone's position in a specified direction to detect intersections with the avatar's surface. In this case, the projection is initiated from a bone's position within the avatar's mesh, and the intersection point is used to generate a site. This algorithm generates sites based on the bone's location and orientation, ensuring that the sites are accurately positioned on the avatar's mesh. Algorithm~\ref{alg:site_generation_with_projection} outlines the projection process for automatic site generation.
+The sites in the previous synthesizer were represented as blender empty objects and had to be manually created (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_sites} of chapter~\ref{ch:background_work}) to automate this site creation, we can use AZee's bone structure as reference as it remains consistent across avatars. For this, we use \textbf{directional surface projection} (figure~\ref{fig:site_surface_projection}), where points are projected from a bone's position in a specified direction to detect intersections with the avatar's surface. In this case, the projection is initiated from a bone's position within the avatar's mesh, and the intersection point is used to generate a site. This algorithm generates sites based on the bone's location and orientation, ensuring that the sites are accurately positioned on the avatar's mesh. Algorithm~\ref{alg:site_generation_with_projection} outlines the projection process for automatic site generation.
 
 \begin{figure}[ht]
     \centering
@@ -120,7 +120,7 @@ The generated sites can be visualized on the avatar in figure~\ref{fig:sites_baz
 \subsection{Creating the bone hierarchy}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers}
 
-The previous system only used an armature with rotation and translation bones (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_hierarchy}). We chose to work from Mixamo (section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:mixamo}) based avatar skeletons and also use account for mesh deformity based on the constraints. To address this, we used bone layers to organize the bones into separate groups based on their function and purpose. Bone layers are often used in 3D animation software to organize and manage bones in a rig. By grouping bones into separate layers, animators can control which bones are visible and selectable at any given time, making it easier to work with complex rigs and animations. The new system has 3 types of bone layers: the deformation bone layer, the \gls{ik} layer, and the \gls{fk} layer.
+The previous system only used an armature with rotation and translation bones (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_hierarchy}). We chose to work from Mixamo (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:mixamo} of chapter~\ref{ch:background_work}) based avatar skeletons and also use account for mesh deformity based on the constraints. To address this, we used bone layers to organize the bones into separate groups based on their function and purpose. Bone layers are often used in 3D animation software to organize and manage bones in a rig. By grouping bones into separate layers, animators can control which bones are visible and selectable at any given time, making it easier to work with complex rigs and animations. The new system has 3 types of bone layers: the deformation bone layer, the \gls{ik} layer, and the \gls{fk} layer.
 
 \subsubsection{Deformation Bone Layer}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers:deform_bone_layer}
@@ -402,7 +402,7 @@ Where:
     \item \( \|\cdot\| \) denotes the Euclidean distance between corresponding vertices.
 \end{itemize}
 
-\section{Results and Implementation}
+\section{Results and Evaluation}
 \label{ch:avatar_creation_pose_synthesis:results}
 
 The layered rigging system has been implemented and tested on the BAZeel (MakeHuman) avatar in blender. The final avatar with layers as well as sites can be seen in figure~\ref{fig:layers_example}.
@@ -415,9 +415,6 @@ The layered rigging system has been implemented and tested on the BAZeel (MakeHu
 \end{figure}
 
 The animator is developed as an add-on for blender (see annex section~\ref{annex:avatar_creation_pose_synthesis:animator_architecture} for the design diagram) and uses the AZee interpreter as a package to parse the AZee descriptions. The BAZeel avatar was developed using the MakeHuman tool with the default Mixamo rig. 
-
-\section{Evaluation}
-\label{ch:avatar_creation_pose_synthesis:evaluation}
 
 We evaluate the quality and the performance of the animation generated by the layered rigging system.
 
@@ -434,7 +431,7 @@ For our tests, the configuration for the posture optimization algorithm were as 
     \item Solver: \gls{itasc}
 \end{itemize}
 
-Video\footnote{\url(www.phd.paritosh-sharma.com/dissertation/ch3comparison.mp4)} shows some \gls{lsf} signs generated by the old and the new synthesizer. The newer system demonstrates improved constraint satisfaction, especially for the sign \emph{:mercredi} (\gls{lsf} for "Wednesday"), using the same posture optimization configuration.
+Video\footnote{\url{www.phd.paritosh-sharma.com/dissertation/ch3comparison.mp4}} shows some \gls{lsf} signs generated by the old and the new synthesizer. The newer system demonstrates improved constraint satisfaction, especially for the sign \emph{:mercredi} (\gls{lsf} for "Wednesday"), using the same posture optimization configuration.
 
 Despite both systems meeting the AZee constraints, the resulting animations remain somewhat robotic and lack the natural fluidity of expressive \gls{sl} gestures. This is because our system solely utilizes the low-level constraint optimization for keyframing the avatar. However, since anything annotated with AZee can be synthesized by our system, this provides a strong foundation for \gls{sl} animation.
 
@@ -474,6 +471,6 @@ We observe that our newer method for synthesis is significantly faster because o
 
 In this chapter, we presented our methodology to create the signing avatar which we can animate using the AZee descriptions. We used a popular open-source avatar creation tool MakeHuman to create our avatar. We introduced an automatic site generation and rigging process to significantly reduce the time and effort required to set up an avatar for \gls{sl} animation. We also improved the link between AZee's abstract skeleton representation and blender's armature by interfacing them directly with each other. Also, we observed that by dividing the rig into distinct layers, each responsible for a different aspect of the avatar's movement and deformation, we have a more efficient system. Lastly, we observe that our constraint-based posture optimization algorithm is more accurate as well as faster than the previous synthesizer.
 
-However, the animations generated by the system are still robotic and lack the fluidity and expressiveness of natural \gls{sl} gestures. The future work includes improving the quality of the animations, integrating facial expressions, and explores the use of machine learning techniques to enhance the realism and expressiveness of the synthesized discourse.
+However, the animations generated by the system are still robotic and lack the fluidity and expressiveness of natural \gls{sl} gestures. The future work includes improving the fluidness of the animations, and explores the use of machine learning techniques to enhance the realism and expressiveness of the synthesized discourse. Also, newer rigging techniques such as neural blendshapes~\cite{li2021learning} could be explored. We could use existing \gls{sl} motion data to define common motion spaces for blendshapes and also link them with an abstract representation like AZee.
 
 \end{document}

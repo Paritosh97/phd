@@ -3,12 +3,12 @@
 \chapter{Conclusion}
 \label{ch:conclusion}
 
-In this chapter, we present a summary and overview of the contributions made in this thesis on \textit{\gls{sl} Synthesis by a Decreasing Granularity System from AZee}. In Section~\ref{ch:conclusion:summary}, we summarize the main findings and insights from the research. In Section~\ref{ch:conclusion:contributions}, we outline the publications and open-source implementations that have resulted from this work. In Section~\ref{ch:conclusion:key_insights}, we present key insights that have emerged from the research, including the importance of granularity in \gls{sl} synthesis and the relationship between language and motion. Finally, in Section~\ref{ch:conclusion:future}, we outline potential future directions for research in \gls{sl} synthesis, including enhancing the decreasing granularity model, expanding the capabilities of the AZee framework, and exploring real-time synthesis applications.
+In this chapter, we present a summary and overview of the contributions made in this thesis on \textit{\gls{sl} Synthesis by a Decreasing Granularity System from AZee}. In Section~\ref{ch:conclusion:summary}, we summarize the main findings and insights from the research. In Section~\ref{ch:conclusion:contributions}, we highlight the publications and open-source implementations that have resulted from this work. In Section~\ref{ch:conclusion:key_insights}, we present key insights that have emerged from the research, including the importance of granularity in \gls{sl} synthesis and the relationship between language and motion. Finally, in Section~\ref{ch:conclusion:future}, we outline potential future directions for research in \gls{sl} synthesis, including enhancing the decreasing granularity model, expanding the capabilities of the AZee framework, and exploring real-time synthesis applications.
 
 \section{Summary}
 \label{ch:conclusion:summary}
 
-This thesis explores innovative approaches to synthesizing \gls{sl} using a decreasing granularity system based on the AZee framework. The primary objective was to develop a system that could generate \gls{sl} sequences that are linguistically accurate and easier to reproduce, addressing a crucial need in accessible communication technologies for the Deaf and Hard of Hearing communities.
+This thesis explores innovative approaches to synthesizing \gls{sl} using a decreasing granularity system based on the AZee framework. The primary objective was to develop a system that could generate \gls{sl} sequences that are linguistically accurate and easier to reproduce, addressing a crucial need of empowering \gls{sl} communication technologies for the Deaf and Hard of Hearing communities.
 
 In Chapter~\ref{ch:background_work}, we reviewed the foundational work in describing \gls{sl}s, and synthesis techniques, particularly focusing on synthesis from AZee. AZee provides a structured way to describe \gls{sl} at varying levels of granularity. However, existing methods often struggle to balance linguistic accuracy with ease of synthesis. 
 
@@ -50,17 +50,6 @@ Apart from the above publications, one of the key contributions of this thesis i
 
 The animator interface allows users to write AZee code in a text editor and visualize the corresponding \gls{sl} animations in real-time. For this, the animator loads the AZee compiler as a python module and uses evaluates the generated AZee Scores directly on the avatar. The add-on uses blender's \gls{nle} to manage the animation blocks and transitions of the multi-track system. The system also supports facial expressions, intermediate blocks and pose correction.
 
-The blender synthesizer was also integrated with the \gls{azvd}~\cite{filhol2024software} editor to generate \gls{sl} animations directly on a web interface (see Figure~\ref{fig:conclusion:azee_web_interface}).
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/conclusion/images/azee_web_interface.png}
-    \caption{AZee web renderer interface}
-    \label{fig:conclusion:azee_web_interface}
-\end{figure}
-
-The web interface allows users to draw AZee visual descriptions which resolved to AZee Scores and then to animations. For this, the AZee code generated from \gls{azvd} in the front-end is sent to the server where an instance of the blender is running headlessly. The synthesizer evaluates the AZee code and returns the animation in video or GLB format to the front-end where it is displayed to the user.
-
 \section{Key Insights}
 \label{ch:conclusion:key_insights}
 
@@ -96,13 +85,27 @@ Most of the evaluation in this thesis was done qualitatively. This is because qu
 \subsection{Realistic Avatars}
 \label{ch:conclusion:future:realistic_avatars}
 
-For this thesis, we used a simplified open-source avatar model to keep our system open-source, focus more on synthesis andalstly to avoid Uncanny Valley (since most ofthis thesis focuses on generation using minimum constraints). Future research could explore more realistic avatars such as MetaHumans (figure~\ref{fig:conclusion:metahuman_bazeel}) which include much more high resolution textures. This would be particularly useful for applications where the realism of the avatar is crucial, such as in educational or entertainment settings. 
+For this thesis, we used a simplified open-source avatar model to keep our system open-source, focus more on synthesis and lastly to avoid Uncanny Valley (since most of this thesis focuses on generation using minimum constraints). Future research could explore more realistic avatars such as MetaHumans (figure~\ref{fig:conclusion:metahuman_bazeel}) which include much more high resolution textures. This would be particularly useful for applications where the realism of the avatar is crucial, such as in educational or entertainment settings. 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{chapters/conclusion/images/metahuman_bazeel.png}
-    \caption{MetaHuman Bazeel}
+    \includegraphics[width=0.6\textwidth]{chapters/conclusion/images/metahuman_bazeel.png}
+    \caption{MetaHuman BAZeel}
     \label{fig:conclusion:metahuman_bazeel}
 \end{figure}
+
+\subsection{AZVD}
+\label{ch:conclusion:future:realistic_avatars}
+
+The blender synthesizer was also integrated with the \gls{azvd}~\cite{filhol2024software} editor to generate \gls{sl} animations directly on a web interface (see Figure~\ref{fig:conclusion:azee_web_interface}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.6\textwidth]{chapters/conclusion/images/azee_web_interface.png}
+    \caption{AZee web renderer interface}
+    \label{fig:conclusion:azee_web_interface}
+\end{figure}
+
+The web interface allows users to draw \gls{azvd} which resolved to AZee Scores and then to animations. For this, the AZee code generated from \gls{azvd} in the front-end is sent to the server where an instance of the blender is running headlessly. The synthesizer evaluates the AZee code and returns the animation in video or GLB format to the front-end where it is displayed to the user. However, the system only supports a few AZee rules for now. A complete system, when integrated with more AZee rules could allow us to draw \gls{sl} discourses and will serve as a strong tool in empowering the language.
 
 \end{document}

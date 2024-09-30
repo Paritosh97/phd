@@ -13,6 +13,8 @@
 \usepackage{svg}
 \usepackage{amssymb}
 \usepackage{natbib}
+\usepackage{rotating} 
+\usepackage{tablefootnote}
 \usepackage{longtable}
 \usepackage[pdf]{graphviz}
 \usepackage{fp}
@@ -42,6 +44,8 @@
 \usepackage{alphabeta}
 \usepackage{mdframed}
 \usepackage{multirow} 
+\usepackage{pdfpages}
+\usepackage{lscape}
 \usepackage{multicol} 
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, arrows}
@@ -200,11 +204,11 @@ Chargé de recherche, Inria \& Université Côte d'Azur \\
 \begin{multicols}{2}
 \noindent \textbf{Résumé:}
 
-Les récents progrès dans la synthèse de la langue des signes ont permis de rapprocher ce domaine de la génération d'une langue des signes plus naturelle et expressive, mais des défis persistent. Les modèles actuels se concentrent souvent sur la synthèse au niveau des mots, ce qui peut entraîner une production manquant de fluidité et de naturel. Un des principaux défis de la synthèse de la langue des signes est de capturer les différentes granularités, allant des gestes larges aux mouvements subtils qui véhiculent des significations spécifiques. Pour surmonter cet obstacle, nous proposons un nouveau système de granularité décroissante basé sur le modèle AZee, qui organise la langue des signes en niveaux hiérarchiques, du plus grossier au plus fin.
+Les récents progrès dans la synthèse de la langue des signes ont permis de se rapprocher d'une génération plus naturelle et expressive, bien que des défis importants subsistent. Les approches actuelles se concentrent principalement sur une synthèse au niveau lexical, ce qui peut conduire à des productions manquant de fluidité et de continuité. Un défi majeur dans la synthèse de la langue des signes réside dans la capacité à capter la diversité des granularités présentes dans le discours, allant des gestes globaux aux mouvements plus subtils, qui véhiculent des nuances sémantiques spécifiques. Pour répondre à cette problématique, nous proposons un nouveau système de granularité décroissante fondé sur le modèle AZee, qui structure la langue des signes selon des niveaux hiérarchiques de granularité, du plus grossier au plus fin.
 
-Dans cette thèse, nous explorons l'application de ce système de granularité décroissante à la synthèse de la langue des signes. Notre objectif principal est de développer un système autonome capable de générer des séquences de langue des signes fluides et naturelles, adaptables à divers contextes et besoins des utilisateurs. Contrairement aux méthodes conventionnelles reposant sur des gestes prédéfinis et statiques, notre approche ajuste dynamiquement le niveau de granularité pendant la synthèse, assurant ainsi que la langue des signes générée soit à la fois contextuellement appropriée et expressive.
+Dans le cadre de cette thèse, nous examinons l'application de ce système de granularité décroissante à la synthèse de la langue des signes. L'objectif principal de notre travail est de développer un système autonome capable de générer des séquences en langue des signes qui s'adaptent à divers contextes et exigences des utilisateurs. Contrairement aux approches classiques qui se reposent sur des gestes statiques et prédéfinis, notre méthode ajuste dynamiquement le niveau de granularité au cours de la synthèse, permettant ainsi de produire une langue des signes à la fois expressive et adaptée au contexte discursif.
 
-Tout au long de nos travaux, nous cherchons à approfondir la compréhension et l'application du formalisme AZee dans la synthèse de la langue des signes. Nous évaluons l'efficacité de notre approche en la comparant à d'autres méthodes existantes de synthèse de la langue des signes. Nos résultats montrent qu'un système de granularité décroissante peut grandement améliorer la naturalité et l'expressivité de la langue des signes synthétisée, ouvrant une voie prometteuse pour les recherches futures dans ce domaine.
+Notre recherche vise à approfondir la compréhension et l'utilisation du formalisme AZee dans le cadre de la synthèse de la langue des signes. Nous évaluons l'efficacité de notre approche en la comparant aux synthétiseurs précédemment développés sur la base d'AZee. Les résultats de nos travaux montrent qu’un système de granularité décroissante constitue une solution évolutive prometteuse pour la synthèse de la langue des signes, ouvrant ainsi des perspectives intéressantes pour des recherches futures dans ce domaine.
 \end{multicols}
 
 \end{mdframed}
@@ -222,11 +226,11 @@ Tout au long de nos travaux, nous cherchons à approfondir la compréhension et 
 \begin{multicols}{2}
 \noindent \textbf{Abstract:}
 
-Recent developments in sign language synthesis have brought the field closer to generating natural and expressive sign language, yet challenges remain. Current models often focus on word-level synthesis, resulting in output that can lack fluidity and naturalness. A major obstacle in sign language synthesis is the need to capture the varying granularities of sign language, ranging from broad gestures to subtle movements that convey specific meanings. To overcome this, we propose a novel decreasing granularity system based on the AZee model, which organizes sign language into hierarchical levels of granularity, from coarse to fine.
+Recent developments in Sign Language synthesis have brought the field closer to generating natural and expressive sign language, yet challenges remain. Current models often focus on word-level synthesis, resulting in output that can lack fluidity and naturalness. A major obstacle in Sign Language synthesis is the need to capture the varying granularities of a discourse, ranging from broad gestures to subtle movements that convey specific meanings. To overcome this, we propose a novel decreasing granularity system based on the AZee model, which organizes Sign Language into hierarchical levels of granularity, from coarse to fine.
 
-In this thesis, we investigate the application of this decreasing granularity system to sign language synthesis. Our primary objective is to develop an autonomous system capable of generating fluid and natural sign language sequences that are adaptable to different contexts and user needs. Unlike conventional approaches that rely on static, predefined gestures, our method dynamically adjusts the level of granularity during synthesis, ensuring that the generated sign language is both contextually appropriate and expressive.
+In this thesis, we investigate the application of this decreasing granularity system to Sign Language synthesis. Our primary objective is to develop an autonomous system capable of generating Sign Language sequences that are adaptable to different contexts and user needs. Unlike conventional approaches that rely on static, predefined gestures, our method dynamically adjusts the level of granularity during synthesis, ensuring that the generated Sign Language is both contextually appropriate and expressive.
 
-Throughout our research, we focus on deepening the understanding and utility of the AZee formalism in sign language synthesis. We evaluate the effectiveness of our approach by comparing it with other existing means to synthesize Sign Language. Our findings demonstrate that a decreasing granularity system can greatly enhance the naturalness and expressiveness of synthesized sign language, presenting a promising avenue for future research in this area.
+Throughout our research, we focus on deepening the understanding and utility of the AZee formalism in Sign Language synthesis. We evaluate the effectiveness of our approach by comparing it with previous AZee based synthesizer. Our findings demonstrate that a decreasing granularity system does offer a promising scalable solution to synthesize Sign Language, presenting a strong avenue for future research in this area.
 
 \end{multicols}
 \end{mdframed}
@@ -243,15 +247,15 @@ Throughout our research, we focus on deepening the understanding and utility of 
 {\vspace{0.1ex}}
 
 % Subsection titles
-\titleformat{\subsection}[hang]{\bfseries\normalsize}{\thesubsection}{0.75em}
+\titleformat{\subsection}[hang]{\bfseries\large}{\thesubsection}{0.75em}
 {\vspace{0.1ex}}
 
 % Subsubsection titles
-\titleformat{\subsubsection}[hang]{\bfseries\small}{\thesubsubsection}{0.75em}
+\titleformat{\subsubsection}[hang]{\bfseries\normalsize}{\thesubsubsection}{0.75em}
 {\vspace{0.1ex}}
 
 % Paragraph titles
-\titleformat{\paragraph}[runin]{\bfseries\normalsize}{\theparagraph}{1em}{}
+\titleformat{\paragraph}[runin]{\bfseries\small}{\theparagraph}{1em}{}
 
 % Subparagraph titles
 \titleformat{\subparagraph}[runin]{\bfseries\footnotesize}{\thesubparagraph}{1em}{}

@@ -1,13 +1,17 @@
 \documentclass[../main.tex]{subfiles}
 \usepackage{forest}
 \usepackage{tikz}
-\usepackage{svg}
+\usepackage{pdfpages}
+\usepackage{lscape}
+\usepackage{rotating} 
 \begin{document}
 
-\chapter{Annex}
+\appendix
+\renewcommand{\thesection}{\Alph{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 
-\section{Annex for Chapter 2}
-\label{annex:background_work}
+\section{Annex}
+\label{annex}
 
 \subsection{Bone List for Previous synthesizer}
 \label{annex:background_work:old_bone_list}
@@ -484,19 +488,23 @@
     FH\_R & head & Right side of the forehead \\ \hline
     \end{longtable}
 
-\section{Annex for Chapter 3}
-\label{annex:avatar_creation_pose_synthesis}
-
 \subsection{Animator Architecture}
 \label{annex:avatar_creation_pose_synthesis:animator_architecture}
 
-\includesvg[width=5in]{chapters/avatar_creation_pose_synthesis/images/classes_animator.svg}
+Figure~\ref{fig:animator_architecture} shows the architecture of the Animator.
 
-\section{Annex for Chapter 5}
-\label{annex:intermediate_blocks_pose_correction}
+\begin{sidewaysfigure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{chapters/avatar_creation_pose_synthesis/images/classes_animator.pdf}
+    \caption{Animator Architecture}
+    \label{fig:animator_architecture}
+\end{sidewaysfigure}
+
 
 \subsection{AZee Rules Frequency}
 \label{annex:intermediate_blocks_pose_correction:azee_rules_frequency}
+
+Figure~\ref{fig:azee_rule_frequency_ch1} shows frequency of AZee rules in the \emph{40 brèves} corpus.
 
 \begin{figure}[h]
     \centering
@@ -516,13 +524,12 @@ In future, the procedurally generated templates can also be based on the AZee ru
     \label{fig:motion_curves_template_procedural_pose_est}
 \end{figure}
 
-The above example uses a SMPL-X mesh fitted to the video using SGNify~\cite{SGNify} and OpenPose~\cite{cao2018openpose} for pose estimation. The motion curves are generated using the rotation parameters of the SMPL-X skeleton.
-
-\section{Annex for Chapter 6}
-\label{annex:facial_expressions}
+The above example uses a SMPL-X mesh fitted to the video using SGNify~\cite{Forte_2023_CVPR} and ViTPose~\cite{xu2022vitpose} for pose estimation. The motion curves are generated using the rotation parameters of the SMPL-X skeleton.
 
 \subsection{AZee Non-Manuals}
 \label{annex:facial_expressions:azee_non_manuals}
+
+Figure~\ref{fig:azee_non_manuals} shows frequency of AZee Non-Manual rules in the \emph{40 brèves} corpus.
 
 \begin{figure}[h]
     \centering
@@ -534,8 +541,10 @@ The above example uses a SMPL-X mesh fitted to the video using SGNify~\cite{SGNi
 \subsection{Facial expressions using FLAME}
 \label{annex:facial_expressions:flame}
 
+Table~\ref{tab:facial_expressions_flame} shows some facial expressions from the \emph{40 brèves} corpus synthesized using FLAME.
+
 \begin{longtable}{|l|c|r|}
-    \caption{Synthesized Expressions} \label{tab:facial_expressions} \\
+    \caption{Synthesized Expressions} \label{tab:facial_expressions_flame} \\
     \hline
     \textbf{AZee rule} & \textbf{Original Expression} & \textbf{FLAME}  \\
     \hline

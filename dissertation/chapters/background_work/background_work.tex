@@ -132,7 +132,7 @@ Similarly, \gls{posture_constraint}s in a \gls{cstr_score} can be of various typ
 \begin{itemize}
   \item \textbf{Place}: Constrains a body \gls{site} to be placed at a specific location in 3D space.
   \item \textbf{Orient}: Constraints the orientation of a bone.
-  \item \textbf{Morph}: Constrains a morphological change of a body part(s).
+  \item \textbf{Morph}: Constrains a morphological change of a body part(s). However, it only defines the syntax (with no actual specification more explained later in section~\ref{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:skel_morphs} of chapter~\ref{ch:avatar_creation_pose_synthesis})
   \item \textbf{Transpath}: Constrains a body \gls{site} along a path.
   \item \textbf{Look-At}: Constrains the body to look at a specific point.
   \item \textbf{Trill}: Shaking of a body part along an axis.
@@ -151,7 +151,7 @@ In addition to these, the AZee model includes several other important operators 
 
 AZee also allows for use of templates which help us identifying patterns in a \gls{sl} utterance, linking linguistic descriptions with animated motions. For example, an AZee template like \emph{:info-about(:âge,?info)} could match an AZee expression such as \emph{:info-about(:âge,:tens-units(:five,:two))}, where the variable \emph{info} would be assigned the function \emph{:tens-units(:five,:two)}. This template can be used to procedurally create animations, where the person's age (52, in this case) is dynamically inserted based on the template match.
 
-Lastly, an AZee description can also be drawn in the form of \gls{svg} images using \gls{azvd}~\cite{filhol2024software}. Figure~\ref{fig:azvd} shows the verbalizing diagrams for the \gls{utterance} "a person aged 52".
+Lastly, an AZee description can also be drawn in the form of \gls{svg} images using \gls{azvd}~\cite{filhol2024software}. Figure~\ref{fig:azvd} shows the AZee verbalizing diagram for the \gls{utterance} "a person aged 52".
 
 \begin{figure}
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/azvd.png}
@@ -185,7 +185,7 @@ Figures~\ref{fig:synthesis_mediaipe_2d} and~\ref{fig:synthesis_gan_2d} illustrat
   \label{fig:synthesis_gan_2d} 
 \end{figure}
 
-While such techniques are computationally less demanding during inference. Require a large amount of data to train the model. They also lack the depth and realism of 3D animations and struggle with capturing complex spatial relationships in \gls{sl}.
+While such techniques are computationally less demanding during inference, they require a large amount of data to train the model. They also lack the depth and realism of 3D animations and struggle with capturing complex spatial relationships in \gls{sl}.
 
 \subsection{3D Techniques}
 \label{ch:background_work:sign_language_synthesis:3d_techniques}
@@ -252,7 +252,7 @@ Weight painting is a technique used to define how much influence each bone in a 
 \subsubsection{Rigging}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:rigging}
 
-A rig is the final system used by the artists to animate the avatars. This is done by implementing all the above systems in order, i.e., creating a skeleton, mesh, texture, weight painting, facial blendshapes, implementing \gls{ik} and \gls{fk} systems, and adding constraints. Figure~\ref{fig:rig_example} shows an example of a rigged character, the "Rain rig" by Blender Studio.
+A rig is the final system used by the artists to animate the avatars. This is done by implementing all the above systems in order, i.e., creating a skeleton, mesh, texture, weight painting, facial blendshapes. The skeleton is often modeled in separate layers of bones (with certain constraints) for different tasks such as \gls{ik}, \gls{fk} etc. Figure~\ref{fig:rig_example} shows an example of a rigged character, the "Rain rig" by Blender Studio.
 
 \begin{figure} 
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/rig_example.png} 
@@ -338,6 +338,17 @@ Figure~\ref{fig:mocap} illustrates the process of motion capture and retargeting
 \end{figure}
 
 Motion capture (mocap) retargeting offers a significant boost in animation speed and realism, but it does come with its challenges. It requires specialized equipment and involves intricate data processing, particularly when filtering out noise. Additionally, reusing mocap data across different avatars can be complex due to variations in body proportions and joint placements. Furthermore, segmenting mocap data into different parts for reuse can be difficult, limiting its flexibility in animation projects.
+
+\paragraph{Skeletal Blendshapes}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:skeletal_blendshapes}
+
+Blendshapes (or Morph Targets) are a technique for animating 3D meshes by smoothly transitioning between predefined shapes, often used for facial expressions. Skeletal blendshapes extend this by applying shape blending to skeletal structures, allowing for deformations that react to bone movement, enhancing realism in animations like muscle flexing or limb poses. Figure~\ref{fig:skeletal_blendshape} shows skeletal blendshape for the fist.
+
+\begin{figure} 
+  \centering \includegraphics[width = 2.5in]{chapters/background_work/images/skeletal_blendshapes.jpg} 
+  \caption{Skeletal blendshape for fist close and open} 
+  \label{fig:skeletal_blendshape} 
+\end{figure}
 
 \paragraph{Kinematics}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:kinematics}
@@ -801,7 +812,7 @@ The synthesizer was based on an armature in blender. The bones and sites of this
 \end{figure}
 
 \subparagraph{Bone heirarchy}
-\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_heirarchy}
+\label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_hierarchy}
 
 The synthesizer uses an armature contained 128 bones (see section~\ref{annex:background_work:old_bone_list} of annex). These bones were structured to accommodate the unique skeletal system requirements of the AZee framework, which utilizes a "rotation first" paradigm. However, since most 3D softwares (including blender) operate on a "translation first" paradigm, a conversion process was necessary. This conversion involved mapping each AZee bone (see section~\ref{annex:background_work:azee_abstract_bones} of annex) to two corresponding armature bones: one for translation and one for rotation, with the rotation bone named by appending a ".rot" suffix to the original bone name (figure~\ref{fig:old_bone_structure}).
 

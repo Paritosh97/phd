@@ -18,9 +18,6 @@ The chapter is structured as follows: Section~\ref{ch:facial_expressions:adding_
 
 The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first tasks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (see section~\ref{annex:facial_expressions:azee_non_manuals} for number of occurrences).
 
-\subsection{Defining AZee Rules in terms of Action Units}
-\label{ch:facial_expressions:defining_azee_rules_in_terms_of_action_units}
-
 We discussed the \gls{facs} earlier in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:face_animation:emotion_recognition}. \gls{facs} is a comprehensive system for describing facial expressions in terms of action units (AUs), which represent the activation of specific facial muscles. AUs can also be combined to create facial expressions. Thus, our first goal is to break down each AZee rule into its constituent AUs. 
 
 We use the AU detector by~\cite{luo2022learning} on mediapipe extractions of still images for each of the facial expressions from the corpus (figure~\ref{ch:facial_expressions:fig:face_detect}).
@@ -89,7 +86,7 @@ Since the FACSHuman blendshapes work on any MakeHuman template mesh, this techni
 
 Let \( V \) be the set of vertices of the 3D facial mesh, where \( V = \{ v_1, v_2, \dots, v_n \} \), and each vertex \( v_i \) has a position in 3D space \( v_i = (x_i, y_i, z_i) \). Each facial Action Unit (AU) \( A_j \) modifies the positions of the vertices based on predefined shape key transformations.
 
-\subsection{Shape Key Definition}
+\paragraph{Shape Key Definition}
 \label{ch:facial_expressions:blendshape_creation:shape_key_definition}
 
 For each AU \( A_j \), let \( S_j \) be the shape key associated with that AU. \( S_j \) defines a vector of vertex displacements for extreme positions. Specifically, for a vertex \( v_i \), the shape key specifies a displacement \( \Delta v_i^j = (\Delta x_i^j, \Delta y_i^j, \Delta z_i^j) \), where:
@@ -100,7 +97,7 @@ For each AU \( A_j \), let \( S_j \) be the shape key associated with that AU. \
 
 Here, \( (x_i^j, y_i^j, z_i^j) \) are the extreme position coordinates of vertex \( v_i \) under AU \( A_j \).
 
-\subsection{AU Activation}
+\paragraph{AU Activation}
 \label{ch:facial_expressions:blendshape_creation:au_activation}
 
 Let \( \alpha_j \in [0, 1] \) be the activation level of AU \( A_j \), where:
@@ -109,7 +106,7 @@ Let \( \alpha_j \in [0, 1] \) be the activation level of AU \( A_j \), where:
     \item \( \alpha_j = 1 \) means the AU is fully activated (extreme position).
 \end{itemize}
 
-\subsection{Vertex Position Update}
+\paragraph{Vertex Position Update}
 \label{ch:facial_expressions:blendshape_creation:vertex_position_update}
 
 For a given activation level \( \alpha_j \), the new position \( v_i' = (x_i', y_i', z_i') \) of vertex \( v_i \) under the influence of AU \( A_j \) is computed as:
@@ -249,8 +246,8 @@ v_i' = v_i + \sum_{j=1}^{k} \alpha_j \Delta v_i^j
 For shape keys, the motion curves (discussed earlier in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:motion_curves} of chapter~\ref{ch:background_work}) represent time in x axis, and the weight of the shape key in the y axis. Each shape key has one motion curve. Figure~\ref{fig:motion_curves_shape_keys} shows how motion curves can be used for shape keys for the facial expressions of the above example.
 
 \begin{figure}[h]
-    \centering \includegraphics[width = 2.5in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_shape_keys.png}
-    \caption{Motion Curves for Shape Keys}
+    \centering \includegraphics[width = 4in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_shape_keys.png}
+    \caption{Motion Curves for \emph{big-threatening}}
     \label{fig:motion_curves_shape_keys}
 \end{figure}
 
@@ -264,14 +261,7 @@ After creating the blendshapes, we used motion curve based templates (as discuss
 
 We used the still images from the corpus as the apex of our curves (figure~\ref{ch:facial_expressions:fig:motion_curve_apex}). Next, we extended our existing intermediate block generation algorithm to include motion curves for facial morphs. This involved creating additional curves that specify the timing and intensity of facial movements based on the template. By controlling the acceleration and deceleration of these movements, we were able to create more naturalistic animations that reflect the dynamic nature of facial expressions.
 
-For example, in the expression \emph{big-threatening}, the motion curves were designed to gradually increase the influence of the blendshapes corresponding to AU10 (Upper Lip Raiser) and AU25 (Lips Part) while simultaneously decreasing the influence of AU4 (Brow Lowerer) as the expression transitions from a neutral state to one of aggression (figure~\ref{ch:facial_expressions:fig:motion_curve_example}).
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/facial_expressions/images/motion_curve_example.png}
-    \caption{Motion curves controlling the blendshape influences for the expression "big-threatening."}
-    \label{ch:facial_expressions:fig:motion_curve_example}
-\end{figure}
+For example, in the expression \emph{big-threatening}, the motion curves were designed to gradually increase the influence of the blendshapes corresponding to AU10 (Upper Lip Raiser) and AU25 (Lips Part) while simultaneously decreasing the influence of AU4 (Brow Lowerer) as the expression transitions from a neutral state to one of aggression (figure~\ref{fig:motion_curves_shape_keys}).
 
 \section{Results and Evaluation}
 \label{ch:facial_expressions:results}
@@ -372,8 +362,10 @@ We also compare the synthesized utterance \emph{big-threatening(hot())} (with fa
 \section{Conclusion}
 \label{ch:facial_expressions:conclusion}
 
+% add dynamic morphs curve thing
+
 In this chapter, we presented a method for synthesizing facial expressions using the AZee framework, focusing on the creation of blendshapes from action units (AUs) and the generation of motion curves to control these shapes over time. Our method involved analyzing AUs from the \gls{facs} system and extending the morph set in the AZee language with 94 blendshapes. Next we created those blendshapes on our avatar based on a MakeHuman template mesh. We also used motion curves to animate these blendshapes. The synthesized facial expressions were evaluated subjectively by the linguist who created them. The results show that even though some of the expressions were challenging to model accurately, our method was able to generate some expressions which were effective in conveying the intended form of the corresponding AZee rule.
 
-For future, we plan to use more modern systems to refine the blendshapes and motion curves to improve the accuracy and naturalness of the facial expressions. A good starting point for this would be to animate these rules using a point cloud based capturing systems and then study the capture data to accurately define blendshapes as well as motion templates. Use of emotion recognition systems such as~\cite{EMOCA} can be used on the existing dataset to define the flame~\cite{FLAME} principle components. However, establishing a link between the AZee rule and these principle components which drive the mesh will be a challenge. Some synthesized facial expressions using the FLAME model on a default SMPL-X avatar can be seen in the annex section \ref{annex:facial_expressions:flame}.
+For future, we plan to use more modern systems to refine the blendshapes and motion curves to improve the accuracy and naturalness of the facial expressions. A good starting point for this would be to animate these rules using a point cloud based capturing systems and then study the capture data to accurately define blendshapes as well as motion templates. Use of emotion recognition systems such as~\cite{danvevcek2022emoca} can be used on the existing dataset to define the flame~\cite{FLAME} principle components. However, establishing a link between the AZee rule and these principle components which drive the mesh will be a challenge. Some synthesized facial expressions using the FLAME model on a default SMPL-X avatar can be seen in the annex section \ref{annex:facial_expressions:flame}.
 
 \end{document}
