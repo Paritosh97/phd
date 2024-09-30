@@ -7,7 +7,7 @@
 \chapter{Facial Expressions}
 \label{ch:facial_expressions}
 
-Facial expressions are a crucial element of communication in both spoken and \gls{sl}s. In \gls{sl}s, they serve a dual purpose: conveying the emotional state of the signer and encoding grammatical information such as negation, and emphasis. While spoken languages rely on tone and intonation for these functions, \gls{sl}s depend heavily on \gls{non_manual_signals}, particularly facial expressions, to fully convey the meaning of an utterance. Therefore, creating accurate and expressive facial animations in signing avatars is essential for producing realistic and comprehensible \gls{sl} content.
+Facial expressions are a crucial element of communication in both spoken and \gls{sl}s. In \gls{sl}s, they serve a dual purpose: conveying the emotional state of the signer and encoding grammatical information such as negation and emphasis. While spoken languages rely on tone and intonation for these functions, \gls{sl}s depend heavily on \gls{non_manual_signals}, particularly facial expressions, to fully convey the meaning of an utterance. Therefore, creating accurate and expressive facial animations in signing avatars is essential for producing realistic and comprehensible \gls{sl} content.
 
 However, synthesizing facial expressions for signing avatars presents significant challenges due to the complexity and subtlety of these expressions. Unlike manual signs, which involve distinct hand and arm movements, facial expressions require the coordinated movement of numerous facial muscles, each contributing to the overall expression. Different facial features, such as eyebrows, eyes, and mouth, often move independently yet in harmony to produce coherent expressions. Previous chapters focused on the synthesis of skeletal features in \gls{sl}. In contrast, this chapter centers on the synthesis of facial expressions from the AZee model, emphasizing their critical role in the conveyance of grammatical information in \gls{sl}s.
 
@@ -16,7 +16,7 @@ The chapter is structured as follows: Section~\ref{ch:facial_expressions:adding_
 \section{Defining facial expressions in AZee}
 \label{ch:facial_expressions:adding_facial_expressions_to_azee}
 
-The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first taks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (see section~\ref{annex:facial_expressions:azee_non_manuals} for number of occurences).
+The AZee model does have a specification for \emph{morph} constraints. However, a proper specification for facial expressions was missing. Thus, our first tasks was to extend the set of \emph{morphs} in the AZee. We used the 40 brèves corpus~\cite{challant2024extending, challant2022first} as a reference for our study. The 40 brèves corpus consists of 23 facial expressions in the form of AZee rules (see section~\ref{annex:facial_expressions:azee_non_manuals} for number of occurrences).
 
 \subsection{Defining AZee Rules in terms of Action Units}
 \label{ch:facial_expressions:defining_azee_rules_in_terms_of_action_units}
@@ -85,7 +85,7 @@ In total, we extended the low-level AZee language morph set with 94 morphs corre
 
 Once the AUs were identified, we used FACSHuman~\cite{gilbert2021facshuman} blendshapes as reference to create shapekeys on our BAZeel avatar that correspond to each AU (figure~\ref{ch:facial_expressions:fig:facshuman_blendshapes}). Shape keys (figure~\ref{ch:facial_expressions:fig:shape_keys}) are essentially different versions of a 3D model, each representing a specific change in vertices. By blending and interpolating these keys together, we can create a wide range of mesh shapes.
 
-Since the FACSHuman blendshape work on any MakeHuman template mesh, this technique of synthesis is avatar-independant. However, since the original model didn't cover all the blendshapes (for all of the facial meshes), some blendshapes were created manually. The creation of blendshapes also involved ensuring that they could be seamlessly combined to create complex expressions. For example, the blendshape for AU4 (Brow Lowerer) was designed to work in conjunction with AU6 (Cheek Raiser) and AU12 (Lip Corner Puller) to create expressions of anger or determination.
+Since the FACSHuman blendshapes work on any MakeHuman template mesh, this technique of synthesis is avatar-independant. However, since the original model did not cover all the blendshapes for every facial mesh, some were created manually. The creation of blendshapes also involved ensuring that they could be seamlessly combined to create complex expressions. For example, the blendshape for AU4 (Brow Lowerer) was designed to work in conjunction with AU6 (Cheek Raiser) and AU12 (Lip Corner Puller) to create expressions of anger or determination.
 
 Let \( V \) be the set of vertices of the 3D facial mesh, where \( V = \{ v_1, v_2, \dots, v_n \} \), and each vertex \( v_i \) has a position in 3D space \( v_i = (x_i, y_i, z_i) \). Each facial Action Unit (AU) \( A_j \) modifies the positions of the vertices based on predefined shape key transformations.
 

@@ -24,7 +24,7 @@ A signing avatar differs significantly from traditional systems. To begin with, 
     \label{fig:upper_body_avatar}
 \end{figure}
 
-However for procedurally animating a signing avatar, the complexity of \gls{sl} gestures and expressions poses unique challenges and necessitates a more sophisticated rigging system.
+However, for procedurally animating a signing avatar, the complexity of \gls{sl} gestures and expressions poses unique challenges and necessitates a more sophisticated rigging system.
 
 \subsection{AZee Blender interface}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:azee_blender_interface}
@@ -117,10 +117,10 @@ The generated sites can be visualized on the avatar in figure~\ref{fig:sites_baz
     \label{fig:sites_bazeel_combined}
 \end{figure}
 
-\subsection{Creating the bone heirarchy}
+\subsection{Creating the bone hierarchy}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers}
 
-The previous system only used an armature with rotation and translation bones (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_heirarchy}). We chose to work from mixamo (section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:mixamo}) based avatar skeletons and also use account for mesh deformity based on the constraints. To address this, we used bone layers to organize the bones into separate groups based on their function and purpose. Bone layers are often used in 3D animation software to organize and manage bones in a rig. By grouping bones into separate layers, animators can control which bones are visible and selectable at any given time, making it easier to work with complex rigs and animations. The new system has 3 types of bone layers: the deformation bone layer, the \gls{ik} layer, and the \gls{fk} layer.
+The previous system only used an armature with rotation and translation bones (explained in section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_hierarchy}). We chose to work from Mixamo (section~\ref{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:mixamo}) based avatar skeletons and also use account for mesh deformity based on the constraints. To address this, we used bone layers to organize the bones into separate groups based on their function and purpose. Bone layers are often used in 3D animation software to organize and manage bones in a rig. By grouping bones into separate layers, animators can control which bones are visible and selectable at any given time, making it easier to work with complex rigs and animations. The new system has 3 types of bone layers: the deformation bone layer, the \gls{ik} layer, and the \gls{fk} layer.
 
 \subsubsection{Deformation Bone Layer}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:bone_layers:deform_bone_layer}
@@ -255,9 +255,9 @@ Joint limit constraints ensure that each joint, including those in the fingers, 
 \subsection{Animating Morphs Constraints}
 \label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints}
 
-The word "morph" comes from the Greek word \textit{morphē}, which means "form" or "shape." In modern usage, "morph" is often used as a shorthand for "morphing." In the field of computer graphics and animation, morphs are predefined shape keys that modify the mesh of the avatar independently of the skeletal structure, allowing for a fine control of the avatar's appearance that cannot be easily achieved through bone manipulation alone. This includes subtle facial expressions, muscle bulges, and other nuanced gestures that are critical for conveying meaning in \gls{sl}.
+The word "morph" comes from the Greek word \textit{morphē}, which means "form" or "shape." In modern usage, "morph" is often used as a shorthand for "morphing." In the field of computer graphics and animation, morphs are predefined shape keys that modify the mesh of the avatar independently of the skeletal structure, allowing for a fine control of the avatar's appearance that cannot be easily achieved through bone manipulation alone. This includes subtle facial expressions, muscle bulges, and other nuanced gestures that are critical to conveying meaning in \gls{sl}.
 
-AZee didn't have any morph specification to control the avatar. During this work, we populated them with skeletal and facial morphs. These morphs are changes in the configuration of the avatar, which can be specified by the linguist in a range from 0 to 1. For instance, closing of hands(a change in skeleton configuration) or raising the eyebrows(a change in the 3D mesh). The syntax of a morph constraint is as follows:
+AZee didn't have any morph specification to control the avatar. During this work, we populated them with skeletal and facial morphs. These morphs are changes in the configuration of the avatar, which can be specified by the linguist in a range from 0 to 1. For instance, closing the hands(a change in skeleton configuration) or raising the eyebrows(a change in the 3D mesh). The syntax of a morph constraint is as follows:
 
 \[
 \texttt{morph } \text{\emph{'morph\_id'}} \ \texttt{weight[0, 1]}
@@ -371,7 +371,7 @@ Facial morphs in the AZee framework provide a means to represent the complex and
 Facial Morph targets are typically generated by sculpting the avatar's mesh into various shapes that correspond to different expressions or gestures. These sculpted shapes are then saved as "keys," which can be blended together during animation to produce the desired expression. This process allows for a high degree of flexibility in animation, as different keys can be combined in real-time to create a wide range of expressions. While this section offers a brief overview, the detailed modeling, implementation, and challenges associated with facial morphs are discussed extensively in Chapter~\ref{ch:facial_expressions}.
 
 \subsubsection{Integration with other layers}
-\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:intergation}
+\label{ch:avatar_creation_pose_synthesis:proc_rig_signing_avatars:morph_constraints:integration}
 
 The morph constraints are integrated along with the other constraints in the posture optimization algorithm. Top optimize skeletal morph constraints we calculate the \gls{fk} values of the impacted bones for skeletal morphs and calculate the loss using rotation distance formula.
 
@@ -441,13 +441,13 @@ Despite both systems meeting the AZee constraints, the resulting animations rema
 \subsection{Performance}
 \label{ch:avatar_creation_pose_synthesis:evaluation:performance}
 
-The synthesis time of our newer system compared to the previous synthesizor for some \gls{lsf} signs are shown in table~\ref{tab:faster_executions}. Note that this not account for the time taken to interpret the AZee descriptions. Thus, the older synthesizor goes from an \emph{Animated Score} to keyframes on the blender armature while the newer system goes from a \emph{Synced Score} to keyframes on the blender armature on a \emph{multi-track} timeline (discussed in more detail in chapter~\ref{ch:multi_track}).
+The synthesis time of our newer system compared to the previous synthesizer for some \gls{lsf} signs are shown in table~\ref{tab:faster_executions}. Note that this not account for the time taken to interpret the AZee descriptions. Thus, the older synthesizer goes from an \emph{Animated Score} to keyframes on the blender armature while the newer system goes from a \emph{Synced Score} to keyframes on the blender armature on a \emph{multi-track} timeline (discussed in more detail in chapter~\ref{ch:multi_track}).
 
 \begin{table}
     \centering
     \begin{tabular}{|c|c|c|}
         \hline
-        \textbf{AZee description} & \textbf{Old Synthesizor} & \textbf{New Synthesizor}\\
+        \textbf{AZee description} & \textbf{Old synthesizer} & \textbf{New synthesizer}\\
         \hline
         \emph{:arbre} (tree) & 1.58 & \textbf{0.63} \\
         \emph{:bien} (good) & 2.93 & \textbf{1.03} \\
@@ -455,7 +455,7 @@ The synthesis time of our newer system compared to the previous synthesizor for 
         \emph{:armoire} (cupboard) & 21.85 & \textbf{8.6} \\
         \hline
     \end{tabular}
-    \caption{Synthesis time (in seconds) for both synthesizors}
+    \caption{Synthesis time (in seconds) for both synthesizers}
     \label{tab:faster_executions}
 \end{table}
 
@@ -468,27 +468,6 @@ We conducted our experiments on a machine with the following specifications:
 \end{itemize}
 
 We observe that our newer method for synthesis is significantly faster because of direct integration with Blender. The automatic site generation and rigging also reduce the time taken to set up the avatar for animation.
-
-%\subsection{Accuracy of the Animation}
-%\label{ch:avatar_creation_pose_synthesis:evaluation:accuracy}
-
-%The accuracy of the animation can be evaluated using the Frechet gesture distance(todo frobenius distance) %calculated using the generated animation and a reference animation based on the AZee body sites. Table~\ref%%{tab:accuracy_metrics} shows the results of the evaluation.
-
-%\begin{table}
-%     \centering
-%     \begin{tabular}{|c|c|}%         \hline
-%         \textbf{Metric} & \textbf{Value} \\
-%         \hline
-%         Frechet Gesture Distance & todo \\
-%         Old synthesizer & todo \\
-%         Paula & todo \\
-%         Sgnify & todo \\
-%         Mocap(Retargeted) & todo \\
-%         \hline
-%     \end{tabular}
-%     \caption{Evaluation metrics for the accuracy of the animation}
-%     \label{tab:accuracy_metrics}
-% \end{table}
 
 \section{Conclusion}
 \label{ch:avatar_creation_pose_synthesis:conclusion}

@@ -39,7 +39,7 @@ Work presented in this thesis has been the subject of the following publications
     \item Paritosh Sharma, Michael Filhol. "Multi-Track Bottom-Up Synthesis from Non-Flattened AZee Scores." In \textit{7th Workshop on Sign Language Translation and Avatar Technology (SLTAT 7)}, Jun 2022, Marseille, France.
 \end{enumerate}
 
-Apart from the above publications, one of the key contributions of this thesis is the open-source implementation of the synthesizor for AZee. The system extends the original AZee language model and integrates it with a decreasing granularity framework to synthesize signs directly in blender~\ref{fig:conclusion:azee_animator_interface}.
+Apart from the above publications, one of the key contributions of this thesis is the open-source implementation of the synthesizer for AZee. The system extends the original AZee language model and integrates it with a decreasing granularity framework to synthesize signs directly in blender~\ref{fig:conclusion:azee_animator_interface}.
 
 \begin{figure}[ht]
     \centering
@@ -50,7 +50,7 @@ Apart from the above publications, one of the key contributions of this thesis i
 
 The animator interface allows users to write AZee code in a text editor and visualize the corresponding \gls{sl} animations in real-time. For this, the animator loads the AZee compiler as a python module and uses evaluates the generated AZee Scores directly on the avatar. The add-on uses blender's \gls{nle} to manage the animation blocks and transitions of the multi-track system. The system also supports facial expressions, intermediate blocks and pose correction.
 
-The blender synthesizor was also integrated with the \gls{azvd}~\cite{filhol2024software} editor to generate \gls{sl} animations directly on a web interface (see Figure~\ref{fig:conclusion:azee_web_interface}).
+The blender synthesizer was also integrated with the \gls{azvd}~\cite{filhol2024software} editor to generate \gls{sl} animations directly on a web interface (see Figure~\ref{fig:conclusion:azee_web_interface}).
 
 \begin{figure}[ht]
     \centering
@@ -59,7 +59,7 @@ The blender synthesizor was also integrated with the \gls{azvd}~\cite{filhol2024
     \label{fig:conclusion:azee_web_interface}
 \end{figure}
 
-The web interface allows users to draw AZee visual descriptions which resolved to AZee Scores and then to animations. For this, the AZee code generated from \gls{azvd} in the front-end is sent to the server where an instance of the blender is running headlessly. The synthesizor evaluates the AZee code and returns the animation in video or GLB format to the front-end where it is displayed to the user.
+The web interface allows users to draw AZee visual descriptions which resolved to AZee Scores and then to animations. For this, the AZee code generated from \gls{azvd} in the front-end is sent to the server where an instance of the blender is running headlessly. The synthesizer evaluates the AZee code and returns the animation in video or GLB format to the front-end where it is displayed to the user.
 
 \section{Key Insights}
 \label{ch:conclusion:key_insights}
