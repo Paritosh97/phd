@@ -1,0 +1,60 @@
+Cover page: I think that the term ‘animation‘ is missing in the English title of the manuscript, but seeing
+that the English title differs from the one I received in the official document this might simply be an error
+(I think the title ‘Sign Language synthesis from AZee expressions with an animation system of decreasing
+granularity’ is more informative)
+P25: The title of Section 2.1.2 stands alone at the bottom of the page
+P26: there are 3 occurrences of “An Score”. I assume “A Score” would be more appropriate (unless not
+pronounced like the word score). I was actually not sure what Score meant in this context, as it seems
+more like a description than a metric (I suppose it is reminiscent of scores in music, but still think that a
+formal definition would benefit the reader).
+P27: a recrusive -> a recursive
+P31: in in SL synthesis
+P32: “rig(add” -> “rig (add”
+P41/43: limitations of IK methods are presented in Figure 2.28, however this figure is difficult to
+understand given that it is not detailed in text (p41 only mentions that classical IK techniques struggle
+with a number of situations). I think the manuscript would benefit from a short paragraph describing
+these limitations, and linking them to Figure 2.28.
+P42/43: Figures 2.26, 2.27, 2.28 too small and difficult to read
+P48: “animations(figure” -> “animations (figure”
+P62: lingusit -> linguist
+P63: crate -> create
+P63: “Figure 2.53 visualizes this flattening process shows the flattened version of …” -> strange sentence
+(two verbs)
+P63: heirarchy -> hierarchy
+P64: for each of the frame -> for each of the frames
+P65: sentence starting with “Even though this approach allows a better coverage” -> strange sentence,
+might be missing a clause (sentence does not seem to be finished)
+P70: didn’t -> did not (formal)
+P76: “hands(a change” -> “hands (a change” / “eyebrows(a change” -> “eyebrows (a change”
+P78: “Top optimize” -> “To optimize”?
+P80 (Figure 3.12): inter-subjecitivty -> inter-subjectivity
+P81: “The newer system demonstrates improved constraint satisfaction” -> the paragraph should be
+reporting the actual values then, for transparency.
+P142: “using pose estimation techniques 6” -> not sure what the 6 is (Figure ?)
+P 144 (Figure 4), this figure is too small and impossible to read, consider breaking down into small
+separate figures?
+Figures 4.1, 4.4, 4.6, 4.8, 4.9: these figures are difficult to read (text is too small, and it is therefore
+difficult to understand what the different blocks correspond to)
+Figure 4.6: this figure appears before figure 4.3
+Figures 5.2 & 5.3: these figures are too small to read
+P 104: inights -> insights
+Table 5.2: the poses are difficult to compare given that they are not seen from the same angle
+P 106: capturing thte nuances -> capturing the nuances
+P 106: “Similarly, while the integration of pose correction into SL synthesis in out animator, it also
+introduces new challenges.” -> sentence seems to be missing a verb
+P 107: “alternative A.6” -> “alternative (see Appendix A.6)” ?
+P 107: “could be studied further improving the the learnt pose prior” -> “could be studied further to
+improve the learnt pose prior”
+P 110: “A few action units were not added 6.2 since” -> not sure what the 6.2 is for (Figure or Section ?)
+Figure 6.3: the differences in AY are extremely difficult to perceive (especially as the last one also has
+variations in color). It might help the reader to mention what the different AUs (or blendshapes) are for
+each image, to know what differences to expect.
+P 122: previosu -> previous
+P 122: “Chapter 6 presents integration of facial expressions in The chapter” -> missing part of the
+sentence, before ‘The chapter’
+P 124: doesn’t -> does not (formal)
+P 124: “Thus. while a common space” -> replace ‘.’ by ‘,’ (or missing part of the sentence?)
+
+- figure numbers
+- bigger section on evaluation
+
