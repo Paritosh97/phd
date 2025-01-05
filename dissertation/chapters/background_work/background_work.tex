@@ -61,6 +61,7 @@ HamNoSys offers a detailed representation of the nuanced components in an \gls{s
   \label{fig:hamnosys_coffee}
 \end{figure}
 
+\newpage
 \subsection{AZee}
 \label{ch:background_work:sign_language_descriptions:azee}
 
@@ -119,7 +120,7 @@ Apart from the high-level representation of an \gls{utterance} as shown in figur
 An \gls{azee_score} can be of various types. These include:
 
 \begin{itemize}
-  \item \textbf{Synced Score}: A recrusive structure containing other scores with some sync rules (relative timing information of the underlying scores) (figure~\ref{fig:azee_score_example}).
+  \item \textbf{Synced Score}: A recursive structure containing other scores with some sync rules (relative timing information of the underlying scores) (figure~\ref{fig:azee_score_example}).
   \item \textbf{\gls{cstr_score}}: A score specifying \gls{posture_constraint}s on the body parts (figure~\ref{fig:azee_score_person}).
   \item \textbf{Hold Score}: A score holding another score for some amount of time.
   \item \textbf{KeyFrame Score}: An abstract \emph{flattened} representation of a \gls{cstr_score}.
@@ -190,7 +191,7 @@ While such techniques are computationally less demanding during inference, they 
 \subsection{3D Techniques}
 \label{ch:background_work:sign_language_synthesis:3d_techniques}
 
-3D techniques generate \gls{sl} animations using avatars that operate in a three-dimensional space. These methods provide a more immersive and realistic representation of \gls{sl}. 3D synthesis can leverage advanced avatars, such as those created by MetaHuman or SMPL-X, to achieve high levels of detail and expressiveness. Avatars are digital representations of characters or individuals, and are quite poular in in \gls{sl} synthesis to animate the described signs. This subsection explores the components of avatar creation and animation, followed by their use in \gls{sl} synthesis.
+3D techniques generate \gls{sl} animations using avatars that operate in a three-dimensional space. These methods provide a more immersive and realistic representation of \gls{sl}. 3D synthesis can leverage advanced avatars, such as those created by MetaHuman or SMPL-X, to achieve high levels of detail and expressiveness. Avatars are digital representations of characters or individuals, and are quite poular in \gls{sl} synthesis to animate the described signs. This subsection explores the components of avatar creation and animation, followed by their use in \gls{sl} synthesis.
 
 \subsubsection{Skeleton}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:skeleton}
@@ -200,7 +201,7 @@ The skeleton of a digital avatar is a crucial component for enabling realistic m
 \paragraph{Mixamo}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:skeleton:mixamo}
 
-Mixamo is a widely used online platform that provides a vast library of pre-rigged 3D characters and animations. Developed by Adobe, Mixamo offers an easy-to-use interface where users can upload their 3D models and automatically rig(add skeleton and other controllable features) them using Mixamo's auto-rigging tool. This tool identifies keypoints on the model and generates a skeleton with appropriate bone placements. Additionally, Mixamo offers a range of pre-made animations that can be applied to the rigged models, facilitating quick and efficient animation workflows. The platform supports various file formats and is compatible with many 3D software tools. A standard Mixamo skeleton consists of 65 bones, covering major body parts, including the spine, arms, legs, hands, and head. Figure~\ref{fig:mixamo_autorigging} shows the process of auto-rigging a 3D model using Mixamo, while Figure~\ref{fig:mixamo_skeleton} illustrates the standard Mixamo skeleton structure.
+Mixamo is a widely used online platform that provides a vast library of pre-rigged 3D characters and animations. Developed by Adobe, Mixamo offers an easy-to-use interface where users can upload their 3D models and automatically rig (add skeleton and other controllable features) them using Mixamo's auto-rigging tool. This tool identifies keypoints on the model and generates a skeleton with appropriate bone placements. Additionally, Mixamo offers a range of pre-made animations that can be applied to the rigged models, facilitating quick and efficient animation workflows. The platform supports various file formats and is compatible with many 3D software tools. A standard Mixamo skeleton consists of 65 bones, covering major body parts, including the spine, arms, legs, hands, and head. Figure~\ref{fig:mixamo_autorigging} shows the process of auto-rigging a 3D model using Mixamo, while Figure~\ref{fig:mixamo_skeleton} illustrates the standard Mixamo skeleton structure.
 
 \begin{figure} 
   \centering \includegraphics[width = 2.5in]{chapters/background_work/images/mixamo_autorigging.png} 
@@ -392,21 +393,31 @@ Kinematics is used to define the motion of joints in a skeleton, allowing animat
 \end{figure}
 
 \begin{figure}
-  \centering \includegraphics[width = 4in]{chapters/background_work/images/ccdik.png}
+  \centering \includegraphics[width = 5in]{chapters/background_work/images/ccdik.png}
   \caption{Cyclic Coordinate Descent (CCD) IK solving (changes the rotation of a joint, one at a time)}
   \label{fig:ccdik}
 \end{figure}
 
 \begin{figure}
-  \centering \includegraphics[width = 4in]{chapters/background_work/images/fabrik.png}
+  \centering \includegraphics[width = 5in]{chapters/background_work/images/fabrik.png}
   \caption{FABRIK solving (updates coordinates in two passes)}
   \label{fig:fabrik}
 \end{figure}
 
-These classical \gls{ik} techniques, while computationally efficient, are prone to singularities, have limited support for complex joint constraints, and often result in unnatural or biomechanically unrealistic poses. As demonstrated in Figure~\ref{fig:problems_classical}, they struggle with overlapping chains and handling multiple end-effectors.
+
+These classical \gls{ik} techniques, while computationally efficient, are prone to singularities, have limited support for complex joint constraints, and often result in unnatural or biomechanically unrealistic poses. 
+
+Figure~\ref{fig:problems_classical} demonstrates five such examples:
+\begin{itemize}
+    \item \textbf{Multiple solutions:} When the end effector results in multiple configurations of the chain.
+    \item \textbf{Singularity:} Occurs when the Jacobian matrix loses rank, making it impossible to control the end effector’s motion in certain directions. This results in the loss of degrees of freedom.
+    \item \textbf{Redundancy:} When there are more degrees of freedom in the system than required to achieve the desired end effector position.
+    \item \textbf{Joint limits:} When the joints of the chain reach their limits, preventing the arm from reaching certain positions or orientations.
+    \item \textbf{Instability:} When the system approaches a singularity, leading to highly sensitive behavior in joint movements and instability in motion control.
+\end{itemize}
 
 \begin{figure}
-  \centering \includegraphics[width = 4in]{chapters/background_work/images/problems_classical.png}
+  \centering \includegraphics[width = 5in]{chapters/background_work/images/problems_classical.png}
   \caption{Problems with classical IK methods}
   \label{fig:problems_classical}
 \end{figure}
@@ -518,7 +529,7 @@ In the context of \gls{sl} synthesis, a multi-track timeline is used by Paula~\c
 \paragraph{Motion Curves}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:avatar_animation:motion_curves}
 
-Motion curves, have been extensively used in 3D character animation to control the timing and spacing of movements. These curves provide a graphical representation of a parameter's change over time, making them an essential tool in achieving realistic and fluid motion in animations(figure~\ref{fig:fcurves_blender}). Early foundational work by Witkin and Kass~\cite{witkin1988spacetime} introduced spacetime constraints, which used optimization techniques to control motion curves in generating realistic animations under physical constraints. This idea has evolved, and modern techniques now integrate deep learning models with motion curves to enhance control and automate the generation of complex animations. This is particularly useful in applications like motion inbetweening, where interpolating between keyframes requires precise control over motion curves to ensure smooth transitions and realistic movements (figure~\ref{fig:inbetweening_transformers})~\cite{10.1145/3550454.3555454}. However, traditional mathematical optimization techniques are still widely in use. For example use of tangent-space optimization~~\cite{10.1145/3306346.3322938} to control character interpolations by allowing animators to directly manipulate positions and orientations of the posture by manipulating the tangent of the curve. This minimizes the need for additional keyframes. It also ensures smooth transitions while respecting \gls{posture_constraint}s like joint limits and contact points, integrating seamlessly into existing animation workflows (figure~\ref{fig:inbetweening_disney}). 
+Motion curves, have been extensively used in 3D character animation to control the timing and spacing of movements. These curves provide a graphical representation of a parameter's change over time, making them an essential tool in achieving realistic and fluid motion in animations (figure~\ref{fig:fcurves_blender}). Early foundational work by Witkin and Kass~\cite{witkin1988spacetime} introduced spacetime constraints, which used optimization techniques to control motion curves in generating realistic animations under physical constraints. This idea has evolved, and modern techniques now integrate deep learning models with motion curves to enhance control and automate the generation of complex animations. This is particularly useful in applications like motion inbetweening, where interpolating between keyframes requires precise control over motion curves to ensure smooth transitions and realistic movements (figure~\ref{fig:inbetweening_transformers})~\cite{10.1145/3550454.3555454}. However, traditional mathematical optimization techniques are still widely in use. For example use of tangent-space optimization~~\cite{10.1145/3306346.3322938} to control character interpolations by allowing animators to directly manipulate positions and orientations of the posture by manipulating the tangent of the curve. This minimizes the need for additional keyframes. It also ensures smooth transitions while respecting \gls{posture_constraint}s like joint limits and contact points, integrating seamlessly into existing animation workflows (figure~\ref{fig:inbetweening_disney}). 
 
 \begin{figure}
     \centering \includegraphics[width = 2.5in]{chapters/background_work/images/fcurves_blender.png}
@@ -797,7 +808,7 @@ The Animated Score is a \emph{flattened} representation of the AZee \gls{cstr_sc
   \label{fig:azee_score_armoire_combined}
 \end{figure}
 
-Although AZee is multi-track by nature (where the lingusit has the ability to crate the track), the low-level AZee synthesizer uses an \emph{Animated Score} which is a flattened version of an AZee Synced Score, where all the tracks are merged into a single track. This flattening is done by collecting all the \gls{posture_constraint}s for each frame and applying them to the corresponding bone rotations during animation. Figure~\ref{fig:azee_score_armoire_combined} visualizes this flattening process shows the flattened version of the AZee Synced Score.
+Although AZee is multi-track by nature (where the linguist has the ability to create the track), the low-level AZee synthesizer uses an \emph{Animated Score} which is a flattened version of an AZee Synced Score, where all the tracks are merged into a single track. This flattening is done by collecting all the \gls{posture_constraint}s for each frame and applying them to the corresponding bone rotations during animation. Figure~\ref{fig:azee_score_armoire_combined} visualizes this flattening process showing the flattened version of the AZee Synced Score.
 
 \subparagraph{AZee Blender interface}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:azee_blender_interface}
@@ -811,7 +822,7 @@ The synthesizer was based on an armature in blender. The bones and sites of this
     \label{fig:old_interface}
 \end{figure}
 
-\subparagraph{Bone heirarchy}
+\subparagraph{Bone hierarchy}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:bone_hierarchy}
 
 The synthesizer uses an armature contained 128 bones (see section~\ref{annex:background_work:old_bone_list} of annex). These bones were structured to accommodate the unique skeletal system requirements of the AZee framework, which utilizes a "rotation first" paradigm. However, since most 3D softwares (including blender) operate on a "translation first" paradigm, a conversion process was necessary. This conversion involved mapping each AZee bone (see section~\ref{annex:background_work:azee_abstract_bones} of annex) to two corresponding armature bones: one for translation and one for rotation, with the rotation bone named by appending a ".rot" suffix to the original bone name (figure~\ref{fig:old_bone_structure}).
@@ -838,7 +849,7 @@ The AZee low-level language consists of 332 sites (see section~\ref{annex:backgr
 \subparagraph{Pose Generation}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:azee_based:low_level_synthesizer_for_azee:pose_generation}
 
-During evaluation, the low-level synthesizer creates postures for each of the frame using this Animated Score. For this, they used the algorithm~\ref{alg:trimmed_constraint_based_optimization} for the pose optimization for each of the constraints to generate the postures. 
+During evaluation, the low-level synthesizer creates postures for each of the frames using this Animated Score. For this, they used the algorithm~\ref{alg:trimmed_constraint_based_optimization} for the pose optimization for each of the constraints to generate the postures. 
 
 \begin{algorithm}
   \caption{Constraint-Based Optimization for Posture Synthesis}
@@ -892,7 +903,9 @@ For the pose optimization, the algorithm~\ref{alg:trimmed_constraint_based_optim
   \label{fig:armoire_low_level}
 \end{figure}
 
-Even though this approach allows a better coverage using AZee descriptions since it can directly generate animations from the linguists input without relying on artists. It is in-extensible to be used with pre-animated motion data blocks for larger sequences since the flattened representation does not contain the original reference of the corresponding animation block on the timeline. More importantly, it generates robotic animations since it does not consider the nuances of natural human motion. This work therefore is the other side of the coin to a high-level synthesis technique like Paula, which are hindered by the labor-intensive nature of hand-crafted animations.
+
+
+Although this approach provides better coverage using AZee descriptions by directly generating animations from the linguist's input without relying on artists, it is not extensible for use with pre-animated motion data blocks for larger sequences. This is because the flattened representation does not retain the original reference to the corresponding animation block on the timeline. More importantly, it generates robotic animations since it does not consider the nuances of natural human motion. This work therefore is the other side of the coin to a high-level synthesis technique like Paula, which are hindered by the labor-intensive nature of hand-crafted animations.
 
 \paragraph{Granularity of \gls{sl} Synthesis}
 \label{ch:background_work:sign_language_synthesis:3d_techniques:sign_language_synthesis_systems:granularity_of_sl_synthesis}

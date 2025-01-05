@@ -52,7 +52,7 @@ The figure~\ref{fig:azee_timeline} shows the generated multi-track timeline for 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/azee_timeline.png}
+    \includegraphics[width=0.9\textwidth]{chapters/multi_track/images/azee_timeline.png}
     \caption{Multi-track timeline generation from an AZee Synced Score.}
     \label{fig:azee_timeline}
 \end{figure}
@@ -75,7 +75,7 @@ Since we are not flattening the AZee Synced Score, the constraints in the blocks
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/multi_track/images/constraint_dag.png}
+    \includegraphics[width=0.9\textwidth]{chapters/multi_track/images/constraint_dag.png}
     \caption{ConstraintDAG for a single block discourse for the sign \emph{arbre}.}
     \label{fig:constraint_dag_tree}
 \end{figure}
@@ -90,9 +90,9 @@ Since we are not flattening the AZee Synced Score, the constraints in the blocks
 \section{AZee and Non-Linearity}
 \label{ch:multi_track:azee_nl}
 
-\begin{figure}[H]
+\begin{figure}
     \centering
-    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/example_azee_non_linear.png}
+    \includegraphics[width=0.9\textwidth]{chapters/multi_track/images/example_azee_non_linear.png}
     \caption{Example of non-linear synthesis in AZee.}
     \label{fig:example_azee_non_linear}
 \end{figure}
@@ -153,7 +153,7 @@ Even though the constraints are optimized together, each individual block in the
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/transpath_blocks.png}
+    \includegraphics[width=0.9\textwidth]{chapters/multi_track/images/transpath_blocks.png}
     \caption{Transpath blocks in \emph{armoire}}
     \label{fig:transpath_blocks}
 \end{figure}
@@ -167,7 +167,7 @@ Transpath blocks are baked by evaluating the transpath constraint for each frame
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{chapters/multi_track/images/hold_blocks.png}
+    \includegraphics[width=0.9\textwidth]{chapters/multi_track/images/hold_blocks.png}
     \caption{Hold blocks for the rule \emph{:info-about(:topic, :info)}}
     \label{fig:hold_blocks}
 \end{figure}
@@ -243,7 +243,7 @@ The multi-track timeline approach to \gls{sl} synthesis offers several advantage
 
 \begin{itemize}
     \item \textbf{Parallelism in block generation} Our system cannot generate multiple independent blocks at the same time in parallel. This could greatly speedup the time for animation
-    \item \textbf{Smartly keyframing} An effort was made to "smartly" keyframe postures to increase synthesis speed, however it didn't work when the AZee Scores contained complex structures such as \emph{dynamic points} (created as a centripetal Catmull–Rom spline) in the linguistic discourse. Thus, we optimize the constraints for every frame of the block which is not the most efficient way to animate the block.
+    \item \textbf{Smartly keyframing} An effort was made to "smartly" keyframe postures to increase synthesis speed, however it did not work when the AZee Scores contained complex structures such as \emph{dynamic points} (created as a centripetal Catmull–Rom spline) in the linguistic discourse. Thus, we optimize the constraints for every frame of the block which is not the most efficient way to animate the block.
 \end{itemize}
 
 \end{document}

@@ -10,6 +10,16 @@
 \renewcommand{\thesection}{\Alph{section}}
 \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 
+% Modify figure and table numbering for annex, making them follow the same sequence
+\setcounter{figure}{0}  % Reset the figure counter at the start of the annex
+\setcounter{table}{0}   % Reset the table counter at the start of the annex
+\renewcommand{\thefigure}{\Alph{section}.\arabic{figure}}  % Number figures as A.1, A.2, etc.
+\renewcommand{\thetable}{\Alph{section}.\arabic{table}}  % Number tables as A.1, A.2, etc.
+
+% Manually increment the same counter for both figures and tables
+\newcounter{annexcounter}
+\setcounter{annexcounter}{0}  % Initialize the shared counter
+
 \section{Annex}
 \label{annex}
 
@@ -17,6 +27,8 @@
 \label{annex:background_work:old_bone_list}
 
 \begin{longtable}{|l|l|l|l|}
+    \caption{Old Bone List}
+    \label{tab:old_bone_list} \\
     \hline
     belly & left\_thumb1 & left\_little2 & right\_wrist \\ \hline
     waist & left\_thumb2 & left\_little3 & right\_hand \\ \hline
@@ -150,6 +162,7 @@
 \label{annex:background_work:azee_sites}
 
 \begin{longtable}{|p{2cm}|p{3cm}|p{5cm}|}
+    \caption{AZee Site List} \label{tab:sites} \\
     \hline
     \textbf{Body Site} & \textbf{Attached Bone} & \textbf{Description} \\ \hline
     AB & back\_1 & Abdominal area connected to the back of the torso \\ \hline
@@ -486,7 +499,7 @@
     CDL\_R & head & Right side of the cranium at the back \\ \hline
     FH\_L & head & Left side of the forehead \\ \hline
     FH\_R & head & Right side of the forehead \\ \hline
-    \end{longtable}
+\end{longtable}
 
 \subsection{Animator Architecture}
 \label{annex:avatar_creation_pose_synthesis:animator_architecture}
@@ -516,7 +529,7 @@ Figure~\ref{fig:azee_rule_frequency_ch1} shows frequency of AZee rules in the \e
 \subsection{Pose Estimation based templates}
 \label{annex:intermediate_blocks_pose_correction:pose_est_templates}
 
-In future, the procedurally generated templates can also be based on the AZee rule and corresponding motion data based on motion curves from videos directly using pose estimation techniques~\ref{fig:motion_curves_template_procedural_pose_est}.
+In future, the procedurally generated templates can also be based on the AZee rule and corresponding motion data based on motion curves from videos directly using pose estimation techniques (figure~\ref{fig:motion_curves_template_procedural_pose_est}).
 
 \begin{figure}
     \centering \includegraphics[width = 5in]{chapters/intermediate_blocks_pose_correction/images/motion_curves_template_procedural_pose_est.png}
